@@ -1364,7 +1364,7 @@ class TextWikiBase
     * Load a format-render class file.
     *
     * TODO: This logic should be factored out into a factory class.
-    * 
+    *
     * @access public
     *
     * @return bool True if loaded, false if not.

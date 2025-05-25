@@ -24,4 +24,6 @@ namespace Horde\Text\Wiki;
  * @version    Release: @package_version@
  * @author     Justin Patrin <justinpatrin@php.net>
  */
-class DefaultEngine extends TextWikiBase {}
+class DefaultEngine extends TextWikiBase
+{
+}

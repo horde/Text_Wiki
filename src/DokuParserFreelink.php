@@ -45,7 +45,9 @@ class DokuParserFreelink extends WikiParse
 {
     public $regex = '/lkdhgliuLKJlyheglihleh/';
 
-    public function parse() {}
+    public function parse()
+    {
+    }
 
     /**
     *
