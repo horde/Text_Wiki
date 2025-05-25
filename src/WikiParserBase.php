@@ -110,19 +110,21 @@ class WikiParserBase
     *
     */
 
-    public function __construct(&$obj)
+    public function __construct($obj, ?string $rule = null)
     {
         // set the reference to the calling Text_Wiki object;
         // this allows us access to the shared source text, token
         // array, etc.
-        $this->wiki = & $obj;
+        $this->wiki = $obj;
 
         // set the name of this rule; generally used when adding
         // to the tokens array. strip off the Text_Wiki_Parse_ portion.
 
         $rendererPrefix = substr($this::class, 0, strrpos($this::class, 'Parser'));
         $this->format = substr($rendererPrefix, strrpos($rendererPrefix, '\\')+1);
-        $rule = substr($this::class, strrpos($this::class, 'Parser') + 6);
+        if (is_null($rule)) {
+            $rule = substr($this::class, strrpos($this::class, 'Parser') + 6);
+        }
         $this->rule = is_string($rule) ? $rule : null;
 
 
