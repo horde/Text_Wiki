@@ -15,6 +15,8 @@
  */
 
 namespace Horde\Text\Wiki;
+use Throwable;
+use InvalidArgumentException;
 
 /**
  * Baseline rule class for extension into a "real" parser component.
@@ -153,11 +155,23 @@ class WikiParserBase
 
     public function parse()
     {
-        $this->wiki->source = preg_replace_callback(
-            $this->regex,
-            $this,
-            $this->wiki->source
-        );
+        if (is_null($this->regex)) {
+            throw new InvalidArgumentException(
+                'The regex property must be set before calling parse() ' . $this::class
+            );
+        }
+        try {
+            // Store parsing result and check if it is valid before applying it to the wiki source.
+            $res = preg_replace_callback(
+                $this->regex,
+                $this,
+                $this->wiki->source
+            );
+            if ($res) {
+                $this->wiki->source = $res;
+            }
+        } catch (Throwable $e) {
+        }
     }
 
     public function __invoke($matches)
