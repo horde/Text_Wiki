@@ -1,8 +1,9 @@
 <?php
+
 namespace HordeTextWiki;
 
-class Text_Wiki_Render_Creole_Interwiki extends WikiRender {
-
+class CreoleRendererInterwiki extends WikiRender
+{
     /**
     *
     * Renders a token into text matching the requested format.
@@ -16,9 +17,8 @@ class Text_Wiki_Render_Creole_Interwiki extends WikiRender {
     *
     */
 
-    function token($options)
+    public function token($options)
     {
-        return '[['.$options['site'].'>'.$options['page'].(strlen($options['text']) ? '|'.$options['text'] : '').']]';
+        return '[[' . $options['site'] . '>' . $options['page'] . (strlen($options['text']) ? '|' . $options['text'] : '') . ']]';
     }
 }
-?>

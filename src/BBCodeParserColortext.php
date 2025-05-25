@@ -1,5 +1,7 @@
 <?php
+
 namespace Horde\Text\Wiki;
+
 // vim: set expandtab tabstop=4 shiftwidth=4 softtabstop=4:
 /**
  * BBCode: Parses for color text.
@@ -32,8 +34,8 @@ namespace Horde\Text\Wiki;
  * @link       http://pear.php.net/package/Text_Wiki
  * @see        Text_Wiki_Parse::Text_Wiki_Parse()
  */
-class Text_Wiki_Parse_Colortext extends WikiParse {
-
+class BBCodeParserColortext extends WikiParse
+{
     /**
      * The regular expression used to parse the source text and find
      * matches conforming to this rule.  Used by the parse() method.
@@ -44,7 +46,7 @@ class Text_Wiki_Parse_Colortext extends WikiParse {
      * @see Text_Wiki_Parse::parse()
      */
 
-    var $regex = "'(?:\[color=(aqua|black|blue|fuchsia|gray|green|lime|maroon|navy|olive|purple|red|silver|teal|white|yellow|\#?[0-9a-f]{6})]((?:((?R))|.)*?)\[/color])'msi";
+    public $regex = "'(?:\[color=(aqua|black|blue|fuchsia|gray|green|lime|maroon|navy|olive|purple|red|silver|teal|white|yellow|\#?[0-9a-f]{6})]((?:((?R))|.)*?)\[/color])'msi";
 
     /**
      * The current color nesting depth, starts by zero
@@ -52,7 +54,7 @@ class Text_Wiki_Parse_Colortext extends WikiParse {
      * @access private
      * @var int
      */
-    var $_level = 0;
+    public $_level = 0;
 
     /**
      * Generates a replacement for the matched text.  Token options are:
@@ -66,14 +68,14 @@ class Text_Wiki_Parse_Colortext extends WikiParse {
      * placeholder in the source text surrounding the text to be colored.
      * @access public
      */
-    function process(&$matches)
+    public function process(&$matches)
     {
         // nested block ?
         if (array_key_exists(2, $matches)) {
             $this->_level++;
             $expsub = preg_replace_callback(
                 $this->regex,
-                array(&$this, 'process'),
+                [&$this, 'process'],
                 $matches[2]
             );
             $this->_level--;
@@ -82,10 +84,10 @@ class Text_Wiki_Parse_Colortext extends WikiParse {
         }
 
         // needs to withdraw leading # as renderer put it in
-        $color = $matches[1]{0} == '#' ? substr($matches[1], 1) : $matches[1];
+        $color = $matches[1][0] == '#' ? substr($matches[1], 1) : $matches[1];
 
         // builds the option array
-        $options = array('type' => 'start', 'level' => $this->_level, 'color' => $color);
+        $options = ['type' => 'start', 'level' => $this->_level, 'color' => $color];
         $statok = $this->wiki->addToken($this->rule, $options);
         $options['type'] = 'end';
         return $statok . $expsub . $this->wiki->addToken($this->rule, $options);

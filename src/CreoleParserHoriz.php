@@ -1,4 +1,5 @@
 <?php
+
 namespace Horde\Text\Wiki;
 
 /**
@@ -20,9 +21,8 @@ namespace Horde\Text\Wiki;
  *
  */
 
-class Text_Wiki_Parse_Horiz extends WikiParse {
-
-
+class CreoleParserHoriz extends WikiParse
+{
     /**
      *
      * The regular expression used to parse the source text and find
@@ -36,7 +36,7 @@ class Text_Wiki_Parse_Horiz extends WikiParse {
      *
      */
 
-    var $regex = '/^([-]{4,})$/m';
+    public $regex = '/^([-]{4,})$/m';
 
 
     /**
@@ -51,9 +51,8 @@ class Text_Wiki_Parse_Horiz extends WikiParse {
      *
      */
 
-    function process(&$matches)
+    public function process(&$matches)
     {
         return "\n" . $this->wiki->addToken($this->rule) . "\n";
     }
 }
-?>

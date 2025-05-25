@@ -1,26 +1,27 @@
 <?php
+
 namespace HordeTextWiki;
 
 /**
-* 
+*
 * Parses for anchor targets.
-* 
+*
 * @category Text
-* 
+*
 * @package Text_Wiki
-* 
+*
 * @author Manuel Holtgrewe <purestorm at ggnore dot net>
 *
 * @author Paul M. Jones <pmjones@php.net>
-* 
+*
 * @license LGPL
-* 
+*
 * @version $Id$
-* 
+*
 */
 
 /**
-* 
+*
 * This class implements a Text_Wiki_Parse to add an anchor target name
 * in the wiki page.
 *
@@ -29,35 +30,34 @@ namespace HordeTextWiki;
 * @author Paul M. Jones <pmjones at ciaweb dot net>
 *
 * @category Text
-* 
+*
 * @package Text_Wiki
-* 
+*
 */
 
 //Not used in CoWiki
-class Text_Wiki_Parse_Anchor extends WikiParse {
-    
-    
+class CowikiParserAnchor extends WikiParse
+{
     /**
-    * 
+    *
     * The regular expression used to find source text matching this
     * rule.  Looks like a macro: [[# anchor_name]]
-    * 
+    *
     * @access public
-    * 
+    *
     * @var string
-    * 
+    *
     */
-    
-    var $regex = '/(\[\[# )([-_A-Za-z0-9.]+?)( .+)?(\]\])/i';
-    
-    
+
+    public $regex = '/(\[\[# )([-_A-Za-z0-9.]+?)( .+)?(\]\])/i';
+
+
     /**
-    * 
+    *
     * Generates a token entry for the matched text.  Token options are:
-    * 
+    *
     * 'text' => The full matched text, not including the <code></code> tags.
-    * 
+    *
     * @access public
     *
     * @param array &$matches The array of matches from parse().
@@ -66,22 +66,23 @@ class Text_Wiki_Parse_Anchor extends WikiParse {
     * the source text.
     *
     */
-    
-    function process(&$matches) {
-    
+
+    public function process(&$matches)
+    {
+
         $name = $matches[2];
         $text = $matches[3];
-        
+
         $start = $this->wiki->addToken(
             $this->rule,
-            array('type' => 'start', 'name' => $name)
+            ['type' => 'start', 'name' => $name]
         );
-        
+
         $end = $this->wiki->addToken(
             $this->rule,
-            array('type' => 'end', 'name' => $name)
+            ['type' => 'end', 'name' => $name]
         );
-        
+
         // done, place the script output directly in the source
         return $start . trim($text) . $end;
     }

@@ -1,9 +1,10 @@
 <?php
+
 namespace HordeTextWiki;
 
 //There is no box rule for Creole, so use a simple table
-class Text_Wiki_Render_Creole_Box extends WikiRender {
-
+class CreoleRendererBox extends WikiRender
+{
     /**
     *
     * Renders a token into text matching the requested format.
@@ -17,7 +18,7 @@ class Text_Wiki_Render_Creole_Box extends WikiRender {
     *
     */
 
-    function token($options)
+    public function token($options)
     {
         if ($options['type'] == 'start') {
             return "|| ";
@@ -28,4 +29,3 @@ class Text_Wiki_Render_Creole_Box extends WikiRender {
         }
     }
 }
-?>

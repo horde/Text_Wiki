@@ -1,5 +1,7 @@
 <?php
+
 namespace HordeTextWiki;
+
 // vim: set expandtab tabstop=4 shiftwidth=4 softtabstop=4:
 /**
  * Parse structured wiki text and render into arbitrary formats such as XHTML.
@@ -33,9 +35,10 @@ namespace HordeTextWiki;
  * @link       http://pear.php.net/package/Text_Wiki
  * @see        Text_Wiki::Text_Wiki()
  */
-class DokuEngine extends TextWikiBase {
-
-    function __construct($rules = null) {
+class DokuEngine extends TextWikiBase
+{
+    public function __construct($rules = null)
+    {
         parent::__construct($rules);
         $paths = $this->getPath('parse');
         $this->addPath('parse', str_replace('Default', 'Doku', $paths[0]));

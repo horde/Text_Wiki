@@ -1,9 +1,11 @@
 <?php
+
 namespace HordeTextWiki;
+
 // vim: set expandtab tabstop=4 shiftwidth=4 softtabstop=4:
 /**
 * Mediawiki: Parse for definition lists.
-* 
+*
 * @category Text
 * @package Text_Wiki
 * @author Justin Patrin <papercrane@reversefold.com>
@@ -11,7 +13,7 @@ namespace HordeTextWiki;
 * @author Moritz Venn <ritzmo@php.net>
 * @license LGPL
 * @version $Id$
-* 
+*
 */
 
 /**
@@ -26,60 +28,60 @@ namespace HordeTextWiki;
 *
 * @category Text
 * @package Text_Wiki
-* 
+*
 * @author Justin Patrin <papercrane@reversefold.com>
 * @author Paul M. Jones <pmjones@php.net>
 * @author Moritz Venn <ritzmo@php.net>
-* 
+*
 */
-class Text_Wiki_Parse_Deflist extends WikiParse {
-    
+class MediawikiParserDeflist extends WikiParse
+{
     /**
     * The regular expression used to parse the source text and find
     * matches conforming to this rule.  Used by the parse() method.
-    * 
+    *
     * @access public
     * @var string
     * @see parse()
     */
-    var $regex = '/\n((?:\;|\:)+.*?\n(?!(?:\;|\:)+))/s';
- 
-   /**
-    * Generates a replacement for the matched text.  Token options are:
-    * 'type' =>
-    *     'list_start'    : the start of a definition list
-    *     'list_end'      : the end of a definition list
-    *     'term_start'    : the start of a definition term
-    *     'term_end'      : the end of a definition term
-    *     'narr_start'    : the start of definition narrative
-    *     'narr_end'      : the end of definition narrative
-    *     'unknown'       : unknown type of definition portion
-    * 'level' => the indent level (0 for the first level, 1 for the
-    * second, etc)
-    * 'count' => the list item number at this level. not needed for
-    * xhtml, but very useful for PDF and RTF.
-    *
-    * @access public
-    * @param array &$matches The array of matches from parse().
-    * @return A series of text and delimited tokens marking the different
-    * list text and list elements.
-    */ 
-    function process(&$matches)
+    public $regex = '/\n((?:\;|\:)+.*?\n(?!(?:\;|\:)+))/s';
+
+    /**
+     * Generates a replacement for the matched text.  Token options are:
+     * 'type' =>
+     *     'list_start'    : the start of a definition list
+     *     'list_end'      : the end of a definition list
+     *     'term_start'    : the start of a definition term
+     *     'term_end'      : the end of a definition term
+     *     'narr_start'    : the start of definition narrative
+     *     'narr_end'      : the end of definition narrative
+     *     'unknown'       : unknown type of definition portion
+     * 'level' => the indent level (0 for the first level, 1 for the
+     * second, etc)
+     * 'count' => the list item number at this level. not needed for
+     * xhtml, but very useful for PDF and RTF.
+     *
+     * @access public
+     * @param array &$matches The array of matches from parse().
+     * @return A series of text and delimited tokens marking the different
+     * list text and list elements.
+     */
+    public function process(&$matches)
     {
         // the replacement text we will return
         $return = '';
 
         // the list of post-processing matches
-        $list = array();
+        $list = [];
 
         // a stack of list-start and list-end types; we keep this
         // so that we know what kind of list we're working with
         // (bullet or number) and what indent level we're at.
-        $stack = array();
+        $stack = [];
 
         // the item count is the number of list items for any
         // given list-type on the stack
-        $itemcount = array();
+        $itemcount = [];
 
         // have we processed the very first list item?
         $pastFirst = false;
@@ -114,10 +116,10 @@ class Text_Wiki_Parse_Deflist extends WikiParse {
 
             $prefix = substr($val[1], 0, -1); // everthing but the last char
 
-            $pair = array(
-                array($prefix . ';' . $term, $prefix . ';', ';', $term),
-                array($prefix . ':' . $narr, $prefix . ':', ':', $narr),
-            );
+            $pair = [
+                [$prefix . ';' . $term, $prefix . ';', ';', $term],
+                [$prefix . ':' . $narr, $prefix . ':', ':', $narr],
+            ];
 
             array_splice($list, $i, 1, $pair);
             $i++; // skip the newly-added definition
@@ -129,11 +131,11 @@ class Text_Wiki_Parse_Deflist extends WikiParse {
             // $val[1] is the type (* or #)
             // $val[2] is the level (number)
             // $val[3] is the list item text
-            
+
             // how many levels are we indented? (1 means the "root"
             // list level, no indenting.)
             $level = strlen($val[1]);
-            
+
             // get the list item type
             if ($val[2] == ';') {
                 $type = 'term';
@@ -142,7 +144,7 @@ class Text_Wiki_Parse_Deflist extends WikiParse {
             } else {
                 $type = 'unknown';
             }
-            
+
             // get the text of the list item
             $text = $val[3];
 
@@ -159,20 +161,20 @@ class Text_Wiki_Parse_Deflist extends WikiParse {
                 if ($level > 1) {
                     $return .= $this->wiki->addToken(
                         $this->rule,
-                        array(
+                        [
                             'type' => $type . '_start',
-                            'level' => $level - 1
-                        )
-                   );
+                            'level' => $level - 1,
+                        ]
+                    );
                 }
 
                 // ...and add a list-start token to the return.
                 $return .= $this->wiki->addToken(
-                    $this->rule, 
-                    array(
+                    $this->rule,
+                    [
                         'type' => 'list_start',
-                        'level' => $level - 1
-                    )
+                        'level' => $level - 1,
+                    ]
                 );
             }
 
@@ -184,17 +186,17 @@ class Text_Wiki_Parse_Deflist extends WikiParse {
                 // stack in the next command.  $tmp will then equal the
                 // current level of indent.
                 $tmp = count($stack) - 1;
-                
+
                 // as long as the stack count is greater than the
-                // current indent level, we need to end list types. 
+                // current indent level, we need to end list types.
                 // continue adding end-list tokens until the stack count
                 // and the indent level are the same.
                 $return .= $this->wiki->addToken(
-                    $this->rule, 
-                    array (
+                    $this->rule,
+                    [
                         'type' => 'list_end',
-                        'level' => $tmp
-                    )
+                        'level' => $tmp,
+                    ]
                 );
 
                 array_pop($stack);
@@ -206,16 +208,16 @@ class Text_Wiki_Parse_Deflist extends WikiParse {
                 // Close the previously opened List item
                 $return .= $this->wiki->addToken(
                     $this->rule,
-                    array (
+                    [
                         'type' => $type . '_end',
-                        'level' => $tmp
-                    )
+                        'level' => $tmp,
+                    ]
                 );
-                
+
                 // reset the item count for the popped indent level
                 unset($itemcount[$tmp + 1]);
             }
-            
+
             // add to the item count for this list (taking into account
             // which level we are at).
             if (! isset($itemcount[$level])) {
@@ -225,7 +227,7 @@ class Text_Wiki_Parse_Deflist extends WikiParse {
                 // increment count
                 $itemcount[$level]++;
             }
-            
+
             // is this the very first item in the list?
             if (! $pastFirst) {
                 $first = true;
@@ -233,60 +235,60 @@ class Text_Wiki_Parse_Deflist extends WikiParse {
             } else {
                 $first = false;
             }
-            
+
             // create a list-item starting token.
             $start = $this->wiki->addToken(
-                $this->rule, 
-                array(
+                $this->rule,
+                [
                     'type' => $type . '_start',
                     'level' => $level,
                     'count' => $itemcount[$level],
-                    'first' => $first
-                )
+                    'first' => $first,
+                ]
             );
-            
+
             // create a list-item ending token.
             $end = $this->wiki->addToken(
-                $this->rule, 
-                array(
+                $this->rule,
+                [
                     'type' => $type . '_end',
                     'level' => $level,
-                    'count' => $itemcount[$level]
-                )
+                    'count' => $itemcount[$level],
+                ]
             );
-            
+
             // add the starting token, list-item text, and ending token
             // to the return.
             $return .= $start . $text . $end;
         }
-        
+
         // the last list-item may have been indented.  go through the
         // list-type stack and create end-list tokens until the stack
         // is empty.
         $level = count($stack);
         while ($level > 0) {
             array_pop($stack);
-                $return .= $this->wiki->addToken(
-                    $this->rule, 
-                    array (
-                        'type' => 'list_end',
-                        'level' => $level - 1
-                    )
-                );
+            $return .= $this->wiki->addToken(
+                $this->rule,
+                [
+                    'type' => 'list_end',
+                    'level' => $level - 1,
+                ]
+            );
 
             // if we are higher than level 1 we need to close fake items
             if ($level > 1) {
                 $return .= $this->wiki->addToken(
                     $this->rule,
-                    array (
+                    [
                         'type' => $stack[$level - 2] . '_end',
-                        'level' => $level - 2
-                    )
+                        'level' => $level - 2,
+                    ]
                 );
             }
             $level = count($stack);
         }
-        
+
         // we're done!  send back the replacement text.
         return "\n" . $return . "\n\n";
     }

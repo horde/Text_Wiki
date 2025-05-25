@@ -1,5 +1,7 @@
 <?php
+
 namespace Horde\Text\Wiki;
+
 // vim: set expandtab tabstop=4 shiftwidth=4 softtabstop=4:
 /**
  * Heading rule end renderer for Xhtml
@@ -24,40 +26,40 @@ namespace Horde\Text\Wiki;
  * @version    Release: @package_version@
  * @link       http://pear.php.net/package/Text_Wiki
  */
-class Text_Wiki_Render_Xhtml_Heading extends WikiRender {
-
-    var $conf = array(
+class XhtmlRendererHeading extends WikiRender
+{
+    public $conf = [
         'css_h1' => null,
         'css_h2' => null,
         'css_h3' => null,
         'css_h4' => null,
         'css_h5' => null,
-        'css_h6' => null
-    );
+        'css_h6' => null,
+    ];
 
-    function token($options)
+    public function token($options)
     {
-    	$collapse = null;
+        $collapse = null;
         static $jsOutput = false;
         // get nice variable names (id, type, level)
         extract($options);
 
-        switch($type) {
-        case 'start':
-            $css = $this->formatConf(' class="%s"', "css_h$level");
-            return '
-<h'.$level.$css.' id="'.$id.'"'.($collapse !== null ? ' onclick="hideTOC(\''.$id.'\');"' : '').'>';
+        switch ($type) {
+            case 'start':
+                $css = $this->formatConf(' class="%s"', "css_h$level");
+                return '
+<h' . $level . $css . ' id="' . $id . '"' . ($collapse !== null ? ' onclick="hideTOC(\'' . $id . '\');"' : '') . '>';
 
-        case 'end':
-            return '</h'.$level.'>
-'.($collapse !== null ? '<a id="'.$id.'__link" href="javascript:void();" onclick="hideTOC(\''.$id.'\')">['.($collapse ? '+' : '-').']</a>
+            case 'end':
+                return '</h' . $level . '>
+' . ($collapse !== null ? '<a id="' . $id . '__link" href="javascript:void();" onclick="hideTOC(\'' . $id . '\')">[' . ($collapse ? '+' : '-') . ']</a>
 ' : '');
-        case 'startContent':
-            if ($collapse !== null) {
-                if ($jsOutput) {
-                    $js = '';
-                } else {
-                    $js = '
+            case 'startContent':
+                if ($collapse !== null) {
+                    if ($jsOutput) {
+                        $js = '';
+                    } else {
+                        $js = '
 <script language="javascript">
 function hideTOC(id) {
     div = document.getElementById(id+"__content");
@@ -72,15 +74,15 @@ function hideTOC(id) {
 }
 </script>
 ';
+                    }
+                } else {
+                    $js = '';
                 }
-            } else {
-                $js = '';
-            }
-            return  $js.'
-<div style="'.($collapse === true ? 'display: none; ' : '').'padding: 0px; margin: 0px; border: none;" id="'.$id.'__content">
+                return  $js . '
+<div style="' . ($collapse === true ? 'display: none; ' : '') . 'padding: 0px; margin: 0px; border: none;" id="' . $id . '__content">
 ';
-        case 'endContent':
-            return '
+            case 'endContent':
+                return '
 </div>
 ';
         }

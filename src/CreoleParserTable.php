@@ -1,4 +1,5 @@
 <?php
+
 namespace HordeTextWiki;
 
 /**
@@ -25,9 +26,8 @@ namespace HordeTextWiki;
  */
 
 
-class Text_Wiki_Parse_Table extends WikiParse {
-
-
+class CreoleParserTable extends WikiParse
+{
     /**
      *
      * The regular expression used to parse the source text and find
@@ -41,7 +41,7 @@ class Text_Wiki_Parse_Table extends WikiParse {
      *
      */
 
-    var $regex = '/\n((\|).*)(\n)(?!(\|))/Us';
+    public $regex = '/\n((\|).*)(\n)(?!(\|))/Us';
 
 
     /**
@@ -75,7 +75,7 @@ class Text_Wiki_Parse_Table extends WikiParse {
      *
      */
 
-    function process(&$matches)
+    public function process(&$matches)
     {
         // our eventual return value
         $return = '';
@@ -93,7 +93,7 @@ class Text_Wiki_Parse_Table extends WikiParse {
         foreach ($rows as $row) {
 
             // increase the row count
-            $num_rows ++;
+            $num_rows++;
 
             // remove first and last (optional) pipe
             $row = substr($row, 1);
@@ -103,14 +103,14 @@ class Text_Wiki_Parse_Table extends WikiParse {
 
             // cells are separated by pipes
             $cells = explode("|", $row);
-            
+
             if (count($cells) == 1 && $cells[0][0] == '=' && ($num_rows == 1 || $num_rows == count($rows)) && ! isset($caption)) {
                 $caption = trim(trim($cells[0], '='));
-            
+
                 // start the caption...
                 $return .= $this->wiki->addToken(
                     $this->rule,
-                    array ('type' => 'caption_start')
+                    ['type' => 'caption_start']
                 );
 
                 // ...add the content...
@@ -119,10 +119,9 @@ class Text_Wiki_Parse_Table extends WikiParse {
                 // ...and end the caption.
                 $return .= $this->wiki->addToken(
                     $this->rule,
-                    array ('type' => 'caption_end')
+                    ['type' => 'caption_end']
                 );
-            }
-            else {
+            } else {
 
                 // update the column count
                 if (count($cells) > $num_cols) {
@@ -132,7 +131,7 @@ class Text_Wiki_Parse_Table extends WikiParse {
                 // start a new row
                 $return .= $this->wiki->addToken(
                     $this->rule,
-                    array('type' => 'row_start')
+                    ['type' => 'row_start']
                 );
 
                 for ($i = 0; $i < count($cells); $i++) {
@@ -141,7 +140,7 @@ class Text_Wiki_Parse_Table extends WikiParse {
                     // by default, cells span only one column (their own)
                     $span = 1;
                     $attr = '';
-                    
+
                     while ($i + 1 < count($cells) && ! strlen($cells[$i + 1])) {
                         $i++;
                         $span++;
@@ -155,11 +154,11 @@ class Text_Wiki_Parse_Table extends WikiParse {
                     // start a new cell...
                     $return .= $this->wiki->addToken(
                         $this->rule,
-                        array (
+                        [
                             'type' => 'cell_start',
                             'attr' => $attr,
-                            'span' => $span
-                        )
+                            'span' => $span,
+                        ]
                     );
 
                     // ...add the content...
@@ -168,41 +167,40 @@ class Text_Wiki_Parse_Table extends WikiParse {
                     // ...and end the cell.
                     $return .= $this->wiki->addToken(
                         $this->rule,
-                        array (
+                        [
                             'type' => 'cell_end',
                             'attr' => $attr,
-                            'span' => $span
-                        )
+                            'span' => $span,
+                        ]
                     );
                 }
 
                 // end the row
                 $return .= $this->wiki->addToken(
                     $this->rule,
-                    array('type' => 'row_end')
+                    ['type' => 'row_end']
                 );
             }
         }
 
         // we're done!
         return
-            "\n\n".
+            "\n\n" .
             $this->wiki->addToken(
                 $this->rule,
-                array(
+                [
                     'type' => 'table_start',
                     'rows' => $num_rows,
-                    'cols' => $num_cols
-                )
-            ).
-            $return.
+                    'cols' => $num_cols,
+                ]
+            ) .
+            $return .
             $this->wiki->addToken(
                 $this->rule,
-                array(
-                    'type' => 'table_end'
-                )
-            ).
+                [
+                    'type' => 'table_end',
+                ]
+            ) .
             "\n\n";
     }
 }
-?>

@@ -1,8 +1,9 @@
 <?php
+
 namespace Horde\Text\Wiki;
 
 /**
-* 
+*
 * This class renders an anchor target name in XHTML.
 *
 * @author Manuel Holtgrewe <purestorm at ggnore dot net>
@@ -13,12 +14,10 @@ namespace Horde\Text\Wiki;
 *
 */
 
-class Text_Wiki_Render_Plain_Anchor extends WikiRender {
-    
-    function token($options)
+class PlainRendererAnchor extends WikiRender
+{
+    public function token($options)
     {
         return $options['name'];
     }
 }
-
-?>

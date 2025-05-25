@@ -1,4 +1,5 @@
 <?php
+
 namespace HordeTextWiki;
 
 /**
@@ -23,9 +24,8 @@ namespace HordeTextWiki;
  *
  */
 
-class Text_Wiki_Parse_Italic extends WikiParse {
-
-
+class CreoleParserItalic extends WikiParse
+{
     /**
      *
      * The regular expression used to parse the source text and find
@@ -39,7 +39,7 @@ class Text_Wiki_Parse_Italic extends WikiParse {
      *
      */
 
-    var $regex =  "/(?:(?<=[\W_\xFF])\/(?![ \/]))(.+?)(?:(?<![ \/])\/(?=[\W_\xFF]))/";
+    public $regex =  "/(?:(?<=[\W_\xFF])\/(?![ \/]))(.+?)(?:(?<![ \/])\/(?=[\W_\xFF]))/";
 
     /**
      *
@@ -58,25 +58,24 @@ class Text_Wiki_Parse_Italic extends WikiParse {
      *
      */
 
-    function process(&$matches)
+    public function process(&$matches)
     {
         $text = $matches[1];
-        
+
         if (! $this->wiki->checkInnerTags($text)) {
             return $matches[0];
         }
 
         $start = $this->wiki->addToken(
             $this->rule,
-            array('type' => 'start')
+            ['type' => 'start']
         );
 
         $end = $this->wiki->addToken(
             $this->rule,
-            array('type' => 'end')
+            ['type' => 'end']
         );
 
         return $start . $text . $end;
     }
 }
-?>

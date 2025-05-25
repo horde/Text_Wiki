@@ -1,5 +1,7 @@
 <?php
+
 namespace HordeTextWiki;
+
 // vim: set expandtab tabstop=4 shiftwidth=4 softtabstop=4:
 /**
  * Bold rule end renderer for Docbook
@@ -24,11 +26,11 @@ namespace HordeTextWiki;
  * @version    Release: @package_version@
  * @link       http://pear.php.net/package/Text_Wiki_Docbook
  */
-class Text_Wiki_Render_Docbook_Bold extends WikiRender {
-
-    var $conf = array(
-        'role' => 'bold'
-    );
+class DocbookRendererBold extends WikiRender
+{
+    public $conf = [
+        'role' => 'bold',
+    ];
 
     /**
     *
@@ -43,7 +45,7 @@ class Text_Wiki_Render_Docbook_Bold extends WikiRender {
     *
     */
 
-    function token($options)
+    public function token($options)
     {
         if ($options['type'] == 'end') {
             return '</emphasis>';

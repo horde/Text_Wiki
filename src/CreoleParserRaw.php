@@ -1,4 +1,5 @@
 <?php
+
 namespace Horde\Text\Wiki;
 
 /**
@@ -17,9 +18,8 @@ namespace Horde\Text\Wiki;
  *
  */
 
-class Text_Wiki_Parse_Raw extends WikiParse {
-
-
+class CreoleParserRaw extends WikiParse
+{
     /**
      *
      * The regular expression used to parse the source text and find
@@ -33,7 +33,7 @@ class Text_Wiki_Parse_Raw extends WikiParse {
      *
      */
 
-    var $regex = '/~(_|[^ \w\n])/';
+    public $regex = '/~(_|[^ \w\n])/';
 
     /**
      *
@@ -51,11 +51,11 @@ class Text_Wiki_Parse_Raw extends WikiParse {
      *
      */
 
-    function process(&$matches)
+    public function process(&$matches)
     {
         return $this->wiki->addToken(
             $this->rule,
-            array('text' => $matches[1], 'type' => 'escape')
+            ['text' => $matches[1], 'type' => 'escape']
         );
     }
 }

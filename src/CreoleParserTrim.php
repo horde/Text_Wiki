@@ -1,4 +1,5 @@
 <?php
+
 namespace Horde\Text\Wiki;
 
 /**
@@ -15,9 +16,8 @@ namespace Horde\Text\Wiki;
  *
  */
 
-class Text_Wiki_Parse_Trim extends WikiParse {
-
-
+class CreoleParserTrim extends WikiParse
+{
     /**
      *
      * Simple parsing method.
@@ -26,7 +26,7 @@ class Text_Wiki_Parse_Trim extends WikiParse {
      *
      */
 
-    function parse()
+    public function parse()
     {
         // trim lines
         $find = "/ *\n */";
@@ -43,7 +43,7 @@ class Text_Wiki_Parse_Trim extends WikiParse {
         $find = "/\n{3,}/m";
         $replace = "\n\n";
         $this->wiki->source = preg_replace($find, $replace, $this->wiki->source);
-            
+
         // numbered lists
         $find = "/(\n[\*\#]*)([\d]+[\.\)]|[\w]\)) /s";
         $replace = "$1# ";
@@ -59,18 +59,17 @@ class Text_Wiki_Parse_Trim extends WikiParse {
         $replace = "\n\n----\n\n$2";
         $this->wiki->source = preg_replace($find, $replace, $this->wiki->source);
 
-		/*
-		// wrap images in tables
+        /*
+        // wrap images in tables
         $find = "/(?<=\n\n){{([^\|}]*)\|([^}]*)}}(?=\n\n)/";
         $replace = "| {{ $1 | $2 }}\n|= $2";
         $this->wiki->source = preg_replace($find, $replace, $this->wiki->source);
-		
+
         // wrap images in tables
         $find = "/(?<=\n\n){{([^\|}]*)}}(?=\n\n)/";
         $replace = "| {{ $1 }}";
         $this->wiki->source = preg_replace($find, $replace, $this->wiki->source);
-		*/
+        */
     }
 
 }
-?>

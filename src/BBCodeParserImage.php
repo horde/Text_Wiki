@@ -1,5 +1,7 @@
 <?php
+
 namespace Horde\Text\Wiki;
+
 // vim: set expandtab tabstop=4 shiftwidth=4 softtabstop=4:
 /**
  * BBCode: Parses for image tags
@@ -31,8 +33,8 @@ namespace Horde\Text\Wiki;
  * @link       http://pear.php.net/package/Text_Wiki
  * @see        Text_Wiki_Parse::Text_Wiki_Parse()
  */
-class Text_Wiki_Parse_Image extends WikiParse {
-
+class BBCodeParserImage extends WikiParse
+{
     /**
      * Configuration keys for this rule
      * 'schemes' => URL scheme(s) (array) recognized by this rule, default is 'http|ftp|https|ftps'
@@ -45,23 +47,23 @@ class Text_Wiki_Parse_Image extends WikiParse {
      * @access public
      * @var array 'config-key' => mixed config-value
      */
-    var $conf = array(
+    public $conf = [
         'schemes' => 'http|ftp|https|ftps',  // can be also as array of regexps/strings
         'extensions' => 'jpg|jpeg|gif|png',  // can be also as array of regexps/strings
         'url_regexp' =>
          '(?:[^.\s/"\'<\\\#delim#\ca-\cz]+\.)*[a-z](?:[-a-z0-9]*[a-z0-9])?\.?(?:/[^\s"<>\\\#delim#\ca-\cz]*)?',
-        'local_regexp' => '(?:/?[^/\s"<\\\#delim#\ca-\cz]+)*'
-    );
+        'local_regexp' => '(?:/?[^/\s"<\\\#delim#\ca-\cz]+)*',
+    ];
 
-     /**
-     * Constructor.
-     * We override the constructor to build up the regex from config
-     *
-     * @param object &$obj the base conversion handler
-     * @return The parser object
-     * @access public
-     */
-    function __construct(&$obj)
+    /**
+    * Constructor.
+    * We override the constructor to build up the regex from config
+    *
+    * @param object &$obj the base conversion handler
+    * @return The parser object
+    * @access public
+    */
+    public function __construct(&$obj)
     {
         $default = $this->conf;
         parent::__construct($obj);
@@ -71,18 +73,18 @@ class Text_Wiki_Parse_Image extends WikiParse {
         $this->regex = '#\[img]((?:(?:' . (is_array($schemes) ? implode('|', $schemes) : $schemes) . ')://' .
                     $this->getConf('url_regexp', $default['url_regexp']);
         if ($local = $this->getConf('local_regexp', $default['local_regexp'])) {
-            $this->regex .= '|' . ( is_array($local) ? implode('|', $local) : $local );
+            $this->regex .= '|' . (is_array($local) ? implode('|', $local) : $local);
         }
         $this->regex .= ')';
         // add the extensions if any
-        if ($extensions = $this->getConf('extensions', array())) {
+        if ($extensions = $this->getConf('extensions', [])) {
             if (is_array($extensions)) {
                 $extensions = implode('|', $extensions);
             }
             $this->regex .= '\.(?:' . $extensions . ')';
         }
         // replace delim in the regexps
-        $this->regex = str_replace( '#delim#', $this->wiki->delim, $this->regex);
+        $this->regex = str_replace('#delim#', $this->wiki->delim, $this->regex);
         $this->regex .= ')\[/img]#i';
     }
 
@@ -95,9 +97,9 @@ class Text_Wiki_Parse_Image extends WikiParse {
      * @return string Delimited token representing the image
      * @access public
      */
-    function process(&$matches)
+    public function process(&$matches)
     {
         // tokenize
-        return $this->wiki->addToken($this->rule, array('src' => $matches[1], 'attr' => array()));
+        return $this->wiki->addToken($this->rule, ['src' => $matches[1], 'attr' => []]);
     }
 }

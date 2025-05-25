@@ -1,5 +1,7 @@
 <?php
+
 namespace Horde\Text\Wiki;
+
 // vim: set expandtab tabstop=4 shiftwidth=4 softtabstop=4:
 /**
  * Table rule end renderer for Xhtml
@@ -24,15 +26,15 @@ namespace Horde\Text\Wiki;
  * @version    Release: @package_version@
  * @link       http://pear.php.net/package/Text_Wiki
  */
-class Text_Wiki_Render_Xhtml_Table extends WikiRender {
-
-    var $conf = array(
+class XhtmlRendererTable extends WikiRender
+{
+    public $conf = [
         'css_table' => null,
         'css_caption' => null,
         'css_tr' => null,
         'css_th' => null,
-        'css_td' => null
-    );
+        'css_td' => null,
+    ];
 
 
     /**
@@ -48,92 +50,92 @@ class Text_Wiki_Render_Xhtml_Table extends WikiRender {
     *
     */
 
-    function token($options)
+    public function token($options)
     {
         // make nice variable names (type, attr, span)
         $span = $rowspan = 1;
         extract($options);
 
         // free format
-        $format = isset($format) ? ' '. $format : '';
+        $format = isset($format) ? ' ' . $format : '';
 
         $pad = '    ';
 
         switch ($type) {
 
-        case 'table_start':
-            $css = $this->formatConf(' class="%s"', 'css_table');
-            return "\n\n<table$css$format>\n";
-            break;
+            case 'table_start':
+                $css = $this->formatConf(' class="%s"', 'css_table');
+                return "\n\n<table$css$format>\n";
+                break;
 
-        case 'table_end':
-            return "</table>\n\n";
-            break;
+            case 'table_end':
+                return "</table>\n\n";
+                break;
 
-        case 'caption_start':
-            $css = $this->formatConf(' class="%s"', 'css_caption');
-            return "<caption$css$format>\n";
-            break;
+            case 'caption_start':
+                $css = $this->formatConf(' class="%s"', 'css_caption');
+                return "<caption$css$format>\n";
+                break;
 
-        case 'caption_end':
-            return "</caption>\n";
-            break;
+            case 'caption_end':
+                return "</caption>\n";
+                break;
 
-        case 'row_start':
-            $css = $this->formatConf(' class="%s"', 'css_tr');
-            return "$pad<tr$css$format>\n";
-            break;
+            case 'row_start':
+                $css = $this->formatConf(' class="%s"', 'css_tr');
+                return "$pad<tr$css$format>\n";
+                break;
 
-        case 'row_end':
-            return "$pad</tr>\n";
-            break;
+            case 'row_end':
+                return "$pad</tr>\n";
+                break;
 
-        case 'cell_start':
+            case 'cell_start':
 
-            // base html
-            $html = $pad . $pad;
+                // base html
+                $html = $pad . $pad;
 
-            // is this a TH or TD cell?
-            if ($attr == 'header') {
-                // start a header cell
-                $css = $this->formatConf(' class="%s"', 'css_th');
-                $html .= "<th$css";
-            } else {
-                // start a normal cell
-                $css = $this->formatConf(' class="%s"', 'css_td');
-                $html .= "<td$css";
-            }
+                // is this a TH or TD cell?
+                if ($attr == 'header') {
+                    // start a header cell
+                    $css = $this->formatConf(' class="%s"', 'css_th');
+                    $html .= "<th$css";
+                } else {
+                    // start a normal cell
+                    $css = $this->formatConf(' class="%s"', 'css_td');
+                    $html .= "<td$css";
+                }
 
-            // add the column span
-            if ($span > 1) {
-                $html .= " colspan=\"$span\"";
-            }
+                // add the column span
+                if ($span > 1) {
+                    $html .= " colspan=\"$span\"";
+                }
 
-            // add the row span
-            if ($rowspan > 1) {
-                $html .= " rowspan=\"$rowspan\"";
-            }
+                // add the row span
+                if ($rowspan > 1) {
+                    $html .= " rowspan=\"$rowspan\"";
+                }
 
-            // add alignment
-            if ($attr != 'header' && $attr != '') {
-                $html .= " style=\"text-align: $attr;\"";
-            }
+                // add alignment
+                if ($attr != 'header' && $attr != '') {
+                    $html .= " style=\"text-align: $attr;\"";
+                }
 
-            // done!
-            $html .= "$format>";
-            return $html;
-            break;
+                // done!
+                $html .= "$format>";
+                return $html;
+                break;
 
-        case 'cell_end':
-            if ($attr == 'header') {
-                return "</th>\n";
-            } else {
-                return "</td>\n";
-            }
-            break;
+            case 'cell_end':
+                if ($attr == 'header') {
+                    return "</th>\n";
+                } else {
+                    return "</td>\n";
+                }
+                break;
 
-        default:
-            return '';
+            default:
+                return '';
 
         }
     }

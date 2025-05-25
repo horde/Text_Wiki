@@ -1,8 +1,9 @@
 <?php
+
 namespace HordeTextWiki;
 
-class Text_Wiki_Render_Creole_Table extends WikiRender {
-
+class CreoleRendererTable extends WikiRender
+{
     /**
     *
     * Renders a token into text matching the requested format.
@@ -16,56 +17,55 @@ class Text_Wiki_Render_Creole_Table extends WikiRender {
     *
     */
 
-    function token($options)
+    public function token($options)
     {
 
 
         switch ($options['type']) {
 
-        case 'table_start':
-            return '';
-            break;
+            case 'table_start':
+                return '';
+                break;
 
-        case 'table_end':
-            return "\n";
-            break;
+            case 'table_end':
+                return "\n";
+                break;
 
-        case 'caption_start':
-            return '|= ';
-            break;
+            case 'caption_start':
+                return '|= ';
+                break;
 
-        case 'caption_end':
-            return "\n";
-            break;
+            case 'caption_end':
+                return "\n";
+                break;
 
-        case 'row_start':
-            return '';
-            break;
+            case 'row_start':
+                return '';
+                break;
 
-        case 'row_end':
-            return "\n";
-            break;
+            case 'row_end':
+                return "\n";
+                break;
 
-        case 'cell_start':
-            // is this a TH or TD cell?
-            if ($options['attr'] == 'header') {
-                // start a header cell
-                $output = '|= ';
-            } else {
-                // start a normal cell
-                $output = '| ';
-            }
-            return $output;
-            break;
+            case 'cell_start':
+                // is this a TH or TD cell?
+                if ($options['attr'] == 'header') {
+                    // start a header cell
+                    $output = '|= ';
+                } else {
+                    // start a normal cell
+                    $output = '| ';
+                }
+                return $output;
+                break;
 
-        case 'cell_end':
-            return ' ';
-            break;
+            case 'cell_end':
+                return ' ';
+                break;
 
-        default:
-            return '';
+            default:
+                return '';
 
         }
     }
 }
-?>

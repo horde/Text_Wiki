@@ -1,5 +1,7 @@
 <?php
+
 namespace HordeTextWiki;
+
 // vim: set expandtab tabstop=4 shiftwidth=4 softtabstop=4:
 /**
  * Plugin rule end renderer for Xhtml
@@ -24,8 +26,8 @@ namespace HordeTextWiki;
  * @version    Release: @package_version@
  * @link       http://pear.php.net/package/Text_Wiki
  */
-class Text_Wiki_Render_Xhtml_Plugin extends WikiRender {
-
+class XhtmlRendererPlugin extends WikiRender
+{
     /**
     *
     * Renders a token into text matching the requested format.
@@ -40,7 +42,7 @@ class Text_Wiki_Render_Xhtml_Plugin extends WikiRender {
     *
     */
 
-    function token($options)
+    public function token($options)
     {
         return '';
     }

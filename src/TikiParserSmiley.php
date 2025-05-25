@@ -1,5 +1,7 @@
 <?php
+
 namespace HordeTextWiki;
+
 // vim: set expandtab tabstop=4 shiftwidth=4 softtabstop=4:
 /**
  * Tiki: Parses for smileys / emoticons tags
@@ -31,18 +33,18 @@ namespace HordeTextWiki;
  * @link       http://pear.php.net/package/Text_Wiki
  * @see        Text_Wiki_Parse::Text_Wiki_Parse()
  */
-class Text_Wiki_Parse_Smiley extends WikiParse {
-
+class TikiParserSmiley extends WikiParse
+{
     /**
      * The regular expression used to parse the source text and find
      * matches conforming to this rule.  Used by the parse() method.
-     * 
+     *
      * @access public
      * @var string
      * @see parse()
      */
-    
-    var $regex =  '/\(:([^:]+):\)/';
+
+    public $regex =  '/\(:([^:]+):\)/';
 
     /**
      * Generates a replacement token for the matched text.  Token options are:
@@ -54,14 +56,16 @@ class Text_Wiki_Parse_Smiley extends WikiParse {
      * @return string Delimited token representing the smiley
      * @access public
      */
-    function process(&$matches)
+    public function process(&$matches)
     {
         // tokenize
-        return $this->wiki->addToken($this->rule,
-            array(
+        return $this->wiki->addToken(
+            $this->rule,
+            [
                 'symbol' => $matches[0],
                 'name'   => $matches[1],
-                'desc'   => $matches[1]
-            ));
+                'desc'   => $matches[1],
+            ]
+        );
     }
 }

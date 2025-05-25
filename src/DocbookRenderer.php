@@ -1,5 +1,7 @@
 <?php
+
 namespace Horde\Text\Wiki;
+
 // vim: set expandtab tabstop=4 shiftwidth=4 softtabstop=4:
 /**
  * Format class for the Docbook rendering
@@ -24,20 +26,20 @@ namespace Horde\Text\Wiki;
  * @version    Release: @package_version@
  * @link       http://pear.php.net/package/Text_Wiki_Docbook
  */
-class Text_Wiki_Render_Docbook extends WikiRender {
+class DocbookRenderer extends WikiRender
+{
+    public $conf = [
+        'translate' => HTML_ENTITIES,
+        'quotes'    => ENT_COMPAT,
+        'charset'   => 'ISO-8859-1',
+    ];
 
-    var $conf = array(
-    	'translate' => HTML_ENTITIES,
-    	'quotes'    => ENT_COMPAT,
-    	'charset'   => 'ISO-8859-1'
-    );
-
-    function pre()
+    public function pre()
     {
         return;
     }
 
-    function post()
+    public function post()
     {
         return;
     }

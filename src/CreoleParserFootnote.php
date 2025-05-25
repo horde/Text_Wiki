@@ -1,4 +1,5 @@
 <?php
+
 namespace Horde\Text\Wiki;
 
 /**
@@ -24,9 +25,8 @@ namespace Horde\Text\Wiki;
  *
  */
 
-class Text_Wiki_Parse_Footnote extends WikiParse {
-
-
+class CreoleParserFootnote extends WikiParse
+{
     /**
      *
      * The regular expression used to parse the source text and find
@@ -40,7 +40,7 @@ class Text_Wiki_Parse_Footnote extends WikiParse {
      *
      */
 
-    var $regex =  "/(\n)*\[([0-9]+)\]/";
+    public $regex =  "/(\n)*\[([0-9]+)\]/";
 
 
     /**
@@ -59,26 +59,24 @@ class Text_Wiki_Parse_Footnote extends WikiParse {
      *
      */
 
-    function process(&$matches)
+    public function process(&$matches)
     {
         $id = $matches[2];
-        
+
         if ($matches[1] == "\n") {
             $matches[1] = "\n\n";
             $name = "fn$id";
             $href = "#ref$id";
-        }
-        else {
+        } else {
             $name = "ref$id";
             $href = "#fn$id";
         }
-        
+
         $token = $this->wiki->addToken(
             'Url',
-            array('text' => "[$id]", 'href' => $href, 'name' => $name, 'type' => 'inline')
+            ['text' => "[$id]", 'href' => $href, 'name' => $name, 'type' => 'inline']
         );
 
         return $matches[1] . $token;
     }
 }
-?>

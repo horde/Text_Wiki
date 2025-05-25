@@ -1,16 +1,17 @@
 <?php
+
 namespace Horde\Text\Wiki;
 
 require_once 'Text/Wiki/Render.php';
 
-class Text_Wiki_Render_Latex_Wikilink extends WikiRender
+class LatexRendererWikilink extends WikiRender
 {
-    var $conf = array(
-        'pages' => array(),
+    public $conf = [
+        'pages' => [],
         'view_url' => 'http://example.com/index.php?page=%s',
         'new_url'  => 'http://example.com/new.php?page=%s',
-        'new_text' => '?'
-    );
+        'new_text' => '?',
+    ];
 
     /**
     *
@@ -25,7 +26,7 @@ class Text_Wiki_Render_Latex_Wikilink extends WikiRender
     *
     */
 
-    function token($options)
+    public function token($options)
     {
         // make nice variable names (page, anchor, text)
         extract($options);

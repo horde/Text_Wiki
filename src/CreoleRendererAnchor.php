@@ -1,4 +1,5 @@
 <?php
+
 namespace HordeTextWiki;
 
 /**
@@ -13,12 +14,10 @@ namespace HordeTextWiki;
 *
 */
 
-class Text_Wiki_Render_Creole_Anchor extends WikiRender {
-
-    function token($options)
+class CreoleRendererAnchor extends WikiRender
+{
+    public function token($options)
     {
         return '';
     }
 }
-
-?>

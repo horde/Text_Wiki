@@ -1,63 +1,63 @@
 <?php
+
 namespace Horde\Text\Wiki;
 
 /**
-* 
+*
 * Parses for implied line breaks indicated by newlines.
-* 
+*
 * @category Text
-* 
+*
 * @package Text_Wiki
-* 
+*
 * @author Justin Patrin <papercrane@reversefold.com>
 * @author Paul M. Jones <pmjones@php.net>
-* 
+*
 * @license LGPL
-* 
+*
 * @version $Id$
-* 
+*
 */
 
 /**
-* 
+*
 * Parses for implied line breaks indicated by newlines.
-* 
+*
 * This class implements a Text_Wiki_Parse to mark implied line breaks in the
 * source text, usually a single carriage return in the middle of a paragraph
 * or block-quoted text.
 *
 * @category Text
-* 
+*
 * @package Text_Wiki
-* 
+*
 * @author Justin Patrin <papercrane@reversefold.com>
 * @author Paul M. Jones <pmjones@php.net>
-* 
+*
 */
 
-class Text_Wiki_Parse_Newline extends WikiParse {
-    
-    
+class TikiParserNewline extends WikiParse
+{
     /**
-    * 
+    *
     * The regular expression used to parse the source text and find
     * matches conforming to this rule.  Used by the parse() method.
-    * 
+    *
     * @access public
-    * 
+    *
     * @var string
-    * 
+    *
     * @see parse()
-    * 
+    *
     */
-    
-    var $regex = '/([^\n])\n([^\n])/m';
-    
-    
+
+    public $regex = '/([^\n])\n([^\n])/m';
+
+
     /**
-    * 
+    *
     * Generates a replacement token for the matched text.
-    * 
+    *
     * @access public
     *
     * @param array &$matches The array of matches from parse().
@@ -66,13 +66,11 @@ class Text_Wiki_Parse_Newline extends WikiParse {
     * the source text.
     *
     */
-    
-    function process(&$matches)
-    {    
+
+    public function process(&$matches)
+    {
         return $matches[1] .
             $this->wiki->addToken($this->rule) .
             $matches[2];
     }
 }
-
-?>

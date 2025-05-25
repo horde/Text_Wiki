@@ -1,5 +1,7 @@
 <?php
+
 namespace HordeTextWiki;
+
 // vim: set expandtab tabstop=4 shiftwidth=4 softtabstop=4:
 /**
  * Specialchar rule end parser for tikiwiki
@@ -25,21 +27,22 @@ namespace HordeTextWiki;
  * @version    Release: @package_version@
  * @link       http://pear.php.net/package/Text_Wiki
  */
-class Text_Wiki_Parse_SpecialChar extends WikiParse {
+class TikiParserSpecialchar extends WikiParse
+{
+    public $types = ['~bs~',
+        '~hs~',
+        '~amp~',
+        '~ldq~',
+        '~rdq~',
+        '~lsq~',
+        '~rsq~',
+        '~c~',
+        '~--~',
+        '~lt~',
+        '~gt~'];
 
-    var $types = array('~bs~',
-                       '~hs~',
-                       '~amp~',
-                       '~ldq~',
-                       '~rdq~',
-                       '~lsq~',
-                       '~rsq~',
-                       '~c~',
-                       '~--~',
-                       '~lt~',
-                       '~gt~');
-
-    function __construct(&$obj) {
+    public function __construct(&$obj)
+    {
         parent::__construct($obj);
 
         $this->regex = '';
@@ -49,7 +52,7 @@ class Text_Wiki_Parse_SpecialChar extends WikiParse {
             }
             $this->regex .= preg_quote($type);
         }
-        $this->regex = '/('.$this->regex.'|("|&quot;) \-\- (?:\2)|\~\d+\~)/';
+        $this->regex = '/(' . $this->regex . '|("|&quot;) \-\- (?:\2)|\~\d+\~)/';
     }
 
     /**
@@ -65,10 +68,8 @@ class Text_Wiki_Parse_SpecialChar extends WikiParse {
     *
     */
 
-    function process(&$matches)
+    public function process(&$matches)
     {
-        return $this->wiki->addToken($this->rule, array('char' => $matches[1]));
+        return $this->wiki->addToken($this->rule, ['char' => $matches[1]]);
     }
 }
-
-?>

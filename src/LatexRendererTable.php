@@ -1,17 +1,19 @@
 <?php
+
 namespace HordeTextWiki;
 
-class Text_Wiki_Render_Latex_Table extends WikiRender {
-    var $cell_id    = 0;
-    var $cell_count = 0;
-    var $is_spanning = false;
+class LatexRendererTable extends WikiRender
+{
+    public $cell_id    = 0;
+    public $cell_count = 0;
+    public $is_spanning = false;
 
-    var $conf = array(
-                      'css_table' => null,
-                      'css_tr' => null,
-                      'css_th' => null,
-                      'css_td' => null
-                      );
+    public $conf = [
+        'css_table' => null,
+        'css_tr' => null,
+        'css_th' => null,
+        'css_td' => null,
+    ];
 
     /**
      *
@@ -26,18 +28,17 @@ class Text_Wiki_Render_Latex_Table extends WikiRender {
      *
      */
 
-    function token($options)
+    public function token($options)
     {
         // make nice variable names (type, attr, span)
         extract($options);
 
-        switch ($type)
-            {
+        switch ($type) {
             case 'table_start':
                 $this->cell_count = $cols;
 
                 $tbl_start = '\begin{tabular}{|';
-                for ($a=0; $a < $this->cell_count; $a++) {
+                for ($a = 0; $a < $this->cell_count; $a++) {
                     $tbl_start .= 'l|';
                 }
                 $tbl_start .= "}\n";
@@ -94,6 +95,6 @@ class Text_Wiki_Render_Latex_Table extends WikiRender {
             default:
                 return '';
 
-            }
+        }
     }
 }

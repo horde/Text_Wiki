@@ -1,17 +1,17 @@
 <?php
+
 namespace HordeTextWiki;
 
-class Text_Wiki_Render_CoWiki extends WikiRender {
-    
-    function pre()
+class CowikiRenderer extends WikiRender
+{
+    public function pre()
     {
         return;
     }
-    
-    function post()
+
+    public function post()
     {
         return;
     }
-    
+
 }
-?>

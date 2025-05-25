@@ -1,4 +1,5 @@
 <?php
+
 // vim: set expandtab tabstop=4 shiftwidth=4 softtabstop=4:
 /**
  * Parse structured wiki text and render into arbitrary formats such as XHTML.
@@ -19,7 +20,9 @@
 /**
  * "master" class for handling the management and convenience
  */
+
 namespace Horde\Text\Wiki;
+
 /**
  * Base Text_Wiki handler class extension for tikiwiki markup
  *
@@ -32,13 +35,14 @@ namespace Horde\Text\Wiki;
  * @link       http://pear.php.net/package/Text_Wiki
  * @see        Text_Wiki::Text_Wiki()
  */
-class TikiEngine extends TextWikiBase {
-    var $rules = array(
+class TikiEngine extends TextWikiBase
+{
+    public $rules = [
         'Prefilter',
         'Delimiter',
         'Code',
         'Plugin',
-//        'Function',
+        //        'Function',
         'Html',
         'Raw',    // Now Parsed in Plugin
         'Preformatted',    // Now Parsed in Plugin
@@ -59,7 +63,7 @@ class TikiEngine extends TextWikiBase {
         'Box',
         'Image',
         'Smiley',
-//        'Phplookup',
+        //        'Phplookup',
         'Center',
         'Newline',
         'Paragraph',
@@ -78,14 +82,13 @@ class TikiEngine extends TextWikiBase {
         'Specialchar',
         'Revise',
         'Interwiki',
-        'Tighten'
-    );
+        'Tighten',
+    ];
 
-    function __construct($rules = null) {
+    public function __construct($rules = null)
+    {
         parent::__construct($rules);
-        $this->addPath('parse', $this->fixPath(dirname(__FILE__)).'Parse/Tiki');
-//        $this->addPath('render', $this->fixPath(dirname(__FILE__)).'Render');
+        $this->addPath('parse', $this->fixPath(dirname(__FILE__)) . 'Parse/Tiki');
+        //        $this->addPath('render', $this->fixPath(dirname(__FILE__)).'Render');
     }
 }
-
-?>

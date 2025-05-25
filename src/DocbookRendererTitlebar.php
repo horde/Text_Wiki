@@ -1,5 +1,7 @@
 <?php
+
 namespace HordeTextWiki;
+
 // vim: set expandtab tabstop=4 shiftwidth=4 softtabstop=4:
 /**
  * Titlebar rule end renderer for Docbook
@@ -24,11 +26,11 @@ namespace HordeTextWiki;
  * @version    Release: @package_version@
  * @link       http://pear.php.net/package/Text_Wiki_Docbook
  */
-class Text_Wiki_Render_Docbook_Titlebar extends WikiRender {
-
-    var $conf = array(
-        'css' => 'titlebar'
-    );
+class DocbookRendererTitlebar extends WikiRender
+{
+    public $conf = [
+        'css' => 'titlebar',
+    ];
 
     /**
     *
@@ -43,7 +45,7 @@ class Text_Wiki_Render_Docbook_Titlebar extends WikiRender {
     *
     */
 
-    function token($options)
+    public function token($options)
     {
         if ($options['type'] == 'start') {
             $css = $this->formatConf(' class="%s"', 'css');

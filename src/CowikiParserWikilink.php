@@ -1,4 +1,5 @@
 <?php
+
 namespace HordeTextWiki;
 
 /**
@@ -43,12 +44,12 @@ namespace HordeTextWiki;
 *
 */
 
-class Text_Wiki_Parse_Wikilink extends WikiParse {
-
-    var $conf = array (
-                       'ext_chars' => false,
-                       'utf-8' => false
-    );
+class CowikiParserWikilink extends WikiParse
+{
+    public $conf =  [
+        'ext_chars' => false,
+        'utf-8' => false,
+    ];
 
     /**
     *
@@ -63,27 +64,27 @@ class Text_Wiki_Parse_Wikilink extends WikiParse {
     *
     */
 
-    function __construct(&$obj)
+    public function __construct(&$obj)
     {
         parent::__construct($obj);
         if ($this->getConf('utf-8')) {
-			$upper = 'A-Z\p{Lu}';
-			$lower = 'a-z0-9\p{Ll}';
-			$either = 'A-Za-z0-9\p{L}';
-        } else if ($this->getConf('ext_chars')) {
-        	// use an extended character set; this should
-        	// allow for umlauts and so on.  taken from the
-        	// Tavi project defaults.php file.
-			$upper = 'A-Z\xc0-\xde';
-			$lower = 'a-z0-9\xdf-\xfe';
-			$either = 'A-Za-z0-9\xc0-\xfe';
-		} else {
-			// the default character set, should be fine
-			// for most purposes.
-			$upper = "A-Z";
-			$lower = "a-z0-9";
-			$either = "A-Za-z0-9";
-		}
+            $upper = 'A-Z\p{Lu}';
+            $lower = 'a-z0-9\p{Ll}';
+            $either = 'A-Za-z0-9\p{L}';
+        } elseif ($this->getConf('ext_chars')) {
+            // use an extended character set; this should
+            // allow for umlauts and so on.  taken from the
+            // Tavi project defaults.php file.
+            $upper = 'A-Z\xc0-\xde';
+            $lower = 'a-z0-9\xdf-\xfe';
+            $either = 'A-Za-z0-9\xc0-\xfe';
+        } else {
+            // the default character set, should be fine
+            // for most purposes.
+            $upper = "A-Z";
+            $lower = "a-z0-9";
+            $either = "A-Za-z0-9";
+        }
 
         // build the regular expression for finding WikiPage names.
         $this->regex =
@@ -113,32 +114,32 @@ class Text_Wiki_Parse_Wikilink extends WikiParse {
     *
     */
 
-    function parse()
+    public function parse()
     {
         if ($this->getConf('utf-8')) {
-			$either = 'A-Za-z0-9\p{L}';
-        } else if ($this->getConf('ext_chars')) {
-			$either = "A-Za-z0-9\xc0-\xfe";
-		} else {
-			$either = "A-Za-z0-9";
-		}
+            $either = 'A-Za-z0-9\p{L}';
+        } elseif ($this->getConf('ext_chars')) {
+            $either = "A-Za-z0-9\xc0-\xfe";
+        } else {
+            $either = "A-Za-z0-9";
+        }
 
         // described wiki links
-        $tmp_regex = '/\(\(' . /*$this->regex*/ '(['.$either.'\s:\.]*?)((\#['.$either.'\s:\.](['.$either.'\s:\.]*?)?)?)' . '(\)\((.+?))?\)\)/'.($this->getConf('utf-8') ? 'u' : '');
+        $tmp_regex = '/\(\(' . /*$this->regex*/ '([' . $either . '\s:\.]*?)((\#[' . $either . '\s:\.]([' . $either . '\s:\.]*?)?)?)' . '(\)\((.+?))?\)\)/' . ($this->getConf('utf-8') ? 'u' : '');
         $this->wiki->source = preg_replace_callback(
             $tmp_regex,
-            array(&$this, 'processDescr'),
+            [&$this, 'processDescr'],
             $this->wiki->source
         );
 
         if ($this->getConf('camel_case')) {
             // standalone wiki links
-            $tmp_regex = '/(^|[^$either\-_])(\)\))?' . $this->regex . '(\(\()?/'.($this->getConf('utf-8') ? 'u' : '');
+            $tmp_regex = '/(^|[^$either\-_])(\)\))?' . $this->regex . '(\(\()?/' . ($this->getConf('utf-8') ? 'u' : '');
             $this->wiki->source = preg_replace_callback(
-                                                        $tmp_regex,
-                                                        array(&$this, 'process'),
-                                                        $this->wiki->source
-                                                        );
+                $tmp_regex,
+                [&$this, 'process'],
+                $this->wiki->source
+            );
         }
     }
 
@@ -156,24 +157,28 @@ class Text_Wiki_Parse_Wikilink extends WikiParse {
     *
     */
 
-    function processDescr(&$matches)
+    public function processDescr(&$matches)
     {
         // set the options
-        $options = array(
+        $options = [
             'page'   => $matches[1],
             'text'   => isset($matches[6]) && strlen($matches[6]) ? $matches[6] : $matches[1],
-            'anchor' => isset($matches[3]) && strlen($matches[3]) ? $matches[3] : ''
-        );
+            'anchor' => isset($matches[3]) && strlen($matches[3]) ? $matches[3] : '',
+        ];
         if ($options['text'] == $options['page']) {
             $options['text'] = '';
         }
 
         // create and return the replacement token and preceding text
-        return $this->wiki->addToken($this->rule,
-                                     array_merge(array('type' => 'start'), $options)).
-            $options['text'].
-            $this->wiki->addToken($this->rule,
-                                  array_merge(array('type' => 'end'), $options));
+        return $this->wiki->addToken(
+            $this->rule,
+            array_merge(['type' => 'start'], $options)
+        ) .
+            $options['text'] .
+            $this->wiki->addToken(
+                $this->rule,
+                array_merge(['type' => 'end'], $options)
+            );
 
     }
 
@@ -192,11 +197,11 @@ class Text_Wiki_Parse_Wikilink extends WikiParse {
     *
     */
 
-    function process(&$matches)
+    public function process(&$matches)
     {
         // when prefixed with !, it's explicitly not a wiki link.
         // return everything as it was.
-        /*if ($matches[3]{0} == '!') {
+        /*if ($matches[3][0] == '!') {
             return $matches[1] . substr($matches[3], 1) . $matches[4] . $matches[7];
         }*/
         if (!isset($matches[4])) {
@@ -207,21 +212,21 @@ class Text_Wiki_Parse_Wikilink extends WikiParse {
         }
 
         // set the options
-        $options = array(
+        $options = [
             'page' => $matches[3],
             'text' => $matches[3] . $matches[4],
-            'anchor' => $matches[4]
-        );
+            'anchor' => $matches[4],
+        ];
         if ($options['text'] == $options['page']) {
             $options['text'] = '';
         }
 
         // create and return the replacement token and preceding text
-        return $matches[1].
-            $matches[2].
-            $this->wiki->addToken($this->rule, array_merge(array('type' => 'start'), $options)).
-            $options['text'].
-            $this->wiki->addToken($this->rule, array_merge(array('type' => 'end'), $options)).
+        return $matches[1] .
+            $matches[2] .
+            $this->wiki->addToken($this->rule, array_merge(['type' => 'start'], $options)) .
+            $options['text'] .
+            $this->wiki->addToken($this->rule, array_merge(['type' => 'end'], $options)) .
             $matches[7];
     }
 }

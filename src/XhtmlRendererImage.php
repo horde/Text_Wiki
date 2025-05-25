@@ -1,5 +1,7 @@
 <?php
+
 namespace HordeTextWiki;
+
 // vim: set expandtab tabstop=4 shiftwidth=4 softtabstop=4:
 /**
  * Image rule end renderer for Xhtml
@@ -24,14 +26,14 @@ namespace HordeTextWiki;
  * @version    Release: @package_version@
  * @link       http://pear.php.net/package/Text_Wiki
  */
-class Text_Wiki_Render_Xhtml_Image extends WikiRender {
-
-    var $conf = array(
+class XhtmlRendererImage extends WikiRender
+{
+    public $conf = [
         'base' => '/',
         'url_base' => null,
         'css'  => null,
-        'css_link' => null
-    );
+        'css_link' => null,
+    ];
 
 
     /**
@@ -47,7 +49,7 @@ class Text_Wiki_Render_Xhtml_Image extends WikiRender {
     *
     */
 
-    function token($options)
+    public function token($options)
     {
         // note the image source
         $src = $options['src'];
@@ -101,9 +103,9 @@ class Text_Wiki_Render_Xhtml_Image extends WikiRender {
             } else {
                 // add a float style to the existing style
                 $options['attr']['style'] .=
-                    'float: '.$options['attr']['align'];
+                    'float: ' . $options['attr']['align'];
             }
-            
+
             // unset so it won't show up as an attribute
             unset($options['attr']['align']);
         }
@@ -114,14 +116,14 @@ class Text_Wiki_Render_Xhtml_Image extends WikiRender {
             ! isset($options['attr']['height'])) {
 
             // does the source refer to a local file or a URL?
-            if (strpos($src,'://')) {
+            if (strpos($src, '://')) {
                 // is a URL link
                 $imageFile = $src;
             } elseif ($src[0] == '.') {
-            	// reg at dav-muz dot net -- 2005-03-07
-				// is a local file on relative path.
-				$imageFile = $src; # ...don't do anything because it's perfect!
-			} else {
+                // reg at dav-muz dot net -- 2005-03-07
+                // is a local file on relative path.
+                $imageFile = $src; # ...don't do anything because it's perfect!
+            } else {
                 // is a local file on absolute path.
                 $imageFile = $_SERVER['DOCUMENT_ROOT'] . $src;
             }

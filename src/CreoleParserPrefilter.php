@@ -1,4 +1,5 @@
 <?php
+
 namespace Horde\Text\Wiki;
 
 /**
@@ -21,9 +22,8 @@ namespace Horde\Text\Wiki;
  *
  */
 
-class Text_Wiki_Parse_Prefilter extends WikiParse {
-
-
+class CreoleParserPrefilter extends WikiParse
+{
     /**
      *
      * Simple parsing method.
@@ -32,19 +32,28 @@ class Text_Wiki_Parse_Prefilter extends WikiParse {
      *
      */
 
-    function parse()
+    public function parse()
     {
         // convert DOS line endings
-        $this->wiki->source = str_replace("\r\n", "\n",
-            $this->wiki->source);
+        $this->wiki->source = str_replace(
+            "\r\n",
+            "\n",
+            $this->wiki->source
+        );
 
         // convert Macintosh line endings
-        $this->wiki->source = str_replace("\r", "\n",
-            $this->wiki->source);
+        $this->wiki->source = str_replace(
+            "\r",
+            "\n",
+            $this->wiki->source
+        );
 
         // convert tabs to four-spaces
-        $this->wiki->source = str_replace("\t", "    ",
-            $this->wiki->source);
+        $this->wiki->source = str_replace(
+            "\t",
+            "    ",
+            $this->wiki->source
+        );
 
         // add extra newlines at the top and end; this
         // seems to help many rules.
@@ -52,4 +61,3 @@ class Text_Wiki_Parse_Prefilter extends WikiParse {
     }
 
 }
-?>

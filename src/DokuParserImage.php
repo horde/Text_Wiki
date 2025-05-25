@@ -1,59 +1,59 @@
 <?php
+
 namespace Horde\Text\Wiki;
 
 /**
-* 
+*
 * Parses for image placement.
-* 
+*
 * @category Text
-* 
+*
 * @package Text_Wiki
-* 
+*
 * @author Paul M. Jones <pmjones@php.net>
-* 
+*
 * @license LGPL
-* 
+*
 * @version $Id$
-* 
+*
 */
 
 /**
-* 
+*
 * Parses for image placement.
-* 
+*
 * @category Text
-* 
+*
 * @package Text_Wiki
-* 
+*
 * @author Paul M. Jones <pmjones@php.net>
-* 
+*
 */
 
-class Text_Wiki_Parse_Image extends WikiParse {
-    
-    
+class DokuParserImage extends WikiParse
+{
     /**
-    * 
+    *
     * The regular expression used to find source text matching this
     * rule.
-    * 
+    *
     * @access public
-    * 
+    *
     * @var string
-    * 
+    *
     */
-    
-    var $regex = '/({{)(\s*)(wiki:|https?:\/\/|ftp:\/\/)(.+?)(\s*)(}})/i';
-    
-    
+
+    public $regex = '/({{)(\s*)(wiki:|https?:\/\/|ftp:\/\/)(.+?)(\s*)(}})/i';
+
+
     /**
-    * 
+    *
     * Generates a token entry for the matched text.  Token options are:
-    * 
+    *
     * 'src' => The image source, typically a relative path name.
     *
     * 'opts' => Any macro options following the source.
-    * 
+    *
     * @access public
     *
     * @param array &$matches The array of matches from parse().
@@ -62,20 +62,20 @@ class Text_Wiki_Parse_Image extends WikiParse {
     * the source text.
     *
     */
-    
-    function process(&$matches)
+
+    public function process(&$matches)
     {
         if ($matches[3] != 'wiki:') {
-            $matches[4] = $matches[3].$matches[4];
+            $matches[4] = $matches[3] . $matches[4];
         }
 
         $pos = strpos($matches[4], '?');
         if ($pos === false) {
-            $options = array(
+            $options = [
                 'src' => $matches[4],
-                'attr' => array());
+                'attr' => []];
         } else {
-            $options = array('src' => substr($matches[4], 0, $pos));
+            $options = ['src' => substr($matches[4], 0, $pos)];
             $attr = substr($matches[4], $pos + 1);
             $parts = explode('x', $attr);
             if (isset($parts[0]) && $parts[0] != '') {
@@ -93,8 +93,7 @@ class Text_Wiki_Parse_Image extends WikiParse {
         } elseif (strlen($matches[5])) {
             $options['attr']['align'] = 'left';
         }
-        
+
         return $this->wiki->addToken($this->rule, $options);
     }
 }
-?>

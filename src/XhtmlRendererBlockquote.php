@@ -1,5 +1,7 @@
 <?php
+
 namespace Horde\Text\Wiki;
+
 // vim: set expandtab tabstop=4 shiftwidth=4 softtabstop=4:
 /**
  * Blockquote rule end renderer for Xhtml
@@ -24,11 +26,11 @@ namespace Horde\Text\Wiki;
  * @version    Release: @package_version@
  * @link       http://pear.php.net/package/Text_Wiki
  */
-class Text_Wiki_Render_Xhtml_Blockquote extends WikiRender {
-
-    var $conf = array(
-        'css' => null
-    );
+class XhtmlRendererBlockquote extends WikiRender
+{
+    public $conf = [
+        'css' => null,
+    ];
 
     /**
     *
@@ -43,7 +45,7 @@ class Text_Wiki_Render_Xhtml_Blockquote extends WikiRender {
     *
     */
 
-    function token($options)
+    public function token($options)
     {
         $type = $options['type'];
         $level = $options['level'];
@@ -57,7 +59,7 @@ class Text_Wiki_Render_Xhtml_Blockquote extends WikiRender {
         $css = $this->formatConf(' class="%s"', 'css');
 
         if (isset($options['css'])) {
-            $css = ' class="' . $options['css']. '"';
+            $css = ' class="' . $options['css'] . '"';
         }
         // starting
         if ($type == 'start') {

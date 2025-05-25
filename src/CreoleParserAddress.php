@@ -1,4 +1,5 @@
 <?php
+
 namespace HordeTextWiki;
 
 /**
@@ -20,8 +21,8 @@ namespace HordeTextWiki;
  *
  */
 
-class Text_Wiki_Parse_Address extends WikiParse {
-
+class CreoleParserAddress extends WikiParse
+{
     /**
      *
      * The regular expression used to find source text matching this
@@ -33,7 +34,7 @@ class Text_Wiki_Parse_Address extends WikiParse {
      *
      */
 
-    var $regex = '/^--([^-].*)$/m';
+    public $regex = '/^--([^-].*)$/m';
 
     /**
      *
@@ -52,17 +53,18 @@ class Text_Wiki_Parse_Address extends WikiParse {
      *
      */
 
-    function process(&$matches)
+    public function process(&$matches)
     {
         $start = $this->wiki->addToken(
-            $this->rule, array('type' => 'start')
+            $this->rule,
+            ['type' => 'start']
         );
 
         $end = $this->wiki->addToken(
-            $this->rule, array('type' => 'end')
+            $this->rule,
+            ['type' => 'end']
         );
 
         return "\n" . $start . trim($matches[1]) . $end;
     }
 }
-?>

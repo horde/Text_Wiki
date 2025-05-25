@@ -1,5 +1,7 @@
 <?php
+
 namespace Horde\Text\Wiki;
+
 // vim: set expandtab tabstop=4 shiftwidth=4 softtabstop=4:
 /**
  * Preformatted rule end renderer for Xhtml
@@ -24,8 +26,8 @@ namespace Horde\Text\Wiki;
  * @version    Release: @package_version@
  * @link       http://pear.php.net/package/Text_Wiki
  */
-class Text_Wiki_Render_Xhtml_Preformatted extends WikiRender {
-
+class XhtmlRendererPreformatted extends WikiRender
+{
     /**
     *
     * Renders a token into text matching the requested format.
@@ -39,9 +41,9 @@ class Text_Wiki_Render_Xhtml_Preformatted extends WikiRender {
     *
     */
 
-    function token($options)
+    public function token($options)
     {
         $text = $this->textEncode($options['text']);
-        return '<pre>'.$text.'</pre>';
+        return '<pre>' . $text . '</pre>';
     }
 }

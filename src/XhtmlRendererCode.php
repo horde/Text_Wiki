@@ -1,5 +1,7 @@
 <?php
+
 namespace HordeTextWiki;
+
 // vim: set expandtab tabstop=4 shiftwidth=4 softtabstop=4:
 /**
  * Code rule end renderer for Xhtml
@@ -24,15 +26,15 @@ namespace HordeTextWiki;
  * @version    Release: @package_version@
  * @link       http://pear.php.net/package/Text_Wiki
  */
-class Text_Wiki_Render_Xhtml_Code extends WikiRender {
-
-    var $conf = array(
+class XhtmlRendererCode extends WikiRender
+{
+    public $conf = [
         'css'      => null, // class for <pre>
         'css_code' => null, // class for generic <code>
         'css_php'  => null, // class for PHP <code>
         'css_html' => null, // class for HTML <code>
-        'css_filename' => null // class for optional filename <div>
-    );
+        'css_filename' => null, // class for optional filename <div>
+    ];
 
     /**
     *
@@ -47,7 +49,7 @@ class Text_Wiki_Render_Xhtml_Code extends WikiRender {
     *
     */
 
-    function token($options)
+    public function token($options)
     {
         $text = $options['text'];
         $attr = $options['attr'];
@@ -61,11 +63,9 @@ class Text_Wiki_Render_Xhtml_Code extends WikiRender {
 
         if ($type == 'php') {
             if (substr($options['text'], 0, 5) != '<?php') {
-namespace HordeTextWiki;
                 // PHP code example:
                 // add the PHP tags
                 $text = "<?php\n" . $options['text'] . "\n?>"; // <?php
-namespace HordeTextWiki;
             }
 
             // convert tabs to four spaces
@@ -82,13 +82,13 @@ namespace HordeTextWiki;
             // replace non-breaking space with simple spaces.
             // translate HTML <font> and color to XHTML <span> and style.
             // courtesy of research by A. Kalin :-).
-            $map = array(
+            $map = [
                 '<br />'  => "\n",
                 '&nbsp;'  => ' ',
                 '<font'   => '<span',
                 '</font>' => '</span>',
-                'color="' => 'style="color:'
-            );
+                'color="' => 'style="color:',
+            ];
             $text = strtr($text, $map);
 
             // get rid of the last newline inside the code block

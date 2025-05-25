@@ -1,5 +1,7 @@
 <?php
+
 namespace Horde\Text\Wiki;
+
 // vim: set expandtab tabstop=4 shiftwidth=4 softtabstop=4:
 /**
  * Emphasis rule end renderer for Docbook
@@ -24,11 +26,11 @@ namespace Horde\Text\Wiki;
  * @version    Release: @package_version@
  * @link       http://pear.php.net/package/Text_Wiki_Docbook
  */
-class Text_Wiki_Render_Docbook_Emphasis extends WikiRender {
-
-    var $conf = array(
-        'role' => null
-    );
+class DocbookRendererEmphasis extends WikiRender
+{
+    public $conf = [
+        'role' => null,
+    ];
 
 
     /**
@@ -44,7 +46,7 @@ class Text_Wiki_Render_Docbook_Emphasis extends WikiRender {
     *
     */
 
-    function token($options)
+    public function token($options)
     {
         if ($options['type'] == 'end') {
             return '</emphasis>';

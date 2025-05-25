@@ -1,5 +1,7 @@
 <?php
+
 namespace HordeTextWiki;
+
 // vim: set expandtab tabstop=4 shiftwidth=4 softtabstop=4:
 /**
  * Anchor rule end renderer for Docbook
@@ -24,9 +26,9 @@ namespace HordeTextWiki;
  * @version    Release: @package_version@
  * @link       http://pear.php.net/package/Text_Wiki_Docbook
  */
-class Text_Wiki_Render_Docbook_Anchor extends WikiRender {
-
-    function token($options)
+class DocbookRendererAnchor extends WikiRender
+{
+    public function token($options)
     {
         extract($options); // $type, $name
 
@@ -37,5 +39,3 @@ class Text_Wiki_Render_Docbook_Anchor extends WikiRender {
         return '</phrase>';
     }
 }
-
-?>

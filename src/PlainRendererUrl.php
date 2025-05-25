@@ -1,10 +1,9 @@
 <?php
+
 namespace HordeTextWiki;
 
-
-class Text_Wiki_Render_Plain_Url extends WikiRender {
-
-
+class PlainRendererUrl extends WikiRender
+{
     /**
     *
     * Renders a token into text matching the requested format.
@@ -18,7 +17,7 @@ class Text_Wiki_Render_Plain_Url extends WikiRender {
     *
     */
 
-    function token($options)
+    public function token($options)
     {
         if ($options['type'] == 'start' || $options['type'] == 'end') {
             return '';
@@ -27,4 +26,3 @@ class Text_Wiki_Render_Plain_Url extends WikiRender {
         }
     }
 }
-?>

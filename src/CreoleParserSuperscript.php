@@ -1,4 +1,5 @@
 <?php
+
 namespace Horde\Text\Wiki;
 
 /**
@@ -19,9 +20,8 @@ namespace Horde\Text\Wiki;
  *
  */
 
-class Text_Wiki_Parse_Superscript extends WikiParse {
-
-
+class CreoleParserSuperscript extends WikiParse
+{
     /**
      *
      * The regular expression used to parse the source text and find
@@ -35,7 +35,7 @@ class Text_Wiki_Parse_Superscript extends WikiParse {
      *
      */
 
-    var $regex =  "/(\^\^(.*?)\^\^|(?<=\d)(st|nd|rd|th|er|e|re|ers|res|nds|de|des|�re|�me|�res|�mes|o|a)(?!\w))/";
+    public $regex =  "/(\^\^(.*?)\^\^|(?<=\d)(st|nd|rd|th|er|e|re|ers|res|nds|de|des|�re|�me|�res|�mes|o|a)(?!\w))/";
 
     /**
      *
@@ -54,23 +54,22 @@ class Text_Wiki_Parse_Superscript extends WikiParse {
      *
      */
 
-    function process(&$matches)
+    public function process(&$matches)
     {
         if (! $this->wiki->checkInnerTags($matches[0])) {
             return $matches[0];
         }
 
-		$start = $this->wiki->addToken(
-			$this->rule,
-			array('type' => 'start')
-		);
+        $start = $this->wiki->addToken(
+            $this->rule,
+            ['type' => 'start']
+        );
 
-		$end = $this->wiki->addToken(
-			$this->rule,
-			array('type' => 'end')
-		);
+        $end = $this->wiki->addToken(
+            $this->rule,
+            ['type' => 'end']
+        );
 
         return $start . trim($matches[0], '^') . $end;
     }
 }
-?>

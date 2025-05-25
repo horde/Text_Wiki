@@ -1,5 +1,7 @@
 <?php
+
 namespace Horde\Text\Wiki;
+
 // vim: set expandtab tabstop=4 shiftwidth=4 softtabstop=4:
 /**
  * BBCode: Parses for font size tag.
@@ -32,8 +34,8 @@ namespace Horde\Text\Wiki;
  * @link       http://pear.php.net/package/Text_Wiki
  * @see        Text_Wiki_Parse::Text_Wiki_Parse()
  */
-class Text_Wiki_Parse_Font extends WikiParse {
-
+class BBCodeParserFont extends WikiParse
+{
     /**
      * The regular expression used to parse the source text and find
      * matches conforming to this rule.  Used by the parse() method.
@@ -42,7 +44,7 @@ class Text_Wiki_Parse_Font extends WikiParse {
      * @var string
      * @see parse()
      */
-    var $regex = "#\[size=(\d+)]((?:((?R))|.)*?)\[/size]#msi";
+    public $regex = "#\[size=(\d+)]((?:((?R))|.)*?)\[/size]#msi";
 
     /**
      * The current font nesting depth, starts by zero
@@ -50,7 +52,7 @@ class Text_Wiki_Parse_Font extends WikiParse {
      * @access private
      * @var int
      */
-    var $_level = 0;
+    public $_level = 0;
 
     /**
      * Generates a replacement for the matched text.  Token options are:
@@ -64,14 +66,14 @@ class Text_Wiki_Parse_Font extends WikiParse {
      * placeholder in the source text surrounding the text to be sized.
      * @access public
      */
-    function process(&$matches)
+    public function process(&$matches)
     {
         // nested block ?
         if (array_key_exists(3, $matches)) {
             $this->_level++;
             $expsub = preg_replace_callback(
                 $this->regex,
-                array(&$this, 'process'),
+                [&$this, 'process'],
                 $matches[2]
             );
             $this->_level--;
@@ -80,7 +82,7 @@ class Text_Wiki_Parse_Font extends WikiParse {
         }
 
         // builds the option array
-        $options = array('type' => 'start', 'level' => $this->_level, 'size' => $matches[1]);
+        $options = ['type' => 'start', 'level' => $this->_level, 'size' => $matches[1]];
         $statok = $this->wiki->addToken($this->rule, $options);
         $options['type'] = 'end';
         return $statok . $expsub . $this->wiki->addToken($this->rule, $options);

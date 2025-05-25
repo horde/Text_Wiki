@@ -1,4 +1,5 @@
 <?php
+
 // vim: set expandtab tabstop=4 shiftwidth=4 softtabstop=4:
 /**
  * Base rendering class for parsed and tokenized text.
@@ -12,7 +13,9 @@
  * @version    CVS: $Id$
  * @link       http://pear.php.net/package/Text_Wiki
  */
+
 namespace Horde\Text\Wiki;
+
 /**
  * Base rendering class for parsed and tokenized text.
  *
@@ -23,9 +26,8 @@ namespace Horde\Text\Wiki;
  * @version    Release: @package_version@
  * @link       http://pear.php.net/package/Text_Wiki
  */
-class WikiRenderBase {
-
-
+class WikiRendererBase
+{
     /**
     *
     * Configuration options for this render rule.
@@ -36,7 +38,7 @@ class WikiRenderBase {
     *
     */
 
-    var $conf = array();
+    public $conf = [];
 
 
     /**
@@ -49,7 +51,7 @@ class WikiRenderBase {
     *
     */
 
-    var $format = null;
+    public $format = null;
 
 
     /**
@@ -62,7 +64,7 @@ class WikiRenderBase {
     *
     */
 
-    var $rule = null;
+    public $rule = null;
 
 
     /**
@@ -77,7 +79,7 @@ class WikiRenderBase {
     * @var object
     */
 
-    var $wiki = null;
+    public $wiki = null;
 
 
     /**
@@ -90,10 +92,10 @@ class WikiRenderBase {
     *
     */
 
-    function __construct(&$obj)
+    public function __construct(&$obj)
     {
         // keep a reference to the calling Text_Wiki object
-        $this->wiki =& $obj;
+        $this->wiki = & $obj;
 
         // get the config-key-name for this object,
         // strip the Text_Wiki_Render_ part
@@ -152,7 +154,7 @@ class WikiRenderBase {
     *
     */
 
-    function getConf($key, $default = null)
+    public function getConf($key, $default = null)
     {
         if (isset($this->conf[$key])) {
             return $this->conf[$key];
@@ -177,7 +179,7 @@ class WikiRenderBase {
     *
     */
 
-    function formatConf($format, $key)
+    public function formatConf($format, $key)
     {
         if (isset($this->conf[$key])) {
             //$this->conf[$key] needs a textEncode....at least for Xhtml output...
@@ -196,7 +198,7 @@ class WikiRenderBase {
     *
     */
 
-    function urlEncode($urlChunk)
+    public function urlEncode($urlChunk)
     {
         return rawurlencode($urlChunk);
     }
@@ -210,7 +212,7 @@ class WikiRenderBase {
     *
     */
 
-    function textEncode($text)
+    public function textEncode($text)
     {
         return htmlspecialchars($text);
     }

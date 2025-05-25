@@ -1,31 +1,32 @@
 <?php
+
 namespace Horde\Text\Wiki;
 
-class Text_Wiki_Render_Latex_Interwiki extends WikiRender {
-    
-    var $conf = array(
-        'sites' => array(
+class LatexRendererInterwiki extends WikiRender
+{
+    public $conf = [
+        'sites' => [
             'MeatBall' => 'http://www.usemod.com/cgi-bin/mb.pl?%s',
             'Advogato' => 'http://advogato.org/%s',
-            'Wiki'       => 'http://c2.com/cgi/wiki?%s'
-        )
-    );
-    
-    
+            'Wiki'       => 'http://c2.com/cgi/wiki?%s',
+        ],
+    ];
+
+
     /**
-    * 
+    *
     * Renders a token into text matching the requested format.
-    * 
+    *
     * @access public
-    * 
+    *
     * @param array $options The "options" portion of the token (second
     * element).
-    * 
+    *
     * @return string The text rendered from the token options.
-    * 
+    *
     */
-    
-    function token($options)
+
+    public function token($options)
     {
         $text = $options['text'];
         if (isset($options['url'])) {
@@ -52,7 +53,7 @@ class Text_Wiki_Render_Latex_Interwiki extends WikiRender {
                 $href = sprintf($href, $page);
             }
         }
-        
+
         return $text . '\footnote{' . $href . '}';
     }
 }

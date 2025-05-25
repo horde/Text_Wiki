@@ -1,17 +1,17 @@
 <?php
+
 namespace Horde\Text\Wiki;
 
-class Text_Wiki_Render_Doku extends WikiRender {
-    
-    function pre()
+class DokuRenderer extends WikiRender
+{
+    public function pre()
     {
         return;
     }
-    
-    function post()
+
+    public function post()
     {
         return;
     }
-    
+
 }
-?>

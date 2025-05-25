@@ -1,5 +1,7 @@
 <?php
+
 namespace HordeTextWiki;
+
 // vim: set expandtab tabstop=4 shiftwidth=4 softtabstop=4:
 /**
  * Default: Parses for smileys / emoticons tags
@@ -31,8 +33,8 @@ namespace HordeTextWiki;
  * @link       http://pear.php.net/package/Text_Wiki
  * @see        Text_Wiki_Parse::Text_Wiki_Parse()
  */
-class Text_Wiki_Parse_Smiley extends WikiParse {
-
+class DefaultParserSmiley extends WikiParse
+{
     /**
      * Configuration keys for this rule
      * 'smileys' => array Smileys recognized by this rule, symbols key definitions:
@@ -47,33 +49,33 @@ class Text_Wiki_Parse_Smiley extends WikiParse {
      * @access public
      * @var array 'config-key' => mixed config-value
      */
-    var $conf = array(
-        'smileys' => array(
-            ':D'        => array('biggrin', 'Very Happy', ':grin:'),
-            ':)'        => array('smile', 'Smile', '(:'),
-            ':('        => array('sad', 'Sad', '):'),
-            ':o'        => array('surprised', 'Surprised', ':eek:', 'o:'),
-            ':shock:'   => array('eek', 'Shocked'),
-            ':?'        => array('confused', 'Confused', ':???:'),
-            '8)'        => array('cool', 'Cool', '(8'),
-            ':lol:'     => array('lol', 'Laughing'),
-            ':x'        => array('mad', 'Mad'),
-            ':P'        => array('razz', 'Razz'),
-            ':oops:'    => array('redface', 'Embarassed'),
-            ':cry:'     => array('cry', 'Crying or Very sad'),
-            ':evil:'    => array('evil', 'Evil or Very Mad'),
-            ':twisted:' => array('twisted', 'Twisted Evil'),
-            ':roll:'    => array('rolleyes', 'Rolling Eyes'),
-            ';)'        => array('wink', 'Wink', '(;'),
-            ':!:'       => array('exclaim', 'Exclamation'),
-            ':?:'       => array('question', 'Question'),
-            ':idea:'    => array('idea', 'Idea'),
-            ':arrow:'   => array('arrow', 'Arrow'),
-            ':|'        => array('neutral', 'Neutral', '|:'),
-            ':mrgreen:' => array('mrgreen', 'Mr. Green'),
-        ),
-        'auto_nose' => true
-    );
+    public $conf = [
+        'smileys' => [
+            ':D'        => ['biggrin', 'Very Happy', ':grin:'],
+            ':)'        => ['smile', 'Smile', '(:'],
+            ':('        => ['sad', 'Sad', '):'],
+            ':o'        => ['surprised', 'Surprised', ':eek:', 'o:'],
+            ':shock:'   => ['eek', 'Shocked'],
+            ':?'        => ['confused', 'Confused', ':???:'],
+            '8)'        => ['cool', 'Cool', '(8'],
+            ':lol:'     => ['lol', 'Laughing'],
+            ':x'        => ['mad', 'Mad'],
+            ':P'        => ['razz', 'Razz'],
+            ':oops:'    => ['redface', 'Embarassed'],
+            ':cry:'     => ['cry', 'Crying or Very sad'],
+            ':evil:'    => ['evil', 'Evil or Very Mad'],
+            ':twisted:' => ['twisted', 'Twisted Evil'],
+            ':roll:'    => ['rolleyes', 'Rolling Eyes'],
+            ';)'        => ['wink', 'Wink', '(;'],
+            ':!:'       => ['exclaim', 'Exclamation'],
+            ':?:'       => ['question', 'Question'],
+            ':idea:'    => ['idea', 'Idea'],
+            ':arrow:'   => ['arrow', 'Arrow'],
+            ':|'        => ['neutral', 'Neutral', '|:'],
+            ':mrgreen:' => ['mrgreen', 'Mr. Green'],
+        ],
+        'auto_nose' => true,
+    ];
 
     /**
      * Definition array of smileys, variantes references their model
@@ -82,17 +84,17 @@ class Text_Wiki_Parse_Smiley extends WikiParse {
      * @access private
      * @var array 'config-key' => mixed config-value
      */
-    var $_smileys = array();
+    public $_smileys = [];
 
-     /**
-     * Constructor.
-     * We override the constructor to build up the regex from config
-     *
-     * @param object &$obj the base conversion handler
-     * @return The parser object
-     * @access public
-     */
-    function __construct(&$obj)
+    /**
+    * Constructor.
+    * We override the constructor to build up the regex from config
+    *
+    * @param object &$obj the base conversion handler
+    * @return The parser object
+    * @access public
+    */
+    public function __construct(&$obj)
     {
         $default = $this->conf;
         parent::__construct($obj);
@@ -112,15 +114,15 @@ class Text_Wiki_Parse_Smiley extends WikiParse {
                     $cur = $smiley;
                 }
                 $len = strlen($cur);
-                if (($cur{0} == ':') && ($len > 2) && ($cur{$len - 1} == ':')) {
+                if (($cur[0] == ':') && ($len > 2) && ($cur[$len - 1] == ':')) {
                     $reg1 .= $sep1 . preg_quote(substr($cur, 1, -1), '#');
                     $sep1 = '|';
                     continue;
                 }
                 if ($autoNose && ($len === 2)) {
-                    $variante = $cur{0} . '-' . $cur{1};
+                    $variante = $cur[0] . '-' . $cur[1];
                     $this->_smileys[$variante] = &$this->_smileys[$smiley];
-                    $cur = preg_quote($cur{0}, '#') . '-?' . preg_quote($cur{1}, '#');
+                    $cur = preg_quote($cur[0], '#') . '-?' . preg_quote($cur[1], '#');
                 } else {
                     $cur = preg_quote($cur, '#');
                 }
@@ -144,14 +146,16 @@ class Text_Wiki_Parse_Smiley extends WikiParse {
      * @return string Delimited token representing the smiley
      * @access public
      */
-    function process(&$matches)
+    public function process(&$matches)
     {
         // tokenize
-        return $this->wiki->addToken($this->rule,
-            array(
+        return $this->wiki->addToken(
+            $this->rule,
+            [
                 'symbol' => $matches[1],
                 'name'   => $this->_smileys[$matches[1]][0],
-                'desc'   => $this->_smileys[$matches[1]][1]
-            ));
+                'desc'   => $this->_smileys[$matches[1]][1],
+            ]
+        );
     }
 }

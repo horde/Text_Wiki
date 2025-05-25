@@ -1,4 +1,5 @@
 <?php
+
 namespace HordeTextWiki;
 
 /**
@@ -23,9 +24,8 @@ namespace HordeTextWiki;
  *
  */
 
-class Text_Wiki_Parse_Blockquote extends WikiParse {
-
-
+class CreoleParserBlockquote extends WikiParse
+{
     /**
     *
     * Regex for parsing the source text.
@@ -38,7 +38,7 @@ class Text_Wiki_Parse_Blockquote extends WikiParse {
     *
     */
 
-    var $regex = '/\n(([>:]).*\n)(?!([>:]))/Us';
+    public $regex = '/\n(([>:]).*\n)(?!([>:]))/Us';
 
 
     /**
@@ -63,13 +63,13 @@ class Text_Wiki_Parse_Blockquote extends WikiParse {
     *
     */
 
-    function process(&$matches)
+    public function process(&$matches)
     {
         // the replacement text we will return to parse()
         $return = '';
 
         // the list of post-processing matches
-        $list = array();
+        $list = [];
 
         // $matches[1] is the text matched as a list set by parse();
         // create an array called $list that contains a new set of
@@ -83,7 +83,7 @@ class Text_Wiki_Parse_Blockquote extends WikiParse {
 
         // a stack of starts and ends; we keep this so that we know what
         // indent level we're at.
-        $stack = array();
+        $stack = [];
 
         // loop through each list-item element.
         foreach ($list as $key => $val) {
@@ -100,9 +100,9 @@ class Text_Wiki_Parse_Blockquote extends WikiParse {
 
             // add a level to the list?
             while ($level > count($stack)) {
-                
+
                 $css = ($val[1][count($stack)] == ':') ? 'remark' : '';
-                
+
                 // the current indent level is greater than the number
                 // of stack elements, so we must be starting a new
                 // level.  push the new level onto the stack with a
@@ -114,11 +114,11 @@ class Text_Wiki_Parse_Blockquote extends WikiParse {
                 // ...and add a start token to the return.
                 $return .= $this->wiki->addToken(
                     $this->rule,
-                    array(
+                    [
                         'type' => 'start',
                         'level' => $level - 1,
-                        'css' => $css
-                    )
+                        'css' => $css,
+                    ]
                 );
 
                 $return .= "\n\n";
@@ -137,10 +137,10 @@ class Text_Wiki_Parse_Blockquote extends WikiParse {
 
                 $return .= $this->wiki->addToken(
                     $this->rule,
-                    array (
+                    [
                         'type' => 'end',
-                        'level' => count($stack)
-                    )
+                        'level' => count($stack),
+                    ]
                 );
 
                 $return .= "\n\n";
@@ -161,10 +161,10 @@ class Text_Wiki_Parse_Blockquote extends WikiParse {
 
             $return .= $this->wiki->addToken(
                 $this->rule,
-                array (
+                [
                     'type' => 'end',
-                    'level' => count($stack)
-                )
+                    'level' => count($stack),
+                ]
             );
 
             $return .= "\n\n";
@@ -174,4 +174,3 @@ class Text_Wiki_Parse_Blockquote extends WikiParse {
         return "\n\n$return\n\n";
     }
 }
-?>

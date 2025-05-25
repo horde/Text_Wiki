@@ -1,5 +1,7 @@
 <?php
+
 namespace HordeTextWiki;
+
 // vim: set expandtab tabstop=4 shiftwidth=4 softtabstop=4:
 /**
  * Freelink rule end renderer for Docbook
@@ -29,8 +31,7 @@ require_once 'Text/Wiki/Render/Docbook/Wikilink.php';
  * @version    Release: @package_version@
  * @link       http://pear.php.net/package/Text_Wiki_Docbook
  */
-class Text_Wiki_Render_Docbook_Freelink extends WikiRender_Docbook_Wikilink {
+class DocbookRendererFreelink extends WikiRender_Docbook_Wikilink
+{
     // renders identically to wikilinks, only the parsing is different :-)
 }
-
-?>

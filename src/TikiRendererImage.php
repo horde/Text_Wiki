@@ -1,15 +1,17 @@
 <?php
-namespace HordeTextWiki;
-class Text_Wiki_Render_Tiki_Image extends WikiRender {
 
+namespace HordeTextWiki;
+
+class TikiRendererImage extends WikiRender
+{
     /**
      * Defines rule specific configuration
      *
      * @var array
      */
-    var $conf = array(
-       'prefix' => 'img/wiki_up/' // path to the wiki image directory 
-    );
+    public $conf = [
+        'prefix' => 'img/wiki_up/', // path to the wiki image directory
+    ];
 
     /**
     *
@@ -24,16 +26,17 @@ class Text_Wiki_Render_Tiki_Image extends WikiRender {
     *
     */
 
-    function token($options)
+    public function token($options)
     {
         $img = '{img src="';
-        if (!empty($this->conf['prefix']))
+        if (!empty($this->conf['prefix'])) {
             $img .= $this->conf['prefix'];
+        }
         $img .= $options['src'] . '"';
 
         if (isset($options['attr']) && is_array($options['attr'])) {
             foreach ($options['attr'] as $var => $val) {
-                $img .= ' '.$var.'="'.$val.'"';
+                $img .= ' ' . $var . '="' . $val . '"';
             }
         }
         $img .= '}';

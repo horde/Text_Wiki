@@ -1,7 +1,9 @@
 <?php
+
 namespace Horde\Text\Wiki;
 
-class Text_Wiki_Render_Creole_Deflist extends WikiRender {
+class CreoleRendererDeflist extends WikiRender
+{
     /**
     *
     * Renders a token into text matching the requested format.
@@ -15,10 +17,8 @@ class Text_Wiki_Render_Creole_Deflist extends WikiRender {
     *
     */
 
-    function token($options)
+    public function token($options)
     {
         return "\n";
     }
 }
-
-?>

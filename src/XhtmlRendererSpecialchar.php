@@ -1,5 +1,7 @@
 <?php
+
 namespace HordeTextWiki;
+
 // vim: set expandtab tabstop=4 shiftwidth=4 softtabstop=4:
 /**
  * Specialchar rule end renderer for Xhtml
@@ -24,30 +26,28 @@ namespace HordeTextWiki;
  * @version    Release: @package_version@
  * @link       http://pear.php.net/package/Text_Wiki
  */
-class Text_Wiki_Render_Xhtml_SpecialChar extends WikiRender {
+class XhtmlRendererSpecialchar extends WikiRender
+{
+    public $types = ['~bs~' => '&#92;',
+        '~hs~' => '&nbsp;',
+        '~amp~' => '&amp;',
+        '~ldq~' => '&ldquo;',
+        '~rdq~' => '&rdquo;',
+        '~lsq~' => '&lsquo;',
+        '~rsq~' => '&rsquo;',
+        '~c~' => '&copy;',
+        '~--~' => '&mdash;',
+        '" -- "' => '&mdash;',
+        '&quot; -- &quot;' => '&mdash;',
+        '~lt~' => '&lt;',
+        '~gt~' => '&gt;'];
 
-    var $types = array('~bs~' => '&#92;',
-                       '~hs~' => '&nbsp;',
-                       '~amp~' => '&amp;',
-                       '~ldq~' => '&ldquo;',
-                       '~rdq~' => '&rdquo;',
-                       '~lsq~' => '&lsquo;',
-                       '~rsq~' => '&rsquo;',
-                       '~c~' => '&copy;',
-                       '~--~' => '&mdash;',
-                       '" -- "' => '&mdash;',
-                       '&quot; -- &quot;' => '&mdash;',
-                       '~lt~' => '&lt;',
-                       '~gt~' => '&gt;');
-
-    function token($options)
+    public function token($options)
     {
         if (isset($this->types[$options['char']])) {
             return $this->types[$options['char']];
         } else {
-            return '&#'.substr($options['char'], 1, -1).';';
+            return '&#' . substr($options['char'], 1, -1) . ';';
         }
     }
 }
-
-?>

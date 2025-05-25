@@ -1,5 +1,7 @@
 <?php
+
 namespace HordeTextWiki;
+
 // vim: set expandtab tabstop=4 shiftwidth=4 softtabstop=4:
 /**
  * Phplookup rule end renderer for Xhtml
@@ -24,12 +26,12 @@ namespace HordeTextWiki;
  * @version    Release: @package_version@
  * @link       http://pear.php.net/package/Text_Wiki
  */
-class Text_Wiki_Render_Xhtml_Phplookup extends WikiRender {
-
-    var $conf = array(
+class XhtmlRendererPhplookup extends WikiRender
+{
+    public $conf = [
         'target' => '_blank',
-        'css' => null
-    );
+        'css' => null,
+    ];
 
 
     /**
@@ -45,7 +47,7 @@ class Text_Wiki_Render_Xhtml_Phplookup extends WikiRender {
     *
     */
 
-    function token($options)
+    public function token($options)
     {
         $text = trim($options['text']);
         $css = $this->formatConf(' class="%s"', 'css');

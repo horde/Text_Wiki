@@ -1,5 +1,7 @@
 <?php
+
 namespace HordeTextWiki;
+
 // vim: set expandtab tabstop=4 shiftwidth=4 softtabstop=4:
 /**
  * Mediawiki: Parses for tables.
@@ -32,8 +34,8 @@ namespace HordeTextWiki;
  * @link       http://pear.php.net/package/Text_Wiki
  * @see        Text_Wiki_Parse::Text_Wiki_Parse()
  */
-class Text_Wiki_Parse_Table extends WikiParse {
-
+class MediawikiParserTable extends WikiParse
+{
     /**
      * The regular expression used to parse the source text and find
      * matches conforming to this rule.  Used by the parse() method.
@@ -42,7 +44,7 @@ class Text_Wiki_Parse_Table extends WikiParse {
      * @var string
      * @see parse()
      */
-    var $regex = '#^\{\|(.*?)(?:^\|\+(.*?))?(^(?:((?R))|.)*?)^\|}#msi';
+    public $regex = '#^\{\|(.*?)(?:^\|\+(.*?))?(^(?:((?R))|.)*?)^\|}#msi';
 
     /**
      * The regular expression used in second stage to find table's rows
@@ -53,7 +55,7 @@ class Text_Wiki_Parse_Table extends WikiParse {
      * @see process()
      * @see processRows()
      */
-    var $regexRows = '#(?:^([|!])-|\G)(.*?)^(.+?)(?=^[|!]-|\z)#msi';
+    public $regexRows = '#(?:^([|!])-|\G)(.*?)^(.+?)(?=^[|!]-|\z)#msi';
 
     /**
      * The regular expression used in third stage to find rows's cells
@@ -64,8 +66,8 @@ class Text_Wiki_Parse_Table extends WikiParse {
      * @see process()
      * @see processCells()
      */
-    var $regexCells =
-    '#((?:^\||^!|\|\||!!|\G))(?:([^|\n]*?)\|(?!\|))?(?:\n*)(.+?)(?:\n*)(?=^\||^!|\|\||!!|\z)#msi';
+    public $regexCells =
+        '#((?:^\||^!|\|\||!!|\G))(?:([^|\n]*?)\|(?!\|))?(?:\n*)(.+?)(?:\n*)(?=^\||^!|\|\||!!|\z)#msi';
 
     /**
      * The current table nesting depth, starts by zero
@@ -73,7 +75,7 @@ class Text_Wiki_Parse_Table extends WikiParse {
      * @access private
      * @var int
      */
-    var $_level = 0;
+    public $_level = 0;
 
     /**
      * The count of rows for this level
@@ -81,7 +83,7 @@ class Text_Wiki_Parse_Table extends WikiParse {
      * @access private
      * @var array of int
      */
-    var $_countRows = array();
+    public $_countRows = [];
 
     /**
      * The max count of cells for this level
@@ -89,7 +91,7 @@ class Text_Wiki_Parse_Table extends WikiParse {
      * @access private
      * @var array of int
      */
-    var $_maxCells = array();
+    public $_maxCells = [];
 
     /**
      * The count of cells for each row
@@ -97,7 +99,7 @@ class Text_Wiki_Parse_Table extends WikiParse {
      * @access private
      * @var array of int
      */
-    var $_countCells = array();
+    public $_countCells = [];
 
     /**
      * The count of spanned cells from previous rowspans for each column
@@ -105,7 +107,7 @@ class Text_Wiki_Parse_Table extends WikiParse {
      * @access private
      * @var array of int
      */
-    var $_spanCells = array();
+    public $_spanCells = [];
 
     /**
      * Generates a replacement for the matched text. Returned token options are:
@@ -139,13 +141,13 @@ class Text_Wiki_Parse_Table extends WikiParse {
      * which point to the the token array containing their type and definition
      * @access public
      */
-    function process(&$matches)
+    public function process(&$matches)
     {
         if (array_key_exists(4, $matches)) {
             $this->_level++;
             $expsub = preg_replace_callback(
                 $this->regex,
-                array(&$this, 'process'),
+                [&$this, 'process'],
                 $matches[3]
             );
             $this->_level--;
@@ -153,32 +155,32 @@ class Text_Wiki_Parse_Table extends WikiParse {
             $expsub = $matches[3];
         }
         $this->_countRows[$this->_level] = $this->_maxCells[$this->_level] = 0;
-        $this->_countCells[$this->_level] = $this->_spanCells[$this->_level] = array();
+        $this->_countCells[$this->_level] = $this->_spanCells[$this->_level] = [];
         $sub = preg_replace_callback(
             $this->regexRows,
-            array(&$this, 'processRows'),
+            [&$this, 'processRows'],
             $expsub
         );
-        $param = array(
-                'type'  => 'table_start',
-                'level' => $this->_level,
-                'rows' => $this->_countRows[$this->_level],
-                'cols' => $this->_maxCells[$this->_level]
-        );
+        $param = [
+            'type'  => 'table_start',
+            'level' => $this->_level,
+            'rows' => $this->_countRows[$this->_level],
+            'cols' => $this->_maxCells[$this->_level],
+        ];
         if ($format = trim($matches[1])) {
             $param['format'] = $format;
         }
-        $ret = $this->wiki->addToken($this->rule, $param );
+        $ret = $this->wiki->addToken($this->rule, $param);
         if ($matches[2]) {
-            $ret .= $this->wiki->addToken($this->rule, array(
+            $ret .= $this->wiki->addToken($this->rule, [
                 'type'  => 'caption_start',
-                'level' => $this->_level ) ) . $matches[2] .
-                    $this->wiki->addToken($this->rule, array(
-                'type'  => 'caption_end',
-                'level' => $this->_level ) );
+                'level' => $this->_level ]) . $matches[2] .
+                    $this->wiki->addToken($this->rule, [
+                        'type'  => 'caption_end',
+                        'level' => $this->_level ]);
         }
         $param['type'] = 'table_end';
-        return $ret . $sub . $this->wiki->addToken($this->rule, $param );
+        return $ret . $sub . $this->wiki->addToken($this->rule, $param);
     }
 
     /**
@@ -200,19 +202,19 @@ class Text_Wiki_Parse_Table extends WikiParse {
      * and containing the cells-parsed block of text between the tags
      * @access public
      */
-    function processRows(&$matches)
+    public function processRows(&$matches)
     {
         $this->_countCells[$this->_level][$this->_countRows[$this->_level]] = 0;
         $sub = preg_replace_callback(
             $this->regexCells,
-            array(&$this, 'processCells'),
+            [&$this, 'processCells'],
             $matches[3]
         );
-        $param = array(
-                'type'  => 'row_start',
-                'order' => $this->_countRows[$this->_level],
-                'cols' => $this->_countCells[$this->_level][$this->_countRows[$this->_level]++]
-        );
+        $param = [
+            'type'  => 'row_start',
+            'order' => $this->_countRows[$this->_level],
+            'cols' => $this->_countCells[$this->_level][$this->_countRows[$this->_level]++],
+        ];
         if ($matches[1] == '!') {
             $param['attr'] = 'header';
         }
@@ -222,9 +224,9 @@ class Text_Wiki_Parse_Table extends WikiParse {
         if ($this->_maxCells[$this->_level] < $param['cols']) {
             $this->_maxCells[$this->_level] = $param['cols'];
         }
-        $ret = $this->wiki->addToken($this->rule, $param );
+        $ret = $this->wiki->addToken($this->rule, $param);
         $param['type'] = 'row_end';
-        return $ret . $sub . $this->wiki->addToken($this->rule, $param );
+        return $ret . $sub . $this->wiki->addToken($this->rule, $param);
     }
 
     /**
@@ -250,7 +252,7 @@ class Text_Wiki_Parse_Table extends WikiParse {
      * and containing the block of text between the tags
      * @access public
      */
-    function processCells(&$matches)
+    public function processCells(&$matches)
     {
         $order = & $this->_countCells[$this->_level][$this->_countRows[$this->_level]];
         while (isset($this->_spanCells[$this->_level][$order])) {
@@ -259,21 +261,21 @@ class Text_Wiki_Parse_Table extends WikiParse {
             }
             $order++;
         }
-        $param = array(
-                'type'  => 'cell_start',
-                'attr'  => $matches[1] && ($matches[1]{0} == '!') ? 'header': null,
-                'span'  => 1,
-                'rowspan'  => 1,
-                'order' => $order
-        );
+        $param = [
+            'type'  => 'cell_start',
+            'attr'  => $matches[1] && ($matches[1][0] == '!') ? 'header' : null,
+            'span'  => 1,
+            'rowspan'  => 1,
+            'order' => $order,
+        ];
         if ($format = trim($matches[2])) {
             if (preg_match('#(.*)colspan=("|\')?(\d+)(?(2)\2)(.*)#i', $format, $pieces)) {
-                $param['span'] = (int)$pieces[3];
+                $param['span'] = (int) $pieces[3];
                 $format = $pieces[1] . $pieces[4];
             }
             if (preg_match('#(.*)rowspan=("|\')?(\d+)(?(2)\2)(.*)#i', $format, $pieces)) {
                 $this->_spanCells[$this->_level][$order] =
-                                    $param['rowspan'] = (int)$pieces[3];
+                                    $param['rowspan'] = (int) $pieces[3];
                 $format = $pieces[1] . $pieces[4];
             }
             $param['format'] = $format;
@@ -281,6 +283,6 @@ class Text_Wiki_Parse_Table extends WikiParse {
         $this->_countCells[$this->_level][$this->_countRows[$this->_level]] += $param['span'];
         $ret = $this->wiki->addToken($this->rule, $param);
         $param['type'] = 'cell_end';
-        return $ret . $matches[3] . $this->wiki->addToken($this->rule, $param );
+        return $ret . $matches[3] . $this->wiki->addToken($this->rule, $param);
     }
 }

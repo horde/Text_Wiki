@@ -1,4 +1,5 @@
 <?php
+
 namespace HordeTextWiki;
 
 /**
@@ -27,9 +28,8 @@ namespace HordeTextWiki;
  *
  */
 
-class Text_Wiki_Parse_List extends WikiParse {
-
-
+class CreoleParserList extends WikiParse
+{
     /**
      *
      * The regular expression used to parse the source text and find
@@ -43,7 +43,7 @@ class Text_Wiki_Parse_List extends WikiParse {
      *
      */
 
-    var $regex = '/\n((\*[^\#\-\*]|\-[^\-\d\*\#]|\#[^\#\-\*]).*?)\n(?![\*\-#])/s';
+    public $regex = '/\n((\*[^\#\-\*]|\-[^\-\d\*\#]|\#[^\#\-\*]).*?)\n(?![\*\-#])/s';
 
     /**
      *
@@ -73,22 +73,22 @@ class Text_Wiki_Parse_List extends WikiParse {
      *
      */
 
-    function process(&$matches)
+    public function process(&$matches)
     {
         // the replacement text we will return
         $return = '';
 
         // the list of post-processing matches
-        $list = array();
+        $list = [];
 
         // a stack of list-start and list-end types; we keep this
         // so that we know what kind of list we're working with
         // (bullet or number) and what indent level we're at.
-        $stack = array();
+        $stack = [];
 
         // the item count is the number of list items for any
         // given list-type on the stack
-        $itemcount = array();
+        $itemcount = [];
 
         // have we processed the very first list item?
         $pastFirst = false;
@@ -101,7 +101,7 @@ class Text_Wiki_Parse_List extends WikiParse {
             $list,
             PREG_SET_ORDER
         );
-        
+
         if (count($list) === 1 && $matches[0][0] === '*' && $matches[0][1] !== ' ' && strpos($matches[0], '*', 1)) {
             return $matches[0];
         }
@@ -146,17 +146,17 @@ class Text_Wiki_Parse_List extends WikiParse {
                 // and the indent level are the same.
                 $return .= $this->wiki->addToken(
                     $this->rule,
-                    array (
+                    [
                         'type' => array_pop($stack) . '_list_end',
-                        'level' => $tmp
-                    )
+                        'level' => $tmp,
+                    ]
                 );
 
                 // reset to the current (previous) list type so that
                 // the new list item matches the proper list type.
                 if ($tmp) {
-					$oldtype = $stack[$tmp - 1];
-				}
+                    $oldtype = $stack[$tmp - 1];
+                }
 
                 // reset the item count for the popped indent level
                 unset($itemcount[$tmp + 1]);
@@ -174,10 +174,10 @@ class Text_Wiki_Parse_List extends WikiParse {
                 // ...and add a list-start token to the return.
                 $return .= $this->wiki->addToken(
                     $this->rule,
-                    array(
+                    [
                         'type' => $type . '_list_start',
-                        'level' => $level - 1
-                    )
+                        'level' => $level - 1,
+                    ]
                 );
             }
 
@@ -202,22 +202,22 @@ class Text_Wiki_Parse_List extends WikiParse {
             // create a list-item starting token.
             $start = $this->wiki->addToken(
                 $this->rule,
-                array(
+                [
                     'type' => $type . '_item_start',
                     'level' => $level,
                     'count' => $itemcount[$level],
-                    'first' => $first
-                )
+                    'first' => $first,
+                ]
             );
 
             // create a list-item ending token.
             $end = $this->wiki->addToken(
                 $this->rule,
-                array(
+                [
                     'type' => $type . '_item_end',
                     'level' => $level,
-                    'count' => $itemcount[$level]
-                )
+                    'count' => $itemcount[$level],
+                ]
             );
 
             // add the starting token, list-item text, and ending token
@@ -231,10 +231,10 @@ class Text_Wiki_Parse_List extends WikiParse {
         while (count($stack) > 0) {
             $return .= $this->wiki->addToken(
                 $this->rule,
-                array (
+                [
                     'type' => array_pop($stack) . '_list_end',
-                    'level' => count($stack)
-                )
+                    'level' => count($stack),
+                ]
             );
         }
 
@@ -242,4 +242,3 @@ class Text_Wiki_Parse_List extends WikiParse {
         return "\n\n" . $return . "\n\n";
     }
 }
-?>

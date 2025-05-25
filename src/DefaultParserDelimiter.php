@@ -1,4 +1,5 @@
 <?php
+
 namespace HordeTextWiki;
 
 /**
@@ -34,8 +35,8 @@ namespace HordeTextWiki;
 *
 */
 
-class Text_Wiki_Parse_Delimiter extends WikiParse {
-
+class DefaultParserDelimiter extends WikiParse
+{
     /**
     *
     * Constructor.  Overrides the Text_Wiki_Parse constructor so that we
@@ -48,7 +49,7 @@ class Text_Wiki_Parse_Delimiter extends WikiParse {
     *
     */
 
-    function __construct(&$obj)
+    public function __construct(&$obj)
     {
         parent::__construct($obj);
         $this->regex = '/' . $this->wiki->delim . '/';
@@ -70,11 +71,11 @@ class Text_Wiki_Parse_Delimiter extends WikiParse {
     *
     */
 
-    function process(&$matches)
+    public function process(&$matches)
     {
         return $this->wiki->addToken(
             $this->rule,
-            array('text' => $this->wiki->delim)
+            ['text' => $this->wiki->delim]
         );
     }
 }

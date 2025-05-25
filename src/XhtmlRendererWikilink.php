@@ -1,5 +1,7 @@
 <?php
+
 namespace HordeTextWiki;
+
 // vim: set expandtab tabstop=4 shiftwidth=4 softtabstop=4:
 /**
  * Wikilink rule end renderer for Xhtml
@@ -24,18 +26,18 @@ namespace HordeTextWiki;
  * @version    Release: @package_version@
  * @link       http://pear.php.net/package/Text_Wiki
  */
-class Text_Wiki_Render_Xhtml_Wikilink extends WikiRender {
-
-    var $conf = array(
-        'pages' => array(), // set to null or false to turn off page checks
+class XhtmlRendererWikilink extends WikiRender
+{
+    public $conf = [
+        'pages' => [], // set to null or false to turn off page checks
         'view_url' => 'http://example.com/index.php?page=%s',
         'new_url'  => 'http://example.com/new.php?page=%s',
         'new_text' => '?',
         'new_text_pos' => 'after', // 'before', 'after', or null/false
         'css' => null,
         'css_new' => null,
-        'exists_callback' => null // call_user_func() callback
-    );
+        'exists_callback' => null, // call_user_func() callback
+    ];
 
 
     /**
@@ -51,7 +53,7 @@ class Text_Wiki_Render_Xhtml_Wikilink extends WikiRender {
     *
     */
 
-    function token($options)
+    public function token($options)
     {
         // make nice variable names (page, anchor, text)
         extract($options);
@@ -61,9 +63,9 @@ class Text_Wiki_Render_Xhtml_Wikilink extends WikiRender {
         // getConf() because we'll need a reference (for
         // object instance method callbacks).
         if (isset($this->conf['exists_callback'])) {
-            $callback =& $this->conf['exists_callback'];
+            $callback = & $this->conf['exists_callback'];
         } else {
-        	$callback = false;
+            $callback = false;
         }
 
         if ($callback) {
@@ -81,7 +83,7 @@ class Text_Wiki_Render_Xhtml_Wikilink extends WikiRender {
             }
         }
 
-        $anchor = '#'.$this->urlEncode(substr($anchor, 1));
+        $anchor = '#' . $this->urlEncode(substr($anchor, 1));
 
         // does the page exist?
         if ($exists) {
@@ -103,9 +105,9 @@ class Text_Wiki_Render_Xhtml_Wikilink extends WikiRender {
             }
 
             // get the CSS class and generate output
-            $css = ' class="'.$this->textEncode($this->getConf('css')).'"';
+            $css = ' class="' . $this->textEncode($this->getConf('css')) . '"';
 
-            $start = '<a'.$css.' href="'.$this->textEncode($href).'">';
+            $start = '<a' . $css . ' href="' . $this->textEncode($href) . '">';
             $end = '</a>';
         } else {
 
@@ -137,7 +139,7 @@ class Text_Wiki_Render_Xhtml_Wikilink extends WikiRender {
             }
 
             // get the appropriate CSS class and new-link text
-            $css = ' class="'.$this->textEncode($this->getConf('css_new')).'"';
+            $css = ' class="' . $this->textEncode($this->getConf('css_new')) . '"';
             $new = $this->getConf('new_text');
 
             // what kind of linking are we doing?
@@ -145,16 +147,16 @@ class Text_Wiki_Render_Xhtml_Wikilink extends WikiRender {
             if (! $pos || ! $new) {
                 // no position (or no new_text), use css only on the page name
 
-                $start = '<a'.$css.' href="'.$this->textEncode($href).'">';
+                $start = '<a' . $css . ' href="' . $this->textEncode($href) . '">';
                 $end = '</a>';
             } elseif ($pos == 'before') {
                 // use the new_text BEFORE the page name
-                $start = '<a'.$css.' href="'.$this->textEncode($href).'">'.$this->textEncode($new).'</a>';
+                $start = '<a' . $css . ' href="' . $this->textEncode($href) . '">' . $this->textEncode($new) . '</a>';
                 $end = '';
             } else {
                 // default, use the new_text link AFTER the page name
                 $start = '';
-                $end = '<a'.$css.' href="'.$this->textEncode($href).'">'.$this->textEncode($new).'</a>';
+                $end = '<a' . $css . ' href="' . $this->textEncode($href) . '">' . $this->textEncode($new) . '</a>';
             }
         }
         if (!strlen($text)) {
@@ -162,15 +164,15 @@ class Text_Wiki_Render_Xhtml_Wikilink extends WikiRender {
         }
         if (isset($type)) {
             switch ($type) {
-            case 'start':
-                $output = $start;
-                break;
-            case 'end':
-                $output = $end;
-                break;
+                case 'start':
+                    $output = $start;
+                    break;
+                case 'end':
+                    $output = $end;
+                    break;
             }
         } else {
-            $output = $start.$this->textEncode($text).$end;
+            $output = $start . $this->textEncode($text) . $end;
         }
         return $output;
     }

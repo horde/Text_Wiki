@@ -1,4 +1,5 @@
 <?php
+
 namespace HordeTextWiki;
 
 /**
@@ -34,12 +35,13 @@ namespace HordeTextWiki;
 *
 */
 
-class Text_Wiki_Parse_Italic extends WikiParse {
-
+class CowikiParserItalic extends WikiParse
+{
     /**
      * Setting regex in constructor instead of with var as we need $this->wiki->delim
      */
-    function __construct(&$obj) {
+    public function __construct(&$obj)
+    {
         parent::__construct($obj);
 
         //using [^delim] here as CoWiki's Italic syntax is a single / and its other markup is HTML syntax with / in it
@@ -64,14 +66,16 @@ class Text_Wiki_Parse_Italic extends WikiParse {
     *
     */
 
-    function process(&$matches)
+    public function process(&$matches)
     {
         $start = $this->wiki->addToken(
-            $this->rule, array('type' => 'start')
+            $this->rule,
+            ['type' => 'start']
         );
 
         $end = $this->wiki->addToken(
-            $this->rule, array('type' => 'end')
+            $this->rule,
+            ['type' => 'end']
         );
 
         return $start . $matches[1] . $end;

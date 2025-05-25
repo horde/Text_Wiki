@@ -1,7 +1,9 @@
 <?php
-namespace HordeTextWiki;
-class Text_Wiki_Render_Creole_Image extends WikiRender {
 
+namespace HordeTextWiki;
+
+class CreoleRendererImage extends WikiRender
+{
     /**
     *
     * Renders a token into text matching the requested format.
@@ -15,13 +17,12 @@ class Text_Wiki_Render_Creole_Image extends WikiRender {
     *
     */
 
-    function token($options)
+    public function token($options)
     {
         if (!strlen($options['attr']['alt']) || $options['src'] == $options['attr']['alt']) {
-            return '{{'.$options['src'].'}}';
+            return '{{' . $options['src'] . '}}';
         } else {
-            return '{{'.$options['src'].'|'.$options['attr']['alt'].'}}';
+            return '{{' . $options['src'] . '|' . $options['attr']['alt'] . '}}';
         }
     }
 }
-?>

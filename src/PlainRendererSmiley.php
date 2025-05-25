@@ -1,5 +1,7 @@
 <?php
+
 namespace Horde\Text\Wiki;
+
 // vim: set expandtab tabstop=4 shiftwidth=4 softtabstop=4:
 /**
  * Smiley rule Plain renderer
@@ -27,8 +29,8 @@ namespace Horde\Text\Wiki;
  * @link       http://pear.php.net/package/Text_Wiki
  * @see        Text_Wiki::Text_Wiki_Render()
  */
-class Text_Wiki_Render_Plain_Smiley extends WikiRender {
-
+class PlainRendererSmiley extends WikiRender
+{
     /**
       * Renders a token into text matching the requested format.
       * process the Smileys
@@ -37,7 +39,7 @@ class Text_Wiki_Render_Plain_Smiley extends WikiRender {
       * @param array $options The "options" portion of the token (second element).
       * @return string The text rendered from the token options.
       */
-    function token($options)
+    public function token($options)
     {
         return $options['symbol'];
     }

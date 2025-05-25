@@ -1,5 +1,7 @@
 <?php
+
 namespace HordeTextWiki;
+
 // vim: set expandtab tabstop=4 shiftwidth=4 softtabstop=4:
 /**
  * Revise rule end renderer for Docbook
@@ -24,12 +26,12 @@ namespace HordeTextWiki;
  * @version    Release: @package_version@
  * @link       http://pear.php.net/package/Text_Wiki_Docbook
  */
-class Text_Wiki_Render_Docbook_Revise extends WikiRender {
-
-    var $conf = array(
+class DocbookRendererRevise extends WikiRender
+{
+    public $conf = [
         'role_ins' => 'inserted',
-        'role_del' => 'deleted'
-    );
+        'role_del' => 'deleted',
+    ];
 
     /**
     *
@@ -44,15 +46,15 @@ class Text_Wiki_Render_Docbook_Revise extends WikiRender {
     *
     */
 
-    function token($options)
+    public function token($options)
     {
         switch ($options['type']) {
             case 'del_start':
-                return '<emphasis' . 
+                return '<emphasis' .
                     (($role = $this->getConf('role_del', 'deleted')) ?
                     ' role="' . $role . '"' : '') . '>';
             case 'ins_start':
-                return '<emphasis' . 
+                return '<emphasis' .
                     (($role = $this->getConf('role_ins', 'inserted')) ?
                     ' role="' . $role . '"' : '') . '>';
         }

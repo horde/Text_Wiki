@@ -1,5 +1,7 @@
 <?php
+
 namespace HordeTextWiki;
+
 // vim: set expandtab tabstop=4 shiftwidth=4 softtabstop=4:
 /**
  * Interwiki rule end renderer for Docbook
@@ -24,15 +26,15 @@ namespace HordeTextWiki;
  * @version    Release: @package_version@
  * @link       http://pear.php.net/package/Text_Wiki_Docbook
  */
-class Text_Wiki_Render_Docbook_Interwiki extends WikiRender {
-
-    var $conf = array(
-        'sites' => array(
+class DocbookRendererInterwiki extends WikiRender
+{
+    public $conf = [
+        'sites' => [
             'MeatBall' => 'http://www.usemod.com/cgi-bin/mb.pl?%s',
             'Advogato' => 'http://advogato.org/%s',
-            'Wiki'       => 'http://c2.com/cgi/wiki?%s'
-        ),
-    );
+            'Wiki'       => 'http://c2.com/cgi/wiki?%s',
+        ],
+    ];
 
 
     /**
@@ -48,7 +50,7 @@ class Text_Wiki_Render_Docbook_Interwiki extends WikiRender {
     *
     */
 
-    function token($options)
+    public function token($options)
     {
         $text = $options['text'];
         if (isset($options['url'])) {

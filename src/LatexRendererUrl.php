@@ -1,15 +1,14 @@
 <?php
+
 namespace HordeTextWiki;
 
-
-class Text_Wiki_Render_Latex_Url extends WikiRender {
-
-
-    var $conf = array(
+class LatexRendererUrl extends WikiRender
+{
+    public $conf = [
         'target' => false,
         'images' => true,
-        'img_ext' => array('jpg', 'jpeg', 'gif', 'png')
-    );
+        'img_ext' => ['jpg', 'jpeg', 'gif', 'png'],
+    ];
 
     /**
     *
@@ -24,7 +23,7 @@ class Text_Wiki_Render_Latex_Url extends WikiRender {
     *
     */
 
-    function token($options)
+    public function token($options)
     {
         // create local variables from the options array (text,
         // href, type)
@@ -32,7 +31,7 @@ class Text_Wiki_Render_Latex_Url extends WikiRender {
 
         if ($options['type'] == 'start') {
             return '';
-        } else if ($options['type'] == 'end') {
+        } elseif ($options['type'] == 'end') {
             return '\footnote{' . $href . '}';
         } else {
             return $text . '\footnote{' . $href . '}';

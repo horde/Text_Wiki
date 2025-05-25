@@ -1,8 +1,9 @@
 <?php
+
 namespace HordeTextWiki;
 
-class Text_Wiki_Render_Plain_Table extends WikiRender {
-
+class PlainRendererTable extends WikiRender
+{
     /**
     *
     * Renders a token into text matching the requested format.
@@ -16,7 +17,7 @@ class Text_Wiki_Render_Plain_Table extends WikiRender {
     *
     */
 
-    function token($options)
+    public function token($options)
     {
         // make nice variable names (type, attr, span)
         extract($options);
@@ -25,40 +26,40 @@ class Text_Wiki_Render_Plain_Table extends WikiRender {
 
         switch ($type) {
 
-        case 'table_start':
-            return;
-            break;
+            case 'table_start':
+                return;
+                break;
 
-        case 'table_end':
-            return;
-            break;
+            case 'table_end':
+                return;
+                break;
 
-        case 'caption_start':
-            return;
-            break;
+            case 'caption_start':
+                return;
+                break;
 
-        case 'caption_end':
-            return "\n";
-            break;
+            case 'caption_end':
+                return "\n";
+                break;
 
-        case 'row_start':
-            return;
-            break;
+            case 'row_start':
+                return;
+                break;
 
-        case 'row_end':
-            return " ||\n";
-            break;
+            case 'row_end':
+                return " ||\n";
+                break;
 
-        case 'cell_start':
-            return " || ";
-            break;
+            case 'cell_start':
+                return " || ";
+                break;
 
-        case 'cell_end':
-            return;
-            break;
+            case 'cell_end':
+                return;
+                break;
 
-        default:
-            return '';
+            default:
+                return '';
 
         }
     }

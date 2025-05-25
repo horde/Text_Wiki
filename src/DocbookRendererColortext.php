@@ -1,5 +1,7 @@
 <?php
+
 namespace HordeTextWiki;
+
 // vim: set expandtab tabstop=4 shiftwidth=4 softtabstop=4:
 /**
  * Colortext rule end renderer for Docbook
@@ -24,12 +26,12 @@ namespace HordeTextWiki;
  * @version    Release: @package_version@
  * @link       http://pear.php.net/package/Text_Wiki_Docbook
  */
-class Text_Wiki_Render_Docbook_Colortext extends WikiRender {
-
-    var $conf = array(
+class DocbookRendererColortext extends WikiRender
+{
+    public $conf = [
         'role' => 'color',
         'attribute' => 'condition',
-        'colors' => array(
+        'colors' => [
             'aqua',
             'black',
             'blue',
@@ -45,9 +47,9 @@ class Text_Wiki_Render_Docbook_Colortext extends WikiRender {
             'silver',
             'teal',
             'white',
-            'yellow'
-        )
-    );
+            'yellow',
+        ],
+    ];
 
 
     /**
@@ -63,18 +65,18 @@ class Text_Wiki_Render_Docbook_Colortext extends WikiRender {
     *
     */
 
-    function token($options)
+    public function token($options)
     {
         if ($options['type'] == 'end') {
             return '</phrase>';
         }
         $color = $options['color'];
 
-        if (!in_array($color, $this->getConf('colors', array())) &&
-             $color{0} != '#') {
+        if (!in_array($color, $this->getConf('colors', [])) &&
+             $color[0] != '#') {
             $color = '#' . $color;
         }
         return '<phrase role="' . $this->getConf('role', 'color') . '" ' .
-            $this->getConf('attribute', 'condition') .'="' . $color . '">';
+            $this->getConf('attribute', 'condition') . '="' . $color . '">';
     }
 }

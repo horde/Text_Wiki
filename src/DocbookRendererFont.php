@@ -1,5 +1,7 @@
 <?php
+
 namespace HordeTextWiki;
+
 // vim: set expandtab tabstop=4 shiftwidth=4 softtabstop=4:
 /**
  * BBCode: extra Font rules renderer to size the text
@@ -17,7 +19,7 @@ namespace HordeTextWiki;
 
 /**
  * Font rule render class (used for BBCode)
- * 
+ *
  * @category   Text
  * @package    Text_Wiki_Docbook
  * @author     Bertrand Gugger <bertrand@toggg.com>
@@ -27,22 +29,22 @@ namespace HordeTextWiki;
  * @link       http://pear.php.net/package/Text_Wiki_Docbook
  * @see        Text_Wiki::Text_Wiki_Render()
  */
-class Text_Wiki_Render_Docbook_Font extends WikiRender {
-
-    var $conf = array(
+class DocbookRendererFont extends WikiRender
+{
+    public $conf = [
         'role' => 'fontsize',
-        'attribute' => 'condition'
-        );
-    
+        'attribute' => 'condition',
+    ];
+
     /**
       * Renders a token into text matching the requested format.
-      * process the font size option 
+      * process the font size option
       *
       * @access public
       * @param array $options The "options" portion of the token (second element).
       * @return string The text rendered from the token options.
       */
-    function token($options)
+    public function token($options)
     {
         if ($options['type'] == 'end') {
             return '</phrase>';
@@ -54,6 +56,6 @@ class Text_Wiki_Render_Docbook_Font extends WikiRender {
             }
         }
         return '<phrase role="' . $this->getConf('role', 'fontsize') . '" ' .
-            $this->getConf('attribute', 'condition') .'="' . $size . '">';
+            $this->getConf('attribute', 'condition') . '="' . $size . '">';
     }
 }

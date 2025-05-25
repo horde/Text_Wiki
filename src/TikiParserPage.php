@@ -1,5 +1,7 @@
 <?php
+
 namespace Horde\Text\Wiki;
+
 // vim: set expandtab tabstop=4 shiftwidth=4 softtabstop=4:
 /**
  * Page rule end parser for tikiwiki
@@ -25,9 +27,8 @@ namespace Horde\Text\Wiki;
  * @version    Release: @package_version@
  * @link       http://pear.php.net/package/Text_Wiki
  */
-class Text_Wiki_Parse_Page extends WikiParse {
-
-
+class TikiParserPage extends WikiParse
+{
     /**
     *
     * The regular expression used to find source text matching this
@@ -39,11 +40,12 @@ class Text_Wiki_Parse_Page extends WikiParse {
     *
     */
 
-    var $regex = '/\.\.\.page\.\.\./i';
+    public $regex = '/\.\.\.page\.\.\./i';
 
 
-    function parse() {
-        $this->wiki->source = preg_replace_callback($this->regex, array(&$this, 'process'), $this->wiki->source);
+    public function parse()
+    {
+        $this->wiki->source = preg_replace_callback($this->regex, [&$this, 'process'], $this->wiki->source);
 
     }
 
@@ -62,7 +64,7 @@ class Text_Wiki_Parse_Page extends WikiParse {
     *
     */
 
-    function process(&$matches)
+    public function process(&$matches)
     {
         return $this->wiki->addToken($this->rule);
     }

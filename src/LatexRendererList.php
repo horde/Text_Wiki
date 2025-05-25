@@ -1,8 +1,9 @@
 <?php
+
 namespace HordeTextWiki;
 
-
-class Text_Wiki_Render_Latex_List extends WikiRender {
+class LatexRendererList extends WikiRender
+{
     /**
      *
      * Renders a token into text matching the requested format.
@@ -19,13 +20,12 @@ class Text_Wiki_Render_Latex_List extends WikiRender {
      *
      */
 
-    function token($options)
+    public function token($options)
     {
         // make nice variables (type, level, count)
         extract($options);
 
-        switch ($type)
-            {
+        switch ($type) {
             case 'bullet_list_start':
                 return "\\begin{itemize}\n";
 
@@ -71,6 +71,6 @@ class Text_Wiki_Render_Latex_List extends WikiRender {
                 // depending on their place in the list.
                 return '';
                 break;
-            }
+        }
     }
 }

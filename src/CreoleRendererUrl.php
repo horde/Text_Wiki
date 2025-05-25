@@ -1,8 +1,9 @@
 <?php
+
 namespace Horde\Text\Wiki;
 
-class Text_Wiki_Render_Creole_Url extends WikiRender {
-
+class CreoleRendererUrl extends WikiRender
+{
     /**
     *
     * Renders a token into text matching the requested format.
@@ -16,26 +17,22 @@ class Text_Wiki_Render_Creole_Url extends WikiRender {
     *
     */
 
-    function token($options)
+    public function token($options)
     {
         extract($options);
         if ($type == 'start') {
-            return '[['.$href.'|';
-        }
-        else if ($type == 'end') {
+            return '[[' . $href . '|';
+        } elseif ($type == 'end') {
             return ']]';
-        }
-        else {
-			$noprot = str_replace('http://', '', str_replace('mailto:', '', $href));
+        } else {
+            $noprot = str_replace('http://', '', str_replace('mailto:', '', $href));
             if (strpos($href, "#ref") === 0 || strpos($href, "#fn") === 0) {
                 return $text;
-            }
-            else if (! strlen($text) || $text == $href || $text == $noprot) {
-                return '[['.$href.']]';
+            } elseif (! strlen($text) || $text == $href || $text == $noprot) {
+                return '[[' . $href . ']]';
             } else {
-                return '[['.$href.'|'.$text.']]';
+                return '[[' . $href . '|' . $text . ']]';
             }
         }
     }
 }
-?>

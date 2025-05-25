@@ -1,5 +1,7 @@
 <?php
+
 namespace Horde\Text\Wiki;
+
 // vim: set expandtab tabstop=4 shiftwidth=4 softtabstop=4:
 /**
  * Colortext rule end renderer for Xhtml
@@ -24,9 +26,9 @@ namespace Horde\Text\Wiki;
  * @version    Release: @package_version@
  * @link       http://pear.php.net/package/Text_Wiki
  */
-class Text_Wiki_Render_Xhtml_Colortext extends WikiRender {
-
-    var $colors = array(
+class XhtmlRendererColortext extends WikiRender
+{
+    public $colors = [
         'aqua',
         'black',
         'blue',
@@ -42,8 +44,8 @@ class Text_Wiki_Render_Xhtml_Colortext extends WikiRender {
         'silver',
         'teal',
         'white',
-        'yellow'
-    );
+        'yellow',
+    ];
 
 
     /**
@@ -59,12 +61,12 @@ class Text_Wiki_Render_Xhtml_Colortext extends WikiRender {
     *
     */
 
-    function token($options)
+    public function token($options)
     {
         $type = $options['type'];
         $color = $options['color'];
 
-        if (! in_array($color, $this->colors) && $color{0} != '#') {
+        if (! in_array($color, $this->colors) && $color[0] != '#') {
             $color = '#' . $color;
         }
 

@@ -1,9 +1,9 @@
 <?php
+
 namespace Horde\Text\Wiki;
 
-
-class Text_Wiki_Render_Tiki_Url extends WikiRender {
-
+class TikiRendererUrl extends WikiRender
+{
     /**
     *
     * Renders a token into text matching the requested format.
@@ -17,25 +17,22 @@ class Text_Wiki_Render_Tiki_Url extends WikiRender {
     *
     */
 
-    function token($options)
+    public function token($options)
     {
         if (isset($options['type']) && $options['type'] == 'start') {
             if ((! isset($options['text']) || ! strlen($options['text'])) || $options['href'] == $options['text']) {
-                return '['.$options['href'];
+                return '[' . $options['href'];
             } else {
-                return '['.$options['href'].'|';
+                return '[' . $options['href'] . '|';
             }
-        }
-        else if (isset($options['type']) && $options['type'] == 'end') {
+        } elseif (isset($options['type']) && $options['type'] == 'end') {
             return ']';
-        }
-        else {
+        } else {
             if ((! isset($options['text']) || ! strlen($options['text'])) || $options['href'] == $options['text']) {
-                return '['.$options['href'].']';
+                return '[' . $options['href'] . ']';
             } else {
-                return '['.$options['href'].'|'.$options['text'].']';
+                return '[' . $options['href'] . '|' . $options['text'] . ']';
             }
         }
     }
 }
-?>

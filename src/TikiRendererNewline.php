@@ -1,13 +1,11 @@
 <?php
+
 namespace HordeTextWiki;
 
-class Text_Wiki_Render_Tiki_Newline extends WikiRender {
-    
-    
-    function token($options)
+class TikiRendererNewline extends WikiRender
+{
+    public function token($options)
     {
         return "\n";
     }
 }
-
-?>

@@ -1,5 +1,7 @@
 <?php
+
 namespace HordeTextWiki;
+
 // vim: set expandtab tabstop=4 shiftwidth=4 softtabstop=4:
 /**
  * Heading rule end renderer for Docbook
@@ -24,8 +26,8 @@ namespace HordeTextWiki;
  * @version    Release: @package_version@
  * @link       http://pear.php.net/package/Text_Wiki_Docbook
  */
-class Text_Wiki_Render_Docbook_Heading extends WikiRender {
-
+class DocbookRendererHeading extends WikiRender
+{
     /**
      * Configuration keys for this rule
      * 'sections' => array of strings, ordered list of sectioning tags,
@@ -37,11 +39,11 @@ class Text_Wiki_Render_Docbook_Heading extends WikiRender {
      * @access public
      * @var array 'config-key' => mixed config-value
      */
-    var $conf = array(
-        'sections' => array('sect1', 'sect2', 'sect3', 'sect4', 'sect5'),
+    public $conf = [
+        'sections' => ['sect1', 'sect2', 'sect3', 'sect4', 'sect5'],
         'section_after' => 'section',
-        'section_final' => 'simplesect'
-    );
+        'section_final' => 'simplesect',
+    ];
 
     /**
      * Current level
@@ -49,7 +51,7 @@ class Text_Wiki_Render_Docbook_Heading extends WikiRender {
      * @access private
      * @var int current section level
      */
-    var $_level = 0;
+    public $_level = 0;
 
     /**
      * Parsed heading levels stack
@@ -57,7 +59,7 @@ class Text_Wiki_Render_Docbook_Heading extends WikiRender {
      * @access private
      * @var array of int parsed heading levels stack
      */
-    var $_stack = array(-1);
+    public $_stack = [-1];
 
     /**
      * Parsed heading ids stack
@@ -65,7 +67,7 @@ class Text_Wiki_Render_Docbook_Heading extends WikiRender {
      * @access private
      * @var array of int parsed heading ids stack
      */
-    var $_id = array(-1);
+    public $_id = [-1];
 
     /**
      * Final sectioning to apply
@@ -73,20 +75,20 @@ class Text_Wiki_Render_Docbook_Heading extends WikiRender {
      * @access private
      * @var array of string section tags
      */
-    var $_section = array();
+    public $_section = [];
 
-     /**
-     * Constructor.
-     * We override the constructor to pre-process the heading tokens
-     * - to correct levels as sequential
-     * - mark the terminal ones
-     * - prepare the actual sections to be used
-     *
-     * @param object &$obj the base conversion handler
-     * @return The render object
-     * @access public
-     */
-    function __construct(&$obj)
+    /**
+    * Constructor.
+    * We override the constructor to pre-process the heading tokens
+    * - to correct levels as sequential
+    * - mark the terminal ones
+    * - prepare the actual sections to be used
+    *
+    * @param object &$obj the base conversion handler
+    * @return The render object
+    * @access public
+    */
+    public function __construct(&$obj)
     {
         parent::__construct($obj);
         $max = 0;
@@ -117,24 +119,30 @@ class Text_Wiki_Render_Docbook_Heading extends WikiRender {
             $this->wiki->tokens[$this->_id[$this->_level]][1]['terminal'] = true;
         }
         // set global sections for process closure
-        $sections = $this->getConf('sections', array(''));
+        $sections = $this->getConf('sections', ['']);
         $this->wiki->source =
             // will produce one only if not blank section
-            $this->wiki->addToken($this->rule,
-                    array('type' => 'start',
-                            'level' => 0,
-                            'id' => 'global',
-                            'text' => '')) .
-            $this->wiki->addToken($this->rule,
-                    array('type' => 'end',
-                            'level' => 0)) .
+            $this->wiki->addToken(
+                $this->rule,
+                ['type' => 'start',
+                    'level' => 0,
+                    'id' => 'global',
+                    'text' => '']
+            ) .
+            $this->wiki->addToken(
+                $this->rule,
+                ['type' => 'end',
+                    'level' => 0]
+            ) .
             $this->wiki->source .
             // will produce nothing but the closure of preceding sections
-            $this->wiki->addToken($this->rule,
-                    array('type' => 'start',
-                            'level' => -1));
+            $this->wiki->addToken(
+                $this->rule,
+                ['type' => 'start',
+                    'level' => -1]
+            );
         // prepare final sectioning
-        if ( ! ($after = $this->getConf('section_after', ''))) {
+        if (! ($after = $this->getConf('section_after', ''))) {
             $after = $sections[count($sections) - 1];
         }
         for ($i = 0; $i <= $max; $i++) {
@@ -145,19 +153,19 @@ class Text_Wiki_Render_Docbook_Heading extends WikiRender {
             }
         }
         // clean stack
-        $this->_stack = array();
+        $this->_stack = [];
         $this->_level = -1;
     }
 
-     /**
-     * Replace start heading tokens with closure of preceding sections
-     * and opening corresponding section if not blank or the last level -1 one
-     *
-     * @param array $option the token options
-     * @return string the replacement text
-     * @access public
-     */
-    function token($options)
+    /**
+    * Replace start heading tokens with closure of preceding sections
+    * and opening corresponding section if not blank or the last level -1 one
+    *
+    * @param array $option the token options
+    * @return string the replacement text
+    * @access public
+    */
+    public function token($options)
     {
         // get nice variable names (id, type, level, terminal)
         $terminal = false;
@@ -179,7 +187,7 @@ class Text_Wiki_Render_Docbook_Heading extends WikiRender {
         $this->_stack[++$this->_level] = $level < 0 ? '' :
                 ($terminal ? $terminal : $this->_section[$level]);
         return $output . ($this->_stack[$this->_level] ?
-            '<'. $this->_stack[$this->_level] . ' xml:id="' . $id .
+            '<' . $this->_stack[$this->_level] . ' xml:id="' . $id .
                  "\">\n<title>" : '');
     }
 }

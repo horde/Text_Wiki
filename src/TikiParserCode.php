@@ -1,27 +1,28 @@
 <?php
+
 namespace HordeTextWiki;
 
 /**
-* 
+*
 * Parses for text marked as a code example block.
-* 
+*
 * @category Text
-* 
+*
 * @package Text_Wiki
-* 
+*
 * @author Justin Patrin <papercrane@reversefold.com>
 * @author Paul M. Jones <pmjones@php.net>
-* 
+*
 * @license LGPL
-* 
+*
 * @version $Id$
-* 
+*
 */
 
 /**
-* 
+*
 * Parses for text marked as a code example block.
-* 
+*
 * This class implements a Text_Wiki_Parse to find sections marked as code
 * examples.  Blocks are marked as the string <code> on a line by itself,
 * followed by the inline code example, and terminated with the string
@@ -30,37 +31,36 @@ namespace HordeTextWiki;
 * with <pre>...</pre> tags when rendered as XHTML.
 *
 * @category Text
-* 
+*
 * @package Text_Wiki
-* 
+*
 * @author Justin Patrin <papercrane@reversefold.com>
 * @author Paul M. Jones <pmjones@php.net>
-* 
+*
 */
 
-class Text_Wiki_Parse_Code extends WikiParse {
-    
-    
+class TikiParserCode extends WikiParse
+{
     /**
-    * 
+    *
     * The regular expression used to find source text matching this
     * rule.
-    * 
+    *
     * @access public
-    * 
+    *
     * @var string
-    * 
+    *
     */
-    
-    var $regex = '/^{CODE\((.+)?\)}\n(.+)\n{CODE}(\s|$)/Umsi';
-    
-    
+
+    public $regex = '/^{CODE\((.+)?\)}\n(.+)\n{CODE}(\s|$)/Umsi';
+
+
     /**
-    * 
+    *
     * Generates a token entry for the matched text.  Token options are:
-    * 
+    *
     * 'text' => The full matched text, not including the <code></code> tags.
-    * 
+    *
     * @access public
     *
     * @param array &$matches The array of matches from parse().
@@ -69,8 +69,8 @@ class Text_Wiki_Parse_Code extends WikiParse {
     * the source text.
     *
     */
-    
-    function process(&$matches)
+
+    public function process(&$matches)
     {
         // are there additional attribute arguments?
         $args = trim(html_entity_decode($matches[1]));
@@ -79,13 +79,13 @@ class Text_Wiki_Parse_Code extends WikiParse {
 
 
         if ($args == '') {
-            $options = array(
+            $options = [
                 'text' => $matches[2],
-                'attr' => array('type' => '')
-            );
+                'attr' => ['type' => ''],
+            ];
         } else {
-        	// get the attributes...
-        	//$attr = $this->getAttrs($args);
+            // get the attributes...
+            //$attr = $this->getAttrs($args);
             foreach (explode(',', $args) as $part) {
                 if (false !== ($eq = strpos($part, '=')) && $eq != strlen($part) - 1) {
                     $attr[substr($part, 0, $eq)] = substr($part, $eq + 1 + ($part[$eq + 1] == '>' ? 1 : 0));
@@ -93,25 +93,24 @@ class Text_Wiki_Parse_Code extends WikiParse {
                     $attr[$part] = '';
                 }
             }
-        	
+
             if (isset($attr['colors'])) {
                 $attr['type'] = $attr['colors'];
                 unset($attr['colors']);
             }
 
-        	// ... and make sure we have a 'type'
-        	if (!isset($attr['type'])) {
-        		$attr['type'] = '';
-        	}
-        	
-        	// retain the options
-            $options = array(
+            // ... and make sure we have a 'type'
+            if (!isset($attr['type'])) {
+                $attr['type'] = '';
+            }
+
+            // retain the options
+            $options = [
                 'text' => $matches[2],
-                'attr' => $attr
-            );
+                'attr' => $attr,
+            ];
         }
-        
+
         return $this->wiki->addToken($this->rule, $options) . $matches[3];
     }
 }
-?>

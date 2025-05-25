@@ -1,5 +1,7 @@
 <?php
+
 namespace HordeTextWiki;
+
 // vim: set expandtab tabstop=4 shiftwidth=4 softtabstop=4:
 /**
  * Titlebar rule end renderer for Latex
@@ -26,8 +28,8 @@ namespace HordeTextWiki;
  * @version    Release: @package_version@
  * @link       http://pear.php.net/package/Text_Wiki
  */
-class Text_Wiki_Render_Latex_Titlebar extends WikiRender {
-
+class LatexRendererTitlebar extends WikiRender
+{
     /**
     *
     * Renders a token into text matching the requested format.
@@ -41,7 +43,7 @@ class Text_Wiki_Render_Latex_Titlebar extends WikiRender {
     *
     */
 
-    function token($options)
+    public function token($options)
     {
         if ($options['type'] == 'start') {
             return '\framebox[\textwidth]{\textbf{';

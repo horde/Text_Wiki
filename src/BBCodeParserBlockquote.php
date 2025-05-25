@@ -1,5 +1,7 @@
 <?php
+
 namespace HordeTextWiki;
+
 // vim: set expandtab tabstop=4 shiftwidth=4 softtabstop=4:
 /**
  * BBCode: Parses for block-quoted text.
@@ -32,8 +34,8 @@ namespace HordeTextWiki;
  * @link       http://pear.php.net/package/Text_Wiki
  * @see        Text_Wiki_Parse::Text_Wiki_Parse()
  */
-class Text_Wiki_Parse_Blockquote extends WikiParse {
-
+class BBCodeParserBlockquote extends WikiParse
+{
     /**
      * The regular expression used to parse the source text and find
      * matches conforming to this rule.  Used by the parse() method.
@@ -43,7 +45,7 @@ class Text_Wiki_Parse_Blockquote extends WikiParse {
      * @var string
      * @see Text_Wiki_Parse::parse()
      */
-    var $regex = '#\[quote(?:=\s*"(.*?)")?\s*]((?:((?R))|.)*?)\[/quote]#msi';
+    public $regex = '#\[quote(?:=\s*"(.*?)")?\s*]((?:((?R))|.)*?)\[/quote]#msi';
 
     /**
      * The current quote nesting depth, starts by zero
@@ -51,7 +53,7 @@ class Text_Wiki_Parse_Blockquote extends WikiParse {
      * @access private
      * @var int
      */
-    var $_level = 0;
+    public $_level = 0;
 
     /**
      * Generates a replacement for the matched text.  Token options are:
@@ -65,14 +67,14 @@ class Text_Wiki_Parse_Blockquote extends WikiParse {
      * placeholder in the source text surrounding the text to be quoted.
      * @access public
      */
-    function process(&$matches)
+    public function process(&$matches)
     {
         // nested block ?
         if (array_key_exists(3, $matches)) {
             $this->_level++;
             $expsub = preg_replace_callback(
                 $this->regex,
-                array(&$this, 'process'),
+                [&$this, 'process'],
                 $matches[2]
             );
             $this->_level--;
@@ -81,7 +83,7 @@ class Text_Wiki_Parse_Blockquote extends WikiParse {
         }
 
         // builds the option array
-        $options = array('type' => 'start', 'level'=>$this->_level);
+        $options = ['type' => 'start', 'level' => $this->_level];
         if (isset($matches[1])) {
             $options['name'] = $matches[1];
         }

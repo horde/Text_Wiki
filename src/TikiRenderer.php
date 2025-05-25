@@ -1,17 +1,17 @@
 <?php
+
 namespace HordeTextWiki;
 
-class Text_Wiki_Render_Tiki extends WikiRender {
-    
-    function pre()
+class TikiRenderer extends WikiRender
+{
+    public function pre()
     {
         return;
     }
-    
-    function post()
+
+    public function post()
     {
         return;
     }
-    
+
 }
-?>

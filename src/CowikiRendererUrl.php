@@ -1,9 +1,9 @@
 <?php
+
 namespace Horde\Text\Wiki;
 
-
-class Text_Wiki_Render_CoWiki_Url extends WikiRender {
-
+class CowikiRendererUrl extends WikiRender
+{
     /**
     *
     * Renders a token into text matching the requested format.
@@ -17,30 +17,27 @@ class Text_Wiki_Render_CoWiki_Url extends WikiRender {
     *
     */
 
-    function token($options)
+    public function token($options)
     {
         extract($options);
         if ($type == 'start') {
             if (! strlen($text) || $href == $text) {
                 return $href;
             } else {
-                return '(('.$href.')(';
+                return '((' . $href . ')(';
             }
-        }
-        else if ($type == 'end') {
+        } elseif ($type == 'end') {
             if (! strlen($text) || $href == $text) {
                 return '';
             } else {
                 return '))';
             }
-        }
-        else {
+        } else {
             if (! strlen($text) || $href == $text) {
                 return $href;
             } else {
-                return '(('.$href.')('.$text.'))';
+                return '((' . $href . ')(' . $text . '))';
             }
         }
     }
 }
-?>

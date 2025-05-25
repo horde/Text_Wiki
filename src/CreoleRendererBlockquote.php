@@ -1,10 +1,11 @@
 <?php
+
 namespace HordeTextWiki;
 
-class Text_Wiki_Render_Creole_Blockquote extends WikiRender {
+class CreoleRendererBlockquote extends WikiRender
+{
+    public $css_stack = [];
 
-    var $css_stack = array();
-    
     /**
     *
     * Renders a token into text matching the requested format.
@@ -18,13 +19,15 @@ class Text_Wiki_Render_Creole_Blockquote extends WikiRender {
     *
     */
 
-    function token($options)
+    public function token($options)
     {
         // starting
         if ($options['type'] == 'start') {
-			if (empty($options['css'])) $options['css'] = '';
+            if (empty($options['css'])) {
+                $options['css'] = '';
+            }
             array_push($this->css_stack, $options['css']);
-            $this->wiki->registerRenderCallback(array(&$this, 'renderInsideText'));
+            $this->wiki->registerRenderCallback([&$this, 'renderInsideText']);
             return '';
         }
         // ending
@@ -34,15 +37,14 @@ class Text_Wiki_Render_Creole_Blockquote extends WikiRender {
         }
     }
 
-    function renderInsideText($text) {
+    public function renderInsideText($text)
+    {
         $text = trim($text);
         if (array_pop($this->css_stack) == 'remark') {
             $text = preg_replace('/(^|\n)([\>\:]*) */', '\1:\2 ', $text);
-        }
-        else {
+        } else {
             $text = preg_replace('/(^|\n)([\>\:]*) */', '\1>\2 ', $text);
         }
         return $text . "\n\n";
     }
 }
-?>

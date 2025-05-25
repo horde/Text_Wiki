@@ -1,5 +1,7 @@
 <?php
+
 namespace Horde\Text\Wiki;
+
 // vim: set expandtab tabstop=4 shiftwidth=4 softtabstop=4:
 /**
  * BBCode: Parses for code blocks.
@@ -33,8 +35,8 @@ namespace Horde\Text\Wiki;
  * @link       http://pear.php.net/package/Text_Wiki
  * @see        Text_Wiki_Parse::Text_Wiki_Parse()
  */
-class Text_Wiki_Parse_List extends WikiParse {
-
+class BBCodeParserList extends WikiParse
+{
     /**
      * The regular expression used to parse the source text and find
      * matches conforming to this rule.  Used by the parse() method.
@@ -43,7 +45,7 @@ class Text_Wiki_Parse_List extends WikiParse {
      * @var string
      * @see parse()
      */
-    var $regex =  "#\[list(?:=(.+?))?]\n?((?:((?R))|.)*?)\[/list]\n?#msi";
+    public $regex =  "#\[list(?:=(.+?))?]\n?((?:((?R))|.)*?)\[/list]\n?#msi";
 
     /**
      * The regular expression used in second stage to find list's elements
@@ -54,7 +56,7 @@ class Text_Wiki_Parse_List extends WikiParse {
      * @see process()
      * @see processElement()
      */
-    var $regexElement =  '#\[\*](.*?)(?=\[\*]|$)\n?#msi';
+    public $regexElement =  '#\[\*](.*?)(?=\[\*]|$)\n?#msi';
 
     /**
      * The current list nesting depth, starts by zero
@@ -62,7 +64,7 @@ class Text_Wiki_Parse_List extends WikiParse {
      * @access private
      * @var int
      */
-    var $_level = 0;
+    public $_level = 0;
 
     /**
      * The count of items for this level
@@ -70,7 +72,7 @@ class Text_Wiki_Parse_List extends WikiParse {
      * @access private
      * @var int
      */
-    var $_count = array();
+    public $_count = [];
 
     /**
      * The type of list for this level ('bullet' or 'number')
@@ -78,7 +80,7 @@ class Text_Wiki_Parse_List extends WikiParse {
      * @access private
      * @var int
      */
-    var $_type = array();
+    public $_type = [];
 
     /**
      * Generates a replacement for the matched text. Returned token options are:
@@ -107,13 +109,13 @@ class Text_Wiki_Parse_List extends WikiParse {
      * the source text and containing the original block of text
      * @access public
      */
-    function process(&$matches)
+    public function process(&$matches)
     {
         if (!empty($matches[3])) {
             $this->_level++;
             $expsub = preg_replace_callback(
                 $this->regex,
-                array(&$this, 'process'),
+                [&$this, 'process'],
                 $matches[2]
             );
             $this->_level--;
@@ -129,7 +131,7 @@ class Text_Wiki_Parse_List extends WikiParse {
                 $format = $matches[1];
             } else {
                 $format =
-                    ($matches[1] >= 'a') && ($matches[1] <='z') ? 'a' : 'A';
+                    ($matches[1] >= 'a') && ($matches[1] <= 'z') ? 'a' : 'A';
                 $key = $matches[1];
             }
         } else {
@@ -138,22 +140,22 @@ class Text_Wiki_Parse_List extends WikiParse {
         $this->_count[$this->_level] = -1;
         $sub = preg_replace_callback(
             $this->regexElement,
-            array(&$this, 'processElement'),
+            [&$this, 'processElement'],
             $expsub
         );
-        $param = array(
-                'level' => $this->_level,
-                'count' => $this->_count[$this->_level] );
-        $param['type'] = $this->_type[$this->_level].'_list_start';
+        $param = [
+            'level' => $this->_level,
+            'count' => $this->_count[$this->_level] ];
+        $param['type'] = $this->_type[$this->_level] . '_list_start';
         if (isset($format)) {
             $param['format'] = $format;
         }
         if (isset($key)) {
             $param['key'] = $key;
         }
-        $ret = $this->wiki->addToken($this->rule, $param );
-        $param['type'] = $this->_type[$this->_level].'_list_end';
-        return $ret . $sub . $this->wiki->addToken($this->rule, $param );
+        $ret = $this->wiki->addToken($this->rule, $param);
+        $param['type'] = $this->_type[$this->_level] . '_list_end';
+        return $ret . $sub . $this->wiki->addToken($this->rule, $param);
     }
 
     /**
@@ -173,16 +175,16 @@ class Text_Wiki_Parse_List extends WikiParse {
      * the source text and containing the original block of text
      * @access public
      */
-    function processElement(&$matches)
+    public function processElement(&$matches)
     {
-        return $this->wiki->addToken($this->rule, array(
-                    'type' => $this->_type[$this->_level] . '_item_start',
-                    'level' => $this->_level,
-                    'count' =>  ++$this->_count[$this->_level]) ) .
+        return $this->wiki->addToken($this->rule, [
+            'type' => $this->_type[$this->_level] . '_item_start',
+            'level' => $this->_level,
+            'count' =>  ++$this->_count[$this->_level]]) .
                rtrim($matches[1]) .
-               $this->wiki->addToken($this->rule, array(
-                    'type' => $this->_type[$this->_level] . '_item_end',
-                    'level' => $this->_level,
-                    'count' =>  $this->_count[$this->_level]) );
+               $this->wiki->addToken($this->rule, [
+                   'type' => $this->_type[$this->_level] . '_item_end',
+                   'level' => $this->_level,
+                   'count' =>  $this->_count[$this->_level]]);
     }
 }

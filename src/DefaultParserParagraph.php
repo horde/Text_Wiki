@@ -1,55 +1,56 @@
 <?php
+
 namespace Horde\Text\Wiki;
 
 /**
-* 
+*
 * Parses for paragraph blocks.
-* 
+*
 * @category Text
-* 
+*
 * @package Text_Wiki
-* 
+*
 * @author Paul M. Jones <pmjones@php.net>
-* 
+*
 * @license LGPL
-* 
+*
 * @version $Id$
-* 
+*
 */
 
 /**
-* 
+*
 * Parses for paragraph blocks.
-* 
+*
 * This class implements a Text_Wiki rule to find sections of the source
 * text that are paragraphs.  A para is any line not starting with a token
 * delimiter, followed by two newlines.
 *
 * @category Text
-* 
+*
 * @package Text_Wiki
-* 
+*
 * @author Paul M. Jones <pmjones@php.net>
-* 
+*
 */
 
-class Text_Wiki_Parse_Paragraph extends WikiParse {
-    
+class DefaultParserParagraph extends WikiParse
+{
     /**
-    * 
+    *
     * The regular expression used to find source text matching this
     * rule.
-    * 
+    *
     * @access public
-    * 
+    *
     * @var string
-    * 
+    *
     */
-    
-    var $regex = "/^.*?\n\n/m";
-    
-    var $conf = array(
-        'skip' => array(
+
+    public $regex = "/^.*?\n\n/m";
+
+    public $conf = [
+        'skip' => [
             'blockquote', // are we sure about this one?
             'code',
             'heading',
@@ -57,19 +58,19 @@ class Text_Wiki_Parse_Paragraph extends WikiParse {
             'deflist',
             'table',
             'list',
-            'toc'
-        )
-    );
-    
-    
+            'toc',
+        ],
+    ];
+
+
     /**
-    * 
+    *
     * Generates a token entry for the matched text.  Token options are:
-    * 
+    *
     * 'start' => The starting point of the paragraph.
-    * 
+    *
     * 'end' => The ending point of the paragraph.
-    * 
+    *
     * @access public
     *
     * @param array &$matches The array of matches from parse().
@@ -78,17 +79,17 @@ class Text_Wiki_Parse_Paragraph extends WikiParse {
     * the source text.
     *
     */
-    
-    function process(&$matches)
+
+    public function process(&$matches)
     {
         $delim = $this->wiki->delim;
-        $skip = $this->getConf('skip', array());
-        
+        $skip = $this->getConf('skip', []);
+
         // was anything there?
         if (trim($matches[0]) == '') {
             return '';
         }
-        
+
         // does the match has tokens inside?
         preg_match_all("/(?:$delim)(\d+?)(?:$delim)/", $matches[0], $delimiters, PREG_SET_ORDER);
 
@@ -104,13 +105,15 @@ class Text_Wiki_Parse_Paragraph extends WikiParse {
         // if there is no skipable token inside the match
         // add the Paragraph token and return
         $start = $this->wiki->addToken(
-            $this->rule, array('type' => 'start')
+            $this->rule,
+            ['type' => 'start']
         );
-        
+
         $end = $this->wiki->addToken(
-            $this->rule, array('type' => 'end')
+            $this->rule,
+            ['type' => 'end']
         );
-        
+
         return $start . trim($matches[0]) . $end;
     }
 }

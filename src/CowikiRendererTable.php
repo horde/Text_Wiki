@@ -1,56 +1,56 @@
 <?php
+
 namespace Horde\Text\Wiki;
 
-class Text_Wiki_Render_CoWiki_Table extends WikiRender {
-    
+class CowikiRendererTable extends WikiRender
+{
     /**
-    * 
+    *
     * Renders a token into text matching the requested format.
-    * 
+    *
     * @access public
-    * 
+    *
     * @param array $options The "options" portion of the token (second
     * element).
-    * 
+    *
     * @return string The text rendered from the token options.
-    * 
+    *
     */
-    
-    function token($options)
+
+    public function token($options)
     {
         // make nice variable names (type, attr, span)
         $pad = '    ';
-        
-        switch ($options['type']) {
-        
-        case 'table_start':
-            return "\n<table>";
-            break;
-        
-        case 'table_end':
-            return "\n</table>";
-            break;
-        
-        case 'row_start':
-            return "\n";
-            break;
-        
-        case 'row_end':
-            return '';
-            break;
-        
-        case 'cell_start':
-            return str_pad('', $options['span'], '|').' ';
-            break;
 
-        case 'cell_end':
-            return ' ';
-            break;
-        
-        default:
-            return '';
-        
+        switch ($options['type']) {
+
+            case 'table_start':
+                return "\n<table>";
+                break;
+
+            case 'table_end':
+                return "\n</table>";
+                break;
+
+            case 'row_start':
+                return "\n";
+                break;
+
+            case 'row_end':
+                return '';
+                break;
+
+            case 'cell_start':
+                return str_pad('', $options['span'], '|') . ' ';
+                break;
+
+            case 'cell_end':
+                return ' ';
+                break;
+
+            default:
+                return '';
+
         }
     }
 }
-?>

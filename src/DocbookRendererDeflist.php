@@ -1,5 +1,7 @@
 <?php
+
 namespace Horde\Text\Wiki;
+
 // vim: set expandtab tabstop=4 shiftwidth=4 softtabstop=4:
 /**
  * Deflist rule end renderer for Docbook
@@ -24,8 +26,8 @@ namespace Horde\Text\Wiki;
  * @version    Release: @package_version@
  * @link       http://pear.php.net/package/Text_Wiki_Docbook
  */
-class Text_Wiki_Render_Docbook_Deflist extends WikiRender {
-
+class DocbookRendererDeflist extends WikiRender
+{
     /**
     *
     * Renders a token into text matching the requested format.
@@ -39,36 +41,36 @@ class Text_Wiki_Render_Docbook_Deflist extends WikiRender {
     *
     */
 
-    function token($options)
+    public function token($options)
     {
         switch ($options['type']) {
 
-        case 'list_start':
-            return "<glosslist>\n";
-            break;
+            case 'list_start':
+                return "<glosslist>\n";
+                break;
 
-        case 'list_end':
-            return "</glosslist>\n";
-            break;
+            case 'list_end':
+                return "</glosslist>\n";
+                break;
 
-        case 'term_start':
-            return '<glossentry><glossterm>';
-            break;
+            case 'term_start':
+                return '<glossentry><glossterm>';
+                break;
 
-        case 'term_end':
-            return "</glossterm>\n";
-            break;
+            case 'term_end':
+                return "</glossterm>\n";
+                break;
 
-        case 'narr_start':
-            return '<glossdef>';
-            break;
+            case 'narr_start':
+                return '<glossdef>';
+                break;
 
-        case 'narr_end':
-            return "</glossdef></glossentry>\n";
-            break;
+            case 'narr_end':
+                return "</glossdef></glossentry>\n";
+                break;
 
-        default:
-            return '';
+            default:
+                return '';
 
         }
     }

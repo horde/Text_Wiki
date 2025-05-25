@@ -1,5 +1,7 @@
 <?php
+
 namespace HordeTextWiki;
+
 // vim: set expandtab tabstop=4 shiftwidth=4 softtabstop=4:
 /**
  * This class implements a Text_Wiki_Render_Doku to "pre-filter" source text so
@@ -17,10 +19,10 @@ namespace HordeTextWiki;
  */
 
 
-class Text_Wiki_Render_Doku_Prefilter extends WikiRender {
-    function token()
+class DokuRendererPrefilter extends WikiRender
+{
+    public function token()
     {
         return '';
     }
 }
-?>

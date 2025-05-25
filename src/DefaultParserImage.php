@@ -1,4 +1,5 @@
 <?php
+
 namespace HordeTextWiki;
 
 /**
@@ -29,19 +30,19 @@ namespace HordeTextWiki;
 *
 */
 
-class Text_Wiki_Parse_Image extends WikiParse {
-
+class DefaultParserImage extends WikiParse
+{
     /**
      * URL schemes recognized by this rule.
      *
      * @access public
      * @var array
     */
-    var $conf = array(
+    public $conf = [
         'schemes' => 'http|https|ftp|gopher|news',
         'host_regexp' => '(?:[^.\s/"\'<\\\#delim#\ca-\cz]+\.)*[a-z](?:[-a-z0-9]*[a-z0-9])?\.?',
-        'path_regexp' => '(?:/[^\s"<\\\#delim#\ca-\cz]*)?'
-    );
+        'path_regexp' => '(?:/[^\s"<\\\#delim#\ca-\cz]*)?',
+    ];
 
     /**
     *
@@ -54,7 +55,7 @@ class Text_Wiki_Parse_Image extends WikiParse {
     *
     */
 
-    var $regex = '/(\[\[image\s+)(.+?)(\]\])/i';
+    public $regex = '/(\[\[image\s+)(.+?)(\]\])/i';
 
 
     /**
@@ -64,27 +65,30 @@ class Text_Wiki_Parse_Image extends WikiParse {
      * @var string
      * @see parse()
      */
-    var $url = '';
+    public $url = '';
 
-     /**
-     * Constructor.
-     * We override the constructor to build up the url regex from config
-     *
-     * @param object &$obj the base conversion handler
-     * @return The parser object
-     * @access public
-     */
-    function __construct(&$obj)
+    /**
+    * Constructor.
+    * We override the constructor to build up the url regex from config
+    *
+    * @param object &$obj the base conversion handler
+    * @return The parser object
+    * @access public
+    */
+    public function __construct(&$obj)
     {
         $default = $this->conf;
         parent::__construct($obj);
 
         // convert the list of recognized schemes to a regex OR,
         $schemes = $this->getConf('schemes', $default['schemes']);
-        $this->url = str_replace( '#delim#', $this->wiki->delim,
-           '#(?:' . (is_array($schemes) ? implode('|', $schemes) : $schemes) . ')://'
+        $this->url = str_replace(
+            '#delim#',
+            $this->wiki->delim,
+            '#(?:' . (is_array($schemes) ? implode('|', $schemes) : $schemes) . ')://'
            . $this->getConf('host_regexp', $default['host_regexp'])
-           . $this->getConf('path_regexp', $default['path_regexp']) .'#');
+           . $this->getConf('path_regexp', $default['path_regexp']) . '#'
+        );
     }
 
     /**
@@ -104,20 +108,20 @@ class Text_Wiki_Parse_Image extends WikiParse {
     *
     */
 
-    function process(&$matches)
+    public function process(&$matches)
     {
         $pos = strpos($matches[2], ' ');
 
         if ($pos === false) {
-            $options = array(
+            $options = [
                 'src' => $matches[2],
-                'attr' => array());
+                'attr' => []];
         } else {
             // everything after the space is attribute arguments
-            $options = array(
+            $options = [
                 'src' => substr($matches[2], 0, $pos),
-                'attr' => $this->getAttrs(substr($matches[2], $pos+1))
-            );
+                'attr' => $this->getAttrs(substr($matches[2], $pos + 1)),
+            ];
             // check the scheme case of external link
             if (array_key_exists('link', $options['attr'])) {
                 // external url ?
@@ -126,7 +130,7 @@ class Text_Wiki_Parse_Image extends WikiParse {
                         return $matches[0];
                     }
                 } elseif (in_array('Wikilink', $this->wiki->disable)) {
-                        return $matches[0]; // Wikilink disabled
+                    return $matches[0]; // Wikilink disabled
                 }
             }
         }

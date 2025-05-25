@@ -1,5 +1,7 @@
 <?php
+
 namespace HordeTextWiki;
+
 // vim: set expandtab tabstop=4 shiftwidth=4 softtabstop=4:
 /**
  * Specialchar rule end renderer for Latex
@@ -26,23 +28,23 @@ namespace HordeTextWiki;
  * @version    Release: @package_version@
  * @link       http://pear.php.net/package/Text_Wiki
  */
-class Text_Wiki_Render_Latex_SpecialChar extends WikiRender {
+class LatexRendererSpecialchar extends WikiRender
+{
+    public $types = ['~bs~' => '\\\\',
+        '~hs~' => '\hspace{1em}',
+        '~amp~' => '\&',
+        '~ldq~' => '``',
+        '~rdq~' => "''",
+        '~lsq~' => '`',
+        '~rsq~' => "'",
+        '~c~' => '\copyright',
+        '~--~' => '---',
+        '" -- "' => '---',
+        '&quot; -- &quot;' => '---',
+        '~lt~' => '<',
+        '~gt~' => '>'];
 
-    var $types = array('~bs~' => '\\\\',
-                       '~hs~' => '\hspace{1em}',
-                       '~amp~' => '\&',
-                       '~ldq~' => '``',
-                       '~rdq~' => "''",
-                       '~lsq~' => '`',
-                       '~rsq~' => "'",
-                       '~c~' => '\copyright',
-                       '~--~' => '---',
-                       '" -- "' => '---',
-                       '&quot; -- &quot;' => '---',
-                       '~lt~' => '<',
-                       '~gt~' => '>');
-
-    function token($options)
+    public function token($options)
     {
         if (isset($this->types[$options['char']])) {
             return $this->types[$options['char']];
@@ -51,5 +53,3 @@ class Text_Wiki_Render_Latex_SpecialChar extends WikiRender {
         }
     }
 }
-
-?>

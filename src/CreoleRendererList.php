@@ -1,8 +1,9 @@
 <?php
+
 namespace Horde\Text\Wiki;
 
-class Text_Wiki_Render_Creole_List extends WikiRender {
-
+class CreoleRendererList extends WikiRender
+{
     /**
     *
     * Renders a token into text matching the requested format.
@@ -19,36 +20,35 @@ class Text_Wiki_Render_Creole_List extends WikiRender {
     *
     */
 
-    function token($options)
+    public function token($options)
     {
         // make nice variables (type, level, count)
 
         switch ($options['type']) {
 
-        case 'bullet_list_start':
-        case 'number_list_start':
-            return '';
-            break;
-        case 'bullet_list_end':
-        case 'number_list_end':
-            if ($options['level'] == 0) {
+            case 'bullet_list_start':
+            case 'number_list_start':
+                return '';
+                break;
+            case 'bullet_list_end':
+            case 'number_list_end':
+                if ($options['level'] == 0) {
+                    return "\n";
+                }
+                break;
+            case 'bullet_item_start':
+                $pad = str_pad('', $options['level'], '*');
+                return $pad . ' ';
+                break;
+            case 'number_item_start':
+                $pad = str_pad('', $options['level'], '#');
+                return $pad . ' ';
+                break;
+            case 'bullet_item_end':
+            case 'number_item_end':
+            default:
                 return "\n";
-            }
-            break;
-        case 'bullet_item_start':
-            $pad = str_pad('', $options['level'], '*');
-            return $pad . ' ';
-            break;
-        case 'number_item_start':
-            $pad = str_pad('', $options['level'], '#');
-            return $pad . ' ';
-            break;
-        case 'bullet_item_end':
-        case 'number_item_end':
-        default:
-            return "\n";
-            break;
+                break;
         }
     }
 }
-?>

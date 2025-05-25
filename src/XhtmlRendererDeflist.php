@@ -1,5 +1,7 @@
 <?php
+
 namespace HordeTextWiki;
+
 // vim: set expandtab tabstop=4 shiftwidth=4 softtabstop=4:
 /**
  * Deflist rule end renderer for Xhtml
@@ -24,13 +26,13 @@ namespace HordeTextWiki;
  * @version    Release: @package_version@
  * @link       http://pear.php.net/package/Text_Wiki
  */
-class Text_Wiki_Render_Xhtml_Deflist extends WikiRender {
-
-    var $conf = array(
+class XhtmlRendererDeflist extends WikiRender
+{
+    public $conf = [
         'css_dl' => null,
         'css_dt' => null,
-        'css_dd' => null
-    );
+        'css_dd' => null,
+    ];
 
     /**
     *
@@ -45,42 +47,42 @@ class Text_Wiki_Render_Xhtml_Deflist extends WikiRender {
     *
     */
 
-    function token($options)
+    public function token($options)
     {
         $type = $options['type'];
         $pad = "    ";
 
         switch ($type) {
 
-        case 'list_start':
-            $css = $this->formatConf(' class="%s"', 'css_dl');
-            return "<dl$css>\n";
-            break;
+            case 'list_start':
+                $css = $this->formatConf(' class="%s"', 'css_dl');
+                return "<dl$css>\n";
+                break;
 
-        case 'list_end':
-            return "</dl>\n\n";
-            break;
+            case 'list_end':
+                return "</dl>\n\n";
+                break;
 
-        case 'term_start':
-            $css = $this->formatConf(' class="%s"', 'css_dt');
-            return $pad . "<dt$css>";
-            break;
+            case 'term_start':
+                $css = $this->formatConf(' class="%s"', 'css_dt');
+                return $pad . "<dt$css>";
+                break;
 
-        case 'term_end':
-            return "</dt>\n";
-            break;
+            case 'term_end':
+                return "</dt>\n";
+                break;
 
-        case 'narr_start':
-            $css = $this->formatConf(' class="%s"', 'css_dd');
-            return $pad . $pad . "<dd$css>";
-            break;
+            case 'narr_start':
+                $css = $this->formatConf(' class="%s"', 'css_dd');
+                return $pad . $pad . "<dd$css>";
+                break;
 
-        case 'narr_end':
-            return "</dd>\n";
-            break;
+            case 'narr_end':
+                return "</dd>\n";
+                break;
 
-        default:
-            return '';
+            default:
+                return '';
 
         }
     }

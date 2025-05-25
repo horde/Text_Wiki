@@ -1,5 +1,7 @@
 <?php
+
 namespace HordeTextWiki;
+
 // vim: set expandtab tabstop=4 shiftwidth=4 softtabstop=4:
 /**
  * Wikilink rule end renderer for Docbook
@@ -24,18 +26,18 @@ namespace HordeTextWiki;
  * @version    Release: @package_version@
  * @link       http://pear.php.net/package/Text_Wiki_Docbook
  */
-class Text_Wiki_Render_Docbook_Wikilink extends WikiRender {
-
-    var $conf = array(
-        'pages' => array(), // set to null or false to turn off page checks
+class DocbookRendererWikilink extends WikiRender
+{
+    public $conf = [
+        'pages' => [], // set to null or false to turn off page checks
         'view_url' => 'http://example.com/index.php?page=%s',
         'new_url'  => 'http://example.com/new.php?page=%s',
         'new_text' => '?',
         'new_text_pos' => 'after', // 'before', 'after', or null/false
         'css' => null,
         'css_new' => null,
-        'exists_callback' => null // call_user_func() callback
-    );
+        'exists_callback' => null, // call_user_func() callback
+    ];
 
 
     /**
@@ -51,7 +53,7 @@ class Text_Wiki_Render_Docbook_Wikilink extends WikiRender {
     *
     */
 
-    function token($options)
+    public function token($options)
     {
         // make nice variable names (page, anchor, text)
         extract($options);
@@ -61,9 +63,9 @@ class Text_Wiki_Render_Docbook_Wikilink extends WikiRender {
         // getConf() because we'll need a reference (for
         // object instance method callbacks).
         if (isset($this->conf['exists_callback'])) {
-            $callback =& $this->conf['exists_callback'];
+            $callback = & $this->conf['exists_callback'];
         } else {
-        	$callback = false;
+            $callback = false;
         }
 
         if ($callback) {

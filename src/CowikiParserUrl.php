@@ -1,4 +1,5 @@
 <?php
+
 namespace HordeTextWiki;
 
 /**
@@ -50,9 +51,8 @@ namespace HordeTextWiki;
 *
 */
 
-class Text_Wiki_Parse_Url extends WikiParse {
-
-
+class CowikiParserUrl extends WikiParse
+{
     /**
     *
     * Keeps a running count of numbered-reference URLs.
@@ -63,7 +63,7 @@ class Text_Wiki_Parse_Url extends WikiParse {
     *
     */
 
-    var $footnoteCount = 0;
+    public $footnoteCount = 0;
 
 
     /**
@@ -76,16 +76,16 @@ class Text_Wiki_Parse_Url extends WikiParse {
     *
     */
 
-    var $conf = array(
-        'schemes' => array(
+    public $conf = [
+        'schemes' => [
             'http://',
             'https://',
             'ftp://',
             'gopher://',
             'news://',
-            'mailto:'
-        )
-    );
+            'mailto:',
+        ],
+    ];
 
 
     /**
@@ -98,14 +98,14 @@ class Text_Wiki_Parse_Url extends WikiParse {
     *
     */
 
-    function __construct(&$obj)
+    public function __construct(&$obj)
     {
         parent::__construct($obj);
 
         // convert the list of recognized schemes to a regex-safe string,
         // where the pattern delim is a slash
-        $tmp = array();
-        $list = $this->getConf('schemes', array());
+        $tmp = [];
+        $list = $this->getConf('schemes', []);
         foreach ($list as $val) {
             $tmp[] = preg_quote($val, '/');
         }
@@ -115,9 +115,9 @@ class Text_Wiki_Parse_Url extends WikiParse {
         $this->regex =
             "($schemes)" . // allowed schemes
             "(" . // start pattern
-            "[^ \\/\"\'\(\)".$this->wiki->delim."]*\\/" . // no spaces, backslashes, slashes, double-quotes, single quotes, or delimiters;
+            "[^ \\/\"\'\(\)" . $this->wiki->delim . "]*\\/" . // no spaces, backslashes, slashes, double-quotes, single quotes, or delimiters;
             ")*" . // end pattern
-            "[^ \\t\\n\\/\"\'\(\)".$this->wiki->delim."]*" .
+            "[^ \\t\\n\\/\"\'\(\)" . $this->wiki->delim . "]*" .
             "[A-Za-z0-9\\/?=&~_#]";
     }
 
@@ -130,7 +130,7 @@ class Text_Wiki_Parse_Url extends WikiParse {
     *
     */
 
-    function parse()
+    public function parse()
     {
         // -------------------------------------------------------------
         //
@@ -144,7 +144,7 @@ class Text_Wiki_Parse_Url extends WikiParse {
         // the replacement text for matches.
         $this->wiki->source = preg_replace_callback(
             $tmp_regex,
-            array(&$this, 'processDescr'),
+            [&$this, 'processDescr'],
             $this->wiki->source
         );
 
@@ -178,7 +178,7 @@ class Text_Wiki_Parse_Url extends WikiParse {
         // use the standard callback for inline URLs
         $this->wiki->source = preg_replace_callback(
             $tmp_regex,
-            array(&$this, 'process'),
+            [&$this, 'process'],
             $this->wiki->source
         );
     }
@@ -199,14 +199,14 @@ class Text_Wiki_Parse_Url extends WikiParse {
     *
     */
 
-    function process(&$matches)
+    public function process(&$matches)
     {
         // set options
-        $options = array(
+        $options = [
             'type' => 'inline',
             'href' => $matches[2],
-            'text' => $matches[2]
-        );
+            'text' => $matches[2],
+        ];
 
         // tokenize
         return $matches[1] . $this->wiki->addToken($this->rule, $options) . $matches[5];
@@ -229,17 +229,17 @@ class Text_Wiki_Parse_Url extends WikiParse {
     *
     */
 
-    function processFootnote(&$matches)
+    public function processFootnote(&$matches)
     {
         // keep a running count for footnotes
         $this->footnoteCount++;
 
         // set options
-        $options = array(
+        $options = [
             'type' => 'footnote',
             'href' => $matches[1],
-            'text' => $this->footnoteCount
-        );
+            'text' => $this->footnoteCount,
+        ];
 
         // tokenize
         return $this->wiki->addToken($this->rule, $options);
@@ -266,14 +266,14 @@ class Text_Wiki_Parse_Url extends WikiParse {
     *
     */
 
-    function processDescr(&$matches)
+    public function processDescr(&$matches)
     {
         // set options
-        $options = array(
+        $options = [
             'type' => 'descr',
             'href' => $matches[1],
             'text' => isset($matches[5]) && strlen($matches[5]) ? $matches[5] : $matches[1],
-        );
+        ];
 
         // tokenize
         return $this->wiki->addToken($this->rule, $options);

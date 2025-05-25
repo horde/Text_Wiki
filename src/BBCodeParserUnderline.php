@@ -1,5 +1,7 @@
 <?php
+
 namespace Horde\Text\Wiki;
+
 // vim: set expandtab tabstop=4 shiftwidth=4 softtabstop=4:
 /**
  * BBCode: Parses for underlined text.
@@ -32,8 +34,8 @@ namespace Horde\Text\Wiki;
  * @link       http://pear.php.net/package/Text_Wiki
  * @see        Text_Wiki_Parse::Text_Wiki_Parse()
  */
-class Text_Wiki_Parse_Underline extends WikiParse {
-
+class BBCodeParserUnderline extends WikiParse
+{
     /**
      * The regular expression used to parse the source text and find
      * matches conforming to this rule.  Used by the parse() method.
@@ -42,7 +44,7 @@ class Text_Wiki_Parse_Underline extends WikiParse {
      * @var string
      * @see parse()
      */
-    var $regex =  "#\[u](.*?)\[/u]#i";
+    public $regex =  "#\[u](.*?)\[/u]#i";
 
 
     /**
@@ -55,10 +57,10 @@ class Text_Wiki_Parse_Underline extends WikiParse {
      * the source text surrounding the text to be emphasized.
      * @access public
      */
-    function process(&$matches)
+    public function process(&$matches)
     {
-        $start = $this->wiki->addToken($this->rule, array('type' => 'start'));
-        $end = $this->wiki->addToken($this->rule, array('type' => 'end'));
+        $start = $this->wiki->addToken($this->rule, ['type' => 'start']);
+        $end = $this->wiki->addToken($this->rule, ['type' => 'end']);
         return $start . $matches[1] . $end;
     }
 }

@@ -1,4 +1,5 @@
 <?php
+
 namespace HordeTextWiki;
 
 /**
@@ -40,11 +41,11 @@ namespace HordeTextWiki;
 *
 */
 
-class Text_Wiki_Parse_Freelink extends WikiParse {
-
-    var $conf = array (
-                       'utf-8' => false
-    );
+class DefaultParserFreelink extends WikiParse
+{
+    public $conf =  [
+        'utf-8' => false,
+    ];
 
     /**
     *
@@ -57,7 +58,7 @@ class Text_Wiki_Parse_Freelink extends WikiParse {
     *
     */
 
-    function __construct(&$obj)
+    public function __construct(&$obj)
     {
         parent::__construct($obj);
         if ($this->getConf('utf-8')) {
@@ -69,11 +70,11 @@ class Text_Wiki_Parse_Freelink extends WikiParse {
             '/' .                                                   // START regex
             "\\(\\(" .                                               // double open-parens
             "(" .                                                   // START freelink page patter
-            "[-A-Za-z0-9 _+\\/.,;:!?'\"\\[\\]\\{\\}&".$any."\xc0-\xff]+" . // 1 or more of just about any character
+            "[-A-Za-z0-9 _+\\/.,;:!?'\"\\[\\]\\{\\}&" . $any . "\xc0-\xff]+" . // 1 or more of just about any character
             ")" .                                                   // END  freelink page pattern
             "(" .                                                   // START display-name
             "\|" .                                                   // a pipe to start the display name
-            "[-A-Za-z0-9 _+\\/.,;:!?'\"\\[\\]\\{\\}&".$any."\xc0-\xff]+" . // 1 or more of just about any character
+            "[-A-Za-z0-9 _+\\/.,;:!?'\"\\[\\]\\{\\}&" . $any . "\xc0-\xff]+" . // 1 or more of just about any character
             ")?" .                                                   // END display-name pattern 0 or 1
             "(" .                                                   // START pattern for named anchors
             "\#" .                                                   // a hash mark
@@ -81,7 +82,7 @@ class Text_Wiki_Parse_Freelink extends WikiParse {
             "[-A-Za-z0-9_:.]*" .                                   // 0 or more alpha, digit, underscore
             ")?" .                                                   // END named anchors pattern 0 or 1
             "()\\)\\)" .                                           // double close-parens
-            '/'.($this->getConf('utf-8') ? 'u' : '');              // END regex
+            '/' . ($this->getConf('utf-8') ? 'u' : '');              // END regex
     }
 
 
@@ -105,7 +106,7 @@ class Text_Wiki_Parse_Freelink extends WikiParse {
     *
     */
 
-    function process(&$matches)
+    public function process(&$matches)
     {
         // use nice variable names
         $page = $matches[1];
@@ -122,11 +123,11 @@ class Text_Wiki_Parse_Freelink extends WikiParse {
         }
 
         // set the options
-        $options = array(
+        $options = [
             'page'   => $page,
             'text'   => $text,
-            'anchor' => $anchor
-        );
+            'anchor' => $anchor,
+        ];
 
         // return a token placeholder
         return $this->wiki->addToken($this->rule, $options);

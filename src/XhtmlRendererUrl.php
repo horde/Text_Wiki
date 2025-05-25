@@ -1,5 +1,7 @@
 <?php
+
 namespace HordeTextWiki;
+
 // vim: set expandtab tabstop=4 shiftwidth=4 softtabstop=4:
 /**
  * Url rule end renderer for Xhtml
@@ -24,18 +26,17 @@ namespace HordeTextWiki;
  * @version    Release: @package_version@
  * @link       http://pear.php.net/package/Text_Wiki
  */
-class Text_Wiki_Render_Xhtml_Url extends WikiRender {
-
-
-    var $conf = array(
+class XhtmlRendererUrl extends WikiRender
+{
+    public $conf = [
         'target' => '_blank',
         'images' => true,
-        'img_ext' => array('jpg', 'jpeg', 'gif', 'png'),
+        'img_ext' => ['jpg', 'jpeg', 'gif', 'png'],
         'css_inline' => null,
         'css_footnote' => null,
         'css_descr' => null,
-        'css_img' => null
-    );
+        'css_img' => null,
+    ];
 
     /**
     *
@@ -50,7 +51,7 @@ class Text_Wiki_Render_Xhtml_Url extends WikiRender {
     *
     */
 
-    function token($options)
+    public function token($options)
     {
         // create local variables from the options array (text,
         // href, type)
@@ -64,7 +65,7 @@ class Text_Wiki_Render_Xhtml_Url extends WikiRender {
 
         // does the filename extension indicate an image file?
         if ($this->getConf('images') &&
-            in_array($ext, $this->getConf('img_ext', array()))) {
+            in_array($ext, $this->getConf('img_ext', []))) {
 
             // create alt text for the image
             if (! isset($text) || $text == '') {
@@ -80,13 +81,13 @@ class Text_Wiki_Render_Xhtml_Url extends WikiRender {
         } else {
 
             // should we build a target clause?
-            if ($href{0} == '#' ||
+            if ($href[0] == '#' ||
               strtolower(substr($href, 0, 7)) == 'mailto:') {
-              // targets not allowed for on-page anchors
-              // and mailto: links.
+                // targets not allowed for on-page anchors
+                // and mailto: links.
                 $target = '';
             } else {
-        // allow targets on non-anchor non-mailto links
+                // allow targets on non-anchor non-mailto links
                 $target = $this->getConf('target');
             }
 
@@ -102,7 +103,7 @@ class Text_Wiki_Render_Xhtml_Url extends WikiRender {
                 $start .= " onclick=\"window.open(this.href, '$target');";
                 $start .= " return false;\"";
             }
-            
+
             if (isset($name)) {
                 $start .= " id=\"$name\"";
             }
@@ -121,7 +122,7 @@ class Text_Wiki_Render_Xhtml_Url extends WikiRender {
 
         if ($options['type'] == 'start') {
             $output = $start;
-        } else if ($options['type'] == 'end') {
+        } elseif ($options['type'] == 'end') {
             $output = $end;
         } else {
             $output = $start . $text . $end;

@@ -1,4 +1,5 @@
 <?php
+
 namespace HordeTextWiki;
 
 /**
@@ -17,9 +18,8 @@ namespace HordeTextWiki;
  *
  */
 
-class Text_Wiki_Parse_Preformatted extends WikiParse {
-
-
+class CreoleParserPreformatted extends WikiParse
+{
     /**
      *
      * The regular expression used to parse the source text and find
@@ -33,7 +33,7 @@ class Text_Wiki_Parse_Preformatted extends WikiParse {
      *
      */
 
-    var $regex = '/\n{{{\n(.*)\n}}}\n/Us';
+    public $regex = '/\n{{{\n(.*)\n}}}\n/Us';
 
     /**
      *
@@ -50,7 +50,7 @@ class Text_Wiki_Parse_Preformatted extends WikiParse {
      *
      */
 
-    function process(&$matches)
+    public function process(&$matches)
     {
         // > any line consisting of only indented three closing curly braces
         // > will have one space removed from the indentation
@@ -58,10 +58,10 @@ class Text_Wiki_Parse_Preformatted extends WikiParse {
         $find = "/\n( *) }}}/";
         $replace = "\n$1}}}";
         $matches[1] = preg_replace($find, $replace, $matches[1]);
-    
+
         $token = $this->wiki->addToken(
             $this->rule,
-            array('text' => $matches[1])
+            ['text' => $matches[1]]
         );
         return "\n\n" . $token . "\n\n";
     }

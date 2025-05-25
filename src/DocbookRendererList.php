@@ -1,5 +1,7 @@
 <?php
+
 namespace Horde\Text\Wiki;
+
 // vim: set expandtab tabstop=4 shiftwidth=4 softtabstop=4:
 /**
  * List rule end renderer for Docbook
@@ -24,19 +26,19 @@ namespace Horde\Text\Wiki;
  * @version    Release: @package_version@
  * @link       http://pear.php.net/package/Text_Wiki_Docbook
  */
-class Text_Wiki_Render_Docbook_List extends WikiRender {
+class DocbookRendererList extends WikiRender
+{
+    public $conf = [
+        'mark' => null,
+    ];
 
-    var $conf = array(
-        'mark' => null
-    );
-
-    var $numeration = array(
+    public $numeration = [
         '1' => 'arabic',
         'i' => 'lowerroman',
         'I' => 'upperroman',
         'a' => 'loweralpha',
         'A' => 'upperalpha',
-    );
+    ];
 
     /**
     *
@@ -54,42 +56,42 @@ class Text_Wiki_Render_Docbook_List extends WikiRender {
     *
     */
 
-    function token($options)
+    public function token($options)
     {
         // make nice variables (type, level, count)
         extract($options);
 
         switch ($options['type']) {
 
-        case 'bullet_list_start':
-            return '<itemizedlist' . (($mark = $this->getConf('mark', null)) ?
-                ' mark="' . $mark . '"' : '') . ">\n";
+            case 'bullet_list_start':
+                return '<itemizedlist' . (($mark = $this->getConf('mark', null)) ?
+                    ' mark="' . $mark . '"' : '') . ">\n";
 
-        case 'bullet_list_end':
-            return "</itemizedlist>\n";
+            case 'bullet_list_end':
+                return "</itemizedlist>\n";
 
-        case 'number_list_start':
-            if (empty($format) || !isset($this->numeration[$format])) {
-                $format = '';
-            } else  {
-                $format = ' numeration="' . $this->numeration[$format] . '"';
-            }
-            return '<orderedlist' . $format . ">\n";
+            case 'number_list_start':
+                if (empty($format) || !isset($this->numeration[$format])) {
+                    $format = '';
+                } else {
+                    $format = ' numeration="' . $this->numeration[$format] . '"';
+                }
+                return '<orderedlist' . $format . ">\n";
 
-        case 'number_list_end':
-            return "</orderedlist>\n";
+            case 'number_list_end':
+                return "</orderedlist>\n";
 
-        case 'bullet_item_start':
-        case 'number_item_start':
-            return "<listitem>\n";
+            case 'bullet_item_start':
+            case 'number_item_start':
+                return "<listitem>\n";
 
-        case 'bullet_item_end':
-        case 'number_item_end':
-            return "</listitem>\n";
+            case 'bullet_item_end':
+            case 'number_item_end':
+                return "</listitem>\n";
 
-        default:
-            return '';
-            break;
+            default:
+                return '';
+                break;
         }
     }
 }

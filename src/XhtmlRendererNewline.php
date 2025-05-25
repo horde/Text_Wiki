@@ -1,5 +1,7 @@
 <?php
+
 namespace Horde\Text\Wiki;
+
 // vim: set expandtab tabstop=4 shiftwidth=4 softtabstop=4:
 /**
  * Newline rule end renderer for Xhtml
@@ -24,13 +26,10 @@ namespace Horde\Text\Wiki;
  * @version    Release: @package_version@
  * @link       http://pear.php.net/package/Text_Wiki
  */
-class Text_Wiki_Render_Xhtml_Newline extends WikiRender {
-
-
-    function token($options)
+class XhtmlRendererNewline extends WikiRender
+{
+    public function token($options)
     {
         return "<br />\n";
     }
 }
-
-?>

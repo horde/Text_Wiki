@@ -1,60 +1,60 @@
 <?php
+
 namespace HordeTextWiki;
 
 /**
-* 
-* Find source text marked for lookup in the PHP online manual.
-* 
-* @category Text
-* 
-* @package Text_Wiki
-* 
-* @author Paul M. Jones <pmjones@php.net>
-* 
-* @license LGPL
-* 
-* @version $Id$
-* 
-*/
-
-/**
-* 
+*
 * Find source text marked for lookup in the PHP online manual.
 *
 * @category Text
-* 
+*
 * @package Text_Wiki
-* 
+*
 * @author Paul M. Jones <pmjones@php.net>
-* 
+*
+* @license LGPL
+*
+* @version $Id$
+*
 */
 
-class Text_Wiki_Parse_Phplookup extends WikiParse {
-    
-    
+/**
+*
+* Find source text marked for lookup in the PHP online manual.
+*
+* @category Text
+*
+* @package Text_Wiki
+*
+* @author Paul M. Jones <pmjones@php.net>
+*
+*/
+
+class DefaultParserPhplookup extends WikiParse
+{
     /**
-    * 
+    *
     * The regular expression used to parse the source text and find
     * matches conforming to this rule.  Used by the parse() method.
-    * 
+    *
     * @access public
-    * 
+    *
     * @var string
-    * 
+    *
     * @see parse()
-    * 
+    *
     */
-    
-    var $regex = "/\[\[php (.+?)\]\]/";
-    
-    
+
+    public $regex = "/\[\[php (.+?)\]\]/";
+
+
     /**
-    * 
+    *
     * Generates a replacement for the matched text.  Token options are:
-    * 
+    *
     * 'type' => ['start'|'end'] The starting or ending point of the
     * teletype text.  The text itself is left in the source.
-    * 
+    *
     * @access public
     *
     * @param array &$matches The array of matches from parse().
@@ -63,12 +63,12 @@ class Text_Wiki_Parse_Phplookup extends WikiParse {
     * placeholder in the source text surrounding the teletype text.
     *
     */
-    
-    function process(&$matches)
+
+    public function process(&$matches)
     {
         return $this->wiki->addToken(
-            $this->rule, array('text' => $matches[1])
+            $this->rule,
+            ['text' => $matches[1]]
         );
     }
 }
-?>

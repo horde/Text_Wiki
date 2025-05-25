@@ -1,4 +1,5 @@
 <?php
+
 namespace Horde\Text\Wiki;
 
 /**
@@ -18,9 +19,8 @@ namespace Horde\Text\Wiki;
  */
 
 
-class Text_Wiki_Parse_Tighten extends WikiParse {
-
-
+class CreoleParserTighten extends WikiParse
+{
     /**
      *
      * Apply tightening directly to the source text.
@@ -29,10 +29,12 @@ class Text_Wiki_Parse_Tighten extends WikiParse {
      *
      */
 
-    function parse()
+    public function parse()
     {
-        $this->wiki->source = str_replace("\n", '',
-            $this->wiki->source);
+        $this->wiki->source = str_replace(
+            "\n",
+            '',
+            $this->wiki->source
+        );
     }
 }
-?>

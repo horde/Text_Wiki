@@ -1,5 +1,7 @@
 <?php
+
 namespace HordeTextWiki;
+
 // vim: set expandtab tabstop=4 shiftwidth=4 softtabstop=4:
 /**
  * Specialchar rule end renderer for Docbook
@@ -24,30 +26,28 @@ namespace HordeTextWiki;
  * @version    Release: @package_version@
  * @link       http://pear.php.net/package/Text_Wiki_Docbook
  */
-class Text_Wiki_Render_Docbook_SpecialChar extends WikiRender {
+class DocbookRendererSpecialchar extends WikiRender
+{
+    public $types = ['~bs~' => '&#092;',
+        '~hs~' => '&#160;', // &nbsp;
+        '~amp~' => '&#038;', // &amp;
+        '~ldq~' => '&#8220;', // &ldquo;
+        '~rdq~' => '&#8221;', // &rdquo;
+        '~lsq~' => '&#8216;', // &lsquo;
+        '~rsq~' => '&#8217;', // &rsquo;
+        '~c~' => '&#169;', // &copy;
+        '~--~' => '&#8212;', // &mdash;
+        '" -- "' => '&#8212;', // &mdash;
+        '&quot; -- &quot;' => '&#8212;', // &mdash;
+        '~lt~' => '&#060;', // &lt;
+        '~gt~' => '&#062']; // &gt;
 
-    var $types = array('~bs~' => '&#092;',
-                       '~hs~' => '&#160;', // &nbsp;
-                       '~amp~' => '&#038;', // &amp;
-                       '~ldq~' => '&#8220;', // &ldquo;
-                       '~rdq~' => '&#8221;', // &rdquo;
-                       '~lsq~' => '&#8216;', // &lsquo;
-                       '~rsq~' => '&#8217;', // &rsquo;
-                       '~c~' => '&#169;', // &copy;
-                       '~--~' => '&#8212;', // &mdash;
-                       '" -- "' => '&#8212;', // &mdash;
-                       '&quot; -- &quot;' => '&#8212;', // &mdash;
-                       '~lt~' => '&#060;', // &lt;
-                       '~gt~' => '&#062'); // &gt;
-
-    function token($options)
+    public function token($options)
     {
         if (isset($this->types[$options['char']])) {
             return $this->types[$options['char']];
         } else {
-            return '&#'.substr($options['char'], 1, -1).';';
+            return '&#' . substr($options['char'], 1, -1) . ';';
         }
     }
 }
-
-?>

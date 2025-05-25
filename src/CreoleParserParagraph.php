@@ -1,4 +1,5 @@
 <?php
+
 namespace Horde\Text\Wiki;
 
 /**
@@ -21,8 +22,8 @@ namespace Horde\Text\Wiki;
  *
  */
 
-class Text_Wiki_Parse_Paragraph extends WikiParse {
-
+class CreoleParserParagraph extends WikiParse
+{
     /**
      *
      * The regular expression used to find source text matching this
@@ -34,10 +35,10 @@ class Text_Wiki_Parse_Paragraph extends WikiParse {
      *
      */
 
-    var $regex = "/^.+?\n/m"; // (?=[\n\-\|#{=])
+    public $regex = "/^.+?\n/m"; // (?=[\n\-\|#{=])
 
-    var $conf = array(
-        'skip' => array(
+    public $conf = [
+        'skip' => [
             'address',
             'box',
             'blockquote',
@@ -50,9 +51,9 @@ class Text_Wiki_Parse_Paragraph extends WikiParse {
             'list',
             'paragraph',
             'preformatted',
-            'toc'
-        )
-    );
+            'toc',
+        ],
+    ];
 
 
     /**
@@ -72,7 +73,7 @@ class Text_Wiki_Parse_Paragraph extends WikiParse {
      *
      */
 
-    function process(&$matches)
+    public function process(&$matches)
     {
         $delim = $this->wiki->delim;
 
@@ -86,11 +87,13 @@ class Text_Wiki_Parse_Paragraph extends WikiParse {
             // no.
 
             $start = $this->wiki->addToken(
-                $this->rule, array('type' => 'start')
+                $this->rule,
+                ['type' => 'start']
             );
 
             $end = $this->wiki->addToken(
-                $this->rule, array('type' => 'end')
+                $this->rule,
+                ['type' => 'end']
             );
 
             return $start . trim($matches[0]) . $end;
@@ -106,7 +109,7 @@ class Text_Wiki_Parse_Paragraph extends WikiParse {
         $key = '';
         $len = strlen($matches[0]);
         for ($i = 1; $i < $len; $i++) {
-            $char = $matches[0]{$i};
+            $char = $matches[0][$i];
             if ($char == $delim) {
                 break;
             } else {
@@ -117,7 +120,7 @@ class Text_Wiki_Parse_Paragraph extends WikiParse {
         // look at the token and see if it's skippable (if we skip,
         // it will not be marked as a paragraph)
         $token_type = strtolower($this->wiki->tokens[$key][0]);
-        $skip = $this->getConf('skip', array());
+        $skip = $this->getConf('skip', []);
 
         if (in_array($token_type, $skip)) {
             // this type of token should not have paragraphs applied to it.
@@ -126,15 +129,16 @@ class Text_Wiki_Parse_Paragraph extends WikiParse {
         } else {
 
             $start = $this->wiki->addToken(
-                $this->rule, array('type' => 'start')
+                $this->rule,
+                ['type' => 'start']
             );
 
             $end = $this->wiki->addToken(
-                $this->rule, array('type' => 'end')
+                $this->rule,
+                ['type' => 'end']
             );
 
             return $start . trim($matches[0]) . $end;
         }
     }
 }
-?>

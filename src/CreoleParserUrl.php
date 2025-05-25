@@ -1,4 +1,5 @@
 <?php
+
 namespace Horde\Text\Wiki;
 
 /**
@@ -25,8 +26,8 @@ namespace Horde\Text\Wiki;
  *
  */
 
-class Text_Wiki_Parse_Url extends WikiParse {
-
+class CreoleParserUrl extends WikiParse
+{
     /**
      *
      * Constructor.  Overrides the Text_Wiki_Parse constructor so that we
@@ -39,7 +40,7 @@ class Text_Wiki_Parse_Url extends WikiParse {
      *
      */
 
-    function __construct(&$obj)
+    public function __construct(&$obj)
     {
         parent::__construct($obj);
         $this->regex = '/((?:\[\[ *((?:\w+:\/\/|mailto:|\/)[^\|\]\n ]*)( *\| *([^\]\n]*))? *\]\])|((?<=[^\~\w])(https?:\/\/|ftps?:\/\/|mailto:)[^\'\"\n ' . $this->wiki->delim . ']*[A-Za-z0-9\/\?\=\&\~\_#]))/';
@@ -65,43 +66,51 @@ class Text_Wiki_Parse_Url extends WikiParse {
      *
      */
 
-    function process(&$matches)
+    public function process(&$matches)
     {
-        if (isset($matches[2])) $href = trim($matches[2]);
-        if (isset($matches[4])) $text = trim($matches[4]);
-        if (isset($matches[5])) $rawurl = $matches[5];
-        if (empty($href)) $href = $rawurl;
+        if (isset($matches[2])) {
+            $href = trim($matches[2]);
+        }
+        if (isset($matches[4])) {
+            $text = trim($matches[4]);
+        }
+        if (isset($matches[5])) {
+            $rawurl = $matches[5];
+        }
+        if (empty($href)) {
+            $href = $rawurl;
+        }
 
         if (empty($text)) {
             $text = $href;
-            if (strpos($text, '/') === FALSE) {
-				$text = str_replace('http://', '', $text);
-				$text = str_replace('mailto:', '', $text);
-			}
+            if (strpos($text, '/') === false) {
+                $text = str_replace('http://', '', $text);
+                $text = str_replace('mailto:', '', $text);
+            }
             return $this->wiki->addToken(
                 $this->rule,
-                array(
-					'type' => 'inline',
+                [
+                    'type' => 'inline',
                     'href' => $href,
-                    'text' => $text
-                )
+                    'text' => $text,
+                ]
             );
         } else {
             return $this->wiki->addToken(
                 $this->rule,
-                array(
+                [
                     'type' => 'start',
                     'href' => $href,
-                    'text' => $text
-                )
+                    'text' => $text,
+                ]
             ) . $text .
             $this->wiki->addToken(
                 $this->rule,
-                array(
+                [
                     'type' => 'end',
                     'href' => $href,
-                    'text' => $text
-                )
+                    'text' => $text,
+                ]
             );
         }
     }

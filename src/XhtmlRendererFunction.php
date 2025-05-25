@@ -1,5 +1,7 @@
 <?php
+
 namespace HordeTextWiki;
+
 // vim: set expandtab tabstop=4 shiftwidth=4 softtabstop=4:
 /**
  * Function rule end renderer for Xhtml
@@ -24,10 +26,10 @@ namespace HordeTextWiki;
  * @version    Release: @package_version@
  * @link       http://pear.php.net/package/Text_Wiki
  */
-class Text_Wiki_Render_Xhtml_Function extends WikiRender {
-
-    var $conf = array(
-    	// list separator for params and throws
+class XhtmlRendererFunction extends WikiRender
+{
+    public $conf = [
+        // list separator for params and throws
         'list_sep' => ', ',
 
         // the "main" format string
@@ -40,8 +42,8 @@ class Text_Wiki_Render_Xhtml_Function extends WikiRender {
         'format_paramd' => '[%type <i>%descr</i> default %default]',
 
         // the looped format string for throws
-        'format_throws' => '<b>throws</b> %type <i>%descr</i>'
-    );
+        'format_throws' => '<b>throws</b> %type <i>%descr</i>',
+    ];
 
     /**
     *
@@ -56,7 +58,7 @@ class Text_Wiki_Render_Xhtml_Function extends WikiRender {
     *
     */
 
-    function token($options)
+    public function token($options)
     {
         extract($options); // name, access, return, params, throws
 
@@ -67,7 +69,7 @@ class Text_Wiki_Render_Xhtml_Function extends WikiRender {
         $output = str_replace('%name', $this->textEncode($name), $output);
 
         // build the set of params
-        $list = array();
+        $list = [];
         foreach ($params as $key => $val) {
 
             // is there a default value?
@@ -89,9 +91,9 @@ class Text_Wiki_Render_Xhtml_Function extends WikiRender {
         $output = str_replace('%params', $tmp, $output);
 
         // build the set of throws
-        $list = array();
+        $list = [];
         foreach ($throws as $key => $val) {
-               $tmp = $this->conf['format_throws'];
+            $tmp = $this->conf['format_throws'];
             $tmp = str_replace('%type', $this->textEncode($val['type']), $tmp);
             $tmp = str_replace('%descr', $this->textEncode($val['descr']), $tmp);
             $list[] = $tmp;

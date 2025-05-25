@@ -1,5 +1,7 @@
 <?php
+
 namespace HordeTextWiki;
+
 // vim: set expandtab tabstop=4 shiftwidth=4 softtabstop=4:
 /**
  * Smiley rule Docbook renderer
@@ -27,8 +29,8 @@ namespace HordeTextWiki;
  * @link       http://pear.php.net/package/Text_Wiki_Docbook
  * @see        Text_Wiki::Text_Wiki_Render()
  */
-class Text_Wiki_Render_Docbook_Smiley extends WikiRender {
-
+class DocbookRendererSmiley extends WikiRender
+{
     /**
      * Configuration keys for this rule
      * 'prefix' => the path to smileys images inclusive file name prefix,
@@ -43,11 +45,11 @@ class Text_Wiki_Render_Docbook_Smiley extends WikiRender {
      * @access public
      * @var array 'config-key' => mixed config-value
      */
-    var $conf = array(
+    public $conf = [
         'prefix' => 'images/smiles/icon_',
         'extension' => '.gif',
-        'css' => null
-    );
+        'css' => null,
+    ];
 
     /**
       * Renders a token into text matching the requested format.
@@ -57,7 +59,7 @@ class Text_Wiki_Render_Docbook_Smiley extends WikiRender {
       * @param array $options The "options" portion of the token (second element).
       * @return string The text rendered from the token options.
       */
-    function token($options)
+    public function token($options)
     {
         $imageFile = $this->getConf('prefix') . $options['name'] . $this->getConf('extension');
 
@@ -67,7 +69,7 @@ class Text_Wiki_Render_Docbook_Smiley extends WikiRender {
         // return the HTML output
         return '<img src="' . $this->textEncode($imageFile) . '"' .
             (is_array($imageSize) ?
-                ' width="' . $imageSize[0] . '" height="' . $imageSize[1] .'"' : '') .
+                ' width="' . $imageSize[0] . '" height="' . $imageSize[1] . '"' : '') .
             ' alt="' . $options['desc'] . '"' .
             $this->formatConf(' class="%s"', 'css') . ' />';
     }

@@ -1,9 +1,9 @@
 <?php
+
 namespace HordeTextWiki;
 
-
-class Text_Wiki_Render_Doku_Url extends WikiRender {
-
+class DokuRendererUrl extends WikiRender
+{
     /**
     *
     * Renders a token into text matching the requested format.
@@ -17,7 +17,7 @@ class Text_Wiki_Render_Doku_Url extends WikiRender {
     *
     */
 
-    function token($options)
+    public function token($options)
     {
         $page_text_options = false;
         if (isset($options['page']) && isset($options['text'])) {
@@ -31,21 +31,19 @@ class Text_Wiki_Render_Doku_Url extends WikiRender {
             if (!strlen($options['text']) || $page_text_options) {
                 return $options['href'];
             } else {
-                return '[['.$options['href'].'|';
+                return '[[' . $options['href'] . '|';
             }
-        }
-        else if ($options['type'] == 'end') {
+        } elseif ($options['type'] == 'end') {
             if (! strlen($options['text']) || $page_text_options) {
                 return '';
             } else {
                 return ']]';
             }
-        }
-        else {
+        } else {
             if (! strlen($options['text']) || $page_text_options) {
                 return $options['href'];
             } else {
-                return '[['.$options['href'].'|'.$options['text'].']]';
+                return '[[' . $options['href'] . '|' . $options['text'] . ']]';
             }
         }
     }

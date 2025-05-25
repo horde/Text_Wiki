@@ -1,5 +1,7 @@
 <?php
+
 namespace Horde\Text\Wiki;
+
 // vim: set expandtab tabstop=4 shiftwidth=4 softtabstop=4:
 /**
  * Titlebar rule end renderer for Xhtml
@@ -24,11 +26,11 @@ namespace Horde\Text\Wiki;
  * @version    Release: @package_version@
  * @link       http://pear.php.net/package/Text_Wiki
  */
-class Text_Wiki_Render_Xhtml_Titlebar extends WikiRender {
-
-    var $conf = array(
-        'css' => 'titlebar'
-    );
+class XhtmlRendererTitlebar extends WikiRender
+{
+    public $conf = [
+        'css' => 'titlebar',
+    ];
 
     /**
     *
@@ -43,7 +45,7 @@ class Text_Wiki_Render_Xhtml_Titlebar extends WikiRender {
     *
     */
 
-    function token($options)
+    public function token($options)
     {
         if ($options['type'] == 'start') {
             $css = $this->formatConf(' class="%s"', 'css');

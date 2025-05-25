@@ -1,4 +1,5 @@
 <?php
+
 // vim: set expandtab tabstop=4 shiftwidth=4 softtabstop=4:
 /**
  * Parse structured wiki text and render into arbitrary formats such as XHTML.
@@ -19,6 +20,7 @@
 /**
  * "master" class for handling the management and convenience
  */
+
 namespace Horde\Text\Wiki;
 
 /**
@@ -33,9 +35,10 @@ namespace Horde\Text\Wiki;
  * @link       http://pear.php.net/package/Text_Wiki
  * @see        Text_Wiki::Text_Wiki()
  */
-class CowikiEngine extends TextWikiBase {
-
-    function __construct() {
+class CowikiEngine extends TextWikiBase
+{
+    public function __construct()
+    {
         parent::__construct();
         $paths = $this->getPath('parse');
         $this->addPath('parse', str_replace('Default', 'Cowiki', $paths[0]));

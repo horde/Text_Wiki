@@ -1,4 +1,5 @@
 <?php
+
 namespace Horde\Text\Wiki;
 
 /**
@@ -19,9 +20,8 @@ namespace Horde\Text\Wiki;
  *
  */
 
-class Text_Wiki_Parse_Newline extends WikiParse {
-
-
+class CreoleParserNewline extends WikiParse
+{
     /**
      *
      * The regular expression used to parse the source text and find
@@ -36,7 +36,7 @@ class Text_Wiki_Parse_Newline extends WikiParse {
      */
 
     //var $regex = '/(?<!\n)\n(?![\n\#\=\|\-\>\:]|\*[^\*\#]|\*+ )/m';
-    var $regex = '/(?<!\n)\n(?!\n|\#|\*|\=|\||\>|\:|\;|\!|\-\D)/m';
+    public $regex = '/(?<!\n)\n(?!\n|\#|\*|\=|\||\>|\:|\;|\!|\-\D)/m';
 
 
     /**
@@ -52,10 +52,8 @@ class Text_Wiki_Parse_Newline extends WikiParse {
      *
      */
 
-    function process(&$matches)
+    public function process(&$matches)
     {
         return ' '; // $this->wiki->addToken($this->rule);
     }
 }
-
-?>

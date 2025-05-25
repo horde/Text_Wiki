@@ -1,4 +1,5 @@
 <?php
+
 namespace HordeTextWiki;
 
 /**
@@ -34,9 +35,8 @@ namespace HordeTextWiki;
 *
 */
 
-class Text_Wiki_Parse_Blockquote extends WikiParse {
-
-
+class DefaultParserBlockquote extends WikiParse
+{
     /**
     *
     * Regex for parsing the source text.
@@ -49,7 +49,7 @@ class Text_Wiki_Parse_Blockquote extends WikiParse {
     *
     */
 
-    var $regex = '/\n(\>+ .*\n)(?!\>+ )/Us';
+    public $regex = '/\n(\>+ .*\n)(?!\>+ )/Us';
 
 
     /**
@@ -74,13 +74,13 @@ class Text_Wiki_Parse_Blockquote extends WikiParse {
     *
     */
 
-    function process(&$matches)
+    public function process(&$matches)
     {
         // the replacement text we will return to parse()
         $return = "\n";
 
         // the list of post-processing matches
-        $list = array();
+        $list = [];
 
         // $matches[1] is the text matched as a blockquote by parse();
         // create an array called $list that contains a new set of
@@ -114,10 +114,10 @@ class Text_Wiki_Parse_Blockquote extends WikiParse {
                 // ...and add a start token to the return.
                 $return .= $this->wiki->addToken(
                     $this->rule,
-                    array(
+                    [
                         'type' => 'start',
-                        'level' => $curLevel
-                    )
+                        'level' => $curLevel,
+                    ]
                 );
             }
 
@@ -131,10 +131,10 @@ class Text_Wiki_Parse_Blockquote extends WikiParse {
 
                 $return .= $this->wiki->addToken(
                     $this->rule,
-                    array (
+                    [
                         'type' => 'end',
-                        'level' => $curLevel
-                    )
+                        'level' => $curLevel,
+                    ]
                 );
 
                 --$curLevel;
@@ -148,10 +148,10 @@ class Text_Wiki_Parse_Blockquote extends WikiParse {
         while ($curLevel > 0) {
             $return .= $this->wiki->addToken(
                 $this->rule,
-                array (
+                [
                     'type' => 'end',
-                    'level' => $curLevel
-                )
+                    'level' => $curLevel,
+                ]
             );
             --$curLevel;
         }

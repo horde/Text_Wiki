@@ -1,9 +1,10 @@
 <?php
+
 namespace HordeTextWiki;
 
-class Text_Wiki_Render_Creole_Include extends WikiRender {
-
-    function token()
+class CreoleRendererInclude extends WikiRender
+{
+    public function token()
     {
         if ($options['type'] == 'start') {
             return "{{";
@@ -14,4 +15,3 @@ class Text_Wiki_Render_Creole_Include extends WikiRender {
         }
     }
 }
-?>

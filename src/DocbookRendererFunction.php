@@ -1,5 +1,7 @@
 <?php
+
 namespace Horde\Text\Wiki;
+
 // vim: set expandtab tabstop=4 shiftwidth=4 softtabstop=4:
 /**
  * Function rule end renderer for Docbook
@@ -24,8 +26,8 @@ namespace Horde\Text\Wiki;
  * @version    Release: @package_version@
  * @link       http://pear.php.net/package/Text_Wiki_Docbook
  */
-class Text_Wiki_Render_Docbook_Function extends WikiRender {
-
+class DocbookRendererFunction extends WikiRender
+{
     /**
     *
     * Renders a token into text matching the requested format.
@@ -39,14 +41,14 @@ class Text_Wiki_Render_Docbook_Function extends WikiRender {
     *
     */
 
-    function token($options)
+    public function token($options)
     {
         extract($options); // name, access, return, params, throws
 
         // build the baseline output
         $output = "<methodsynopsis>\n<modifier>" . $access .
             "</modifier>\n<type>" . $return . "</type>\n<methodname>" .
-            $name ."</methodname>\n";
+            $name . "</methodname>\n";
 
         // build the set of params
         foreach ($params as $key => $val) {

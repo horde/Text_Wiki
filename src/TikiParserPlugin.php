@@ -1,5 +1,7 @@
 <?php
+
 namespace Horde\Text\Wiki;
+
 // vim: set expandtab tabstop=4 shiftwidth=4 softtabstop=4:
 /**
  * Plugin rule end parser for tikiwiki
@@ -29,8 +31,8 @@ namespace Horde\Text\Wiki;
  * @version    Release: @package_version@
  * @link       http://pear.php.net/package/Text_Wiki
  */
-class Text_Wiki_Parse_Plugin extends WikiParse {
-
+class TikiParserPlugin extends WikiParse
+{
     /**
      * Configurations keys, the script's name of the plugin will be prefixed and an extension added
      * the path is a comma separated list of directories where to find it
@@ -38,11 +40,11 @@ class Text_Wiki_Parse_Plugin extends WikiParse {
      * @access public
      * @var string
      */
-    var $conf = array (
+    public $conf =  [
         'file_prefix' => 'wikiplugin_',
         'file_extension' => '.php',
-        'file_path' => 'lib/wiki-plugins/'
-    );
+        'file_path' => 'lib/wiki-plugins/',
+    ];
 
     /**
      * The regular expression used in second stage to find plugin's arguments
@@ -50,7 +52,7 @@ class Text_Wiki_Parse_Plugin extends WikiParse {
      * @access public
      * @var string
      */
-    var $regexArgs = '#(\w+?)=(?:>|&gt;)?([^"\'][^,]+?|"[^"]+"|\'[^\']+\')#';
+    public $regexArgs = '#(\w+?)=(?:>|&gt;)?([^"\'][^,]+?|"[^"]+"|\'[^\']+\')#';
 
     /**
     *
@@ -64,7 +66,7 @@ class Text_Wiki_Parse_Plugin extends WikiParse {
     */
 
     // var $regex = '/\{([A-Z]+?)\((.*?)\)}((?:(?R)|.)*?)\{\1}/msi';
-    var $regex = '#(?:\{([A-Z]+?)\((.*?)\)}|(~pp~)|(~np~)|(&lt;pre&gt;))
+    public $regex = '#(?:\{([A-Z]+?)\((.*?)\)}|(~pp~)|(~np~)|(&lt;pre&gt;))
                   ((?:(?R)|.)*?)
                   (?(1)\{\1})(?(3)~/pp~)(?(4)~/np~)(?(5)&lt;/pre&gt;)#mixs';
 
@@ -83,17 +85,21 @@ class Text_Wiki_Parse_Plugin extends WikiParse {
     *
     */
 
-    function process(&$matches)
+    public function process(&$matches)
     {
         // preparsed area
         if (isset($matches[3]) || isset($matches[5])) {
-            return $this->wiki->addToken('Preformatted',
-                                         array('text' => $matches[6]));
+            return $this->wiki->addToken(
+                'Preformatted',
+                ['text' => $matches[6]]
+            );
         }
         // non parsed area
         if (isset($matches[4])) {
-            return $this->wiki->addToken('Raw',
-                                         array('text' => $matches[6]));
+            return $this->wiki->addToken(
+                'Raw',
+                ['text' => $matches[6]]
+            );
         }
         // plugin
         $func = $this->getConf('file_prefix') . strtolower($matches[1]);
@@ -114,9 +120,9 @@ class Text_Wiki_Parse_Plugin extends WikiParse {
 
         // are there additional attribute arguments?
         preg_match_all($this->regexArgs, $matches[2], $args, PREG_PATTERN_ORDER);
-        $attr = array();
-        foreach ($args[1] as $i=>$name) {
-            if ($args[2][$i]{0} == '"' || $args[2][$i]{0} == "'") {
+        $attr = [];
+        foreach ($args[1] as $i => $name) {
+            if ($args[2][$i][0] == '"' || $args[2][$i][0] == "'") {
                 $attr[$name] = substr($args[2][$i], 1, -1);
             } else {
                 $attr[$name] = trim($args[2][$i]);
@@ -126,9 +132,9 @@ class Text_Wiki_Parse_Plugin extends WikiParse {
         // executes the plugin with data and pameters then recursive re-parse for nested or produced plugins
         $res = $func($matches[6], $attr);
         return preg_replace_callback(
-                $this->regex,
-                array(&$this, 'process'),
-                $res
-            );
+            $this->regex,
+            [&$this, 'process'],
+            $res
+        );
     }
 }

@@ -1,5 +1,7 @@
 <?php
+
 namespace Horde\Text\Wiki;
+
 // vim: set expandtab tabstop=4 shiftwidth=4 softtabstop=4:
 /**
  * Prefilter rule end renderer for Docbook
@@ -26,8 +28,9 @@ namespace Horde\Text\Wiki;
  * @version    Release: @package_version@
  * @link       http://pear.php.net/package/Text_Wiki_Docbook
  */
-class Text_Wiki_Render_Docbook_Prefilter extends WikiRender {
-    function token()
+class DocbookRendererPrefilter extends WikiRender
+{
+    public function token()
     {
         return '';
     }

@@ -1,4 +1,5 @@
 <?php
+
 // vim: set expandtab tabstop=4 shiftwidth=4 softtabstop=4:
 /**
  * Parse structured wiki text and render into arbitrary formats such as XHTML.
@@ -14,6 +15,7 @@
  * @version    CVS: $Id$
  * @link       http://pear.php.net/package/Text_Wiki
  */
+
 namespace Horde\Text\Wiki;
 
 /**
@@ -31,65 +33,65 @@ namespace Horde\Text\Wiki;
  * @link       http://pear.php.net/package/Text_Wiki
  * @see        Text_Wiki::Text_Wiki()
  */
-class MediawikiEngine extends TextWikiBase {
-    var $rules = array(
+class MediawikiEngine extends TextWikiBase
+{
+    public $rules = [
         'Prefilter',
         'Delimiter',
         'Code',
         'Comment',
         'Preformatted',
-//        'Plugin',
-//        'Function',
-//        'Html',
+        //        'Plugin',
+        //        'Function',
+        //        'Html',
         'Raw',
-//        'Include',
-//        'Embed',
-//        'Page',
-//        'Anchor',
+        //        'Include',
+        //        'Embed',
+        //        'Page',
+        //        'Anchor',
         'Heading',
         'Toc',
-//        'Titlebar',
+        //        'Titlebar',
         'Horiz',
         'Redirect',
         'Break',
-//        'Blockquote',
-//        'Box',
+        //        'Blockquote',
+        //        'Box',
         'Wikilink',
-//        'Image', // done by Wikilink but still possible to disable/configure
-//        'Interwiki', // done by Wikilink but still possible to disable/configure
+        //        'Image', // done by Wikilink but still possible to disable/configure
+        //        'Interwiki', // done by Wikilink but still possible to disable/configure
         'Table',
-//        'Phplookup',
-//        'Center',
+        //        'Phplookup',
+        //        'Center',
         'List',
         'Deflist',
-//        'Strong',  ** will be only fake inserted by Emphasis if needed for render
+        //        'Strong',  ** will be only fake inserted by Emphasis if needed for render
         'Emphasis', // must run before Newline (see Text_Wiki_Parse_Emphasis::parse())
         'Newline',
         'Paragraph',
         'Url',
-//        'Freelink',
-//        'Colortext',
-//        'Bold',
-//        'Italic',
-//        'Underline',
+        //        'Freelink',
+        //        'Colortext',
+        //        'Bold',
+        //        'Italic',
+        //        'Underline',
         'Tt',
         'Superscript',
         'Subscript',
-//        'Specialchar',
-//        'Revise',
-        'Tighten'
-    );
+        //        'Specialchar',
+        //        'Revise',
+        'Tighten',
+    ];
 
-	/**
+    /**
      * Constructor: just adds the path to Mediawiki rules
      *
      * @access public
      * @param array $rules The set of rules to load for this object.
      */
-    function __construct($rules = null) {
+    public function __construct($rules = null)
+    {
         parent::__construct($rules);
-        $this->addPath('parse', $this->fixPath(dirname(__FILE__)).'Parse/Mediawiki');
+        $this->addPath('parse', $this->fixPath(dirname(__FILE__)) . 'Parse/Mediawiki');
     }
 }
-
-?>

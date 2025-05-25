@@ -1,26 +1,27 @@
 <?php
+
 namespace HordeTextWiki;
 
-class Text_Wiki_Render_Doku_Blockquote extends WikiRender {
-    
+class DokuRendererBlockquote extends WikiRender
+{
     /**
-    * 
+    *
     * Renders a token into text matching the requested format.
-    * 
+    *
     * @access public
-    * 
+    *
     * @param array $options The "options" portion of the token (second
     * element).
-    * 
+    *
     * @return string The text rendered from the token options.
-    * 
+    *
     */
-    
-    function token($options)
+
+    public function token($options)
     {
         // starting
         if ($options['type'] == 'start') {
-            $this->wiki->registerRenderCallback(array(&$this, 'renderInsideText'));
+            $this->wiki->registerRenderCallback([&$this, 'renderInsideText']);
             return '';
         }
         // ending
@@ -30,9 +31,9 @@ class Text_Wiki_Render_Doku_Blockquote extends WikiRender {
         }
     }
 
-    function renderInsideText($text) {
+    public function renderInsideText($text)
+    {
         $text = preg_replace('/(^|\n)(?!$)/', '\1>', $text);
         return $text;
     }
 }
-?>

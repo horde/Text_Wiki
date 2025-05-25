@@ -1,4 +1,5 @@
 <?php
+
 // vim: set expandtab tabstop=4 shiftwidth=4 softtabstop=4:
 /**
  * Baseline rule class for extension into a "real" parser component.
@@ -12,7 +13,9 @@
  * @version    CVS: $Id$
  * @link       http://pear.php.net/package/Text_Wiki
  */
+
 namespace Horde\Text\Wiki;
+
 /**
  * Baseline rule class for extension into a "real" parser component.
  *
@@ -37,9 +40,8 @@ namespace Horde\Text\Wiki;
  * @version    Release: @package_version@
  * @link       http://pear.php.net/package/Text_Wiki
  */
-class WikiParse {
-
-
+class WikiParserBase
+{
     /**
     *
     * Configuration options for this parser rule.
@@ -50,7 +52,7 @@ class WikiParse {
     *
     */
 
-    var $conf = array();
+    public $conf = [];
 
 
     /**
@@ -65,7 +67,7 @@ class WikiParse {
     *
     */
 
-    var $regex = null;
+    public $regex = null;
 
 
     /**
@@ -78,7 +80,7 @@ class WikiParse {
     *
     */
 
-    var $rule = null;
+    public $rule = null;
 
 
     /**
@@ -93,7 +95,7 @@ class WikiParse {
     * @var object
     */
 
-    var $wiki = null;
+    public $wiki = null;
 
 
     /**
@@ -106,12 +108,12 @@ class WikiParse {
     *
     */
 
-    function __construct(&$obj)
+    public function __construct(&$obj)
     {
         // set the reference to the calling Text_Wiki object;
         // this allows us access to the shared source text, token
         // array, etc.
-        $this->wiki =& $obj;
+        $this->wiki = & $obj;
 
         // set the name of this rule; generally used when adding
         // to the tokens array. strip off the Text_Wiki_Parse_ portion.
@@ -147,11 +149,11 @@ class WikiParse {
     *
     */
 
-    function parse()
+    public function parse()
     {
         $this->wiki->source = preg_replace_callback(
             $this->regex,
-            array(&$this, 'process'),
+            [&$this, 'process'],
             $this->wiki->source
         );
     }
@@ -175,7 +177,7 @@ class WikiParse {
     *
     */
 
-    function process(&$matches)
+    public function process(&$matches)
     {
         return $matches[0];
     }
@@ -197,7 +199,7 @@ class WikiParse {
     *
     */
 
-    function getConf($key, $default = null)
+    public function getConf($key, $default = null)
     {
         if (isset($this->conf[$key])) {
             return $this->conf[$key];
@@ -229,14 +231,14 @@ class WikiParse {
     *
     */
 
-    function getAttrs($text)
+    public function getAttrs($text)
     {
         // find the =" sections;
         $tmp = explode('="', trim($text));
 
         // basic setup
         $k = count($tmp) - 1;
-        $attrs = array();
+        $attrs = [];
         $key = null;
 
         // loop through the sections
@@ -253,7 +255,7 @@ class WikiParse {
             // the part to the right is the next key name
             $pos = strrpos($val, '"');
             $attrs[$key] = stripslashes(substr($val, 0, $pos));
-            $key = trim(substr($val, $pos+1));
+            $key = trim(substr($val, $pos + 1));
 
         }
 

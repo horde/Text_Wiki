@@ -1,5 +1,7 @@
 <?php
+
 namespace Horde\Text\Wiki;
+
 // vim: set expandtab tabstop=4 shiftwidth=4 softtabstop=4:
 /**
  * BBCode: Parses for code blocks.
@@ -32,8 +34,8 @@ namespace Horde\Text\Wiki;
  * @link       http://pear.php.net/package/Text_Wiki
  * @see        Text_Wiki_Parse::Text_Wiki_Parse()
  */
-class Text_Wiki_Parse_Code extends WikiParse {
-
+class BBCodeParserCode extends WikiParse
+{
     /**
      * The regular expression used to parse the source text and find
      * matches conforming to this rule.  Used by the parse() method.
@@ -42,7 +44,7 @@ class Text_Wiki_Parse_Code extends WikiParse {
      * @var string
      * @see parse()
      */
-    var $regex =  "#\[code]((?:(?R)|.)*?)\[/code]#msi";
+    public $regex =  "#\[code]((?:(?R)|.)*?)\[/code]#msi";
 
 
     /**
@@ -55,10 +57,10 @@ class Text_Wiki_Parse_Code extends WikiParse {
      * the source text and containing the original block of text
      * @access public
      */
-    function process(&$matches)
+    public function process(&$matches)
     {
-        return $this->wiki->addToken($this->rule, array(
-                    'text' => $matches[1],
-                    'attr' => array('type' => '') ) );
+        return $this->wiki->addToken($this->rule, [
+            'text' => $matches[1],
+            'attr' => ['type' => ''] ]);
     }
 }

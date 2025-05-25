@@ -1,4 +1,5 @@
 <?php
+
 namespace Horde\Text\Wiki;
 
 /**
@@ -23,9 +24,8 @@ namespace Horde\Text\Wiki;
  *
  */
 
-class Text_Wiki_Parse_Underline extends WikiParse {
-
-
+class CreoleParserUnderline extends WikiParse
+{
     /**
      *
      * The regular expression used to parse the source text and find
@@ -39,7 +39,7 @@ class Text_Wiki_Parse_Underline extends WikiParse {
      *
      */
 
-    var $regex =  "/__(.+?)__/";
+    public $regex =  "/__(.+?)__/";
     //var $regex =  "/(?:\_\_(.+?)\_\_|(?:(?<=[\W_\xFF])\_(?![ \_]))(.+?)(?:(?<![ \_])\_(?=[\W_\xFF])))/";
 
     /**
@@ -59,26 +59,25 @@ class Text_Wiki_Parse_Underline extends WikiParse {
      *
      */
 
-    function process(&$matches)
+    public function process(&$matches)
     {
         $text = $matches[1];
         //$text = $matches[1] ? $matches[1] : $matches[2];
-        
+
         if (! $this->wiki->checkInnerTags($text)) {
             return $matches[0];
         }
 
         $start = $this->wiki->addToken(
             $this->rule,
-            array('type' => 'start')
+            ['type' => 'start']
         );
 
         $end = $this->wiki->addToken(
             $this->rule,
-            array('type' => 'end')
+            ['type' => 'end']
         );
 
         return $start . $text . $end;
     }
 }
-?>

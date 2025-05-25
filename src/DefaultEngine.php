@@ -1,4 +1,5 @@
 <?php
+
 // vim: set expandtab tabstop=4 shiftwidth=4 softtabstop=4:
 /**
  * Parse structured wiki text and render into arbitrary formats such as XHTML.
@@ -23,5 +24,4 @@ namespace Horde\Text\Wiki;
  * @version    Release: @package_version@
  * @author     Justin Patrin <justinpatrin@php.net>
  */
-class DefaultEngine extends TextWikiBase {
-}
+class DefaultEngine extends TextWikiBase {}

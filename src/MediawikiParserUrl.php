@@ -1,5 +1,7 @@
 <?php
+
 namespace Horde\Text\Wiki;
+
 // vim: set expandtab tabstop=4 shiftwidth=4 softtabstop=4:
 /**
  * Mediawiki: Parse for URLS in the source text.
@@ -49,15 +51,15 @@ namespace Horde\Text\Wiki;
  * @link       http://pear.php.net/package/Text_Wiki
  * @see        Text_Wiki_Parse::Text_Wiki_Parse()
  */
-class Text_Wiki_Parse_Url extends WikiParse {
-
+class MediawikiParserUrl extends WikiParse
+{
     /**
     * Keeps a running count of numbered-reference URLs.
     *
     * @access public
     * @var int
     */
-    var $footnoteCount = 0;
+    public $footnoteCount = 0;
 
 
     /**
@@ -66,17 +68,17 @@ class Text_Wiki_Parse_Url extends WikiParse {
     * @access public
     * @var array
     */
-    var $conf = array(
-        'schemes' => array(
+    public $conf = [
+        'schemes' => [
             'http://',
             'https://',
             'ftp://',
             'gopher://',
             'news://',
             'file://',
-            'mailto:'
-        )
-    );
+            'mailto:',
+        ],
+    ];
 
 
     /**
@@ -86,14 +88,14 @@ class Text_Wiki_Parse_Url extends WikiParse {
     *
     * @access public
     */
-    function __construct(&$obj)
+    public function __construct(&$obj)
     {
         parent::__construct($obj);
 
         // convert the list of recognized schemes to a regex-safe string,
         // where the pattern delim is a slash
-        $tmp = array();
-        $list = $this->getConf('schemes', array());
+        $tmp = [];
+        $list = $this->getConf('schemes', []);
         foreach ($list as $val) {
             $tmp[] = preg_quote($val, '/');
         }
@@ -115,7 +117,7 @@ class Text_Wiki_Parse_Url extends WikiParse {
     *
     * @access public
     */
-    function parse()
+    public function parse()
     {
         // -------------------------------------------------------------
         //
@@ -129,7 +131,7 @@ class Text_Wiki_Parse_Url extends WikiParse {
         // the replacement text for matches.
         $this->wiki->source = preg_replace_callback(
             $tmp_regex,
-            array(&$this, 'processDescr'),
+            [&$this, 'processDescr'],
             $this->wiki->source
         );
 
@@ -147,7 +149,7 @@ class Text_Wiki_Parse_Url extends WikiParse {
         $this->wiki->source = preg_replace_callback(
             $tmp_regex,
             //array(&$this, 'processFootnote'),
-            array(&$this, 'processOrdinary'),
+            [&$this, 'processOrdinary'],
             $this->wiki->source
         );
 
@@ -164,7 +166,7 @@ class Text_Wiki_Parse_Url extends WikiParse {
         // use the standard callback for inline URLs
         $this->wiki->source = preg_replace_callback(
             $tmp_regex,
-            array(&$this, 'process'),
+            [&$this, 'process'],
             $this->wiki->source
         );
 
@@ -175,16 +177,16 @@ class Text_Wiki_Parse_Url extends WikiParse {
         // use the standard callback for inline URLs
         $this->wiki->source = preg_replace_callback(
             $tmp_regex,
-            array(&$this, 'processWithoutProtocol'),
+            [&$this, 'processWithoutProtocol'],
             $this->wiki->source
         );
 
-        $tmp_regex = '/(^|\s|'.$this->wiki->delim.')<([a-zA-Z0-9\-\.%_\+\!\*\'\(\)\,]+@[a-zA-Z0-9\-]+(\.[a-zA-Z0-9\-]+)+)>(\s|'.$this->wiki->delim.'|$)/';
+        $tmp_regex = '/(^|\s|' . $this->wiki->delim . ')<([a-zA-Z0-9\-\.%_\+\!\*\'\(\)\,]+@[a-zA-Z0-9\-]+(\.[a-zA-Z0-9\-]+)+)>(\s|' . $this->wiki->delim . '|$)/';
 
         // use the standard callback for inline URLs
         $this->wiki->source = preg_replace_callback(
             $tmp_regex,
-            array(&$this, 'processInlineEmail'),
+            [&$this, 'processInlineEmail'],
             $this->wiki->source
         );
     }
@@ -200,42 +202,42 @@ class Text_Wiki_Parse_Url extends WikiParse {
     * $matches[2] is the second matched pattern, and so on.
     * @return string The processed text replacement.
     */
-    function process(&$matches)
+    public function process(&$matches)
     {
         // set options
-        $options = array(
+        $options = [
             'type' => 'inline',
             'href' => $matches[2],
-            'text' => $matches[2]
-        );
+            'text' => $matches[2],
+        ];
 
         // tokenize
         return $matches[1] . $this->wiki->addToken($this->rule, $options) . $matches[5];
     }
 
     // TODO: check if this is supported by Mediawiki parser (apparently it is not)
-    function processWithoutProtocol(&$matches)
+    public function processWithoutProtocol(&$matches)
     {
         // set options
-        $options = array(
+        $options = [
             'type' => 'inline',
-            'href' => 'http://'.$matches[2],
-            'text' => $matches[2]
-        );
+            'href' => 'http://' . $matches[2],
+            'text' => $matches[2],
+        ];
 
         // tokenize
         return $matches[1] . $this->wiki->addToken($this->rule, $options) . $matches[4];
     }
 
     // TODO: check if this is supported by Mediawiki parser (apparently it is not)
-    function processInlineEmail(&$matches)
+    public function processInlineEmail(&$matches)
     {
         // set options
-        $options = array(
+        $options = [
             'type' => 'inline',
-            'href' => 'mailto://'.$matches[2],
-            'text' => $matches[2]
-        );
+            'href' => 'mailto://' . $matches[2],
+            'text' => $matches[2],
+        ];
 
         // tokenize
         return $matches[1] . $this->wiki->addToken($this->rule, $options) . $matches[4];
@@ -253,33 +255,33 @@ class Text_Wiki_Parse_Url extends WikiParse {
     * $matches[2] is the second matched pattern, and so on.
     * @return string The processed text replacement.
     */
-    function processFootnote(&$matches)
+    public function processFootnote(&$matches)
     {
         // keep a running count for footnotes
         $this->footnoteCount++;
 
         // set options
-        $options = array(
+        $options = [
             'type' => 'footnote',
             'href' => $matches[1],
-            'text' => $this->footnoteCount
-        );
+            'text' => $this->footnoteCount,
+        ];
 
         // tokenize
         return $this->wiki->addToken($this->rule, $options);
     }
 
-     function processOrdinary(&$matches)
+    public function processOrdinary(&$matches)
     {
-    	// keep a running count for footnotes
+        // keep a running count for footnotes
         $this->footnoteCount++;
 
         // set options
-        $options = array(
+        $options = [
             'type' => 'descr',
             'href' => $matches[1],
-            'text' => $matches[1]
-        );
+            'text' => $matches[1],
+        ];
 
         // tokenize
         return $this->wiki->addToken($this->rule, $options);
@@ -303,14 +305,14 @@ class Text_Wiki_Parse_Url extends WikiParse {
     *
     */
 
-    function processDescr(&$matches)
+    public function processDescr(&$matches)
     {
         // set options
-        $options = array(
+        $options = [
             'type' => 'descr',
             'href' => $matches[1],
-            'text' => $matches[4]
-        );
+            'text' => $matches[4],
+        ];
 
         // tokenize
         return $this->wiki->addToken($this->rule, $options);

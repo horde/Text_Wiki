@@ -1,8 +1,9 @@
 <?php
+
 namespace Horde\Text\Wiki;
 
-class Text_Wiki_Render_Creole_Preformatted extends WikiRender {
-
+class CreoleRendererPreformatted extends WikiRender
+{
     /**
     *
     * Renders a token into text matching the requested format.
@@ -16,13 +17,12 @@ class Text_Wiki_Render_Creole_Preformatted extends WikiRender {
     *
     */
 
-    function token($options)
+    public function token($options)
     {
         $text = $options['text'];
-        
+
         $text = preg_replace("/\n( +)}}}/s", "\n$1 }}}", $text);
-        
+
         return "{{{\n" . $text . "\n}}}\n\n";
     }
 }
-?>

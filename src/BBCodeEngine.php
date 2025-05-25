@@ -1,4 +1,5 @@
 <?php
+
 // vim: set expandtab tabstop=4 shiftwidth=4 softtabstop=4:
 /**
  * BBCode: extension of base Text_Wiki text conversion handler
@@ -17,6 +18,7 @@
 /**
  * "master" class for handling the management and convenience
  */
+
 namespace Horde\Text\Wiki;
 
 /**
@@ -31,60 +33,60 @@ namespace Horde\Text\Wiki;
  * @link       http://pear.php.net/package/Text_Wiki
  * @see        Text_Wiki::Text_Wiki()
  */
-class BBCodeEngine extends TextWikiBase {
-
+class BBCodeEngine extends TextWikiBase
+{
     /**
      * The default list of rules, in order, to apply to the source text.
      *
      * @access public
      * @var array
      */
-    var $rules = array(
+    public $rules = [
         'Prefilter',
         'Delimiter',
         'Code',
-//        'Plugin',
-//        'Function',
-//        'Html',
-//        'Raw',
-//        'Preformatted',
-//        'Include',
-//        'Embed',
-//        'Page',
-//        'Anchor',
-//        'Heading',
-//        'Toc',
-//        'Titlebar',
-//        'Horiz',
-//        'Break',
+        //        'Plugin',
+        //        'Function',
+        //        'Html',
+        //        'Raw',
+        //        'Preformatted',
+        //        'Include',
+        //        'Embed',
+        //        'Page',
+        //        'Anchor',
+        //        'Heading',
+        //        'Toc',
+        //        'Titlebar',
+        //        'Horiz',
+        //        'Break',
         'Blockquote',
         'List',
-//        'Deflist',
-//        'Table',
-//        'Box',
+        //        'Deflist',
+        //        'Table',
+        //        'Box',
         'Image',
         'Smiley',
-//        'Phplookup',
-//        'Center',
+        //        'Phplookup',
+        //        'Center',
         'Newline',
         'Paragraph',
         'Url',
-//        'Freelink',
+        //        'Freelink',
         'Colortext',
         'Font',
-//        'Strong',
+        //        'Strong',
         'Bold',
-//        'Emphasis',
+        //        'Emphasis',
         'Italic',
         'Underline',
-//        'Tt',
+        //        'Tt',
         'Superscript',
         'Subscript',
-//        'Specialchar',
-//        'Revise',
-//        'Interwiki',
-        'Tighten'
-    );
+        //        'Specialchar',
+        //        'Revise',
+        //        'Interwiki',
+        'Tighten',
+    ];
 
     /**
      * Constructor: just adds the path to BBCode rules
@@ -92,9 +94,9 @@ class BBCodeEngine extends TextWikiBase {
      * @access public
      * @param array $rules The set of rules to load for this object.
      */
-    function __construct($rules = null)
+    public function __construct($rules = null)
     {
         parent::__construct($rules);
-        $this->addPath('parse', $this->fixPath(dirname(__FILE__)).'Parse/BBCode');
+        $this->addPath('parse', $this->fixPath(dirname(__FILE__)) . 'Parse/BBCode');
     }
 }

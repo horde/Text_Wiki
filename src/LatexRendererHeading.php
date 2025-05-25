@@ -1,16 +1,16 @@
 <?php
+
 namespace Horde\Text\Wiki;
 
-class Text_Wiki_Render_Latex_Heading extends WikiRender {
-
-    function token($options)
+class LatexRendererHeading extends WikiRender
+{
+    public function token($options)
     {
         // get nice variable names (type, level)
         extract($options);
 
         if ($type == 'start') {
-            switch ($level)
-                {
+            switch ($level) {
                 case '1':
                     return '\part{';
                 case '2':
@@ -23,12 +23,11 @@ class Text_Wiki_Render_Latex_Heading extends WikiRender {
                     return '\paragraph{';
                 case '6':
                     return '\subparagraph{';
-                }
+            }
         }
-        
+
         if ($type == 'end') {
             return "}\n";
         }
     }
 }
-?>

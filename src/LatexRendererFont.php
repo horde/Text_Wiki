@@ -1,5 +1,7 @@
 <?php
+
 namespace Horde\Text\Wiki;
+
 // vim: set expandtab tabstop=4 shiftwidth=4 softtabstop=4:
 /**
  * BBCode: extra Font rules renderer to size the text
@@ -17,7 +19,7 @@ namespace Horde\Text\Wiki;
 
 /**
  * Font rule render class (used for BBCode)
- * 
+ *
  * @category   Text
  * @package    Text_Wiki
  * @author     Bertrand Gugger <bertrand@toggg.com>
@@ -27,15 +29,15 @@ namespace Horde\Text\Wiki;
  * @link       http://pear.php.net/package/Text_Wiki
  * @see        Text_Wiki::Text_Wiki_Render()
  */
-class Text_Wiki_Render_Latex_Font extends WikiRender {
-    
+class LatexRendererFont extends WikiRender
+{
     /**
      * A table to translate the sizes
-     * 
+     *
      * @access public
      * @var array
      */
-    var $sizes = array(
+    public $sizes = [
         'tiny' => 5,
         'scriptsize' => 7,
         'footnotesize' => 8,
@@ -45,17 +47,17 @@ class Text_Wiki_Render_Latex_Font extends WikiRender {
         'Large' => 16,
         'LARGE' => 19,
         'huge' => 22,
-        'Huge' => 9999);
-    
+        'Huge' => 9999];
+
     /**
       * Renders a token into text matching the requested format.
-      * process the font size option 
+      * process the font size option
       *
       * @access public
       * @param array $options The "options" portion of the token (second element).
       * @return string The text rendered from the token options.
       */
-    function token($options)
+    public function token($options)
     {
         if ($options['type'] == 'start') {
             foreach ($this->sizes as $key => $lim) {
@@ -65,7 +67,7 @@ class Text_Wiki_Render_Latex_Font extends WikiRender {
             }
             return '\{' . $key . '}{';
         }
-        
+
         if ($options['type'] == 'end') {
             return '}';
         }

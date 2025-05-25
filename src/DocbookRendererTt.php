@@ -1,5 +1,7 @@
 <?php
+
 namespace Horde\Text\Wiki;
+
 // vim: set expandtab tabstop=4 shiftwidth=4 softtabstop=4:
 /**
  * Tt rule end renderer for Docbook
@@ -24,8 +26,8 @@ namespace Horde\Text\Wiki;
  * @version    Release: @package_version@
  * @link       http://pear.php.net/package/Text_Wiki_Docbook
  */
-class Text_Wiki_Render_Docbook_Tt extends WikiRender {
-
+class DocbookRendererTt extends WikiRender
+{
     /**
     *
     * Renders a token into text matching the requested format.
@@ -39,7 +41,7 @@ class Text_Wiki_Render_Docbook_Tt extends WikiRender {
     *
     */
 
-    function token($options)
+    public function token($options)
     {
         if ($options['type'] == 'start') {
             return "<code>";

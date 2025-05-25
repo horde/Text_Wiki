@@ -1,27 +1,28 @@
 <?php
+
 namespace HordeTextWiki;
 
 /**
-* 
+*
 * Parses for definition lists.
-* 
+*
 * @category Text
-* 
+*
 * @package Text_Wiki
-* 
+*
 * @author Michele Tomaiuolo <tomamic@yahoo.it>
 * @author Paul M. Jones <pmjones@php.net>
-* 
+*
 * @license LGPL
-* 
+*
 * @version $Id$
-* 
+*
 */
 
 /**
-* 
+*
 * Parses for definition lists.
-* 
+*
 * This class implements a Text_Wiki_Parse to find source text marked as a
 * definition list.  In short, if a line starts with ';' then it is a
 * definition list item; a ':' on the same line or the nex one indicates the end
@@ -30,36 +31,35 @@ namespace HordeTextWiki;
 * them) -- a blank line indicates the beginning of a new list.
 *
 * @category Text
-* 
+*
 * @package Text_Wiki
-* 
+*
 * @author Paul M. Jones <pmjones@php.net>
-* 
+*
 */
 
-class Text_Wiki_Parse_Deflist extends WikiParse {
-    
-    
+class CreoleParserDeflist extends WikiParse
+{
     /**
-    * 
+    *
     * The regular expression used to parse the source text and find
     * matches conforming to this rule.  Used by the parse() method.
-    * 
+    *
     * @access public
-    * 
+    *
     * @var string
-    * 
+    *
     * @see parse()
-    * 
+    *
     */
-    
-    var $regex = '/\n((; *).*\n)(?!(;|:))/Us';
-    
-    
+
+    public $regex = '/\n((; *).*\n)(?!(;|:))/Us';
+
+
     /**
-    * 
+    *
     * Generates a replacement for the matched text.  Token options are:
-    * 
+    *
     * 'type' =>
     *     'list_start'    : the start of a definition list
     *     'list_end'      : the end of a definition list
@@ -77,19 +77,19 @@ class Text_Wiki_Parse_Deflist extends WikiParse {
     * list text and list elements.
     *
     */
-    
-    function process(&$matches)
+
+    public function process(&$matches)
     {
         // the replacement text we will return to parse()
         $return = '';
-        
+
         // the list of post-processing matches
-        $list = array();
-        
+        $list = [];
+
         // start the deflist
-        $options = array('type' => 'list_start');
+        $options = ['type' => 'list_start'];
         $return .= $this->wiki->addToken($this->rule, $options);
-        
+
         // $matches[1] is the text matched as a list set by parse();
         // create an array called $list that contains a new set of
         // matches for the various definition-list elements.
@@ -99,32 +99,31 @@ class Text_Wiki_Parse_Deflist extends WikiParse {
             $list,
             PREG_SET_ORDER
         );
-        
+
         // add each term and narrative
         foreach ($list as $key => $val) {
             if (isset($val[2])) {
-	            $return .= (
-	                $this->wiki->addToken($this->rule, array('type' => 'term_start')) .
-	                trim($val[2]) .
-	                $this->wiki->addToken($this->rule, array('type' => 'term_end'))
-	            );
-			}
+                $return .= (
+                    $this->wiki->addToken($this->rule, ['type' => 'term_start']) .
+                    trim($val[2]) .
+                    $this->wiki->addToken($this->rule, ['type' => 'term_end'])
+                );
+            }
             if (isset($val[4])) {
-	            $return .= (
-	                $this->wiki->addToken($this->rule, array('type' => 'narr_start')) .
-	                trim($val[4]) . 
-	                $this->wiki->addToken($this->rule, array('type' => 'narr_end'))
-	            );
-			}
+                $return .= (
+                    $this->wiki->addToken($this->rule, ['type' => 'narr_start']) .
+                    trim($val[4]) .
+                    $this->wiki->addToken($this->rule, ['type' => 'narr_end'])
+                );
+            }
         }
-        
-        
+
+
         // end the deflist
-        $options = array('type' => 'list_end');
+        $options = ['type' => 'list_end'];
         $return .= $this->wiki->addToken($this->rule, $options);
-        
+
         // done!
         return "\n" . $return . "\n\n";
     }
 }
-?>

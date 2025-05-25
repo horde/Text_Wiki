@@ -1,5 +1,7 @@
 <?php
+
 namespace Horde\Text\Wiki;
+
 // vim: set expandtab tabstop=4 shiftwidth=4 softtabstop=4:
 /**
  * Freelink rule end renderer for Xhtml
@@ -29,8 +31,7 @@ require_once 'Text/Wiki/Render/Xhtml/Wikilink.php';
  * @version    Release: @package_version@
  * @link       http://pear.php.net/package/Text_Wiki
  */
-class Text_Wiki_Render_Xhtml_Freelink extends WikiRender_Xhtml_Wikilink {
+class XhtmlRendererFreelink extends WikiRender_Xhtml_Wikilink
+{
     // renders identically to wikilinks, only the parsing is different :-)
 }
-
-?>

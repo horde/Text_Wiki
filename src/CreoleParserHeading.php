@@ -1,4 +1,5 @@
 <?php
+
 namespace Horde\Text\Wiki;
 
 /**
@@ -25,9 +26,8 @@ namespace Horde\Text\Wiki;
  *
  */
 
-class Text_Wiki_Parse_Heading extends WikiParse {
-
-
+class CreoleParserHeading extends WikiParse
+{
     /**
      *
      * The regular expression used to parse the source text and find
@@ -41,11 +41,11 @@ class Text_Wiki_Parse_Heading extends WikiParse {
      *
      */
 
-    var $regex = '/^(={1,6}) *(.*?) *=*$/m';
+    public $regex = '/^(={1,6}) *(.*?) *=*$/m';
 
-    var $conf = array(
-        'id_prefix' => 'toc'
-    );
+    public $conf = [
+        'id_prefix' => 'toc',
+    ];
 
     /**
      *
@@ -63,7 +63,7 @@ class Text_Wiki_Parse_Heading extends WikiParse {
      *
      */
 
-    function process(&$matches)
+    public function process(&$matches)
     {
         // keep a running count for header IDs.  we use this later
         // when constructing TOC entries, etc.
@@ -76,20 +76,20 @@ class Text_Wiki_Parse_Heading extends WikiParse {
 
         $start = $this->wiki->addToken(
             $this->rule,
-            array(
+            [
                 'type' => 'start',
                 'level' => strlen($matches[1]),
                 'text' => trim($matches[2]),
-                'id' => $prefix . $id ++
-            )
+                'id' => $prefix . $id++,
+            ]
         );
 
         $end = $this->wiki->addToken(
             $this->rule,
-            array(
+            [
                 'type' => 'end',
-                'level' => strlen($matches[1])
-            )
+                'level' => strlen($matches[1]),
+            ]
         );
 
         return $start . trim($matches[2]) . $end . "\n\n";

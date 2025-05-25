@@ -1,29 +1,30 @@
 <?php
+
 namespace HordeTextWiki;
 
 /**
-* 
+*
 * Parses for wiki freelink text.
-* 
+*
 * @category Text
-* 
+*
 * @package Text_Wiki
-* 
+*
 * @author Paul M. Jones <pmjones@php.net>
-* 
+*
 * @license LGPL
-* 
+*
 * @version $Id$
-* 
+*
 */
 
 /**
-* 
+*
 * Parses for freelinked page links.
-* 
+*
 * This class implements a Text_Wiki_Parse to find source text marked as a
 * wiki freelink, and automatically create a link to that page.
-* 
+*
 * A freelink is any page name not conforming to the standard
 * StudlyCapsStyle for a wiki page name.  For example, a page normally
 * named MyHomePage can be renamed and referred to as ((My Home Page)) --
@@ -33,31 +34,30 @@ namespace HordeTextWiki;
 * ((MyHomePage|My Home Page#Section1)).
 *
 * @category Text
-* 
+*
 * @package Text_Wiki
-* 
+*
 * @author Paul M. Jones <pmjones@php.net>
-* 
+*
 */
 
 //Taken care of in WikiLink (I think)
-class Text_Wiki_Parse_Freelink extends WikiParse {
-    
+class CowikiParserFreelink extends WikiParse
+{
+    public $regex = '/abcdefghijklmnop\(\)\(\#\*%$%/';
 
-    var $regex = '/abcdefghijklmnop\(\)\(\#\*%$%/';
-    
-    
+
     /**
-    * 
+    *
     * Generates a replacement for the matched text.  Token options are:
-    * 
+    *
     * 'page' => the wiki page name (e.g., HomePage).
-    * 
+    *
     * 'text' => alternative text to be displayed in place of the wiki
     * page name.
-    * 
+    *
     * 'anchor' => a named anchor on the target wiki page
-    * 
+    *
     * @access public
     *
     * @param array &$matches The array of matches from parse().
@@ -66,10 +66,9 @@ class Text_Wiki_Parse_Freelink extends WikiParse {
     * the source text, plus any text priot to the match.
     *
     */
-    
-    function process(&$matches)
+
+    public function process(&$matches)
     {
         return;
     }
 }
-?>

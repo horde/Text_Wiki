@@ -1,9 +1,11 @@
 <?php
+
 namespace HordeTextWiki;
-class Text_Wiki_Render_Latex_Include extends WikiRender {    
-    function token()
+
+class LatexRendererInclude extends WikiRender
+{
+    public function token()
     {
         return '';
     }
 }
-?>

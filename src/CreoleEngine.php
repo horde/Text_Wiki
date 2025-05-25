@@ -20,7 +20,9 @@
  * @version    CVS: $Id$
  *
  */
+
 namespace Horde\Text\Wiki;
+
 /**
  *
  * "Master" class for handling the management and convenience
@@ -45,12 +47,12 @@ namespace Horde\Text\Wiki;
  *
  */
 
-class CreoleEngine extends TextWikiBase {
-
+class CreoleEngine extends TextWikiBase
+{
     // *single newlines* are handled as in most wikis (ignored)
     // if Newline is removed from rules, they will be handled as in word-processors (meaning a paragraph break)
 
-    var $rules = array(
+    public $rules = [
         'Prefilter',
         'Delimiter',
         'Preformatted',
@@ -83,8 +85,8 @@ class CreoleEngine extends TextWikiBase {
         'Strong',
         //'Italic',
         //'Bold',
-        'Tighten'
-    );
+        'Tighten',
+    ];
 
     /**
      * Constructor: just adds the path to Creole rules
@@ -93,17 +95,19 @@ class CreoleEngine extends TextWikiBase {
      * @param array $rules The set of rules to load for this object.
      */
 
-    function __construct($rules = null) {
+    public function __construct($rules = null)
+    {
         parent::__construct($rules);
-        $this->addPath('parse', $this->fixPath(dirname(__FILE__)).'Parse/Creole');
+        $this->addPath('parse', $this->fixPath(dirname(__FILE__)) . 'Parse/Creole');
         $this->renderingType = 'char';
         $this->setRenderConf('xhtml', 'center', 'css', 'center');
         $this->setRenderConf('xhtml', 'url', 'target', null);
     }
 
-    function checkInnerTags(&$text) {
-        $started = array();
-		$i = false;
+    public function checkInnerTags(&$text)
+    {
+        $started = [];
+        $i = false;
         while (($i = strpos($text, $this->delim, $i)) !== false) {
             $j = strpos($text, $this->delim, $i + 1);
             $t = substr($text, $i + 1, $j - $i - 1);
@@ -112,37 +116,38 @@ class CreoleEngine extends TextWikiBase {
             $type = $this->tokens[$t][1]['type'];
 
             if ($type == 'start') {
-				if (empty($started[$rule])) {
-					$started[$rule] = 0;
-				}
+                if (empty($started[$rule])) {
+                    $started[$rule] = 0;
+                }
                 $started[$rule] += 1;
-            }
-            else if ($type == 'end') {
-                if (empty($started[$rule])) return false;
+            } elseif ($type == 'end') {
+                if (empty($started[$rule])) {
+                    return false;
+                }
 
                 $started[$rule] -= 1;
-                if (! $started[$rule]) unset($started[$rule]);
+                if (! $started[$rule]) {
+                    unset($started[$rule]);
+                }
             }
         }
         return ! (count($started) > 0);
     }
 
-    function restoreRaw($text) {
-		$i = false;
+    public function restoreRaw($text)
+    {
+        $i = false;
         while (($i = strpos($text, $this->delim, $i)) !== false) {
             $j = strpos($text, $this->delim, $i + 1);
             $t = substr($text, $i + 1, $j - $i - 1);
             $rule = strtolower($this->tokens[$t][0]);
 
             if ($rule == 'raw') {
-                $text = str_replace($this->delim. $t. $this->delim, $this->tokens[$t][1]['text'], $text);
-            }
-            else {
+                $text = str_replace($this->delim . $t . $this->delim, $this->tokens[$t][1]['text'], $text);
+            } else {
                 $i = $j + 1;
             }
         }
         return $text;
     }
 }
-
-?>

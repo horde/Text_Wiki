@@ -1,4 +1,5 @@
 <?php
+
 namespace HordeTextWiki;
 
 /**
@@ -18,8 +19,8 @@ namespace HordeTextWiki;
  */
 
 
-class Text_Wiki_Parse_Image extends WikiParse {
-
+class CreoleParserImage extends WikiParse
+{
     /**
      *
      * Constructor.  Overrides the Text_Wiki_Parse constructor so that we
@@ -32,7 +33,7 @@ class Text_Wiki_Parse_Image extends WikiParse {
      *
      */
 
-    function __construct(&$obj)
+    public function __construct(&$obj)
     {
         parent::__construct($obj);
         $this->regex = '/{{([^' . $this->wiki->delim . ']*)(\|([^' . $this->wiki->delim . ']*))?}}/U';
@@ -51,18 +52,18 @@ class Text_Wiki_Parse_Image extends WikiParse {
      *
      */
 
-    function process(&$matches)
+    public function process(&$matches)
     {
         $src = trim($matches[1]);
-		$src = ltrim($src, '/');
+        $src = ltrim($src, '/');
         $alt = isset($matches[3]) ? trim($matches[3]) : $src;
 
         return $this->wiki->addToken(
             $this->rule,
-            array(
+            [
                 'src' => $src,
-                'attr' => array('alt' => $alt, 'title' => $alt)
-            )
+                'attr' => ['alt' => $alt, 'title' => $alt],
+            ]
         );
     }
 

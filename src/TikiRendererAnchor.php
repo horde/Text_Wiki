@@ -1,8 +1,9 @@
 <?php
+
 namespace HordeTextWiki;
 
 /**
-* 
+*
 * This class renders an anchor target name in XHTML.
 *
 * @author Manuel Holtgrewe <purestorm at ggnore dot net>
@@ -13,18 +14,16 @@ namespace HordeTextWiki;
 *
 */
 
-class Text_Wiki_Render_Tiki_Anchor extends WikiRender {
-    
-    function token($options)
+class TikiRendererAnchor extends WikiRender
+{
+    public function token($options)
     {
         if ($options['type'] == 'start') {
-            return '(('.$options['name'];
+            return '((' . $options['name'];
         }
-        
+
         if ($options['type'] == 'end') {
             return '))';
         }
     }
 }
-
-?>

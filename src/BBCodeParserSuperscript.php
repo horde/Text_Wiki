@@ -1,5 +1,7 @@
 <?php
+
 namespace Horde\Text\Wiki;
+
 /* vim: set expandtab tabstop=4 shiftwidth=4 softtabstop=4 foldmethod=marker */
 
 // {{{ Header
@@ -37,7 +39,7 @@ namespace Horde\Text\Wiki;
  *          GNU Lesser General Public License, version 2.1
  * @version Release: @package_version@
  */
-class Text_Wiki_Parse_Superscript extends WikiParse
+class BBCodeParserSuperscript extends WikiParse
 {
     // {{{ Properties
 
@@ -49,7 +51,7 @@ class Text_Wiki_Parse_Superscript extends WikiParse
      * @var string
      * @see parse()
      */
-    var $regex = "#\[sup](.*?)\[/sup]#i";
+    public $regex = "#\[sup](.*?)\[/sup]#i";
 
     // {{{ process()
 
@@ -63,10 +65,10 @@ class Text_Wiki_Parse_Superscript extends WikiParse
      * the source text surrounding the text to be emphasized.
      * @access public
      */
-    function process(&$matches)
+    public function process(&$matches)
     {
-        $start = $this->wiki->addToken($this->rule, array('type' => 'start'));
-        $end = $this->wiki->addToken($this->rule, array('type' => 'end'));
+        $start = $this->wiki->addToken($this->rule, ['type' => 'start']);
+        $end = $this->wiki->addToken($this->rule, ['type' => 'end']);
         return $start . $matches[1] . $end;
     }
 

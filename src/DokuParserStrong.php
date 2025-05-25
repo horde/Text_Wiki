@@ -1,27 +1,28 @@
 <?php
+
 namespace Horde\Text\Wiki;
 
 /**
-* 
+*
 * Parses for strongly-emphasized text.
-* 
+*
 * @category Text
-* 
+*
 * @package Text_Wiki
-* 
+*
 * @author Paul M. Jones <pmjones@php.net>
-* 
+*
 * @license LGPL
-* 
+*
 * @version $Id$
-* 
+*
 */
 
 
 /**
-* 
+*
 * Parses for strongly-emphasized text.
-* 
+*
 * This class implements a Text_Wiki_Parse to find source text marked for
 * strong emphasis (bold) as defined by text surrounded by three
 * single-quotes. On parsing, the text itself is left in place, but the
@@ -29,43 +30,42 @@ namespace Horde\Text\Wiki;
 * tokens.
 *
 * @category Text
-* 
+*
 * @package Text_Wiki
-* 
+*
 * @author Paul M. Jones <pmjones@php.net>
-* 
+*
 */
 
-class Text_Wiki_Parse_Strong extends WikiParse {
-    
-    
+class DokuParserStrong extends WikiParse
+{
     /**
-    * 
+    *
     * The regular expression used to parse the source text and find
     * matches conforming to this rule.  Used by the parse() method.
-    * 
+    *
     * @access public
-    * 
+    *
     * @var string
-    * 
+    *
     * @see parse()
-    * 
+    *
     */
-    
+
     // original
     // var $regex =  "/\*\*(.*?)\*\*/";
-    
+
     // alternatives:
     // var $regex = "/\*\*(()|[^\n]*)\*\*/U";
-    var $regex = '/\*\*(()|.*)\*\*/U';
-    
+    public $regex = '/\*\*(()|.*)\*\*/U';
+
     /**
-    * 
+    *
     * Generates a replacement for the matched text.  Token options are:
-    * 
+    *
     * 'type' => ['start'|'end'] The starting or ending point of the
     * emphasized text.  The text itself is left in the source.
-    * 
+    *
     * @access public
     *
     * @param array &$matches The array of matches from parse().
@@ -74,18 +74,19 @@ class Text_Wiki_Parse_Strong extends WikiParse {
     * the source text surrounding the text to be emphasized.
     *
     */
-    
-    function process(&$matches)
+
+    public function process(&$matches)
     {
         $start = $this->wiki->addToken(
-            $this->rule, array('type' => 'start')
+            $this->rule,
+            ['type' => 'start']
         );
-        
+
         $end = $this->wiki->addToken(
-            $this->rule, array('type' => 'end')
+            $this->rule,
+            ['type' => 'end']
         );
-        
+
         return $start . $matches[1] . $end;
     }
 }
-?>

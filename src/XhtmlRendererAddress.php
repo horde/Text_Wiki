@@ -1,4 +1,5 @@
 <?php
+
 namespace Horde\Text\Wiki;
 
 /**
@@ -21,11 +22,11 @@ namespace Horde\Text\Wiki;
  *
  */
 
-class Text_Wiki_Render_Xhtml_Address extends WikiRender {
-
-    var $conf = array(
-        'css' => null
-    );
+class XhtmlRendererAddress extends WikiRender
+{
+    public $conf = [
+        'css' => null,
+    ];
 
     /**
     *
@@ -40,7 +41,7 @@ class Text_Wiki_Render_Xhtml_Address extends WikiRender {
     *
     */
 
-    function token($options)
+    public function token($options)
     {
         if ($options['type'] == 'start') {
             $css = $this->formatConf(' class="%s"', 'css');

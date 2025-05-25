@@ -1,5 +1,7 @@
 <?php
+
 namespace Horde\Text\Wiki;
+
 // vim: set expandtab tabstop=4 shiftwidth=4 softtabstop=4:
 /**
  * Interwiki rule end renderer for Xhtml
@@ -24,17 +26,17 @@ namespace Horde\Text\Wiki;
  * @version    Release: @package_version@
  * @link       http://pear.php.net/package/Text_Wiki
  */
-class Text_Wiki_Render_Xhtml_Interwiki extends WikiRender {
-
-    var $conf = array(
-        'sites' => array(
+class XhtmlRendererInterwiki extends WikiRender
+{
+    public $conf = [
+        'sites' => [
             'MeatBall' => 'http://www.usemod.com/cgi-bin/mb.pl?%s',
             'Advogato' => 'http://advogato.org/%s',
-            'Wiki'       => 'http://c2.com/cgi/wiki?%s'
-        ),
+            'Wiki'       => 'http://c2.com/cgi/wiki?%s',
+        ],
         'target' => '_blank',
-        'css' => null
-    );
+        'css' => null,
+    ];
 
 
     /**
@@ -50,7 +52,7 @@ class Text_Wiki_Render_Xhtml_Interwiki extends WikiRender {
     *
     */
 
-    function token($options)
+    public function token($options)
     {
         $text = $options['text'];
         if (isset($options['url'])) {

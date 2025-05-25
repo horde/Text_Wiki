@@ -1,8 +1,9 @@
 <?php
+
 namespace HordeTextWiki;
 
-class Text_Wiki_Render_Creole_Raw extends WikiRender {
-
+class CreoleRendererRaw extends WikiRender
+{
     /**
     *
     * Renders a token into text matching the requested format.
@@ -16,14 +17,15 @@ class Text_Wiki_Render_Creole_Raw extends WikiRender {
     *
     */
 
-    function token($options)
+    public function token($options)
     {
         $text = $options['text'];
-        if ($text == '\\') $text = ' ';
+        if ($text == '\\') {
+            $text = ' ';
+        }
         if (isset($options['type']) && $options['type'] == 'escape') {
             $text = '~' . $text;
-        }
-        else {
+        } else {
             $find = "/}}}(?!})/";
             $replace = "}}}}}}{{{";
             $text = preg_replace($find, $replace, $text);
@@ -31,4 +33,3 @@ class Text_Wiki_Render_Creole_Raw extends WikiRender {
         return $text;
     }
 }
-?>

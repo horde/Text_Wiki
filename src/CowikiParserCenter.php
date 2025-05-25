@@ -1,58 +1,58 @@
 <?php
+
 namespace HordeTextWiki;
 
 /**
-* 
+*
 * Parses for centered lines of text.
-* 
+*
 * @category Text
-* 
+*
 * @package Text_Wiki
-* 
+*
 * @author Paul M. Jones <pmjones@php.net>
-* 
+*
 * @license LGPL
-* 
+*
 * @version $Id$
-* 
+*
 */
 
 /**
-* 
+*
 * Parses for centered lines of text.
-* 
+*
 * This class implements a Text_Wiki_Parse to find lines marked for centering.
 * The line must start with "= " (i.e., an equal-sign followed by a space).
 *
 * @category Text
-* 
+*
 * @package Text_Wiki
-* 
+*
 * @author Paul M. Jones <pmjones@php.net>
-* 
+*
 */
 
 //None in CoWiki
-class Text_Wiki_Parse_Center extends WikiParse {
-    
-    
+class CowikiParserCenter extends WikiParse
+{
     /**
-    * 
+    *
     * The regular expression used to find source text matching this
     * rule.
-    * 
+    *
     * @access public
-    * 
+    *
     * @var string
-    * 
+    *
     */
-    
-    var $regex = '/\n::(.*?)::\n/';
-    
+
+    public $regex = '/\n::(.*?)::\n/';
+
     /**
-    * 
+    *
     * Generates a token entry for the matched text.
-    * 
+    *
     * @access public
     *
     * @param array &$matches The array of matches from parse().
@@ -61,20 +61,19 @@ class Text_Wiki_Parse_Center extends WikiParse {
     * the source text.
     *
     */
-    
-    function process(&$matches)
+
+    public function process(&$matches)
     {
         $start = $this->wiki->addToken(
             $this->rule,
-            array('type' => 'start')
+            ['type' => 'start']
         );
-        
+
         $end = $this->wiki->addToken(
             $this->rule,
-            array('type' => 'end')
+            ['type' => 'end']
         );
-        
+
         return "\n" . $start . $matches[1] . $end . "\n";
     }
 }
-?>

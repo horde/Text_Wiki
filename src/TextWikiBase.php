@@ -1,4 +1,5 @@
 <?php
+
 // vim: set expandtab tabstop=4 shiftwidth=4 softtabstop=4:
 /**
  * Parse structured wiki text and render into arbitrary formats such as XHTML.
@@ -28,8 +29,8 @@ namespace Horde\Text\Wiki;
  * @version    Release: @package_version@
  * @link       http://pear.php.net/package/Text_Wiki
  */
-class TextWikiBase {
-
+class TextWikiBase
+{
     /**
     *
     * The default list of rules, in order, to apply to the source text.
@@ -40,7 +41,7 @@ class TextWikiBase {
     *
     */
 
-    public array $rules = array(
+    public array $rules = [
         'Prefilter',
         'Delimiter',
         'Code',
@@ -77,8 +78,8 @@ class TextWikiBase {
         'Superscript',
         'Subscript',
         'Revise',
-        'Tighten'
-    );
+        'Tighten',
+    ];
 
 
     /**
@@ -91,11 +92,11 @@ class TextWikiBase {
     *
     */
 
-    var $disable = array(
+    public $disable = [
         'Html',
         'Include',
-        'Embed'
-    );
+        'Embed',
+    ];
 
 
     /**
@@ -124,7 +125,7 @@ class TextWikiBase {
     *
     */
 
-    var $parseConf = array();
+    public $parseConf = [];
 
 
     /**
@@ -146,14 +147,14 @@ class TextWikiBase {
     *
     */
 
-    var $renderConf = array(
-        'Docbook' => array(),
-        'Latex' => array(),
-        'Pdf' => array(),
-        'Plain' => array(),
-        'Rtf' => array(),
-        'Xhtml' => array()
-    );
+    public $renderConf = [
+        'Docbook' => [],
+        'Latex' => [],
+        'Pdf' => [],
+        'Plain' => [],
+        'Rtf' => [],
+        'Xhtml' => [],
+    ];
 
 
     /**
@@ -177,14 +178,14 @@ class TextWikiBase {
     *
     */
 
-    var $formatConf = array(
-        'Docbook' => array(),
-        'Latex' => array(),
-        'Pdf' => array(),
-        'Plain' => array(),
-        'Rtf' => array(),
-        'Xhtml' => array()
-    );
+    public $formatConf = [
+        'Docbook' => [],
+        'Latex' => [],
+        'Pdf' => [],
+        'Plain' => [],
+        'Rtf' => [],
+        'Xhtml' => [],
+    ];
 
 
     /**
@@ -197,7 +198,7 @@ class TextWikiBase {
     *
     */
 
-    var $delim = "\31";
+    public $delim = "\31";
 
 
     /**
@@ -220,7 +221,7 @@ class TextWikiBase {
     *
     */
 
-    var $tokens = array();
+    public $tokens = [];
 
     /**
     * How many tokens generated pro rules.
@@ -230,7 +231,7 @@ class TextWikiBase {
     * @access private
     * @var array
     */
-    var $_countRulesTokens = array();
+    public $_countRulesTokens = [];
 
 
     /**
@@ -246,14 +247,14 @@ class TextWikiBase {
     *
     */
 
-    var $source = '';
+    public $source = '';
 
     /**
      * The output text
      *
      * @var string
      */
-    var $output = '';
+    public $output = '';
 
 
     /**
@@ -271,7 +272,7 @@ class TextWikiBase {
     *
     */
 
-    var $parseObj = array();
+    public $parseObj = [];
 
 
     /**
@@ -289,7 +290,7 @@ class TextWikiBase {
     *
     */
 
-    var $renderObj = array();
+    public $renderObj = [];
 
 
     /**
@@ -302,7 +303,7 @@ class TextWikiBase {
     *
     */
 
-    var $formatObj = array();
+    public $formatObj = [];
 
 
     /**
@@ -315,10 +316,10 @@ class TextWikiBase {
     *
     */
 
-    var $path = array(
-        'parse' => array(),
-        'render' => array()
-    );
+    public $path = [
+        'parse' => [],
+        'render' => [],
+    ];
 
 
 
@@ -332,35 +333,35 @@ class TextWikiBase {
     *
     */
 
-    var $_dirSep = DIRECTORY_SEPARATOR;
+    public $_dirSep = DIRECTORY_SEPARATOR;
 
     /**
      * Temporary configuration variable
      *
      * @var string
      */
-    var $renderingType = 'normal';
+    public $renderingType = 'normal';
 
     /**
      * Stack of rendering callbacks
      *
      * @var Array
      */
-    var $_renderCallbacks = array();
+    public $_renderCallbacks = [];
 
     /**
      * Current output block
      *
      * @var string
      */
-    var $_block;
+    public $_block;
 
     /**
      * A stack of blocks
      *
      * @param Array
      */
-    var $_blocks;
+    public $_blocks;
 
     /**
      * A fix for PHP5.
@@ -373,10 +374,10 @@ class TextWikiBase {
      * @return $this
      * @uses   self::Text_Wiki()
      */
-    function __construct($rules = null)
+    public function __construct($rules = null)
     {
         if (is_array($rules)) {
-            $this->rules = array();
+            $this->rules = [];
             foreach ($rules as $rule) {
                 $this->rules[] = ucfirst($rule);
             }
@@ -430,7 +431,7 @@ class TextWikiBase {
     */
     public static function singleton($parser = 'Default', $rules = null)
     {
-        static $only = array();
+        static $only = [];
         if (!isset($only[$parser])) {
             $ret = Text_Wiki::factory($parser, $rules);
             if (Text_Wiki::isError($ret)) {
@@ -453,13 +454,14 @@ class TextWikiBase {
     public static function factory($parser = 'Default', $rules = null)
     {
         $class = 'Text_Wiki_' . $parser;
-        $file = str_replace('_', '/', $class).'.php';
+        $file = str_replace('_', '/', $class) . '.php';
         if (!class_exists($class)) {
             require_once $file;
             if (!class_exists($class)) {
                 return Text_Wiki::error(
-                    'Class ' . $class . ' does not exist after requiring '. $file .
-                        ', install package ' . $class . "\n");
+                    'Class ' . $class . ' does not exist after requiring ' . $file .
+                        ', install package ' . $class . "\n"
+                );
             }
         }
 
@@ -483,12 +485,12 @@ class TextWikiBase {
     *
     */
 
-    function setParseConf($rule, $arg1, $arg2 = null)
+    public function setParseConf($rule, $arg1, $arg2 = null)
     {
         $rule = ucwords(strtolower($rule));
 
         if (! isset($this->parseConf[$rule])) {
-            $this->parseConf[$rule] = array();
+            $this->parseConf[$rule] = [];
         }
 
         // if first arg is an array, use it as the entire
@@ -518,7 +520,7 @@ class TextWikiBase {
     *
     */
 
-    function getParseConf($rule, $key = null)
+    public function getParseConf($rule, $key = null)
     {
         $rule = ucwords(strtolower($rule));
 
@@ -562,17 +564,17 @@ class TextWikiBase {
     *
     */
 
-    function setRenderConf($format, $rule, $arg1, $arg2 = null)
+    public function setRenderConf($format, $rule, $arg1, $arg2 = null)
     {
         $format = ucwords(strtolower($format));
         $rule = ucwords(strtolower($rule));
 
         if (! isset($this->renderConf[$format])) {
-            $this->renderConf[$format] = array();
+            $this->renderConf[$format] = [];
         }
 
         if (! isset($this->renderConf[$format][$rule])) {
-            $this->renderConf[$format][$rule] = array();
+            $this->renderConf[$format][$rule] = [];
         }
 
         // if first arg is an array, use it as the entire
@@ -604,7 +606,7 @@ class TextWikiBase {
     *
     */
 
-    function getRenderConf($format, $rule, $key = null)
+    public function getRenderConf($format, $rule, $key = null)
     {
         $format = ucwords(strtolower($format));
         $rule = ucwords(strtolower($rule));
@@ -646,10 +648,10 @@ class TextWikiBase {
     *
     */
 
-    function setFormatConf($format, $arg1, $arg2 = null)
+    public function setFormatConf($format, $arg1, $arg2 = null)
     {
         if (! isset($this->formatConf[$format]) || ! is_array($this->formatConf[$format])) {
-            $this->formatConf[$format] = array();
+            $this->formatConf[$format] = [];
         }
 
         // if first arg is an array, use it as the entire
@@ -680,7 +682,7 @@ class TextWikiBase {
     *
     */
 
-    function getFormatConf($format, $key = null)
+    public function getFormatConf($format, $key = null)
     {
         // the format does not exist
         if (! isset($this->formatConf[$format])) {
@@ -720,7 +722,7 @@ class TextWikiBase {
     *
     */
 
-    function insertRule($name, $tgt = null)
+    public function insertRule($name, $tgt = null)
     {
         $name = ucwords(strtolower($name));
         if (! is_null($tgt)) {
@@ -760,7 +762,7 @@ class TextWikiBase {
 
         // insert after the named rule
         $tmp = $this->rules;
-        $this->rules = array();
+        $this->rules = [];
 
         foreach ($tmp as $val) {
             $this->rules[] = $val;
@@ -786,7 +788,7 @@ class TextWikiBase {
     *
     */
 
-    function deleteRule($name)
+    public function deleteRule($name)
     {
         $name = ucwords(strtolower($name));
         $key = array_search($name, $this->rules);
@@ -810,7 +812,7 @@ class TextWikiBase {
     *
     */
 
-    function changeRule($old, $new)
+    public function changeRule($old, $new)
     {
         $old = ucwords(strtolower($old));
         $new = ucwords(strtolower($new));
@@ -835,7 +837,7 @@ class TextWikiBase {
     *
     */
 
-    function enableRule($name)
+    public function enableRule($name)
     {
         $name = ucwords(strtolower($name));
         $key = array_search($name, $this->disable);
@@ -857,7 +859,7 @@ class TextWikiBase {
     *
     */
 
-    function disableRule($name)
+    public function disableRule($name)
     {
         $name = ucwords(strtolower($name));
         $key = array_search($name, $this->disable);
@@ -896,7 +898,7 @@ class TextWikiBase {
     *
     */
 
-    function transform($text, $format = 'Xhtml')
+    public function transform($text, $format = 'Xhtml')
     {
         $this->parse($text);
         return $this->render($format);
@@ -917,14 +919,14 @@ class TextWikiBase {
     *
     */
 
-    function parse($text)
+    public function parse($text)
     {
         // set the object property for the source text
         $this->source = $text;
 
         // reset the tokens.
-        $this->tokens = array();
-        $this->_countRulesTokens = array();
+        $this->tokens = [];
+        $this->_countRulesTokens = [];
 
         // apply the parse() method of each requested rule to the source
         // text.
@@ -959,7 +961,7 @@ class TextWikiBase {
     *
     */
 
-    function render($format = 'Xhtml')
+    public function render($format = 'Xhtml')
     {
         // the rendering method we're going to use from each rule
         $format = ucwords(strtolower($format));
@@ -991,9 +993,11 @@ class TextWikiBase {
         }
 
         if ($this->renderingType == 'preg') {
-            $this->output = preg_replace_callback('/'.$this->delim.'(\d+)'.$this->delim.'/',
-                                            array(&$this, '_renderToken'),
-                                            $this->source);
+            $this->output = preg_replace_callback(
+                '/' . $this->delim . '(\d+)' . $this->delim . '/',
+                [&$this, '_renderToken'],
+                $this->source
+            );
             /*
 //Damn strtok()! Why does it "skip" empty parts of the string. It's useless now!
         } elseif ($this->renderingType == 'strtok') {
@@ -1016,7 +1020,7 @@ class TextWikiBase {
         } else {
             // pass through the parsed source text character by character
             $this->_block = '';
-            $tokenStack = array();
+            $tokenStack = [];
             $k = strlen($this->source);
             for ($i = 0; $i < $k; $i++) {
 
@@ -1047,7 +1051,7 @@ class TextWikiBase {
 
                         // yes, get the replacement text for the delimited
                         // token number and unset the flag.
-                        $key = (int)$key;
+                        $key = (int) $key;
                         $rule = $this->tokens[$key][0];
                         $opts = $this->tokens[$key][1];
                         $this->_block .= $this->renderObj[$rule]->token($opts);
@@ -1107,17 +1111,20 @@ class TextWikiBase {
      * @return string The rendered text for the token
      * @access private
      */
-    function _renderToken($matches) {
+    public function _renderToken($matches)
+    {
         return $this->renderObj[$this->tokens[$matches[1]][0]]->token($this->tokens[$matches[1]][1]);
     }
 
-    function registerRenderCallback($callback) {
+    public function registerRenderCallback($callback)
+    {
         $this->_blocks[] = $this->_block;
         $this->_block = '';
         $this->_renderCallbacks[] = $callback;
     }
 
-    function popRenderCallback() {
+    public function popRenderCallback()
+    {
         if (count($this->_renderCallbacks) == 0) {
             return Text_Wiki::error('Render callback popped when no render callbacks in stack');
         } else {
@@ -1125,7 +1132,7 @@ class TextWikiBase {
             $this->_block = call_user_func($callback, $this->_block);
             if (count($this->_blocks)) {
                 $parentBlock = array_pop($this->_blocks);
-                $this->_block = $parentBlock.$this->_block;
+                $this->_block = $parentBlock . $this->_block;
             }
             if (count($this->_renderCallbacks) == 0) {
                 $this->output .= $this->_block;
@@ -1144,7 +1151,7 @@ class TextWikiBase {
     *
     */
 
-    function getSource()
+    public function getSource()
     {
         return $this->source;
     }
@@ -1164,13 +1171,13 @@ class TextWikiBase {
     *
     */
 
-    function getTokens($rules = null)
+    public function getTokens($rules = null)
     {
         if (is_null($rules)) {
             return $this->tokens;
         } else {
             settype($rules, 'array');
-            $result = array();
+            $result = [];
             foreach ($this->tokens as $key => $val) {
                 if (in_array($val[0], $rules)) {
                     $result[$key] = $val;
@@ -1203,7 +1210,7 @@ class TextWikiBase {
     *
     */
 
-    function addToken($rule, $options = array(), $id_only = false)
+    public function addToken($rule, $options = [], $id_only = false)
     {
         // increment the token ID number.  note that if you parse
         // multiple times with the same Text_Wiki object, the ID number
@@ -1212,17 +1219,17 @@ class TextWikiBase {
         if (! isset($id)) {
             $id = 0;
         } else {
-            $id ++;
+            $id++;
         }
 
         // force the options to be an array
         settype($options, 'array');
 
         // add the token
-        $this->tokens[$id] = array(
+        $this->tokens[$id] = [
             0 => $rule,
-            1 => $options
-        );
+            1 => $options,
+        ];
         if (!isset($this->_countRulesTokens[$rule])) {
             $this->_countRulesTokens[$rule] = 1;
         } else {
@@ -1260,14 +1267,14 @@ class TextWikiBase {
     *
     */
 
-    function setToken($id, $rule, $options = array())
+    public function setToken($id, $rule, $options = [])
     {
         $oldRule = isset($this->tokens[$id]) ? $this->tokens[$id][0] : null;
         // reset the token
-        $this->tokens[$id] = array(
+        $this->tokens[$id] = [
             0 => $rule,
-            1 => $options
-        );
+            1 => $options,
+        ];
         if ($rule != $oldRule) {
             if (isset($oldRule) && !($this->_countRulesTokens[$oldRule]--)) {
                 unset($this->_countRulesTokens[$oldRule]);
@@ -1291,7 +1298,7 @@ class TextWikiBase {
     *
     */
 
-    function loadParseObj($rule)
+    public function loadParseObj($rule)
     {
         $rule = ucwords(strtolower($rule));
         $file = $rule . '.php';
@@ -1327,7 +1334,7 @@ class TextWikiBase {
     *
     */
 
-    function loadRenderObj($format, $rule)
+    public function loadRenderObj($format, $rule)
     {
         $format = ucwords(strtolower($format));
         $rule = ucwords(strtolower($rule));
@@ -1362,7 +1369,7 @@ class TextWikiBase {
     *
     */
 
-    function loadFormatObj($format)
+    public function loadFormatObj($format)
     {
         $format = ucwords(strtolower($format));
         $file = $format . '.php';
@@ -1399,11 +1406,11 @@ class TextWikiBase {
     *
     */
 
-    function addPath($type, $dir)
+    public function addPath($type, $dir)
     {
         $dir = $this->fixPath($dir);
         if (! isset($this->path[$type])) {
-            $this->path[$type] = array($dir);
+            $this->path[$type] = [$dir];
         } else {
             array_unshift($this->path[$type], $dir);
         }
@@ -1423,12 +1430,12 @@ class TextWikiBase {
     *
     */
 
-    function getPath($type = null)
+    public function getPath($type = null)
     {
         if (is_null($type)) {
             return $this->path;
         } elseif (! isset($this->path[$type])) {
-            return array();
+            return [];
         } else {
             return $this->path[$type];
         }
@@ -1449,7 +1456,7 @@ class TextWikiBase {
     *
     */
 
-    function findFile($type, $file)
+    public function findFile($type, $file)
     {
         // get the set of paths
         $set = $this->getPath($type);
@@ -1479,12 +1486,12 @@ class TextWikiBase {
     *
     */
 
-    function fixPath($path)
+    public function fixPath($path)
     {
         $len = strlen($this->_dirSep);
 
         if (! empty($path) &&
-            substr($path, -1 * $len, $len) != $this->_dirSep)    {
+            substr($path, -1 * $len, $len) != $this->_dirSep) {
             return $path . $this->_dirSep;
         } else {
             return $path;
@@ -1504,7 +1511,7 @@ class TextWikiBase {
     *
     */
 
-    function error($message)
+    public function error($message)
     {
         if (! class_exists('PEAR_Error')) {
             include_once 'PEAR.php';

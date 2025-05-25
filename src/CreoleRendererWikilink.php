@@ -1,8 +1,9 @@
 <?php
+
 namespace HordeTextWiki;
 
-class Text_Wiki_Render_Creole_Wikilink extends WikiRender {
-
+class CreoleRendererWikilink extends WikiRender
+{
     /**
     *
     * Renders a token into XHTML.
@@ -16,29 +17,37 @@ class Text_Wiki_Render_Creole_Wikilink extends WikiRender {
     *
     */
 
-    function token($options)
+    public function token($options)
     {
         $dup = (($options['page'] == $options['text']) || ($options['page'] == preg_replace('/\s+/', '_', $options['text'])));
-        
+
         if ($options['type'] == 'start') {
-            if ($dup) return '[[';
-            else return '[['.$options['page'].
-                (strlen($options['anchor']) ? $options['anchor'] : '').
-                (strlen($options['text']) && (strlen($options['page']) || strlen($options['anchor'])) ? '|' : '');
-        } else if ($options['type'] == 'end') {
-            if ($dup && strlen($options['anchor'])) return $options['anchor'].']]';
-            else return ']]';
+            if ($dup) {
+                return '[[';
+            } else {
+                return '[[' . $options['page'] .
+                    (strlen($options['anchor']) ? $options['anchor'] : '') .
+                    (strlen($options['text']) && (strlen($options['page']) || strlen($options['anchor'])) ? '|' : '');
+            }
+        } elseif ($options['type'] == 'end') {
+            if ($dup && strlen($options['anchor'])) {
+                return $options['anchor'] . ']]';
+            } else {
+                return ']]';
+            }
         } else {
-            if ($dup) return '[['.
-                    (strlen($options['text']) ? $options['text'] : '').
-                    (strlen($options['anchor']) ? $options['anchor'] : '').
+            if ($dup) {
+                return '[[' .
+                        (strlen($options['text']) ? $options['text'] : '') .
+                        (strlen($options['anchor']) ? $options['anchor'] : '') .
+                        ']]';
+            } else {
+                return '[[' . $options['page'] .
+                    (strlen($options['anchor']) ? $options['anchor'] : '') .
+                    (strlen($options['text']) && strlen($options['page']) && strlen($options['anchor']) ? '|' : '') .
+                    (strlen($options['text']) ? $options['text'] : '') .
                     ']]';
-            else return '[['.$options['page'].
-                (strlen($options['anchor']) ? $options['anchor'] : '').
-                (strlen($options['text']) && strlen($options['page']) && strlen($options['anchor']) ? '|' : '').
-                (strlen($options['text']) ? $options['text'] : '').
-                ']]';
+            }
         }
     }
 }
-?>

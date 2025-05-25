@@ -1,5 +1,7 @@
 <?php
+
 namespace HordeTextWiki;
+
 // vim: set expandtab tabstop=4 shiftwidth=4 softtabstop=4:
 /**
  * Horiz rule end renderer for Docbook
@@ -24,8 +26,8 @@ namespace HordeTextWiki;
  * @version    Release: @package_version@
  * @link       http://pear.php.net/package/Text_Wiki_Docbook
  */
-class Text_Wiki_Render_Docbook_Horiz extends WikiRender {
-
+class DocbookRendererHoriz extends WikiRender
+{
     /**
     *
     * Renders a token into text matching the requested format.
@@ -39,7 +41,7 @@ class Text_Wiki_Render_Docbook_Horiz extends WikiRender {
     *
     */
 
-    function token($options)
+    public function token($options)
     {
         return '<phrase role="horiz"></phrase>' . "\n";
     }

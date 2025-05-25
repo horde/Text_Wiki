@@ -1,13 +1,14 @@
 <?php
+
 namespace HordeTextWiki;
 
-class Text_Wiki_Render_Latex_Deflist extends WikiRender {
-
-    var $conf = array(
-                      'css_dl' => null,
-                      'css_dt' => null,
-                      'css_dd' => null
-                      );
+class LatexRendererDeflist extends WikiRender
+{
+    public $conf = [
+        'css_dl' => null,
+        'css_dt' => null,
+        'css_dd' => null,
+    ];
 
     /**
      *
@@ -22,11 +23,10 @@ class Text_Wiki_Render_Latex_Deflist extends WikiRender {
      *
      */
 
-    function token($options)
+    public function token($options)
     {
         $type = $options['type'];
-        switch ($type)
-            {
+        switch ($type) {
             case 'list_start':
                 return "\\begin{description}\n";
 
@@ -48,7 +48,6 @@ class Text_Wiki_Render_Latex_Deflist extends WikiRender {
             default:
                 return '';
 
-            }
+        }
     }
 }
-?>

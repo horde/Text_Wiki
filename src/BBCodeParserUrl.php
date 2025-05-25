@@ -1,5 +1,7 @@
 <?php
+
 namespace Horde\Text\Wiki;
+
 // vim: set expandtab tabstop=4 shiftwidth=4 softtabstop=4:
 /**
  * BBCode: Parses for url and mail links
@@ -32,8 +34,8 @@ namespace Horde\Text\Wiki;
  * @link       http://pear.php.net/package/Text_Wiki
  * @see        Text_Wiki_Parse::Text_Wiki_Parse()
  */
-class Text_Wiki_Parse_Url extends WikiParse {
-
+class BBCodeParserUrl extends WikiParse
+{
     /**
      * Configuration keys for this rule
      * 'schemes' => URL scheme(s) (array) recognized by this rule, default is the single rfc2396 pattern
@@ -48,16 +50,16 @@ class Text_Wiki_Parse_Url extends WikiParse {
      * @var array 'config-key' => mixed config-value
      * @access public
      */
-    var $conf = array(
+    public $conf = [
         'schemes' => '[a-z][-+.a-z0-9]*',  // can be also as array('htpp', 'htpps', 'ftp')
-        'refused' => array('script', 'about', 'applet', 'activex', 'chrome'),
-        'prefixes' => array('www', 'ftp'),
+        'refused' => ['script', 'about', 'applet', 'activex', 'chrome'],
+        'prefixes' => ['www', 'ftp'],
         'host_regexp' => '(?:[^.\s/"\'<\\\#delim#\ca-\cz]+\.)*[a-z](?:[-a-z0-9]*[a-z0-9])?\.?',
         'path_regexp' => '(?:/[^][\'\s"<\\\#delim#\ca-\cz]*)?',
         'user_regexp' => '[^]()<>[:;@\,."\s\\\#delim#\ca-\cz]+(?:\.[^]()<>[:;@\,."\s\\\#delim#\ca-\cz]+)*',
         'inline_enable' => true,
-        'relative_enable' => false
-    );
+        'relative_enable' => false,
+    ];
 
     /**
      * The regular expressions used to parse the source text and find
@@ -67,36 +69,36 @@ class Text_Wiki_Parse_Url extends WikiParse {
      * @var string
      * @see parse()
      */
-    var $regex =  array(
-            '#\[url(?:(=)|])(#url#)(?(1)](.*?))\[/url]#mi',
-            '#([\n\r\s#delim#])(#url#)#i',
-            '#\[(email)(?:(=)|])(#email#)(?(2)](.*?))\[/email]#mi',
-            '#([\n\r\s#delim#](mailto:)?)(#email#)#i',
-        );
+    public $regex =  [
+        '#\[url(?:(=)|])(#url#)(?(1)](.*?))\[/url]#mi',
+        '#([\n\r\s#delim#])(#url#)#i',
+        '#\[(email)(?:(=)|])(#email#)(?(2)](.*?))\[/email]#mi',
+        '#([\n\r\s#delim#](mailto:)?)(#email#)#i',
+    ];
 
-     /**
-     * Constructor.
-     * We override the constructor to build up the regex from config
-     *
-     * @param object &$obj the base conversion handler
-     * @return The parser object
-     * @access public
-     */
-    function __construct(&$obj)
+    /**
+    * Constructor.
+    * We override the constructor to build up the regex from config
+    *
+    * @param object &$obj the base conversion handler
+    * @return The parser object
+    * @access public
+    */
+    public function __construct(&$obj)
     {
         $default = $this->conf;
         parent::__construct($obj);
 
         // store the list of refused schemes
-        $this->refused = $this->getConf('refused', array());
+        $this->refused = $this->getConf('refused', []);
         if (is_string($this->refused)) {
-            $this->refused = array($this->refused);
+            $this->refused = [$this->refused];
         }
         // convert the list of recognized schemes to a regex OR,
         $schemes = $this->getConf('schemes', $default['schemes']);
         $url = '(?:(' . (is_array($schemes) ? implode('|', $schemes) : $schemes) . ')://';
         // add the "lazy" prefixes if any
-        $prefixes = $this->getConf('prefixes', array());
+        $prefixes = $this->getConf('prefixes', []);
         foreach ($prefixes as $val) {
             $url .= '|' . preg_quote($val, '#') . '\.';
         }
@@ -113,12 +115,12 @@ class Text_Wiki_Parse_Url extends WikiParse {
         }
         // relative url to enable ?
         if ($this->getConf('relative_enable', false)) {
-            $this->regex[5] = str_replace( '#url#', $path, $this->regex[0]);
+            $this->regex[5] = str_replace('#url#', $path, $this->regex[0]);
         }
         // replace in the regexps
-        $this->regex = str_replace( '#url#', $url, $this->regex);
-        $this->regex = str_replace( '#email#', $email, $this->regex);
-        $this->regex = str_replace( '#delim#', $this->wiki->delim, $this->regex);
+        $this->regex = str_replace('#url#', $url, $this->regex);
+        $this->regex = str_replace('#email#', $email, $this->regex);
+        $this->regex = str_replace('#delim#', $this->wiki->delim, $this->regex);
     }
 
     /**
@@ -131,7 +133,7 @@ class Text_Wiki_Parse_Url extends WikiParse {
      * @return string Delimited token representing the url
      * @access public
      */
-    function process(&$matches)
+    public function process(&$matches)
     {
         if ($this->refused && isset($matches[3]) && in_array($matches[3], $this->refused)) {
             return $matches[0];
@@ -144,7 +146,7 @@ class Text_Wiki_Parse_Url extends WikiParse {
                     if ($matches[2] === '=') {
                         $type = 'descr';
                     } elseif ($matches[2]) {
-                        $pre = $matches[1]{0};
+                        $pre = $matches[1][0];
                     }
                 }
                 $matches[2] = 'mailto:' . $matches[3];
@@ -163,24 +165,24 @@ class Text_Wiki_Parse_Url extends WikiParse {
         }
         // set options
         $href = (isset($matches[3]) ? '' : 'http://') . $matches[2];
-        $text = isset($matches[4]) ? $matches[4] : $matches[2];
+        $text = $matches[4] ?? $matches[2];
 
         // tokenize
         if ($type == 'inline') {
-            return $pre . $this->wiki->addToken($this->rule, array(
+            return $pre . $this->wiki->addToken($this->rule, [
                 'type' => $type,
                 'href' => $href,
-                'text' => $text));
+                'text' => $text]);
         }
         return $pre .
-            $this->wiki->addToken($this->rule, array(
+            $this->wiki->addToken($this->rule, [
                 'type' => 'start',
                 'href' => $href,
-                'text' => '')) .
+                'text' => '']) .
             $text .
-            $this->wiki->addToken($this->rule, array(
+            $this->wiki->addToken($this->rule, [
                 'type' => 'end',
                 'href' => $href,
-                'text' => ''));
+                'text' => '']);
     }
 }

@@ -1,5 +1,7 @@
 <?php
+
 namespace Horde\Text\Wiki;
+
 // vim: set expandtab tabstop=4 shiftwidth=4 softtabstop=4:
 /**
  * Page rule end renderer for Latex
@@ -26,8 +28,8 @@ namespace Horde\Text\Wiki;
  * @version    Release: @package_version@
  * @link       http://pear.php.net/package/Text_Wiki
  */
-class Text_Wiki_Render_Latex_Page extends WikiRender {
-
+class LatexRendererPage extends WikiRender
+{
     /**
     *
     * Renders a token into text matching the requested format.
@@ -41,7 +43,7 @@ class Text_Wiki_Render_Latex_Page extends WikiRender {
     *
     */
 
-    function token($options)
+    public function token($options)
     {
         return "\\newpage\n";
     }
