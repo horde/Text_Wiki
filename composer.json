@@ -17,25 +17,22 @@
         }
     ],
     "autoload": {
-        "psr-0": {
-            "Text": "./"
+        "psr-4": {
+            "Horde\\Text\\Wiki\\": "src/"
         }
     },
     "description": "More info available on: http://pear.php.net/package/Text_Wiki",
     "include-path": [
         "./"
     ],
-    "license": "LGPL",
-    "name": "pear/text_wiki",
+    "license": "LGPL-2.1-or-later",
+    "name": "horde/text_wiki",
     "support": {
         "issues": "http://pear.php.net/bugs/search.php?cmd=display&package_name[]=Text_Wiki",
         "source": "https://github.com/pear/Text_Wiki"
     },
     "type": "library",
-    "require": {
-        "pear/pear_exception": "*"
-    },
     "require-dev": {
-        "phpunit/phpunit": "*"
+        "phpunit/phpunit": "^12"
     }
 }
