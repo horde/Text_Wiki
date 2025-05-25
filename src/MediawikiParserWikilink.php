@@ -151,7 +151,7 @@ class MediawikiParserWikilink extends WikiParserBase
      * @param array &$matches The array of matches from parse().
      * @return string token to be used as replacement
      */
-    public function process(&$matches)
+    public function process($matches)
     {
         // Starting colon ?
         $colon = !empty($matches[1]);

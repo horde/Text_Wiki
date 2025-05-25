@@ -64,7 +64,7 @@ class CowikiParserRaw extends WikiParserBase
     *
     */
 
-    public function process(&$matches)
+    public function process($matches)
     {
         $options = ['text' => strlen($matches[1]) ? $matches[1] : $matches[2]];
         return $this->wiki->addToken($this->rule, $options);

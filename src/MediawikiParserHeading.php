@@ -62,7 +62,7 @@ class MediawikiParserHeading extends WikiParserBase
     * @return string A pair of delimited tokens to be used as a
     * placeholder in the source text surrounding the heading text.
     */
-    public function process(&$matches)
+    public function process($matches)
     {
         // keep a running count for header IDs.  we use this later
         // when constructing TOC entries, etc.

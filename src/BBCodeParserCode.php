@@ -57,7 +57,7 @@ class BBCodeParserCode extends WikiParserBase
      * the source text and containing the original block of text
      * @access public
      */
-    public function process(&$matches)
+    public function process($matches)
     {
         return $this->wiki->addToken($this->rule, [
             'text' => $matches[1],

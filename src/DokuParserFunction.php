@@ -35,7 +35,7 @@ class DokuParserFunction extends WikiParserBase
 {
     public $regex = '/^(\<function\>)\n(.+)\n(\<\/function\>)(\s|$)/Umsi';
 
-    public function process(&$matches)
+    public function process($matches)
     {
         // default options
         $opts = [

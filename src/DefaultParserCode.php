@@ -69,7 +69,7 @@ class DefaultParserCode extends WikiParserBase
     *
     */
 
-    public function process(&$matches)
+    public function process($matches)
     {
         // are there additional attribute arguments?
         $args = trim($matches[1]);

@@ -52,7 +52,7 @@ class CreoleParserImage extends WikiParserBase
      *
      */
 
-    public function process(&$matches)
+    public function process($matches)
     {
         $src = trim($matches[1]);
         $src = ltrim($src, '/');

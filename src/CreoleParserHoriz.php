@@ -51,7 +51,7 @@ class CreoleParserHoriz extends WikiParserBase
      *
      */
 
-    public function process(&$matches)
+    public function process($matches)
     {
         return "\n" . $this->wiki->addToken($this->rule) . "\n";
     }

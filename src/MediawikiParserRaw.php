@@ -54,7 +54,7 @@ class MediawikiParserRaw extends WikiParserBase
     * @return A delimited token number to be used as a placeholder in
     * the source text.
     */
-    public function process(&$matches)
+    public function process($matches)
     {
         $options = ['text' => $matches[1]];
         return $this->wiki->addToken($this->rule, $options);

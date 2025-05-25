@@ -70,7 +70,7 @@ class TikiParserCode extends WikiParserBase
     *
     */
 
-    public function process(&$matches)
+    public function process($matches)
     {
         // are there additional attribute arguments?
         $args = trim(html_entity_decode($matches[1]));

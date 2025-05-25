@@ -72,7 +72,7 @@ class TikiParserEmphasis extends WikiParserBase
     *
     */
 
-    public function process(&$matches)
+    public function process($matches)
     {
         $start = $this->wiki->addToken(
             $this->rule,

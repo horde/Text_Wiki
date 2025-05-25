@@ -56,7 +56,7 @@ class TikiParserSmiley extends WikiParserBase
      * @return string Delimited token representing the smiley
      * @access public
      */
-    public function process(&$matches)
+    public function process($matches)
     {
         // tokenize
         return $this->wiki->addToken(

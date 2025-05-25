@@ -55,7 +55,7 @@ class MediawikiParserPreformatted extends WikiParserBase
     * @return A delimited token number to be used as a placeholder in
     * the source text.
     */
-    public function process(&$matches)
+    public function process($matches)
     {
         if (isset($matches[2])) {
             return $this->wiki->addToken(

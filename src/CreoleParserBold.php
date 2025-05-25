@@ -59,7 +59,7 @@ class CreoleParserBold extends WikiParserBase
      *
      */
 
-    public function process(&$matches)
+    public function process($matches)
     {
         $text = $matches[1];
 

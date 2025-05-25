@@ -65,7 +65,7 @@ class BBCodeParserSuperscript extends WikiParserBase
      * the source text surrounding the text to be emphasized.
      * @access public
      */
-    public function process(&$matches)
+    public function process($matches)
     {
         $start = $this->wiki->addToken($this->rule, ['type' => 'start']);
         $end = $this->wiki->addToken($this->rule, ['type' => 'end']);

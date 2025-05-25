@@ -63,7 +63,7 @@ class DokuParserHoriz extends WikiParserBase
     *
     */
 
-    public function process(&$matches)
+    public function process($matches)
     {
         return $this->wiki->addToken($this->rule);
     }

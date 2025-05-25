@@ -141,7 +141,7 @@ class MediawikiParserTable extends WikiParserBase
      * which point to the the token array containing their type and definition
      * @access public
      */
-    public function process(&$matches)
+    public function process($matches)
     {
         if (array_key_exists(4, $matches)) {
             $this->_level++;

@@ -64,7 +64,7 @@ class CowikiParserImage extends WikiParserBase
     *
     */
 
-    public function process(&$matches)
+    public function process($matches)
     {
         $pos = strpos($matches[2], ' ');
 

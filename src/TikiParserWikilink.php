@@ -197,7 +197,7 @@ class TikiParserWikilink extends WikiParserBase
     *
     */
 
-    public function process(&$matches)
+    public function process($matches)
     {
         // when prefixed with !, it's explicitly not a wiki link.
         // return everything as it was.

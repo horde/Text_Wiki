@@ -202,7 +202,7 @@ class MediawikiParserUrl extends WikiParserBase
     * $matches[2] is the second matched pattern, and so on.
     * @return string The processed text replacement.
     */
-    public function process(&$matches)
+    public function process($matches)
     {
         // set options
         $options = [

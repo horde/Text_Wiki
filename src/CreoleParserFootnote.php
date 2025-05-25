@@ -59,7 +59,7 @@ class CreoleParserFootnote extends WikiParserBase
      *
      */
 
-    public function process(&$matches)
+    public function process($matches)
     {
         $id = $matches[2];
 

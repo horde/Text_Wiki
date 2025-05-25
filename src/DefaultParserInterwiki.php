@@ -93,7 +93,7 @@ class DefaultParserInterwiki extends WikiParserBase
     *
     */
 
-    public function process(&$matches)
+    public function process($matches)
     {
         $options = [
             'site' => $matches[1],

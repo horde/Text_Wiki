@@ -72,7 +72,7 @@ class MediawikiParserList extends WikiParserBase
     * @return A series of text and delimited tokens marking the different
     * list text and list elements.
     */
-    public function process(&$matches)
+    public function process($matches)
     {
         // the replacement text we will return
         $return = '';

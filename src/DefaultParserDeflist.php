@@ -77,7 +77,7 @@ class DefaultParserDeflist extends WikiParserBase
     *
     */
 
-    public function process(&$matches)
+    public function process($matches)
     {
         // the replacement text we will return to parse()
         $return = '';

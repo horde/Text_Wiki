@@ -36,7 +36,7 @@ class TikiParserTitlebar extends WikiParserBase
     *
     */
 
-    public function process(&$matches)
+    public function process($matches)
     {
         $start = $this->wiki->addToken($this->rule, ['type' => 'start']);
         $end = $this->wiki->addToken($this->rule, ['type' => 'end']);

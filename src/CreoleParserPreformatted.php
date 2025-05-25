@@ -50,7 +50,7 @@ class CreoleParserPreformatted extends WikiParserBase
      *
      */
 
-    public function process(&$matches)
+    public function process($matches)
     {
         // > any line consisting of only indented three closing curly braces
         // > will have one space removed from the indentation

@@ -53,7 +53,7 @@ class MediawikiParserComment extends WikiParserBase
     * @return string A delimited token to be used as a placeholder in
     * the source text.
     */
-    public function process(&$matches)
+    public function process($matches)
     {
         return '';
     }

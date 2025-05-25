@@ -53,7 +53,7 @@ class TikiParserImage extends WikiParserBase
     *
     */
 
-    public function process(&$matches)
+    public function process($matches)
     {
         $options = ['src' => '', 'attr' => ['border' => '0']];
         $src = $link = $align = $desc = '';

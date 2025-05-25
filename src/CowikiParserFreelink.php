@@ -67,7 +67,7 @@ class CowikiParserFreelink extends WikiParserBase
     *
     */
 
-    public function process(&$matches)
+    public function process($matches)
     {
         return;
     }

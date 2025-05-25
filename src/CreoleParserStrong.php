@@ -60,7 +60,7 @@ class CreoleParserStrong extends WikiParserBase
      *
      */
 
-    public function process(&$matches)
+    public function process($matches)
     {
         $text = $matches[1];
         //$text = $matches[1] ? $matches[1] : $matches[2];

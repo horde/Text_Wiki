@@ -97,7 +97,7 @@ class BBCodeParserImage extends WikiParserBase
      * @return string Delimited token representing the image
      * @access public
      */
-    public function process(&$matches)
+    public function process($matches)
     {
         // tokenize
         return $this->wiki->addToken($this->rule, ['src' => $matches[1], 'attr' => []]);

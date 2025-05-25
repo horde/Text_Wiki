@@ -87,7 +87,7 @@ class TikiParserList extends WikiParserBase
     *
     */
 
-    public function process(&$matches)
+    public function process($matches)
     {
         // the replacement text we will return
         $return = '';

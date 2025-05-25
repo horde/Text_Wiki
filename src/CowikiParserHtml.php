@@ -68,7 +68,7 @@ class CowikiParserHtml extends WikiParserBase
     *
     */
 
-    public function process(&$matches)
+    public function process($matches)
     {
         $options = ['text' => $matches[1]];
         return $this->wiki->addToken($this->rule, $options) . $matches[2];

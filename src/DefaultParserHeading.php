@@ -73,7 +73,7 @@ class DefaultParserHeading extends WikiParserBase
     *
     */
 
-    public function process(&$matches)
+    public function process($matches)
     {
         // keep a running count for header IDs.  we use this later
         // when constructing TOC entries, etc.

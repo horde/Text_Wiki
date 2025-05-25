@@ -58,7 +58,7 @@ class MediawikiParserTt extends WikiParserBase
     * @return string A pair of delimited tokens to be used as a
     * placeholder in the source text surrounding the teletype text.
     */
-    public function process(&$matches)
+    public function process($matches)
     {
         $start = $this->wiki->addToken(
             $this->rule,

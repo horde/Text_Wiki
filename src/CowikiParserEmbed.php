@@ -83,7 +83,7 @@ class CowikiParserEmbed extends WikiParserBase
     *
     */
 
-    public function process(&$matches)
+    public function process($matches)
     {
         // save the file location
         $this->file = $this->getConf('base', './') . $matches[2];

@@ -109,7 +109,7 @@ class BBCodeParserList extends WikiParserBase
      * the source text and containing the original block of text
      * @access public
      */
-    public function process(&$matches)
+    public function process($matches)
     {
         if (!empty($matches[3])) {
             $this->_level++;

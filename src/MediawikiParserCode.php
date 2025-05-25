@@ -56,7 +56,7 @@ class MediawikiParserCode extends WikiParserBase
     * @return A delimited token number to be used as a placeholder in
     * the source text.
     */
-    public function process(&$matches)
+    public function process($matches)
     {
         // are there additional attribute arguments?
         $args = trim($matches[1]);

@@ -104,7 +104,7 @@ class DokuParserRevise extends WikiParserBase
     *
     */
 
-    public function process(&$matches)
+    public function process($matches)
     {
         $output = '';
         $src = $matches[1];

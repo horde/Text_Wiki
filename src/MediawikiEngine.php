@@ -35,7 +35,17 @@ namespace Horde\Text\Wiki;
  */
 class MediawikiEngine extends TextWikiBase
 {
-    public $rules = [
+    /**
+     * Constructor: just adds the path to Mediawiki rules
+     *
+     * @access public
+     * @param array $rules The set of rules to load for this object.
+     */
+    public function __construct(?array $rules = null)
+    {
+        if (!is_array($rules)) {
+            $rules = 
+[
         'Prefilter',
         'Delimiter',
         'Code',
@@ -83,14 +93,8 @@ class MediawikiEngine extends TextWikiBase
         'Tighten',
     ];
 
-    /**
-     * Constructor: just adds the path to Mediawiki rules
-     *
-     * @access public
-     * @param array $rules The set of rules to load for this object.
-     */
-    public function __construct($rules = null)
-    {
+
+        }
         parent::__construct($rules);
         $this->addPath('parse', $this->fixPath(dirname(__FILE__)) . 'Parse/Mediawiki');
     }

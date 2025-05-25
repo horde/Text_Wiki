@@ -85,7 +85,7 @@ class TikiParserPlugin extends WikiParserBase
     *
     */
 
-    public function process(&$matches)
+    public function process($matches)
     {
         // preparsed area
         if (isset($matches[3]) || isset($matches[5])) {

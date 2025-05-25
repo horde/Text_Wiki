@@ -85,7 +85,7 @@ class DokuParserTable extends WikiParserBase
      *
      */
 
-    public function process(&$matches)
+    public function process($matches)
     {
         // our eventual return value
         $return = '';

@@ -73,7 +73,7 @@ class DokuParserToc extends WikiParserBase
     *
     */
 
-    public function process(&$matches)
+    public function process($matches)
     {
         if (count($this->wiki->getTokens('Heading')) > 3) {
             return $this->wiki->addToken($this->rule) . $matches[0];

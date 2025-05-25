@@ -199,7 +199,7 @@ class DefaultParserUrl extends WikiParserBase
     *
     */
 
-    public function process(&$matches)
+    public function process($matches)
     {
         // set options
         $options = [

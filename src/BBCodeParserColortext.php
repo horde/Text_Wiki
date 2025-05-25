@@ -68,7 +68,7 @@ class BBCodeParserColortext extends WikiParserBase
      * placeholder in the source text surrounding the text to be colored.
      * @access public
      */
-    public function process(&$matches)
+    public function process($matches)
     {
         // nested block ?
         if (array_key_exists(2, $matches)) {

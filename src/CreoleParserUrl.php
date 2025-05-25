@@ -66,7 +66,7 @@ class CreoleParserUrl extends WikiParserBase
      *
      */
 
-    public function process(&$matches)
+    public function process($matches)
     {
         if (isset($matches[2])) {
             $href = trim($matches[2]);

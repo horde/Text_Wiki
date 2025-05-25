@@ -106,7 +106,7 @@ class DefaultParserFreelink extends WikiParserBase
     *
     */
 
-    public function process(&$matches)
+    public function process($matches)
     {
         // use nice variable names
         $page = $matches[1];

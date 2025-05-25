@@ -158,7 +158,7 @@ class CreoleParserWikilink extends WikiParserBase
      * @return string token to be used as replacement
      */
 
-    public function process(&$matches)
+    public function process($matches)
     {
         $matches[3] = $this->wiki->restoreRaw($matches[3]);
 

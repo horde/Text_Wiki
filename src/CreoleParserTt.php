@@ -51,7 +51,7 @@ class CreoleParserTt extends WikiParserBase
      *
      */
 
-    public function process(&$matches)
+    public function process($matches)
     {
         // remove the sequence }}}{{{
         $find = "/}}}{{{/";

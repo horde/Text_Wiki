@@ -69,7 +69,7 @@ class DokuParserFreelink extends WikiParserBase
     *
     */
 
-    public function process(&$matches)
+    public function process($matches)
     {
         return $matches[0];
         // use nice variable names

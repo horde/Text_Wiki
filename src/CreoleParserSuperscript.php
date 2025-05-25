@@ -54,7 +54,7 @@ class CreoleParserSuperscript extends WikiParserBase
      *
      */
 
-    public function process(&$matches)
+    public function process($matches)
     {
         if (! $this->wiki->checkInnerTags($matches[0])) {
             return $matches[0];

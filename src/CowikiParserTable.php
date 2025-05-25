@@ -85,7 +85,7 @@ class CowikiParserTable extends WikiParserBase
     *
     */
 
-    public function process(&$matches)
+    public function process($matches)
     {
         if (strlen(trim($matches[1]))) {
             $attr = $this->getAttrs(trim($matches[1]));

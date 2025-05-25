@@ -63,7 +63,7 @@ class DokuParserImage extends WikiParserBase
     *
     */
 
-    public function process(&$matches)
+    public function process($matches)
     {
         if ($matches[3] != 'wiki:') {
             $matches[4] = $matches[3] . $matches[4];

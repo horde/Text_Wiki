@@ -52,7 +52,7 @@ class MediawikiParserSubscript extends WikiParserBase
     * @return A pair of delimited tokens to be used as a placeholder in
     * the source text surrounding the text to be emphasized.
     */
-    public function process(&$matches)
+    public function process($matches)
     {
         $start = $this->wiki->addToken(
             $this->rule,

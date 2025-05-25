@@ -133,7 +133,7 @@ class BBCodeParserUrl extends WikiParserBase
      * @return string Delimited token representing the url
      * @access public
      */
-    public function process(&$matches)
+    public function process($matches)
     {
         if ($this->refused && isset($matches[3]) && in_array($matches[3], $this->refused)) {
             return $matches[0];

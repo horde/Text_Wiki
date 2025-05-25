@@ -80,7 +80,7 @@ class DefaultParserParagraph extends WikiParserBase
     *
     */
 
-    public function process(&$matches)
+    public function process($matches)
     {
         $delim = $this->wiki->delim;
         $skip = $this->getConf('skip', []);

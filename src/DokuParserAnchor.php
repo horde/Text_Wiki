@@ -67,7 +67,7 @@ class DokuParserAnchor extends WikiParserBase
     *
     */
 
-    public function process(&$matches)
+    public function process($matches)
     {
 
         $name = $matches[2];
