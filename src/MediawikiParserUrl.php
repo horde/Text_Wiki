@@ -131,7 +131,7 @@ class MediawikiParserUrl extends WikiParserBase
         // the replacement text for matches.
         $this->wiki->source = preg_replace_callback(
             $tmp_regex,
-            [&$this, 'processDescr'],
+            [$this, 'processDescr'],
             $this->wiki->source
         );
 
@@ -305,7 +305,7 @@ class MediawikiParserUrl extends WikiParserBase
     *
     */
 
-    public function processDescr(&$matches)
+    public function processDescr($matches)
     {
         // set options
         $options = [

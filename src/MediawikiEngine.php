@@ -78,7 +78,7 @@ class MediawikiEngine extends TextWikiBase
         //        'Strong',  ** will be only fake inserted by Emphasis if needed for render
         'Emphasis', // must run before Newline (see Text_Wiki_Parse_Emphasis::parse())
         'Newline',
-        'Paragraph',
+        //'Paragraph',
         'Url',
         //        'Freelink',
         //        'Colortext',
@@ -90,7 +90,7 @@ class MediawikiEngine extends TextWikiBase
         'Subscript',
         //        'Specialchar',
         //        'Revise',
-        'Tighten',
+        // 'Tighten',
     ];
 
 
