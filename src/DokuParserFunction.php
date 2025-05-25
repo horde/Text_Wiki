@@ -1,6 +1,6 @@
 <?php
 
-namespace HordeTextWiki;
+namespace Horde\Text\Wiki;
 
 /**
 *
@@ -31,7 +31,7 @@ namespace HordeTextWiki;
 */
 
 //None in DokuWiki
-class DokuParserFunction extends WikiParse
+class DokuParserFunction extends WikiParserBase
 {
     public $regex = '/^(\<function\>)\n(.+)\n(\<\/function\>)(\s|$)/Umsi';
 

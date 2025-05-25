@@ -1,9 +1,9 @@
 <?php
 
-namespace HordeTextWiki;
+namespace Horde\Text\Wiki;
 
 //There is no center rule for Creole, so use a simple table
-class CreoleRendererCenter extends WikiRender
+class CreoleRendererCenter extends WikiRendererBase
 {
     /**
     *

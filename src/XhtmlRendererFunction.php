@@ -1,6 +1,6 @@
 <?php
 
-namespace HordeTextWiki;
+namespace Horde\Text\Wiki;
 
 // vim: set expandtab tabstop=4 shiftwidth=4 softtabstop=4:
 /**
@@ -26,7 +26,7 @@ namespace HordeTextWiki;
  * @version    Release: @package_version@
  * @link       http://pear.php.net/package/Text_Wiki
  */
-class XhtmlRendererFunction extends WikiRender
+class XhtmlRendererFunction extends WikiRendererBase
 {
     public $conf = [
         // list separator for params and throws

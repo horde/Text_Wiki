@@ -32,7 +32,7 @@ namespace Horde\Text\Wiki;
  * @link       http://pear.php.net/package/Text_Wiki
  * @see        Text_Wiki_Parse::Text_Wiki_Parse()
  */
-class MediawikiParserComment extends WikiParse
+class MediawikiParserComment extends WikiParserBase
 {
     /**
     * The regular expression used to parse the source text and find

@@ -23,7 +23,7 @@ namespace Horde\Text\Wiki;
  *
  */
 
-class CreoleParserDelimiter extends WikiParse
+class CreoleParserDelimiter extends WikiParserBase
 {
     /**
      *

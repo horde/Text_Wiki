@@ -2,7 +2,7 @@
 
 namespace Horde\Text\Wiki;
 
-class DokuRendererHoriz extends WikiRender
+class DokuRendererHoriz extends WikiRendererBase
 {
     /**
     *

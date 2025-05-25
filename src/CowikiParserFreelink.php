@@ -1,6 +1,6 @@
 <?php
 
-namespace HordeTextWiki;
+namespace Horde\Text\Wiki;
 
 /**
 *
@@ -42,7 +42,7 @@ namespace HordeTextWiki;
 */
 
 //Taken care of in WikiLink (I think)
-class CowikiParserFreelink extends WikiParse
+class CowikiParserFreelink extends WikiParserBase
 {
     public $regex = '/abcdefghijklmnop\(\)\(\#\*%$%/';
 

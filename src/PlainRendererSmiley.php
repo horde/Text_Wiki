@@ -29,7 +29,7 @@ namespace Horde\Text\Wiki;
  * @link       http://pear.php.net/package/Text_Wiki
  * @see        Text_Wiki::Text_Wiki_Render()
  */
-class PlainRendererSmiley extends WikiRender
+class PlainRendererSmiley extends WikiRendererBase
 {
     /**
       * Renders a token into text matching the requested format.

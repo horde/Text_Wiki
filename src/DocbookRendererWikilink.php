@@ -1,6 +1,6 @@
 <?php
 
-namespace HordeTextWiki;
+namespace Horde\Text\Wiki;
 
 // vim: set expandtab tabstop=4 shiftwidth=4 softtabstop=4:
 /**
@@ -26,7 +26,7 @@ namespace HordeTextWiki;
  * @version    Release: @package_version@
  * @link       http://pear.php.net/package/Text_Wiki_Docbook
  */
-class DocbookRendererWikilink extends WikiRender
+class DocbookRendererWikilink extends WikiRendererBase
 {
     public $conf = [
         'pages' => [], // set to null or false to turn off page checks

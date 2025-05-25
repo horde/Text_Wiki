@@ -26,7 +26,7 @@ namespace Horde\Text\Wiki;
  * @version    Release: @package_version@
  * @link       http://pear.php.net/package/Text_Wiki
  */
-class XhtmlRendererBox extends WikiRender
+class XhtmlRendererBox extends WikiRendererBase
 {
     public $conf = [
         'css' => 'simplebox',

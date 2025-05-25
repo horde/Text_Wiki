@@ -1,10 +1,10 @@
 <?php
 
-namespace HordeTextWiki;
+namespace Horde\Text\Wiki;
 
 // $Id$
 //not in tiki
-class TikiRendererPhplookup extends WikiRender
+class TikiRendererPhplookup extends WikiRendererBase
 {
     /**
     *

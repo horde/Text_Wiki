@@ -1,8 +1,8 @@
 <?php
 
-namespace HordeTextWiki;
+namespace Horde\Text\Wiki;
 
-class TikiRendererImage extends WikiRender
+class TikiRendererImage extends WikiRendererBase
 {
     /**
      * Defines rule specific configuration

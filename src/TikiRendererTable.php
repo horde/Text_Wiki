@@ -1,8 +1,8 @@
 <?php
 
-namespace HordeTextWiki;
+namespace Horde\Text\Wiki;
 
-class TikiRendererTable extends WikiRender
+class TikiRendererTable extends WikiRendererBase
 {
     /**
     *

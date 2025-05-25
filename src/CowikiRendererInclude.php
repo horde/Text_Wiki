@@ -1,8 +1,8 @@
 <?php
 
-namespace HordeTextWiki;
+namespace Horde\Text\Wiki;
 
-class CowikiRendererInclude extends WikiRender
+class CowikiRendererInclude extends WikiRendererBase
 {
     public function token()
     {

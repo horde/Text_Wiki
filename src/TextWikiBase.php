@@ -15,7 +15,7 @@
  */
 
 namespace Horde\Text\Wiki;
-
+use Stringable;
 /**
  * Parse structured wiki text and render into arbitrary formats such as XHTML.
  *
@@ -363,6 +363,8 @@ class TextWikiBase
      */
     public $_blocks;
 
+    // The fully qualified class name of the parser, minus "Engine".
+    public readonly string $parserPrefix;
     /**
      * A fix for PHP5.
      *
@@ -379,19 +381,12 @@ class TextWikiBase
         if (is_array($rules)) {
             $this->rules = [];
             foreach ($rules as $rule) {
-                $this->rules[] = ucfirst($rule);
+                $this->rules[] = $rule;
             }
         }
-
-        $this->addPath(
-            'parse',
-            $this->fixPath(dirname(__FILE__)) . 'Wiki/Parse/Default/'
-        );
-        $this->addPath(
-            'render',
-            $this->fixPath(dirname(__FILE__)) . 'Wiki/Render/'
-        );
+        $this->parserPrefix = substr($this::class, 0, strrpos($this::class, 'Engine'));
     }
+
 
     /**
     * Singleton.
@@ -911,7 +906,7 @@ class TextWikiBase
     *
     */
 
-    public function parse($text)
+    public function parse(string|Stringable $text)
     {
         // set the object property for the source text
         $this->source = $text;
@@ -1292,23 +1287,14 @@ class TextWikiBase
 
     public function loadParseObj($rule)
     {
-        $rule = ucwords(strtolower($rule));
+        $rule = ucfirst($rule);
         $file = $rule . '.php';
-        $class = "Text_Wiki_Parse_$rule";
+        $class = $this->parserPrefix . 'Parser' . ucfirst($rule);
 
         if (! class_exists($class)) {
-            $loc = $this->findFile('parse', $file);
-            if ($loc) {
-                // found the class
-                include_once $loc;
-            } else {
-                // can't find the class
-                $this->parseObj[$rule] = null;
-                // can't find the class
-                return $this->error(
-                    "Parse rule '$rule' not found"
+                throw new GenericTextWikiException(
+                    "Parse rule '$rule' not found, expected class '$class'"
                 );
-            }
         }
 
         $this->parseObj[$rule] = new $class($this);
@@ -1328,23 +1314,13 @@ class TextWikiBase
 
     public function loadRenderObj($format, $rule)
     {
-        $format = ucwords(strtolower($format));
-        $rule = ucwords(strtolower($rule));
-        $file = "$format/$rule.php";
-        $class = "Text_Wiki_Render_$format" . "_$rule";
+        $format = ucfirst($format);
+        $rule = ucfirst($rule);
+        $class = 'Horde\Text\Wiki\\' . $format . 'Renderer' . $rule;
 
         if (! class_exists($class)) {
-            // load the class
-            $loc = $this->findFile('render', $file);
-            if ($loc) {
-                // found the class
-                include_once $loc;
-            } else {
-                // can't find the class
-                return $this->error(
-                    "Render rule '$rule' in format '$format' not found"
-                );
-            }
+            throw new GenericTextWikiException(
+                    "Render rule '$rule' in format '$format' not found. Expected class '$class'");
         }
 
         $this->renderObj[$rule] = new $class($this);

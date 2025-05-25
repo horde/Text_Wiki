@@ -97,17 +97,10 @@ class WikiRendererBase
         // keep a reference to the calling Text_Wiki object
         $this->wiki = & $obj;
 
-        // get the config-key-name for this object,
-        // strip the Text_Wiki_Render_ part
-        //           01234567890123456
-        $tmp = get_class($this);
-        $tmp = substr($tmp, 17);
-
-        // split into pieces at the _ mark.
-        // first part is format, second part is rule.
-        $part   = explode('_', $tmp);
-        $this->format = isset($part[0]) ? ucwords(strtolower($part[0])) : null;
-        $this->rule   = isset($part[1]) ? ucwords(strtolower($part[1])) : null;
+        $rendererPrefix = substr($this::class, 0, strrpos($this::class, 'Renderer'));
+        $this->format = substr($rendererPrefix, strrpos($rendererPrefix, '\\')+1);
+        $rule = substr($this::class, strrpos($this::class, 'Renderer') + 8);
+        $this->rule = is_string($rule) ? $rule : null;
 
         // is there a format but no rule?
         // then this is the "main" render object, with

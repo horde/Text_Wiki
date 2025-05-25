@@ -18,7 +18,7 @@ namespace Horde\Text\Wiki;
  *
  */
 
-class CreoleParserRaw extends WikiParse
+class CreoleParserRaw extends WikiParserBase
 {
     /**
      *

@@ -32,7 +32,7 @@ namespace Horde\Text\Wiki;
 *
 */
 //Not used in Tiki
-class TikiParserRevise extends WikiParse
+class TikiParserRevise extends WikiParserBase
 {
     /**
     *

@@ -41,7 +41,7 @@ namespace Horde\Text\Wiki;
  * @see        Text_Wiki_Parse::Text_Wiki_Parse()
  */
 
-class CreoleParserWikilink extends WikiParse
+class CreoleParserWikilink extends WikiParserBase
 {
     /**
      * Configuration for this rule (Wikilink)

@@ -31,7 +31,7 @@ namespace Horde\Text\Wiki;
 */
 //Not used in CoWiki
 //Added strikethrough :-)
-class CowikiParserRevise extends WikiParse
+class CowikiParserRevise extends WikiParserBase
 {
     /**
     *

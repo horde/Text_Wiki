@@ -4,7 +4,7 @@ namespace Horde\Text\Wiki;
 
 // $Id$
 
-class CreoleRendererPhplookup extends WikiRender
+class CreoleRendererPhplookup extends WikiRendererBase
 {
     /**
     *

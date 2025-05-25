@@ -1,8 +1,8 @@
 <?php
 
-namespace HordeTextWiki;
+namespace Horde\Text\Wiki;
 
-class PlainRendererNewline extends WikiRender
+class PlainRendererNewline extends WikiRendererBase
 {
     public function token($options)
     {

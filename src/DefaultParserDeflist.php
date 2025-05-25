@@ -37,7 +37,7 @@ namespace Horde\Text\Wiki;
 *
 */
 
-class DefaultParserDeflist extends WikiParse
+class DefaultParserDeflist extends WikiParserBase
 {
     /**
     *

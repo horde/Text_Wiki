@@ -1,6 +1,6 @@
 <?php
 
-namespace HordeTextWiki;
+namespace Horde\Text\Wiki;
 
 // vim: set expandtab tabstop=4 shiftwidth=4 softtabstop=4:
 /**
@@ -29,7 +29,7 @@ namespace HordeTextWiki;
  * @link       http://pear.php.net/package/Text_Wiki
  * @see        Text_Wiki::Text_Wiki_Render()
  */
-class PlainRendererFont extends WikiRender
+class PlainRendererFont extends WikiRendererBase
 {
     /**
       * Renders a token into text matching the requested format.

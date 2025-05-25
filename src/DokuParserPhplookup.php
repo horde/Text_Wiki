@@ -1,6 +1,6 @@
 <?php
 
-namespace HordeTextWiki;
+namespace Horde\Text\Wiki;
 
 /**
 *
@@ -31,7 +31,7 @@ namespace HordeTextWiki;
 */
 
 //None in DokuWiki
-class DokuParserPhplookup extends WikiParse
+class DokuParserPhplookup extends WikiParserBase
 {
     /**
     *

@@ -1,6 +1,6 @@
 <?php
 
-namespace HordeTextWiki;
+namespace Horde\Text\Wiki;
 
 // vim: set expandtab tabstop=4 shiftwidth=4 softtabstop=4:
 /**
@@ -34,7 +34,7 @@ namespace HordeTextWiki;
 * @author Moritz Venn <ritzmo@php.net>
 *
 */
-class MediawikiParserDeflist extends WikiParse
+class MediawikiParserDeflist extends WikiParserBase
 {
     /**
     * The regular expression used to parse the source text and find

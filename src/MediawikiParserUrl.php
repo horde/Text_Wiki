@@ -51,7 +51,7 @@ namespace Horde\Text\Wiki;
  * @link       http://pear.php.net/package/Text_Wiki
  * @see        Text_Wiki_Parse::Text_Wiki_Parse()
  */
-class MediawikiParserUrl extends WikiParse
+class MediawikiParserUrl extends WikiParserBase
 {
     /**
     * Keeps a running count of numbered-reference URLs.

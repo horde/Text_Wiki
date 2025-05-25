@@ -1,6 +1,6 @@
 <?php
 
-namespace HordeTextWiki;
+namespace Horde\Text\Wiki;
 
 /**
 *
@@ -36,7 +36,7 @@ namespace HordeTextWiki;
 *
 */
 
-class CowikiParserUnderline extends WikiParse
+class CowikiParserUnderline extends WikiParserBase
 {
     /**
     *

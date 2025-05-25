@@ -1,8 +1,8 @@
 <?php
 
-namespace HordeTextWiki;
+namespace Horde\Text\Wiki;
 
-class TikiRendererDeflist extends WikiRender
+class TikiRendererDeflist extends WikiRendererBase
 {
     /**
      * The last token type rendered

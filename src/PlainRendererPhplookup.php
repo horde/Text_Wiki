@@ -1,8 +1,8 @@
 <?php
 
-namespace HordeTextWiki;
+namespace Horde\Text\Wiki;
 
-class PlainRendererPhplookup extends WikiRender
+class PlainRendererPhplookup extends WikiRendererBase
 {
     public $conf = ['target' => '_blank'];
 

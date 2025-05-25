@@ -1,8 +1,8 @@
 <?php
 
-namespace HordeTextWiki;
+namespace Horde\Text\Wiki;
 
-class LatexRendererUrl extends WikiRender
+class LatexRendererUrl extends WikiRendererBase
 {
     public $conf = [
         'target' => false,

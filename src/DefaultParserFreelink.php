@@ -1,6 +1,6 @@
 <?php
 
-namespace HordeTextWiki;
+namespace Horde\Text\Wiki;
 
 /**
 *
@@ -41,7 +41,7 @@ namespace HordeTextWiki;
 *
 */
 
-class DefaultParserFreelink extends WikiParse
+class DefaultParserFreelink extends WikiParserBase
 {
     public $conf =  [
         'utf-8' => false,

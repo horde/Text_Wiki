@@ -31,7 +31,7 @@ namespace Horde\Text\Wiki;
 */
 
 //None in DokuWiki
-class DokuParserColortext extends WikiParse
+class DokuParserColortext extends WikiParserBase
 {
     /**
     *

@@ -1,8 +1,8 @@
 <?php
 
-namespace HordeTextWiki;
+namespace Horde\Text\Wiki;
 
-class DokuRendererEmbed extends WikiRender
+class DokuRendererEmbed extends WikiRendererBase
 {
     /**
     *

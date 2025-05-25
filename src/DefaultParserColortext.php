@@ -30,7 +30,7 @@ namespace Horde\Text\Wiki;
 *
 */
 
-class DefaultParserColortext extends WikiParse
+class DefaultParserColortext extends WikiParserBase
 {
     /**
     *

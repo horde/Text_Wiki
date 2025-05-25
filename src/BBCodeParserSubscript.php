@@ -1,6 +1,6 @@
 <?php
 
-namespace HordeTextWiki;
+namespace Horde\Text\Wiki;
 
 /* vim: set expandtab tabstop=4 shiftwidth=4 softtabstop=4 foldmethod=marker */
 
@@ -39,7 +39,7 @@ namespace HordeTextWiki;
  *          GNU Lesser General Public License, version 2.1
  * @version Release: @package_version@
  */
-class BBCodeParserSubscript extends WikiParse
+class BBCodeParserSubscript extends WikiParserBase
 {
     // {{{ Properties
 

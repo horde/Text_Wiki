@@ -2,7 +2,7 @@
 
 namespace Horde\Text\Wiki;
 
-class CreoleRendererTighten extends WikiRender
+class CreoleRendererTighten extends WikiRendererBase
 {
     public function token()
     {

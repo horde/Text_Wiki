@@ -37,7 +37,7 @@ namespace Horde\Text\Wiki;
 *
 */
 
-class TikiParserAnchor extends WikiParse
+class TikiParserAnchor extends WikiParserBase
 {
     /**
     *

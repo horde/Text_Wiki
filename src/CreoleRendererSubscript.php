@@ -1,8 +1,8 @@
 <?php
 
-namespace HordeTextWiki;
+namespace Horde\Text\Wiki;
 
-class CreoleRendererSubscript extends WikiRender
+class CreoleRendererSubscript extends WikiRendererBase
 {
     /**
     *

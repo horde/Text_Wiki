@@ -1,6 +1,6 @@
 <?php
 
-namespace HordeTextWiki;
+namespace Horde\Text\Wiki;
 
 /**
 *
@@ -30,7 +30,7 @@ namespace HordeTextWiki;
 *
 */
 //Nine in CoWIki
-class CowikiParserPhplookup extends WikiParse
+class CowikiParserPhplookup extends WikiParserBase
 {
     /**
     *

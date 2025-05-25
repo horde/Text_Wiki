@@ -80,7 +80,7 @@ class WikiParserBase
     *
     */
 
-    public $rule = null;
+    public readonly ?string $rule;
 
 
     /**
@@ -97,7 +97,7 @@ class WikiParserBase
 
     public $wiki = null;
 
-
+    public readonly ?string $format;
     /**
     *
     * Constructor for this parser rule.
@@ -117,10 +117,12 @@ class WikiParserBase
 
         // set the name of this rule; generally used when adding
         // to the tokens array. strip off the Text_Wiki_Parse_ portion.
-        // text_wiki_parse_
-        // 0123456789012345
-        $tmp = substr(get_class($this), 16);
-        $this->rule = ucwords(strtolower($tmp));
+
+        $rendererPrefix = substr($this::class, 0, strrpos($this::class, 'Parser'));
+        $this->format = substr($rendererPrefix, strrpos($rendererPrefix, '\\')+1);
+        $rule = substr($this::class, strrpos($this::class, 'Parser') + 6);
+        $this->rule = is_string($rule) ? $rule : null;
+
 
         // override config options for the rule if specified
         if (isset($this->wiki->parseConf[$this->rule]) &&
@@ -153,9 +155,14 @@ class WikiParserBase
     {
         $this->wiki->source = preg_replace_callback(
             $this->regex,
-            [&$this, 'process'],
+            $this,
             $this->wiki->source
         );
+    }
+
+    public function __invoke($matches)
+    {
+        return $this->process($matches);
     }
 
 

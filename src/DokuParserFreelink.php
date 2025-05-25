@@ -41,7 +41,7 @@ namespace Horde\Text\Wiki;
 *
 */
 
-class DokuParserFreelink extends WikiParse
+class DokuParserFreelink extends WikiParserBase
 {
     public $regex = '/lkdhgliuLKJlyheglihleh/';
 

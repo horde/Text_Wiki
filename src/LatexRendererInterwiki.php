@@ -2,7 +2,7 @@
 
 namespace Horde\Text\Wiki;
 
-class LatexRendererInterwiki extends WikiRender
+class LatexRendererInterwiki extends WikiRendererBase
 {
     public $conf = [
         'sites' => [

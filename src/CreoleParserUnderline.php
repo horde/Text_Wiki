@@ -24,7 +24,7 @@ namespace Horde\Text\Wiki;
  *
  */
 
-class CreoleParserUnderline extends WikiParse
+class CreoleParserUnderline extends WikiParserBase
 {
     /**
      *

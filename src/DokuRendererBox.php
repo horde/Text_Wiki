@@ -3,7 +3,7 @@
 namespace Horde\Text\Wiki;
 
 //There is no box rule for Doku, so use a simple table
-class DokuRendererBox extends WikiRender
+class DokuRendererBox extends WikiRendererBase
 {
     /**
     *

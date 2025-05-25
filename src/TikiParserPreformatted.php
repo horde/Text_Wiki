@@ -36,7 +36,7 @@ namespace Horde\Text\Wiki;
 *
 */
 
-class TikiParserPreformatted extends WikiParse
+class TikiParserPreformatted extends WikiParserBase
 {
     /**
     *

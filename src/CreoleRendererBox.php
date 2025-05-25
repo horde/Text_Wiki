@@ -1,9 +1,9 @@
 <?php
 
-namespace HordeTextWiki;
+namespace Horde\Text\Wiki;
 
 //There is no box rule for Creole, so use a simple table
-class CreoleRendererBox extends WikiRender
+class CreoleRendererBox extends WikiRendererBase
 {
     /**
     *

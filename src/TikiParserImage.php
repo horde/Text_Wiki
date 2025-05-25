@@ -20,7 +20,7 @@ namespace Horde\Text\Wiki;
 *
 */
 
-class TikiParserImage extends WikiParse
+class TikiParserImage extends WikiParserBase
 {
     /**
     *

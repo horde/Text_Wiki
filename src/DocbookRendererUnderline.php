@@ -26,7 +26,7 @@ namespace Horde\Text\Wiki;
  * @version    Release: @package_version@
  * @link       http://pear.php.net/package/Text_Wiki_Docbook
  */
-class DocbookRendererUnderline extends WikiRender
+class DocbookRendererUnderline extends WikiRendererBase
 {
     public $conf = [
         'role' => 'underline',

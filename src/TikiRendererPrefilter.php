@@ -19,7 +19,7 @@ namespace Horde\Text\Wiki;
  */
 
 
-class TikiRendererPrefilter extends WikiRender
+class TikiRendererPrefilter extends WikiRendererBase
 {
     public function token()
     {

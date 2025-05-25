@@ -2,7 +2,7 @@
 
 namespace Horde\Text\Wiki;
 
-class PlainRendererTighten extends WikiRender
+class PlainRendererTighten extends WikiRendererBase
 {
     public function token()
     {

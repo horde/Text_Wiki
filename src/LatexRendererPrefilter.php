@@ -18,7 +18,7 @@ namespace Horde\Text\Wiki;
  * @link       http://pear.php.net/package/Text_Wiki
  */
 
-class LatexRendererPrefilter extends WikiRender
+class LatexRendererPrefilter extends WikiRendererBase
 {
     public function token()
     {

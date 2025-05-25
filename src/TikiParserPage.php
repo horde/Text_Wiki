@@ -27,7 +27,7 @@ namespace Horde\Text\Wiki;
  * @version    Release: @package_version@
  * @link       http://pear.php.net/package/Text_Wiki
  */
-class TikiParserPage extends WikiParse
+class TikiParserPage extends WikiParserBase
 {
     /**
     *

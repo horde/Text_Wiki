@@ -38,7 +38,7 @@ namespace Horde\Text\Wiki;
 */
 
 //none in DokuWiki
-class DokuParserDeflist extends WikiParse
+class DokuParserDeflist extends WikiParserBase
 {
     /**
     *

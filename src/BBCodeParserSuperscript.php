@@ -39,7 +39,7 @@ namespace Horde\Text\Wiki;
  *          GNU Lesser General Public License, version 2.1
  * @version Release: @package_version@
  */
-class BBCodeParserSuperscript extends WikiParse
+class BBCodeParserSuperscript extends WikiParserBase
 {
     // {{{ Properties
 

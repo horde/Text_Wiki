@@ -41,7 +41,7 @@ namespace Horde\Text\Wiki;
 */
 
 //Not used in CoWiki
-class CowikiParserEmbed extends WikiParse
+class CowikiParserEmbed extends WikiParserBase
 {
     public $conf = [
         'base' => '/path/to/scripts/',

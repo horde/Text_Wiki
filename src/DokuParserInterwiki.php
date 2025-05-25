@@ -34,7 +34,7 @@ namespace Horde\Text\Wiki;
  *
  */
 
-class DokuParserInterwiki extends WikiParse
+class DokuParserInterwiki extends WikiParserBase
 {
     // double-colons wont trip up now
     public $regex = '([A-Za-z0-9_\s]+)>((?!>)[A-Za-z0-9_\/=&~#.:;-\s]+)';

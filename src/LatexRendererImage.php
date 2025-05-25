@@ -1,8 +1,8 @@
 <?php
 
-namespace HordeTextWiki;
+namespace Horde\Text\Wiki;
 
-class LatexRendererImage extends WikiRender
+class LatexRendererImage extends WikiRendererBase
 {
     public $conf = [
         'base' => '/',

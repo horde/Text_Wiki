@@ -1,9 +1,9 @@
 <?php
 
-namespace HordeTextWiki;
+namespace Horde\Text\Wiki;
 
 //none in Dokuwiki, using <html>
-class DokuRendererCenter extends WikiRender
+class DokuRendererCenter extends WikiRendererBase
 {
     /**
     *

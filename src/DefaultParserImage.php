@@ -1,6 +1,6 @@
 <?php
 
-namespace HordeTextWiki;
+namespace Horde\Text\Wiki;
 
 /**
 *
@@ -30,7 +30,7 @@ namespace HordeTextWiki;
 *
 */
 
-class DefaultParserImage extends WikiParse
+class DefaultParserImage extends WikiParserBase
 {
     /**
      * URL schemes recognized by this rule.

@@ -26,7 +26,7 @@ namespace Horde\Text\Wiki;
  * @version    Release: @package_version@
  * @link       http://pear.php.net/package/Text_Wiki
  */
-class XhtmlRendererNewline extends WikiRender
+class XhtmlRendererNewline extends WikiRendererBase
 {
     public function token($options)
     {

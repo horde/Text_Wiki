@@ -36,7 +36,7 @@ namespace Horde\Text\Wiki;
 *
 */
 
-class TikiParserNewline extends WikiParse
+class TikiParserNewline extends WikiParserBase
 {
     /**
     *

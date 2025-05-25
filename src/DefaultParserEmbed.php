@@ -1,6 +1,6 @@
 <?php
 
-namespace HordeTextWiki;
+namespace Horde\Text\Wiki;
 
 /**
 *
@@ -40,7 +40,7 @@ namespace HordeTextWiki;
 *
 */
 
-class DefaultParserEmbed extends WikiParse
+class DefaultParserEmbed extends WikiParserBase
 {
     public $conf = [
         'base' => '/path/to/scripts/',

@@ -1,8 +1,8 @@
 <?php
 
-namespace HordeTextWiki;
+namespace Horde\Text\Wiki;
 
-class CowikiRenderer extends WikiRender
+class CowikiRenderer extends WikiRendererBase
 {
     public function pre()
     {

@@ -3,7 +3,7 @@
 namespace Horde\Text\Wiki;
 
 //no similar in Doku, using <html>
-class DokuRendererColortext extends WikiRender
+class DokuRendererColortext extends WikiRendererBase
 {
     public $colors = [
         'aqua',

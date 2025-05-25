@@ -4,7 +4,7 @@ namespace Horde\Text\Wiki;
 
 // $Id$
 
-class PlainRendererFunction extends WikiRender
+class PlainRendererFunction extends WikiRendererBase
 {
     /**
     *

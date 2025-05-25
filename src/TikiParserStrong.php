@@ -39,7 +39,7 @@ namespace Horde\Text\Wiki;
 *
 */
 
-class TikiParserStrong extends WikiParse
+class TikiParserStrong extends WikiParserBase
 {
     /**
     *

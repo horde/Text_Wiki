@@ -1,6 +1,6 @@
 <?php
 
-namespace HordeTextWiki;
+namespace Horde\Text\Wiki;
 
 /**
 *
@@ -34,7 +34,7 @@ namespace HordeTextWiki;
 *
 */
 
-class CowikiParserInterwiki extends WikiParse
+class CowikiParserInterwiki extends WikiParserBase
 {
     // double-colons wont trip up now
     public $regex = '([A-Za-z0-9_\s\.-:;&~=\/]+)\|((?!\|)[A-Za-z0-9_\/=&~#.:;-\s]*)';

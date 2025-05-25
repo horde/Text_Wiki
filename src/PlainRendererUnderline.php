@@ -2,7 +2,7 @@
 
 namespace Horde\Text\Wiki;
 
-class PlainRendererUnderline extends WikiRender
+class PlainRendererUnderline extends WikiRendererBase
 {
     /**
     *

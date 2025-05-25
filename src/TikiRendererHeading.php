@@ -2,7 +2,7 @@
 
 namespace Horde\Text\Wiki;
 
-class TikiRendererHeading extends WikiRender
+class TikiRendererHeading extends WikiRendererBase
 {
     public function token($options)
     {

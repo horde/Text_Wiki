@@ -36,7 +36,7 @@ namespace Horde\Text\Wiki;
 *
 */
 
-class DokuParserBold extends WikiParse
+class DokuParserBold extends WikiParserBase
 {
     /**
     *

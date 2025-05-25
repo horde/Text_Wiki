@@ -1,10 +1,10 @@
 <?php
 
-namespace HordeTextWiki;
+namespace Horde\Text\Wiki;
 
 // $Id$
 
-class DokuRendererPhplookup extends WikiRender
+class DokuRendererPhplookup extends WikiRendererBase
 {
     /**
     *

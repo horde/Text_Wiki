@@ -30,7 +30,7 @@ namespace Horde\Text\Wiki;
 *
 */
 
-class DokuParserImage extends WikiParse
+class DokuParserImage extends WikiParserBase
 {
     /**
     *

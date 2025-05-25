@@ -2,7 +2,7 @@
 
 namespace Horde\Text\Wiki;
 
-class CreoleRendererHeading extends WikiRender
+class CreoleRendererHeading extends WikiRendererBase
 {
     public function token($options)
     {

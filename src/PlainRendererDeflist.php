@@ -1,8 +1,8 @@
 <?php
 
-namespace HordeTextWiki;
+namespace Horde\Text\Wiki;
 
-class PlainRendererDeflist extends WikiRender
+class PlainRendererDeflist extends WikiRendererBase
 {
     /**
     *

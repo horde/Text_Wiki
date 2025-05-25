@@ -19,7 +19,7 @@ namespace Horde\Text\Wiki;
  */
 
 
-class CowikiRendererPrefilter extends WikiRender
+class CowikiRendererPrefilter extends WikiRendererBase
 {
     public function token()
     {

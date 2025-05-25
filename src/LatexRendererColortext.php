@@ -2,7 +2,7 @@
 
 namespace Horde\Text\Wiki;
 
-class LatexRendererColortext extends WikiRender
+class LatexRendererColortext extends WikiRendererBase
 {
     public $colors = [
         'aqua',

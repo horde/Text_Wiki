@@ -1,9 +1,9 @@
 <?php
 
-namespace HordeTextWiki;
+namespace Horde\Text\Wiki;
 
 //Not used in CoWiki
-class CowikiRendererImage extends WikiRender
+class CowikiRendererImage extends WikiRendererBase
 {
     /**
     *

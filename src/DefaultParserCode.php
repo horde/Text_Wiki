@@ -37,7 +37,7 @@ namespace Horde\Text\Wiki;
 *
 */
 
-class DefaultParserCode extends WikiParse
+class DefaultParserCode extends WikiParserBase
 {
     /**
     *

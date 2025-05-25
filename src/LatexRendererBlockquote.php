@@ -2,7 +2,7 @@
 
 namespace Horde\Text\Wiki;
 
-class LatexRendererBlockquote extends WikiRender
+class LatexRendererBlockquote extends WikiRendererBase
 {
     public $conf = ['css' => null];
 

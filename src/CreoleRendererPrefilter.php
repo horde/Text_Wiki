@@ -1,8 +1,8 @@
 <?php
 
-namespace HordeTextWiki;
+namespace Horde\Text\Wiki;
 
-class CreoleRendererPrefilter extends WikiRender
+class CreoleRendererPrefilter extends WikiRendererBase
 {
     public function token()
     {

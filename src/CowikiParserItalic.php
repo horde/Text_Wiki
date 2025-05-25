@@ -1,6 +1,6 @@
 <?php
 
-namespace HordeTextWiki;
+namespace Horde\Text\Wiki;
 
 /**
 *
@@ -35,7 +35,7 @@ namespace HordeTextWiki;
 *
 */
 
-class CowikiParserItalic extends WikiParse
+class CowikiParserItalic extends WikiParserBase
 {
     /**
      * Setting regex in constructor instead of with var as we need $this->wiki->delim

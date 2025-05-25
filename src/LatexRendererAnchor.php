@@ -14,7 +14,7 @@ namespace Horde\Text\Wiki;
 *
 */
 
-class LatexRendererAnchor extends WikiRender
+class LatexRendererAnchor extends WikiRendererBase
 {
     public function token($options)
     {

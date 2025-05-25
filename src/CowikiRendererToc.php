@@ -4,7 +4,7 @@ namespace Horde\Text\Wiki;
 
 // $Id$
 
-class CowikiRendererToc extends WikiRender
+class CowikiRendererToc extends WikiRendererBase
 {
     /**
     *

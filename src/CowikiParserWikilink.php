@@ -1,6 +1,6 @@
 <?php
 
-namespace HordeTextWiki;
+namespace Horde\Text\Wiki;
 
 /**
 *
@@ -44,7 +44,7 @@ namespace HordeTextWiki;
 *
 */
 
-class CowikiParserWikilink extends WikiParse
+class CowikiParserWikilink extends WikiParserBase
 {
     public $conf =  [
         'ext_chars' => false,

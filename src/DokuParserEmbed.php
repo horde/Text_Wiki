@@ -1,6 +1,6 @@
 <?php
 
-namespace HordeTextWiki;
+namespace Horde\Text\Wiki;
 
 /**
 *
@@ -41,7 +41,7 @@ namespace HordeTextWiki;
 */
 
 //Not used in DokuWiki
-class DokuParserEmbed extends WikiParse
+class DokuParserEmbed extends WikiParserBase
 {
     public $conf = [
         'base' => '/path/to/scripts/',

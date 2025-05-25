@@ -29,7 +29,7 @@ namespace Horde\Text\Wiki;
  * @link       http://pear.php.net/package/Text_Wiki
  * @see        Text_Wiki::Text_Wiki_Render()
  */
-class LatexRendererFont extends WikiRender
+class LatexRendererFont extends WikiRendererBase
 {
     /**
      * A table to translate the sizes

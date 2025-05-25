@@ -2,7 +2,7 @@
 
 namespace Horde\Text\Wiki;
 
-class TikiParserTitlebar extends WikiParse
+class TikiParserTitlebar extends WikiParserBase
 {
     /**
     *

@@ -1,9 +1,9 @@
 <?php
 
-namespace HordeTextWiki;
+namespace Horde\Text\Wiki;
 
 //None in Tiki
-class TikiRendererSubscript extends WikiRender
+class TikiRendererSubscript extends WikiRendererBase
 {
     /**
     *

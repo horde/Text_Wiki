@@ -34,7 +34,7 @@ namespace Horde\Text\Wiki;
 *
 */
 
-class DefaultParserNewline extends WikiParse
+class DefaultParserNewline extends WikiParserBase
 {
     /**
     *

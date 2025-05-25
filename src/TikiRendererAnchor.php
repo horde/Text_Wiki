@@ -1,6 +1,6 @@
 <?php
 
-namespace HordeTextWiki;
+namespace Horde\Text\Wiki;
 
 /**
 *
@@ -14,7 +14,7 @@ namespace HordeTextWiki;
 *
 */
 
-class TikiRendererAnchor extends WikiRender
+class TikiRendererAnchor extends WikiRendererBase
 {
     public function token($options)
     {

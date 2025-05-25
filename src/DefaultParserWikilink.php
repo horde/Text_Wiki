@@ -44,7 +44,7 @@ namespace Horde\Text\Wiki;
 *
 */
 
-class DefaultParserWikilink extends WikiParse
+class DefaultParserWikilink extends WikiParserBase
 {
     public $conf =  [
         'ext_chars' => false,

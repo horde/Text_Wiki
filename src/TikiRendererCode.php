@@ -2,7 +2,7 @@
 
 namespace Horde\Text\Wiki;
 
-class TikiRendererCode extends WikiRender
+class TikiRendererCode extends WikiRendererBase
 {
     /**
     *

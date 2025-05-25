@@ -42,7 +42,7 @@ namespace Horde\Text\Wiki;
  * @link       http://pear.php.net/package/Text_Wiki
  * @see        Text_Wiki_Parse::Text_Wiki_Parse()
  */
-class MediawikiParserEmphasis extends WikiParse
+class MediawikiParserEmphasis extends WikiParserBase
 {
     /**
      * Split $this->wiki->source by line break and call $this->process()

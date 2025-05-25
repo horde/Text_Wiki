@@ -4,7 +4,7 @@ namespace Horde\Text\Wiki;
 
 // $Id$
 //not in tiki
-class TikiRendererFunction extends WikiRender
+class TikiRendererFunction extends WikiRendererBase
 {
     /**
     *

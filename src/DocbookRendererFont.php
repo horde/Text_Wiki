@@ -1,6 +1,6 @@
 <?php
 
-namespace HordeTextWiki;
+namespace Horde\Text\Wiki;
 
 // vim: set expandtab tabstop=4 shiftwidth=4 softtabstop=4:
 /**
@@ -29,7 +29,7 @@ namespace HordeTextWiki;
  * @link       http://pear.php.net/package/Text_Wiki_Docbook
  * @see        Text_Wiki::Text_Wiki_Render()
  */
-class DocbookRendererFont extends WikiRender
+class DocbookRendererFont extends WikiRendererBase
 {
     public $conf = [
         'role' => 'fontsize',

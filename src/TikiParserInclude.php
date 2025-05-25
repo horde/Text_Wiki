@@ -1,6 +1,6 @@
 <?php
 
-namespace HordeTextWiki;
+namespace Horde\Text\Wiki;
 
 /**
 *
@@ -42,7 +42,7 @@ namespace HordeTextWiki;
 *
 */
 
-class TikiParserInclude extends WikiParse
+class TikiParserInclude extends WikiParserBase
 {
     public $conf = [
         'base' => '/path/to/scripts/',

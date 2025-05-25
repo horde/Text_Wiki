@@ -1,8 +1,8 @@
 <?php
 
-namespace HordeTextWiki;
+namespace Horde\Text\Wiki;
 
-class LatexRendererDeflist extends WikiRender
+class LatexRendererDeflist extends WikiRendererBase
 {
     public $conf = [
         'css_dl' => null,

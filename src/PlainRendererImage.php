@@ -2,7 +2,7 @@
 
 namespace Horde\Text\Wiki;
 
-class PlainRendererImage extends WikiRender
+class PlainRendererImage extends WikiRendererBase
 {
     /**
     *

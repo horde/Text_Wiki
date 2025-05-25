@@ -38,7 +38,7 @@ namespace Horde\Text\Wiki;
 *
 */
 
-class TikiParserUnderline extends WikiParse
+class TikiParserUnderline extends WikiParserBase
 {
     /**
     *

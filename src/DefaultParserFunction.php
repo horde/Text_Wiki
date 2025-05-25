@@ -30,7 +30,7 @@ namespace Horde\Text\Wiki;
 *
 */
 
-class DefaultParserFunction extends WikiParse
+class DefaultParserFunction extends WikiParserBase
 {
     public $regex = '/^(\<function\>)\n(.+)\n(\<\/function\>)(\s|$)/Umsi';
 

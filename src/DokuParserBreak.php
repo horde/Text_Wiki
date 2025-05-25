@@ -34,7 +34,7 @@ namespace Horde\Text\Wiki;
 */
 
 //None in DokuWiki
-class DokuParserBreak extends WikiParse
+class DokuParserBreak extends WikiParserBase
 {
     /**
     *

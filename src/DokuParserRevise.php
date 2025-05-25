@@ -1,6 +1,6 @@
 <?php
 
-namespace HordeTextWiki;
+namespace Horde\Text\Wiki;
 
 /**
 *
@@ -31,7 +31,7 @@ namespace HordeTextWiki;
 */
 
 //Not used in DokuWiki, but added support for <del>
-class DokuParserRevise extends WikiParse
+class DokuParserRevise extends WikiParserBase
 {
     /**
     *

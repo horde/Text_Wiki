@@ -1,6 +1,6 @@
 <?php
 
-namespace HordeTextWiki;
+namespace Horde\Text\Wiki;
 
 /**
  *
@@ -28,7 +28,7 @@ namespace HordeTextWiki;
  *
  */
 
-class CreoleParserList extends WikiParse
+class CreoleParserList extends WikiParserBase
 {
     /**
      *

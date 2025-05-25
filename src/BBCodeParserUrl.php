@@ -34,7 +34,7 @@ namespace Horde\Text\Wiki;
  * @link       http://pear.php.net/package/Text_Wiki
  * @see        Text_Wiki_Parse::Text_Wiki_Parse()
  */
-class BBCodeParserUrl extends WikiParse
+class BBCodeParserUrl extends WikiParserBase
 {
     /**
      * Configuration keys for this rule

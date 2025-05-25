@@ -1,6 +1,6 @@
 <?php
 
-namespace HordeTextWiki;
+namespace Horde\Text\Wiki;
 
 /**
 *
@@ -40,7 +40,7 @@ namespace HordeTextWiki;
 *
 */
 //None in CoWIki
-class CowikiParserInclude extends WikiParse
+class CowikiParserInclude extends WikiParserBase
 {
     public $conf = [
         'base' => '/path/to/scripts/',

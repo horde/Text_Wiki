@@ -2,7 +2,7 @@
 
 namespace Horde\Text\Wiki;
 
-class CreoleRendererParagraph extends WikiRender
+class CreoleRendererParagraph extends WikiRendererBase
 {
     /**
     *

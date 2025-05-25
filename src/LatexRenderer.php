@@ -33,7 +33,7 @@ namespace Horde\Text\Wiki;
 *
 */
 
-class LatexRenderer extends WikiRender
+class LatexRenderer extends WikiRendererBase
 {
     public function escape_latex($txt)
     {

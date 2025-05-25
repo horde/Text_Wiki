@@ -2,7 +2,7 @@
 
 namespace Horde\Text\Wiki;
 
-class DokuRendererCode extends WikiRender
+class DokuRendererCode extends WikiRendererBase
 {
     /**
     *

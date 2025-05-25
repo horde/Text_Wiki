@@ -31,7 +31,7 @@ namespace Horde\Text\Wiki;
 *
 */
 
-class MediawikiParserRedirect extends WikiParse
+class MediawikiParserRedirect extends WikiParserBase
 {
     /**
     *

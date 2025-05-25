@@ -20,7 +20,7 @@ namespace Horde\Text\Wiki;
  *
  */
 
-class CreoleParserNewline extends WikiParse
+class CreoleParserNewline extends WikiParserBase
 {
     /**
      *

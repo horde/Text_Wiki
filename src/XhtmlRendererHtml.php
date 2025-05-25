@@ -26,7 +26,7 @@ namespace Horde\Text\Wiki;
  * @version    Release: @package_version@
  * @link       http://pear.php.net/package/Text_Wiki
  */
-class XhtmlRendererHtml extends WikiRender
+class XhtmlRendererHtml extends WikiRendererBase
 {
     /**
     *

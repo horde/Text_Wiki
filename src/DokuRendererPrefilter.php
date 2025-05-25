@@ -1,6 +1,6 @@
 <?php
 
-namespace HordeTextWiki;
+namespace Horde\Text\Wiki;
 
 // vim: set expandtab tabstop=4 shiftwidth=4 softtabstop=4:
 /**
@@ -19,7 +19,7 @@ namespace HordeTextWiki;
  */
 
 
-class DokuRendererPrefilter extends WikiRender
+class DokuRendererPrefilter extends WikiRendererBase
 {
     public function token()
     {

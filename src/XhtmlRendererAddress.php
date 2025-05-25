@@ -22,7 +22,7 @@ namespace Horde\Text\Wiki;
  *
  */
 
-class XhtmlRendererAddress extends WikiRender
+class XhtmlRendererAddress extends WikiRendererBase
 {
     public $conf = [
         'css' => null,

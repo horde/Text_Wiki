@@ -35,7 +35,7 @@ namespace Horde\Text\Wiki;
 */
 
 //DokuWiki has no token for the TOC
-class DokuParserToc extends WikiParse
+class DokuParserToc extends WikiParserBase
 {
     /**
     *

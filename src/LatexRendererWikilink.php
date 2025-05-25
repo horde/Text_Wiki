@@ -4,7 +4,7 @@ namespace Horde\Text\Wiki;
 
 require_once 'Text/Wiki/Render.php';
 
-class LatexRendererWikilink extends WikiRender
+class LatexRendererWikilink extends WikiRendererBase
 {
     public $conf = [
         'pages' => [],

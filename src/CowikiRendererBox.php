@@ -1,9 +1,9 @@
 <?php
 
-namespace HordeTextWiki;
+namespace Horde\Text\Wiki;
 
 //no box rule in cowiki, so use a table
-class CowikiRendererBox extends WikiRender
+class CowikiRendererBox extends WikiRendererBase
 {
     /**
     *

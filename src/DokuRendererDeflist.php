@@ -1,9 +1,9 @@
 <?php
 
-namespace HordeTextWiki;
+namespace Horde\Text\Wiki;
 
 //not used in Dokuwiki
-class DokuRendererDeflist extends WikiRender
+class DokuRendererDeflist extends WikiRendererBase
 {
     /**
     *

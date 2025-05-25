@@ -1,8 +1,8 @@
 <?php
 
-namespace HordeTextWiki;
+namespace Horde\Text\Wiki;
 
-class CreoleRendererNewline extends WikiRender
+class CreoleRendererNewline extends WikiRendererBase
 {
     public function token($options)
     {

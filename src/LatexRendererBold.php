@@ -2,7 +2,7 @@
 
 namespace Horde\Text\Wiki;
 
-class LatexRendererBold extends WikiRender
+class LatexRendererBold extends WikiRendererBase
 {
     /**
     *

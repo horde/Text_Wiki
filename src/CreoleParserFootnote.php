@@ -25,7 +25,7 @@ namespace Horde\Text\Wiki;
  *
  */
 
-class CreoleParserFootnote extends WikiParse
+class CreoleParserFootnote extends WikiParserBase
 {
     /**
      *

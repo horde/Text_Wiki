@@ -1,6 +1,6 @@
 <?php
 
-namespace HordeTextWiki;
+namespace Horde\Text\Wiki;
 
 /**
  * Preformatted rule end renderer for Tiki
@@ -25,7 +25,7 @@ namespace HordeTextWiki;
  * @version    Release: @package_version@
  * @link       http://pear.php.net/package/Text_Wiki
  */
-class TikiRendererPreformatted extends WikiRender
+class TikiRendererPreformatted extends WikiRendererBase
 {
     /**
     *

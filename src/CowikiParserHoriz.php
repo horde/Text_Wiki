@@ -33,7 +33,7 @@ namespace Horde\Text\Wiki;
 *
 */
 
-class CowikiParserHoriz extends WikiParse
+class CowikiParserHoriz extends WikiParserBase
 {
     /**
     *

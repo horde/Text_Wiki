@@ -1,6 +1,6 @@
 <?php
 
-namespace HordeTextWiki;
+namespace Horde\Text\Wiki;
 
 /**
 *
@@ -34,7 +34,7 @@ namespace HordeTextWiki;
 *
 */
 
-class DefaultParserHtml extends WikiParse
+class DefaultParserHtml extends WikiParserBase
 {
     /**
     *

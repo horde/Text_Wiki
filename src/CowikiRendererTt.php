@@ -2,7 +2,7 @@
 
 namespace Horde\Text\Wiki;
 
-class CowikiRendererTt extends WikiRender
+class CowikiRendererTt extends WikiRendererBase
 {
     /**
     *

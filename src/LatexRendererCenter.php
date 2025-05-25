@@ -1,8 +1,8 @@
 <?php
 
-namespace HordeTextWiki;
+namespace Horde\Text\Wiki;
 
-class LatexRendererCenter extends WikiRender
+class LatexRendererCenter extends WikiRendererBase
 {
     /**
     *

@@ -26,7 +26,7 @@ namespace Horde\Text\Wiki;
  * @version    Release: @package_version@
  * @link       http://pear.php.net/package/Text_Wiki
  */
-class XhtmlRendererHeading extends WikiRender
+class XhtmlRendererHeading extends WikiRendererBase
 {
     public $conf = [
         'css_h1' => null,

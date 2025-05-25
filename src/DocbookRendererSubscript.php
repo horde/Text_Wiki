@@ -26,7 +26,7 @@ namespace Horde\Text\Wiki;
  * @version    Release: @package_version@
  * @link       http://pear.php.net/package/Text_Wiki_Docbook
  */
-class DocbookRendererSubscript extends WikiRender
+class DocbookRendererSubscript extends WikiRendererBase
 {
     /**
     *

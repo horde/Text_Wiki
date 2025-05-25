@@ -2,7 +2,7 @@
 
 namespace Horde\Text\Wiki;
 
-class CowikiRendererNewline extends WikiRender
+class CowikiRendererNewline extends WikiRendererBase
 {
     public function token($options)
     {

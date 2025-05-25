@@ -36,7 +36,7 @@ namespace Horde\Text\Wiki;
 *
 */
 
-class TikiParserInterwiki extends WikiParse
+class TikiParserInterwiki extends WikiParserBase
 {
     // double-colons wont trip up now
     public $regex = '([A-Za-z0-9_\-]+):((?!:)[A-Za-z0-9_\-]+)';

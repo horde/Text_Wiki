@@ -1,8 +1,8 @@
 <?php
 
-namespace HordeTextWiki;
+namespace Horde\Text\Wiki;
 
-class DokuRendererHeading extends WikiRender
+class DokuRendererHeading extends WikiRendererBase
 {
     public function token($options)
     {

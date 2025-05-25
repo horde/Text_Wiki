@@ -14,7 +14,7 @@ namespace Horde\Text\Wiki;
 *
 */
 
-class PlainRendererAnchor extends WikiRender
+class PlainRendererAnchor extends WikiRendererBase
 {
     public function token($options)
     {

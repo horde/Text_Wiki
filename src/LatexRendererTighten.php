@@ -1,8 +1,8 @@
 <?php
 
-namespace HordeTextWiki;
+namespace Horde\Text\Wiki;
 
-class LatexRendererTighten extends WikiRender
+class LatexRendererTighten extends WikiRendererBase
 {
     public function token()
     {

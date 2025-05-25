@@ -1,8 +1,8 @@
 <?php
 
-namespace HordeTextWiki;
+namespace Horde\Text\Wiki;
 
-class LatexRendererTable extends WikiRender
+class LatexRendererTable extends WikiRendererBase
 {
     public $cell_id    = 0;
     public $cell_count = 0;

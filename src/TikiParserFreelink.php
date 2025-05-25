@@ -1,6 +1,6 @@
 <?php
 
-namespace HordeTextWiki;
+namespace Horde\Text\Wiki;
 
 /**
 *
@@ -43,7 +43,7 @@ namespace HordeTextWiki;
 *
 */
 
-class TikiParserFreelink extends WikiParse
+class TikiParserFreelink extends WikiParserBase
 {
     public $conf =  [
         'utf-8' => false,

@@ -1,6 +1,6 @@
 <?php
 
-namespace HordeTextWiki;
+namespace Horde\Text\Wiki;
 
 /**
 *
@@ -35,7 +35,7 @@ namespace HordeTextWiki;
 *
 */
 
-class TikiParserCenter extends WikiParse
+class TikiParserCenter extends WikiParserBase
 {
     /**
     *

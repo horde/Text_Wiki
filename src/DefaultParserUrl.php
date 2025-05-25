@@ -51,7 +51,7 @@ namespace Horde\Text\Wiki;
 *
 */
 
-class DefaultParserUrl extends WikiParse
+class DefaultParserUrl extends WikiParserBase
 {
     /**
     *

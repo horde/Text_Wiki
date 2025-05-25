@@ -1,8 +1,8 @@
 <?php
 
-namespace HordeTextWiki;
+namespace Horde\Text\Wiki;
 
-class CreoleRendererBlockquote extends WikiRender
+class CreoleRendererBlockquote extends WikiRendererBase
 {
     public $css_stack = [];
 
