@@ -433,10 +433,7 @@ class TextWikiBase
     {
         static $only = [];
         if (!isset($only[$parser])) {
-            $ret = Text_Wiki::factory($parser, $rules);
-            if (Text_Wiki::isError($ret)) {
-                return $ret;
-            }
+            $ret = self::factory($parser, $rules);
             $only[$parser] = $ret;
         }
         return $only[$parser];
@@ -453,16 +450,11 @@ class TextWikiBase
      */
     public static function factory($parser = 'Default', $rules = null)
     {
-        $class = 'Text_Wiki_' . $parser;
-        $file = str_replace('_', '/', $class) . '.php';
+        $class = '\Horde\Text\Wiki\\' . $parser . 'Engine';
         if (!class_exists($class)) {
-            require_once $file;
-            if (!class_exists($class)) {
-                return Text_Wiki::error(
-                    'Class ' . $class . ' does not exist after requiring ' . $file .
-                        ', install package ' . $class . "\n"
+                throw new GenericTextWikiException(
+                    "Class '$class' implementing parser '$parser' does not exist or could not be autoloaded.\n"
                 );
-            }
         }
 
         return new $class($rules);

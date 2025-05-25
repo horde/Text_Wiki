@@ -33,6 +33,8 @@
     },
     "type": "library",
     "require-dev": {
-        "phpunit/phpunit": "^12"
+        "phpunit/phpunit": "^12",
+        "friendsofphp/php-cs-fixer": "^3.75",
+        "phpstan/phpstan": "^2.1"
     }
 }
