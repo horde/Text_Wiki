@@ -1363,29 +1363,23 @@ class TextWikiBase
     *
     * Load a format-render class file.
     *
+    * TODO: This logic should be factored out into a factory class.
+    * 
     * @access public
     *
     * @return bool True if loaded, false if not.
     *
     */
 
-    public function loadFormatObj($format)
+    public function loadFormatObj(string $format = 'Default')
     {
         $format = ucwords(strtolower($format));
-        $file = $format . '.php';
-        $class = "Text_Wiki_Render_$format";
+        $baseName = $format . 'Renderer';
+        $class = 'Horde\Text\Wiki\\' . $baseName;
+        $file = $class . '.php';
 
-        if (! class_exists($class)) {
-            $loc = $this->findFile('render', $file);
-            if ($loc) {
-                // found the class
-                include_once $loc;
-            } else {
-                // can't find the class
-                return $this->error(
-                    "Rendering format class '$class' not found"
-                );
-            }
+        if (!class_exists($class)) {
+            throw new InvalidArgumentException("No handler for format '$format' found, expected '$class'");
         }
 
         $this->formatObj[$format] = new $class($this);
