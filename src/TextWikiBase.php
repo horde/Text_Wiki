@@ -16,6 +16,7 @@
 
 namespace Horde\Text\Wiki;
 use Stringable;
+use InvalidArgumentException;
 /**
  * Parse structured wiki text and render into arbitrary formats such as XHTML.
  *
