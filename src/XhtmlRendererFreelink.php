@@ -19,7 +19,6 @@ namespace Horde\Text\Wiki;
 /**
  * The wikilink render class.
  */
-require_once 'Text/Wiki/Render/Xhtml/Wikilink.php';
 
 /**
  * This class renders free links in XHTML.
@@ -31,7 +30,7 @@ require_once 'Text/Wiki/Render/Xhtml/Wikilink.php';
  * @version    Release: @package_version@
  * @link       http://pear.php.net/package/Text_Wiki
  */
-class XhtmlRendererFreelink extends WikiRendererBase_Xhtml_Wikilink
+class XhtmlRendererFreelink extends XhtmlRendererWikilink
 {
     // renders identically to wikilinks, only the parsing is different :-)
 }
