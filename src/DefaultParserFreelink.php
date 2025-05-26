@@ -44,7 +44,7 @@ namespace Horde\Text\Wiki;
 class DefaultParserFreelink extends WikiParserBase
 {
     public $conf =  [
-        'utf-8' => false,
+        'utf-8' => true,
     ];
 
     /**
@@ -63,18 +63,20 @@ class DefaultParserFreelink extends WikiParserBase
         parent::__construct($obj);
         if ($this->getConf('utf-8')) {
             $any = '\p{L}';
+            $control = '';
         } else {
             $any = '';
+            $control = "\xc0-\xff";
         }
         $this->regex =
             '/' .                                                   // START regex
             "\\(\\(" .                                               // double open-parens
             "(" .                                                   // START freelink page patter
-            "[-A-Za-z0-9 _+\\/.,;:!?'\"\\[\\]\\{\\}&" . $any . "\xc0-\xff]+" . // 1 or more of just about any character
+            "[-A-Za-z0-9 _+\\/.,;:!?'\"\\[\\]\\{\\}&" . $any . "]+" . // 1 or more of just about any character
             ")" .                                                   // END  freelink page pattern
             "(" .                                                   // START display-name
             "\|" .                                                   // a pipe to start the display name
-            "[-A-Za-z0-9 _+\\/.,;:!?'\"\\[\\]\\{\\}&" . $any . "\xc0-\xff]+" . // 1 or more of just about any character
+            "[-A-Za-z0-9 _+\\/.,;:!?'\"\\[\\]\\{\\}&" . $any . "]+" . // 1 or more of just about any character
             ")?" .                                                   // END display-name pattern 0 or 1
             "(" .                                                   // START pattern for named anchors
             "\#" .                                                   // a hash mark
