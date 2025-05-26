@@ -120,8 +120,8 @@ class WikiParserBase
         // set the name of this rule; generally used when adding
         // to the tokens array. strip off the Text_Wiki_Parse_ portion.
 
-        $rendererPrefix = substr($this::class, 0, strrpos($this::class, 'Parser'));
-        $this->format = substr($rendererPrefix, strrpos($rendererPrefix, '\\')+1);
+        $parserPrefix = substr($this::class, 0, strrpos($this::class, 'Parser'));
+        $this->format = substr($parserPrefix, strrpos($parserPrefix, '\\')+1);
         if (is_null($rule)) {
             $rule = substr($this::class, strrpos($this::class, 'Parser') + 6);
         }
