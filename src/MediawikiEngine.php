@@ -96,6 +96,5 @@ class MediawikiEngine extends TextWikiBase
 
         }
         parent::__construct($rules);
-        $this->addPath('parse', $this->fixPath(dirname(__FILE__)) . 'Parse/Mediawiki');
     }
 }
