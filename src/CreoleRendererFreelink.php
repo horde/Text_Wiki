@@ -2,9 +2,7 @@
 
 namespace Horde\Text\Wiki;
 
-require_once 'Text/Wiki/Render/Creole/Wikilink.php';
-
-class CreoleRendererFreelink extends WikiRendererBase_Creole_Wikilink
+class CreoleRendererFreelink extends CreoleRendererWikilink
 {
     // renders identically to wikilinks, only the parsing is different :-)
 }

@@ -2,9 +2,7 @@
 
 namespace Horde\Text\Wiki;
 
-require_once 'Text/Wiki/Render/Doku/Wikilink.php';
-
-class DokuRendererFreelink extends WikiRendererBase_Doku_Wikilink
+class DokuRendererFreelink extends DokuRendererWikilink
 {
     // renders identically to wikilinks, only the parsing is different :-)
 }

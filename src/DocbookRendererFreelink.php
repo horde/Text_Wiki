@@ -19,7 +19,6 @@ namespace Horde\Text\Wiki;
 /**
  * The wikilink render class.
  */
-require_once 'Text/Wiki/Render/Docbook/Wikilink.php';
 
 /**
  * This class renders free links in DocBook.
@@ -31,7 +30,7 @@ require_once 'Text/Wiki/Render/Docbook/Wikilink.php';
  * @version    Release: @package_version@
  * @link       http://pear.php.net/package/Text_Wiki_Docbook
  */
-class DocbookRendererFreelink extends WikiRendererBase_Docbook_Wikilink
+class DocbookRendererFreelink extends DocbookRendererWikilink
 {
     // renders identically to wikilinks, only the parsing is different :-)
 }
