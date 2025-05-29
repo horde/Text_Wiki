@@ -17,6 +17,8 @@
 namespace Horde\Text\Wiki;
 use Stringable;
 use InvalidArgumentException;
+use Throwable;
+
 /**
  * Parse structured wiki text and render into arbitrary formats such as XHTML.
  *
@@ -1486,14 +1488,15 @@ class TextWikiBase
     *
     * Simple error checker.
     *
-    * @param mixed $obj Check if this is a PEAR_Error object or not.
+    * @param mixed $obj Check if this is an Exception object or not.
     *
-    * @return bool True if a PEAR_Error, false if not.
+    * @deprecated Use instanceof Throwable instead.
+    * @return bool True if it's a Throwable, false if not.
     *
     */
 
     public static function isError(&$obj)
     {
-        return is_a($obj, 'PEAR_Error');
+        return is_a($obj, Throwable::class);
     }
 }
