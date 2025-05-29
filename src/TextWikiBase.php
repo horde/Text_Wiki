@@ -1030,7 +1030,7 @@ class TextWikiBase
                                 array_push($tokenStack, $rule);
                             } elseif ($opts['type'] == 'end') {
                                 if ($tokenStack[count($tokenStack) - 1] != $rule) {
-                                    return Text_Wiki::error('Unbalanced tokens, check your syntax');
+                                    return new GenericTextWikiException('Unbalanced tokens, check your syntax');
                                 } else {
                                     array_pop($tokenStack);
                                 }
@@ -1464,23 +1464,21 @@ class TextWikiBase
 
     /**
     *
-    * Simple error-object generator.
+    * Exception generator. Creates the object but does not throw it.
+    *
+    * @deprecated Directly throw a TextWikiException instead.
     *
     * @access public
     *
     * @param string $message The error message.
     *
-    * @return object PEAR_Error
+    * @return GenericTextWikiException
     *
     */
 
     public function error($message)
     {
-        if (! class_exists('PEAR_Error')) {
-            include_once 'PEAR.php';
-        }
-        $pear = new PEAR();
-        return $pear->throwError($message);
+        return new GenericTextWikiException($message);
     }
 
 
