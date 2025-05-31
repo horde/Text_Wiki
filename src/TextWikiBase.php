@@ -367,7 +367,10 @@ class TextWikiBase
     public $_blocks;
 
     // The fully qualified class name of the parser, minus "Engine".
-    public readonly string $parserPrefix;
+    // This cannot be public readonly as external engines may want to set it in their own constructor
+    // This cannot be protected as some parsers want to access it, i.e. WikiParserHeading2
+    // Good candidate for a property hook when 8.4 becomes baseline 
+    public string $parserPrefix;
     /**
      * A fix for PHP5.
      *
