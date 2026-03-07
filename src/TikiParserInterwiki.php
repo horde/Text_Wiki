@@ -59,7 +59,7 @@ class TikiParserInterwiki extends WikiParserBase
         $tmp_regex = '/\(\(' . str_replace(']', '\s]', $this->regex) . '(?:\|(.+?))?\)\)/';
         $this->wiki->source = preg_replace_callback(
             $tmp_regex,
-            [&$this, 'processDescr'],
+            [$this, 'processDescr'],
             $this->wiki->source
         );
 
@@ -67,7 +67,7 @@ class TikiParserInterwiki extends WikiParserBase
         $tmp_regex = '/' . $this->regex . '/';
         $this->wiki->source = preg_replace_callback(
             $tmp_regex,
-            [&$this, 'process'],
+            [$this, 'process'],
             $this->wiki->source
         );
 

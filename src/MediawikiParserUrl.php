@@ -149,7 +149,7 @@ class MediawikiParserUrl extends WikiParserBase
         $this->wiki->source = preg_replace_callback(
             $tmp_regex,
             //array(&$this, 'processFootnote'),
-            [&$this, 'processOrdinary'],
+            [$this, 'processOrdinary'],
             $this->wiki->source
         );
 
@@ -166,7 +166,7 @@ class MediawikiParserUrl extends WikiParserBase
         // use the standard callback for inline URLs
         $this->wiki->source = preg_replace_callback(
             $tmp_regex,
-            [&$this, 'process'],
+            [$this, 'process'],
             $this->wiki->source
         );
 
@@ -177,7 +177,7 @@ class MediawikiParserUrl extends WikiParserBase
         // use the standard callback for inline URLs
         $this->wiki->source = preg_replace_callback(
             $tmp_regex,
-            [&$this, 'processWithoutProtocol'],
+            [$this, 'processWithoutProtocol'],
             $this->wiki->source
         );
 
@@ -186,7 +186,7 @@ class MediawikiParserUrl extends WikiParserBase
         // use the standard callback for inline URLs
         $this->wiki->source = preg_replace_callback(
             $tmp_regex,
-            [&$this, 'processInlineEmail'],
+            [$this, 'processInlineEmail'],
             $this->wiki->source
         );
     }

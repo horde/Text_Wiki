@@ -133,7 +133,7 @@ class TikiParserPlugin extends WikiParserBase
         $res = $func($matches[6], $attr);
         return preg_replace_callback(
             $this->regex,
-            [&$this, 'process'],
+            [$this, 'process'],
             $res
         );
     }

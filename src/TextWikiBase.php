@@ -988,7 +988,7 @@ class TextWikiBase
         if ($this->renderingType == 'preg') {
             $this->output = preg_replace_callback(
                 '/' . $this->delim . '(\d+)' . $this->delim . '/',
-                [&$this, '_renderToken'],
+                [$this, '_renderToken'],
                 $this->source
             );
             /*

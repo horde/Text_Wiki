@@ -147,7 +147,7 @@ class MediawikiParserTable extends WikiParserBase
             $this->_level++;
             $expsub = preg_replace_callback(
                 $this->regex,
-                [&$this, 'process'],
+                [$this, 'process'],
                 $matches[3]
             );
             $this->_level--;
@@ -158,7 +158,7 @@ class MediawikiParserTable extends WikiParserBase
         $this->_countCells[$this->_level] = $this->_spanCells[$this->_level] = [];
         $sub = preg_replace_callback(
             $this->regexRows,
-            [&$this, 'processRows'],
+            [$this, 'processRows'],
             $expsub
         );
         $param = [
@@ -207,7 +207,7 @@ class MediawikiParserTable extends WikiParserBase
         $this->_countCells[$this->_level][$this->_countRows[$this->_level]] = 0;
         $sub = preg_replace_callback(
             $this->regexCells,
-            [&$this, 'processCells'],
+            [$this, 'processCells'],
             $matches[3]
         );
         $param = [

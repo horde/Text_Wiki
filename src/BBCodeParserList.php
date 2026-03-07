@@ -115,7 +115,7 @@ class BBCodeParserList extends WikiParserBase
             $this->_level++;
             $expsub = preg_replace_callback(
                 $this->regex,
-                [&$this, 'process'],
+                [$this, 'process'],
                 $matches[2]
             );
             $this->_level--;
@@ -140,7 +140,7 @@ class BBCodeParserList extends WikiParserBase
         $this->_count[$this->_level] = -1;
         $sub = preg_replace_callback(
             $this->regexElement,
-            [&$this, 'processElement'],
+            [$this, 'processElement'],
             $expsub
         );
         $param = [

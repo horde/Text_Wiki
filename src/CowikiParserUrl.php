@@ -144,7 +144,7 @@ class CowikiParserUrl extends WikiParserBase
         // the replacement text for matches.
         $this->wiki->source = preg_replace_callback(
             $tmp_regex,
-            [&$this, 'processDescr'],
+            [$this, 'processDescr'],
             $this->wiki->source
         );
 
@@ -178,7 +178,7 @@ class CowikiParserUrl extends WikiParserBase
         // use the standard callback for inline URLs
         $this->wiki->source = preg_replace_callback(
             $tmp_regex,
-            [&$this, 'process'],
+            [$this, 'process'],
             $this->wiki->source
         );
     }

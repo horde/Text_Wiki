@@ -144,7 +144,7 @@ class DokuParserUrl extends WikiParserBase
         // the replacement text for matches.
         $this->wiki->source = preg_replace_callback(
             $tmp_regex,
-            [&$this, 'processDescr'],
+            [$this, 'processDescr'],
             $this->wiki->source
         );
 
@@ -161,7 +161,7 @@ class DokuParserUrl extends WikiParserBase
         // the replacement text for matches.
         $this->wiki->source = preg_replace_callback(
             $tmp_regex,
-            [&$this, 'processFootnote'],
+            [$this, 'processFootnote'],
             $this->wiki->source
         );
 
@@ -178,7 +178,7 @@ class DokuParserUrl extends WikiParserBase
         // use the standard callback for inline URLs
         $this->wiki->source = preg_replace_callback(
             $tmp_regex,
-            [&$this, 'process'],
+            [$this, 'process'],
             $this->wiki->source
         );
 
@@ -189,7 +189,7 @@ class DokuParserUrl extends WikiParserBase
         // use the standard callback for inline URLs
         $this->wiki->source = preg_replace_callback(
             $tmp_regex,
-            [&$this, 'processWithoutProtocol'],
+            [$this, 'processWithoutProtocol'],
             $this->wiki->source
         );
 
@@ -198,7 +198,7 @@ class DokuParserUrl extends WikiParserBase
         // use the standard callback for inline URLs
         $this->wiki->source = preg_replace_callback(
             $tmp_regex,
-            [&$this, 'processInlineEmail'],
+            [$this, 'processInlineEmail'],
             $this->wiki->source
         );
     }

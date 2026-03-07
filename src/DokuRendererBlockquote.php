@@ -21,7 +21,7 @@ class DokuRendererBlockquote extends WikiRendererBase
     {
         // starting
         if ($options['type'] == 'start') {
-            $this->wiki->registerRenderCallback([&$this, 'renderInsideText']);
+            $this->wiki->registerRenderCallback([$this, 'renderInsideText']);
             return '';
         }
         // ending
