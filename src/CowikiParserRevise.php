@@ -69,14 +69,14 @@ class CowikiParserRevise extends WikiParserBase
     {
         $this->wiki->source = preg_replace_callback(
             $this->regex,
-            [&$this, 'process'],
+            [$this, 'process'],
             $this->wiki->source
         );
 
         $tmp_regex = '!-(.*?)-!';
         $this->wiki->source = preg_replace_callback(
             $tmp_regex,
-            [&$this, 'processDel'],
+            [$this, 'processDel'],
             $this->wiki->source
         );
 

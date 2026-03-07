@@ -130,7 +130,7 @@ class TikiParserWikilink extends WikiParserBase
         $tmp_regex = '/\(\(' . /*$this->regex*/ '([' . $either . '\s\.\-]*?)(?:(\#[' . $either . '\s\.\-](?:[' . $either . '\s\.\-]*?)?)?)(?:\|(.+?))?\)\)/' . ($this->getConf('utf-8') ? 'u' : '');
         $this->wiki->source = preg_replace_callback(
             $tmp_regex,
-            [&$this, 'processDescr'],
+            [$this, 'processDescr'],
             $this->wiki->source
         );
 
@@ -138,7 +138,7 @@ class TikiParserWikilink extends WikiParserBase
         $tmp_regex = '/(^|[^$either\-_])(\)\))?' . $this->regex . '(\(\()?/' . ($this->getConf('utf-8') ? 'u' : '');
         $this->wiki->source = preg_replace_callback(
             $tmp_regex,
-            [&$this, 'process'],
+            [$this, 'process'],
             $this->wiki->source
         );
     }

@@ -27,7 +27,7 @@ class CreoleRendererBlockquote extends WikiRendererBase
                 $options['css'] = '';
             }
             array_push($this->css_stack, $options['css']);
-            $this->wiki->registerRenderCallback([&$this, 'renderInsideText']);
+            $this->wiki->registerRenderCallback([$this, 'renderInsideText']);
             return '';
         }
         // ending

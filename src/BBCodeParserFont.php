@@ -73,7 +73,7 @@ class BBCodeParserFont extends WikiParserBase
             $this->_level++;
             $expsub = preg_replace_callback(
                 $this->regex,
-                [&$this, 'process'],
+                [$this, 'process'],
                 $matches[2]
             );
             $this->_level--;

@@ -45,7 +45,7 @@ class TikiParserPage extends WikiParserBase
 
     public function parse()
     {
-        $this->wiki->source = preg_replace_callback($this->regex, [&$this, 'process'], $this->wiki->source);
+        $this->wiki->source = preg_replace_callback($this->regex, [$this, 'process'], $this->wiki->source);
 
     }
 

@@ -80,7 +80,7 @@ class DokuParserWikilink extends WikiParserBase
             '\]\]/' . ($this->getConf('utf-8') ? 'u' : ''); //end
         $this->wiki->source = preg_replace_callback(
             $tmp_regex,
-            [&$this, 'processDescr'],
+            [$this, 'processDescr'],
             $this->wiki->source
         );
     }
