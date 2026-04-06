@@ -62,7 +62,7 @@ class TikiParserHtml extends WikiParserBase
     *
     * @access public
     *
-    * @param array &$matches The array of matches from parse().
+    * @param array $matches The array of matches from parse().
     *
     * @return A delimited token to be used as a placeholder in
     * the source text, plus any text following the HTML block.

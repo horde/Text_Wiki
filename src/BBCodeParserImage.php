@@ -93,7 +93,7 @@ class BBCodeParserImage extends WikiParserBase
      *     'src' => the URL / path to the image
      *     'attr' => empty for basic BBCode
      *
-     * @param array &$matches The array of matches from parse().
+     * @param array $matches The array of matches from parse().
      * @return string Delimited token representing the image
      * @access public
      */

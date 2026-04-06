@@ -136,7 +136,7 @@ class MediawikiParserTable extends WikiParserBase
      *
      * 'format' => table, row or cell optional styling ('xxx_start')
      *
-     * @param array &$matches The array of matches from parse().
+     * @param array $matches The array of matches from parse().
      * @return string the original text with tags replaced by delimited tokens
      * which point to the the token array containing their type and definition
      * @access public
@@ -197,12 +197,12 @@ class MediawikiParserTable extends WikiParserBase
      *
      * 'format' => row optional styling
      *
-     * @param array &$matches The array of matches from process() callback.
+     * @param array $matches The array of matches from process() callback.
      * @return string 2 delimited tokens pointing the row params
      * and containing the cells-parsed block of text between the tags
      * @access public
      */
-    public function processRows(&$matches)
+    public function processRows($matches)
     {
         $this->_countCells[$this->_level][$this->_countRows[$this->_level]] = 0;
         $sub = preg_replace_callback(
@@ -247,12 +247,12 @@ class MediawikiParserTable extends WikiParserBase
      *
      * 'format' => cell optional styling
      *
-     * @param array &$matches The array of matches from processRows() callback.
+     * @param array $matches The array of matches from processRows() callback.
      * @return string 2 delimited tokens pointing the cell params
      * and containing the block of text between the tags
      * @access public
      */
-    public function processCells(&$matches)
+    public function processCells($matches)
     {
         $order = & $this->_countCells[$this->_level][$this->_countRows[$this->_level]];
         while (isset($this->_spanCells[$this->_level][$order])) {

@@ -59,7 +59,7 @@ class CowikiParserEmphasis extends WikiParserBase
     *
     * @access public
     *
-    * @param array &$matches The array of matches from parse().
+    * @param array $matches The array of matches from parse().
     *
     * @return string A pair of delimited tokens to be used as a
     * placeholder in the source text surrounding the text to be

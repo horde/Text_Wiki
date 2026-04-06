@@ -57,7 +57,7 @@ class DokuParserHoriz extends WikiParserBase
     *
     * @access public
     *
-    * @param array &$matches The array of matches from parse().
+    * @param array $matches The array of matches from parse().
     *
     * @return string A token marking the horizontal rule.
     *

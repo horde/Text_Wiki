@@ -150,14 +150,14 @@ class TikiParserWikilink extends WikiParserBase
     *
     * @access public
     *
-    * @param array &$matches The array of matches from parse().
+    * @param array $matches The array of matches from parse().
     *
     * @return A delimited token to be used as a placeholder in
     * the source text, plus any text priot to the match.
     *
     */
 
-    public function processDescr(&$matches)
+    public function processDescr($matches)
     {
         // set the options
         $options = [
@@ -190,7 +190,7 @@ class TikiParserWikilink extends WikiParserBase
     *
     * @access public
     *
-    * @param array &$matches The array of matches from parse().
+    * @param array $matches The array of matches from parse().
     *
     * @return A delimited token to be used as a placeholder in
     * the source text, plus any text prior to the match.

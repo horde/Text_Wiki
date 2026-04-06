@@ -104,7 +104,7 @@ class BBCodeParserList extends WikiParserBase
      *
      * 'key' => the optional starting number/letter (not for items)
      *
-     * @param array &$matches The array of matches from parse().
+     * @param array $matches The array of matches from parse().
      * @return A delimited token to be used as a placeholder in
      * the source text and containing the original block of text
      * @access public
@@ -170,12 +170,12 @@ class BBCodeParserList extends WikiParserBase
      *
      * 'count' => the item ordeer at this level.
      *
-     * @param array &$matches The array of matches from parse().
+     * @param array $matches The array of matches from parse().
      * @return A delimited token to be used as a placeholder in
      * the source text and containing the original block of text
      * @access public
      */
-    public function processElement(&$matches)
+    public function processElement($matches)
     {
         return $this->wiki->addToken($this->rule, [
             'type' => $this->_type[$this->_level] . '_item_start',

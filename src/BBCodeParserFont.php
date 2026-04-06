@@ -61,7 +61,7 @@ class BBCodeParserFont extends WikiParserBase
      * - 'level' => the level of nesting (starting 0)
      * - 'size' => the size indicator
      *
-     * @param array &$matches The array of matches from parse().
+     * @param array $matches The array of matches from parse().
      * @return string Delimited by start/end tokens to be used as
      * placeholder in the source text surrounding the text to be sized.
      * @access public

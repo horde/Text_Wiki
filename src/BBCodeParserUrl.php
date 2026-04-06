@@ -129,7 +129,7 @@ class BBCodeParserUrl extends WikiParserBase
      *     'href' => the URL link href portion
      *     'text' => the displayed text of the URL link
      *
-     * @param array &$matches The array of matches from parse().
+     * @param array $matches The array of matches from parse().
      * @return string Delimited token representing the url
      * @access public
      */
