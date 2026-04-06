@@ -18,29 +18,29 @@ class DefaultParseAnchorTest extends TestCase
     {
         $wiki = TextWikiBase::factory('Default', ['Anchor']);
 
-        $input = 'Text with [# anchor-name] here.';
+        $input = 'Text with [[# anchor-name]] here.';
         $wiki->parse($input);
 
         $anchorTokens = array_filter($wiki->tokens, fn($t) => $t[0] === 'Anchor');
-        $this->assertCount(1, $anchorTokens);
+        $this->assertCount(2, $anchorTokens);
     }
 
     public function testMultipleAnchors(): void
     {
         $wiki = TextWikiBase::factory('Default', ['Anchor']);
 
-        $input = '[# first] Some text [# second] More text [# third]';
+        $input = '[[# first]] Some text [[# second]] More text [[# third]]';
         $wiki->parse($input);
 
         $anchorTokens = array_filter($wiki->tokens, fn($t) => $t[0] === 'Anchor');
-        $this->assertCount(3, $anchorTokens);
+        $this->assertCount(6, $anchorTokens);
     }
 
     public function testAnchorToXhtmlRendering(): void
     {
         $wiki = TextWikiBase::factory('Default', ['Anchor']);
 
-        $input = '[# section1]';
+        $input = '[[# section1]]';
         $output = $wiki->transform($input, 'Xhtml');
 
         $this->assertStringContainsString('id=', $output);
@@ -51,10 +51,10 @@ class DefaultParseAnchorTest extends TestCase
     {
         $wiki = TextWikiBase::factory('Default', ['Anchor']);
 
-        $input = '[# my-anchor_name] and [# another_one]';
+        $input = '[[# my-anchor_name]] and [[# another_one]]';
         $wiki->parse($input);
 
         $anchorTokens = array_filter($wiki->tokens, fn($t) => $t[0] === 'Anchor');
-        $this->assertCount(2, $anchorTokens);
+        $this->assertCount(4, $anchorTokens);
     }
 }

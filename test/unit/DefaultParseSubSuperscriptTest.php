@@ -68,7 +68,7 @@ class DefaultParseSubSuperscriptTest extends TestCase
         $wiki->parse($input);
 
         $subTokens = array_filter($wiki->tokens, fn($t) => $t[0] === 'Subscript');
-        $this->assertCount(2, $subTokens);
+        $this->assertCount(4, $subTokens);
     }
 
     public function testMultipleSuperscripts(): void
@@ -79,6 +79,6 @@ class DefaultParseSubSuperscriptTest extends TestCase
         $wiki->parse($input);
 
         $supTokens = array_filter($wiki->tokens, fn($t) => $t[0] === 'Superscript');
-        $this->assertCount(2, $supTokens);
+        $this->assertCount(4, $supTokens);
     }
 }

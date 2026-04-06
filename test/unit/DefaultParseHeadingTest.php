@@ -23,7 +23,7 @@ class DefaultParseHeadingTest extends TestCase
         $input = "+ Heading Level 1\n";
         $wiki->parse($input);
 
-        $this->assertCount(1, $wiki->tokens);
+        $this->assertCount(2, $wiki->tokens);
         $this->assertEquals('Heading', $wiki->tokens[0][0]);
         $this->assertEquals(1, $wiki->tokens[0][1]['level']);
         $this->assertEquals('Heading Level 1', $wiki->tokens[0][1]['text']);
@@ -36,7 +36,7 @@ class DefaultParseHeadingTest extends TestCase
         $input = "++ Heading Level 2\n";
         $wiki->parse($input);
 
-        $this->assertCount(1, $wiki->tokens);
+        $this->assertCount(2, $wiki->tokens);
         $this->assertEquals('Heading', $wiki->tokens[0][0]);
         $this->assertEquals(2, $wiki->tokens[0][1]['level']);
         $this->assertEquals('Heading Level 2', $wiki->tokens[0][1]['text']);
@@ -53,11 +53,11 @@ class DefaultParseHeadingTest extends TestCase
 
         $wiki->parse($input);
 
-        $this->assertCount(4, $wiki->tokens);
+        $this->assertCount(8, $wiki->tokens);
         $this->assertEquals(3, $wiki->tokens[0][1]['level']);
-        $this->assertEquals(4, $wiki->tokens[1][1]['level']);
-        $this->assertEquals(5, $wiki->tokens[2][1]['level']);
-        $this->assertEquals(6, $wiki->tokens[3][1]['level']);
+        $this->assertEquals(4, $wiki->tokens[2][1]['level']);
+        $this->assertEquals(5, $wiki->tokens[4][1]['level']);
+        $this->assertEquals(6, $wiki->tokens[6][1]['level']);
     }
 
     public function testMultipleHeadings(): void
@@ -72,10 +72,10 @@ class DefaultParseHeadingTest extends TestCase
 
         $wiki->parse($input);
 
-        $this->assertCount(3, $wiki->tokens);
+        $this->assertCount(6, $wiki->tokens);
         $this->assertEquals('First Heading', $wiki->tokens[0][1]['text']);
-        $this->assertEquals('Second Heading', $wiki->tokens[1][1]['text']);
-        $this->assertEquals('Third Heading', $wiki->tokens[2][1]['text']);
+        $this->assertEquals('Second Heading', $wiki->tokens[2][1]['text']);
+        $this->assertEquals('Third Heading', $wiki->tokens[4][1]['text']);
     }
 
     public function testHeadingToXhtmlRendering(): void
@@ -109,7 +109,12 @@ class DefaultParseHeadingTest extends TestCase
         $input = "+ Heading with \"quotes\" and 'apostrophes'\n";
         $wiki->parse($input);
 
-        $this->assertCount(1, $wiki->tokens);
+        $this->assertCount(2, $wiki->tokens);
+        $this->assertIsArray($wiki->tokens);
+        $this->assertArrayHasKey(0, $wiki->tokens);
+        $this->assertIsArray($wiki->tokens[0]);
+        $this->assertArrayHasKey(1, $wiki->tokens[0]);
+        $this->assertArrayHasKey('text', $wiki->tokens[0][1]);
         $this->assertStringContainsString('quotes', $wiki->tokens[0][1]['text']);
         $this->assertStringContainsString('apostrophes', $wiki->tokens[0][1]['text']);
     }

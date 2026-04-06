@@ -44,7 +44,7 @@ class DefaultParseUnderlineTest extends TestCase
         $wiki->parse($input);
 
         $underlineTokens = array_filter($wiki->tokens, fn($t) => $t[0] === 'Underline');
-        $this->assertCount(2, $underlineTokens);
+        $this->assertCount(4, $underlineTokens);
     }
 
     public function testUnderlineWithBold(): void

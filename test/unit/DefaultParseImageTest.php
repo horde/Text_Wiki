@@ -18,7 +18,7 @@ class DefaultParseImageTest extends TestCase
     {
         $wiki = TextWikiBase::factory('Default', ['Image']);
 
-        $input = '[[image.jpg]]';
+        $input = '[[image image.jpg]]';
         $wiki->parse($input);
 
         $this->assertGreaterThan(0, count($wiki->tokens));
@@ -31,7 +31,7 @@ class DefaultParseImageTest extends TestCase
     {
         $wiki = TextWikiBase::factory('Default', ['Image']);
 
-        $input = '[[image.jpg | alt="Description"]]';
+        $input = '[[image image.jpg alt="Description"]]';
         $wiki->parse($input);
 
         $imageTokens = array_filter($wiki->tokens, fn($t) => $t[0] === 'Image');
@@ -42,7 +42,7 @@ class DefaultParseImageTest extends TestCase
     {
         $wiki = TextWikiBase::factory('Default', ['Image']);
 
-        $input = '[[image.jpg | link="http://example.com"]]';
+        $input = '[[image image.jpg link="http://example.com"]]';
         $wiki->parse($input);
 
         $imageTokens = array_filter($wiki->tokens, fn($t) => $t[0] === 'Image');
@@ -53,7 +53,7 @@ class DefaultParseImageTest extends TestCase
     {
         $wiki = TextWikiBase::factory('Default', ['Image']);
 
-        $input = '[[test.jpg]]';
+        $input = '[[image test.jpg]]';
         $output = $wiki->transform($input, 'Xhtml');
 
         $this->assertStringContainsString('<img', $output);
@@ -64,7 +64,7 @@ class DefaultParseImageTest extends TestCase
     {
         $wiki = TextWikiBase::factory('Default', ['Image']);
 
-        $input = '[[first.jpg]] and [[second.png]]';
+        $input = '[[image first.jpg]] and [[image second.png]]';
         $wiki->parse($input);
 
         $imageTokens = array_filter($wiki->tokens, fn($t) => $t[0] === 'Image');

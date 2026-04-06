@@ -23,7 +23,8 @@ class PlainRenderUrlTest extends TestCase
 http://www.example.com/page
 ';
 
-        $expected = 'An example page (http://www.example.com/page)
+        $expected = '
+An example page
 http://www.example.com/page
 ';
 

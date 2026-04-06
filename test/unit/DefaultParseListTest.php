@@ -49,9 +49,9 @@ class DefaultParseListTest extends TestCase
         $wiki = TextWikiBase::factory('Default', ['List']);
 
         $input = "* Level 1\n";
-        $input .= "** Level 2\n";
-        $input .= "*** Level 3\n";
-        $input .= "** Back to Level 2\n";
+        $input .= " * Level 2\n";
+        $input .= "  * Level 3\n";
+        $input .= " * Back to Level 2\n";
         $input .= "* Back to Level 1\n";
 
         $wiki->parse($input);

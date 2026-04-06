@@ -18,7 +18,7 @@ class DefaultParseParagraphTest extends TestCase
     {
         $wiki = TextWikiBase::factory('Default', ['Paragraph', 'Newline']);
 
-        $input = "This is a single paragraph.";
+        $input = "This is a single paragraph.\n\n";
         $wiki->parse($input);
 
         $paragraphTokens = array_filter($wiki->tokens, fn($t) => $t[0] === 'Paragraph');
@@ -53,7 +53,7 @@ class DefaultParseParagraphTest extends TestCase
     {
         $wiki = TextWikiBase::factory('Default', ['Paragraph', 'Newline']);
 
-        $input = "Line one\nLine two";
+        $input = "Line one\nLine two\n\n";
         $wiki->parse($input);
 
         // Single newline should be within same paragraph

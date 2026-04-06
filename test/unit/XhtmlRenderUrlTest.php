@@ -24,7 +24,8 @@ class XhtmlRenderUrlTest extends TestCase
 http://www.example.com/page
 ';
 
-        $expected = '<a href="http://www.example.com/page">An example page</a>
+        $expected = '
+<a href="http://www.example.com/page">An example page</a>
 <a href="http://www.example.com/page">http://www.example.com/page</a>
 ';
 

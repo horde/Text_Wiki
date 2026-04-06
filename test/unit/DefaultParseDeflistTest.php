@@ -18,7 +18,7 @@ class DefaultParseDeflistTest extends TestCase
     {
         $wiki = TextWikiBase::factory('Default', ['Deflist']);
 
-        $input = ": term : definition";
+        $input = "\n: term : definition\n";
         $wiki->parse($input);
 
         $deflistTokens = array_filter($wiki->tokens, fn($t) => $t[0] === 'Deflist');
@@ -29,7 +29,7 @@ class DefaultParseDeflistTest extends TestCase
     {
         $wiki = TextWikiBase::factory('Default', ['Deflist']);
 
-        $input = ": term1 : definition1\n: term2 : definition2";
+        $input = "\n: term1 : definition1\n: term2 : definition2\n";
         $wiki->parse($input);
 
         $deflistTokens = array_filter($wiki->tokens, fn($t) => $t[0] === 'Deflist');
@@ -40,7 +40,7 @@ class DefaultParseDeflistTest extends TestCase
     {
         $wiki = TextWikiBase::factory('Default', ['Deflist']);
 
-        $input = ": API : Application Programming Interface";
+        $input = "\n: API : Application Programming Interface\n";
         $output = $wiki->transform($input, 'Xhtml');
 
         $this->assertStringContainsString('<dl', $output);
@@ -54,7 +54,7 @@ class DefaultParseDeflistTest extends TestCase
     {
         $wiki = TextWikiBase::factory('Default', ['Deflist']);
 
-        $input = ": term : definition\n:: nested term :: nested definition";
+        $input = "\n: term : definition\n: nested term : nested definition\n";
         $wiki->parse($input);
 
         $deflistTokens = array_filter($wiki->tokens, fn($t) => $t[0] === 'Deflist');

@@ -26,16 +26,16 @@ class DefaultToXhtmlIntegrationTest extends TestCase
     public function testSimpleDocumentTransformation(): void
     {
         $input = <<<WIKI
-+ Main Heading
+            + Main Heading
 
-This is a paragraph with '''bold''' and ''italic'' text.
+            This is a paragraph with '''bold''' and ''italic'' text.
 
-++ Subheading
+            ++ Subheading
 
-* List item 1
-* List item 2
-* List item 3
-WIKI;
+            * List item 1
+            * List item 2
+            * List item 3
+            WIKI;
 
         $output = $this->wiki->transform($input, 'Xhtml');
 
@@ -60,56 +60,56 @@ WIKI;
     public function testComplexDocumentWithAllFeatures(): void
     {
         $input = <<<WIKI
-+ Wiki Formatting Test
+            + Wiki Formatting Test
 
-This is a WikiWord link and a ((Free Link)) example.
+            This is a WikiWord link and a ((Free Link)) example.
 
-++ Text Formatting
+            ++ Text Formatting
 
-'''Bold text''', ''italic text'', and '''''bold italic'''''.
+            '''Bold text''', ''italic text'', and '''''bold italic'''''.
 
-Also __underlined__ and ^^superscript^^ and ,,subscript,,.
+            Also __underlined__ and ^^superscript^^ and ,,subscript,,.
 
-++ Lists and Structure
+            ++ Lists and Structure
 
-* Unordered item 1
-** Nested item
-* Unordered item 2
+            * Unordered item 1
+            ** Nested item
+            * Unordered item 2
 
-# Ordered item 1
-# Ordered item 2
+            # Ordered item 1
+            # Ordered item 2
 
-+++ Blockquotes
+            +++ Blockquotes
 
-> This is a quoted text.
-> It continues here.
+            > This is a quoted text.
+            > It continues here.
 
-++++ Tables
+            ++++ Tables
 
-|| Header 1 || Header 2 ||
-|| Cell 1   || Cell 2   ||
-|| Cell 3   || Cell 4   ||
+            || Header 1 || Header 2 ||
+            || Cell 1   || Cell 2   ||
+            || Cell 3   || Cell 4   ||
 
-+++++ Links and Media
+            +++++ Links and Media
 
-Visit http://example.com for info.
+            Visit http://example.com for info.
 
-[http://example.com Link Text]
+            [http://example.com Link Text]
 
-[[image.jpg]]
+            [[image image.jpg]]
 
-++++++ Horizontal Rule
+            ++++++ Horizontal Rule
 
-----
+            ----
 
-= Centered text =
+            = Centered text =
 
-<code>
-function test() {
-    return true;
-}
-</code>
-WIKI;
+            <code>
+            function test() {
+                return true;
+            }
+            </code>
+            WIKI;
 
         $output = $this->wiki->transform($input, 'Xhtml');
 
@@ -146,21 +146,21 @@ WIKI;
     public function testNestedStructures(): void
     {
         $input = <<<WIKI
-+ Document with Nesting
+            + Document with Nesting
 
-* First level
-** Second level
-*** Third level
-*** Another third
-** Back to second
-* Back to first
+            * First level
+            ** Second level
+            *** Third level
+            *** Another third
+            ** Back to second
+            * Back to first
 
-# Ordered first
-## Ordered second
-### Ordered third
-## Back to second
-# Back to first
-WIKI;
+            # Ordered first
+            ## Ordered second
+            ### Ordered third
+            ## Back to second
+            # Back to first
+            WIKI;
 
         $output = $this->wiki->transform($input, 'Xhtml');
 
@@ -175,23 +175,23 @@ WIKI;
     public function testLinksAndReferences(): void
     {
         $input = <<<WIKI
-+ Links Test
+            + Links Test
 
-WikiWord automatic link.
+            WikiWord automatic link.
 
-((Free Link)) with parens.
+            ((Free Link)) with parens.
 
-((Page|Display Text)) with custom text.
+            ((Page|Display Text)) with custom text.
 
-((Page#Anchor)) with anchor.
+            ((Page#Anchor)) with anchor.
 
-[http://example.com External link]
+            [http://example.com External link]
 
-http://example.com inline URL.
+            http://example.com inline URL.
 
-[# section1]
-Jump to [#section1].
-WIKI;
+            [# section1]
+            Jump to [#section1].
+            WIKI;
 
         $output = $this->wiki->transform($input, 'Xhtml');
 
@@ -206,19 +206,19 @@ WIKI;
     public function testCodeAndPreformatted(): void
     {
         $input = <<<WIKI
-+ Code Examples
+            + Code Examples
 
-Inline <code>code here</code> works.
+            Inline <code>code here</code> works.
 
-Block code:
-<code>
-function example() {
-    return "test";
-}
-</code>
+            Block code:
+            <code>
+            function example() {
+                return "test";
+            }
+            </code>
 
-End of document.
-WIKI;
+            End of document.
+            WIKI;
 
         $output = $this->wiki->transform($input, 'Xhtml');
 
@@ -230,12 +230,12 @@ WIKI;
     public function testMixedFormatting(): void
     {
         $input = <<<WIKI
-This paragraph has '''bold ''italic'' inside''' and ''italic '''bold''' inside''.
+            This paragraph has '''bold ''italic'' inside''' and ''italic '''bold''' inside''.
 
-Also '''bold with ((free link)) inside''' works.
+            Also '''bold with ((free link)) inside''' works.
 
-And ((Free Link with '''bold''' inside)) too.
-WIKI;
+            And ((Free Link with '''bold''' inside)) too.
+            WIKI;
 
         $output = $this->wiki->transform($input, 'Xhtml');
 
@@ -247,18 +247,18 @@ WIKI;
     public function testSpecialCharacters(): void
     {
         $input = <<<WIKI
-+ Special Characters
+            + Special Characters
 
-Text with "quotes" and 'apostrophes'.
+            Text with "quotes" and 'apostrophes'.
 
-Text with & ampersand and < less than and > greater than.
+            Text with & ampersand and < less than and > greater than.
 
-Email: test@example.com
+            Email: test@example.com
 
-Math: 2 + 2 = 4
+            Math: 2 + 2 = 4
 
-Code with <special> characters.
-WIKI;
+            Code with <special> characters.
+            WIKI;
 
         $output = $this->wiki->transform($input, 'Xhtml');
 
@@ -310,13 +310,13 @@ WIKI;
     public function testAllHeadingLevels(): void
     {
         $input = <<<WIKI
-+ Level 1
-++ Level 2
-+++ Level 3
-++++ Level 4
-+++++ Level 5
-++++++ Level 6
-WIKI;
+            + Level 1
+            ++ Level 2
+            +++ Level 3
+            ++++ Level 4
+            +++++ Level 5
+            ++++++ Level 6
+            WIKI;
 
         $output = $this->wiki->transform($input, 'Xhtml');
 
