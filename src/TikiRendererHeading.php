@@ -7,7 +7,7 @@ class TikiRendererHeading extends WikiRendererBase
     public function token($options)
     {
         if ($options['type'] == 'end') {
-            return "\n";
+            return "";
         } elseif ($options['type'] == 'start') {
             return str_pad('', $options['level'], '!');
         }
