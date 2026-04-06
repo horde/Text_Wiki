@@ -207,6 +207,6 @@ class WikiRendererBase
 
     public function textEncode($text)
     {
-        return htmlspecialchars($text);
+        return htmlspecialchars($text ?? '');
     }
 }
