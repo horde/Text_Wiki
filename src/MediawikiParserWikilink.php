@@ -148,7 +148,7 @@ class MediawikiParserWikilink extends WikiParserBase
      * - 'text' => the optional alternate link text
      *
      * @access public
-     * @param array &$matches The array of matches from parse().
+     * @param array $matches The array of matches from parse().
      * @return string token to be used as replacement
      */
     public function process($matches)
@@ -253,7 +253,7 @@ class MediawikiParserWikilink extends WikiParserBase
      * | - 'height' => 'NNNpx'
      *
      * @access public
-     * @param array &$matches The array of matches from parse().
+     * @param array $matches The array of matches from parse().
      * @return string token to be used as replacement
      */
     public function image($name, $text, $interlang, $colon)
@@ -299,7 +299,7 @@ class MediawikiParserWikilink extends WikiParserBase
      * - 'text' => the optional alternate link text
      *
      * @access public
-     * @param array &$matches The array of matches from parse().
+     * @param array $matches The array of matches from parse().
      * @return string token to be used as replacement
      */
     public function interwiki($site, $interwiki, $page, $text, $interlang, $colon)

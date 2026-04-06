@@ -52,7 +52,7 @@ class TikiParserSmiley extends WikiParserBase
      *     'name' => the name of the smiley
      *     'desc' => the description of the smiley
      *
-     * @param array &$matches The array of matches from parse().
+     * @param array $matches The array of matches from parse().
      * @return string Delimited token representing the smiley
      * @access public
      */

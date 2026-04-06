@@ -58,7 +58,7 @@ class MediawikiParserHeading extends WikiParserBase
     * heading text.  The text itself is left in the source.
     *
     * @access public
-    * @param array &$matches The array of matches from parse().
+    * @param array $matches The array of matches from parse().
     * @return string A pair of delimited tokens to be used as a
     * placeholder in the source text surrounding the heading text.
     */

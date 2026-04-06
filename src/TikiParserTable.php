@@ -80,7 +80,7 @@ class TikiParserTable extends WikiParserBase
     *
     * @access public
     *
-    * @param array &$matches The array of matches from parse().
+    * @param array $matches The array of matches from parse().
     *
     * @return A series of text and delimited tokens marking the different
     * table elements and cell text.

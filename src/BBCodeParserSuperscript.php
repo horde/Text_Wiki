@@ -60,7 +60,7 @@ class BBCodeParserSuperscript extends WikiParserBase
      * - 'type' => ['start'|'end'] The starting or ending point of the
      * emphasized text.  The text itself is left in the source.
      *
-     * @param array &$matches The array of matches from parse().
+     * @param array $matches The array of matches from parse().
      * @return A pair of delimited tokens to be used as a placeholder in
      * the source text surrounding the text to be emphasized.
      * @access public

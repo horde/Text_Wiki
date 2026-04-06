@@ -154,7 +154,7 @@ class CreoleParserWikilink extends WikiParserBase
      * - 'text' => the optional alternate link text
      *
      * @access public
-     * @param array &$matches The array of matches from parse().
+     * @param array $matches The array of matches from parse().
      * @return string token to be used as replacement
      */
 
@@ -268,7 +268,7 @@ class CreoleParserWikilink extends WikiParserBase
      * | - 'align => 'left', 'center' or 'right'
      *
      * @access public
-     * @param array &$matches The array of matches from parse().
+     * @param array $matches The array of matches from parse().
      * @return string token to be used as replacement
      */
 
@@ -308,7 +308,7 @@ class CreoleParserWikilink extends WikiParserBase
      * - 'text' => the optional alternate link text
      *
      * @access public
-     * @param array &$matches The array of matches from parse().
+     * @param array $matches The array of matches from parse().
      * @return string token to be used as replacement
      */
 
