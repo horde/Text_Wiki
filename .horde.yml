@@ -3,9 +3,11 @@ id: text_wiki
 name: Text_Wiki
 full: Horde.org PSR-4 successor to the 2010s fork of the original pear/text_wiki
 description: >-
-  Parse structured wiki text and render into arbitrary formats such as XHTML, LaTeX, plain text, and Docbook.
-  Supports multiple wiki markup formats including Mediawiki, Tiki, Creole, DokuWiki, BBCode, and Cowiki.
-  Originally forked from PEAR Text_Wiki packages, now modernized for PHP 8+ with PSR-4 autoloading.
+  Parse structured wiki text and render into arbitrary formats such as XHTML,
+  LaTeX, plain text, and Docbook. Supports multiple wiki markup formats
+  including Mediawiki, Tiki, Creole, DokuWiki, BBCode, and Cowiki. Originally
+  forked from PEAR Text_Wiki packages, now modernized for PHP 8+ with PSR-4
+  autoloading.
 list: dev
 type: library
 homepage: https://www.horde.org/libraries/Horde_Text_Wiki
@@ -106,3 +108,8 @@ license:
 dependencies:
   required:
     php: ^8.1
+keywords:
+  - parser
+  - creole
+  - tikiwiki
+vendor: horde
