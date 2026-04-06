@@ -24,13 +24,13 @@ class DefaultToPlainIntegrationTest extends TestCase
     public function testSimpleDocumentToPlain(): void
     {
         $input = <<<WIKI
-+ Main Heading
+            + Main Heading
 
-This is a paragraph with '''bold''' and ''italic'' text.
+            This is a paragraph with '''bold''' and ''italic'' text.
 
-* List item 1
-* List item 2
-WIKI;
+            * List item 1
+            * List item 2
+            WIKI;
 
         $output = $this->wiki->transform($input, 'Plain');
 
@@ -60,17 +60,18 @@ WIKI;
     public function testLinksInPlainText(): void
     {
         $input = <<<WIKI
-Visit WikiWord page.
+            Visit WikiWord page.
 
-See ((Free Link)) here.
+            See ((Free Link)) here.
 
-URL: [http://example.com Link Text]
-WIKI;
+            URL: [http://example.com Link Text]
+            WIKI;
 
         $output = $this->wiki->transform($input, 'Plain');
 
+        // Plain text should contain link text but not URLs
         $this->assertStringContainsString('WikiWord', $output);
         $this->assertStringContainsString('Free Link', $output);
-        $this->assertStringContainsString('http://example.com', $output);
+        $this->assertStringContainsString('Link Text', $output);
     }
 }

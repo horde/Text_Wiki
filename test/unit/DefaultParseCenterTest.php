@@ -20,7 +20,7 @@ class DefaultParseCenterTest extends TestCase
     {
         $wiki = TextWikiBase::factory('Default', ['Center']);
 
-        $input = "= Centered Text =";
+        $input = "\n= Centered Text =\n";
         $wiki->parse($input);
 
         $centerTokens = array_filter($wiki->tokens, fn($t) => $t[0] === 'Center');
@@ -31,7 +31,7 @@ class DefaultParseCenterTest extends TestCase
     {
         $wiki = TextWikiBase::factory('Default', ['Center']);
 
-        $input = "= Centered =";
+        $input = "\n= Centered =\n";
         $output = $wiki->transform($input, 'Xhtml');
 
         $this->assertMatchesRegularExpression('/(text-align:\s*center|class="[^"]*center)/i', $output);
@@ -42,7 +42,7 @@ class DefaultParseCenterTest extends TestCase
     {
         $wiki = TextWikiBase::factory('Default', ['Center']);
 
-        $input = "= First =\nRegular text\n= Second =";
+        $input = "\n= First =\nRegular text\n= Second =\n";
         $wiki->parse($input);
 
         $centerTokens = array_filter($wiki->tokens, fn($t) => $t[0] === 'Center');

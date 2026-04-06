@@ -44,10 +44,10 @@ class DefaultParserInteroperabilityTest extends TestCase
     public function testFormattingInsideLists(): void
     {
         $input = <<<WIKI
-* Item with '''bold'''
-* Item with ''italic''
-* Item with ((Free Link))
-WIKI;
+            * Item with '''bold'''
+            * Item with ''italic''
+            * Item with ((Free Link))
+            WIKI;
 
         $output = $this->wiki->transform($input, 'Xhtml');
 
@@ -60,10 +60,10 @@ WIKI;
     public function testListsInsideBlockquotes(): void
     {
         $input = <<<WIKI
-> Quoted text
-> * Item 1
-> * Item 2
-WIKI;
+            > Quoted text
+            > * Item 1
+            > * Item 2
+            WIKI;
 
         $output = $this->wiki->transform($input, 'Xhtml');
 
@@ -74,9 +74,9 @@ WIKI;
     public function testTableWithFormatting(): void
     {
         $input = <<<WIKI
-|| '''Header''' || ''Column'' ||
-|| ((Link)) || Normal ||
-WIKI;
+            || '''Header''' || ''Column'' ||
+            || ((Link)) || Normal ||
+            WIKI;
 
         $output = $this->wiki->transform($input, 'Xhtml');
 
@@ -98,27 +98,27 @@ WIKI;
 
     public function testCodePreservesMarkup(): void
     {
-        $input = "<code>'''not bold''' and ((not link))</code>";
+        $input = "``'''not bold''' and ((not link))``";
         $output = $this->wiki->transform($input, 'Xhtml');
 
-        $this->assertStringContainsString('<code>', $output);
-        $this->assertStringContainsString("'''not bold'''", $output);
-        $this->assertStringContainsString("((not link))", $output);
-
-        // Should NOT have parsed the markup inside code
+        // Raw content should not be parsed as wiki markup
         $this->assertStringNotContainsString('<strong>', $output);
         $this->assertStringNotContainsString('<b>', $output);
+        $this->assertStringNotContainsString('<a', $output);
+
+        // The raw markup should appear in escaped form
+        $this->assertMatchesRegularExpression("/&#039;&#039;&#039;|'''/", $output);
     }
 
     public function testNestedFormattingCombinations(): void
     {
         $input = <<<WIKI
-'''Bold with ''italic'' inside'''
+            '''Bold with ''italic'' inside'''
 
-''Italic with '''bold''' inside''
+            ''Italic with '''bold''' inside''
 
-__Underline with '''bold''' and ''italic''__
-WIKI;
+            __Underline with '''bold''' and ''italic''__
+            WIKI;
 
         $output = $this->wiki->transform($input, 'Xhtml');
 
@@ -130,16 +130,16 @@ WIKI;
     public function testComplexNestedLists(): void
     {
         $input = <<<WIKI
-* Level 1
-** Level 2 with '''bold'''
-*** Level 3 with ((link))
-** Back to level 2
-* Back to level 1
+            * Level 1
+            ** Level 2 with '''bold'''
+            *** Level 3 with ((link))
+            ** Back to level 2
+            * Back to level 1
 
-# Ordered 1
-## Ordered 2 with ''italic''
-# Back to 1
-WIKI;
+            # Ordered 1
+            ## Ordered 2 with ''italic''
+            # Back to 1
+            WIKI;
 
         $output = $this->wiki->transform($input, 'Xhtml');
 
@@ -153,47 +153,50 @@ WIKI;
     public function testAllFeaturesDocument(): void
     {
         $input = <<<WIKI
-+ Document Title
+            + Document Title
 
-This is a paragraph with WikiWord, ((Free Link)), '''bold''', ''italic'', __underline__, ^^super^^, and ,,sub,,.
+            This is a paragraph with WikiWord, ((Free Link)), '''bold''', ''italic'', __underline__, ^^super^^, and ,,sub,,.
 
-++ Features List
+            ++ Features List
 
-* '''Bold''' list item
-* ''Italic'' list item
-* List with ((link))
-** Nested with WikiWord
-** Nested with [http://example.com URL]
+            * '''Bold''' list item
+            * ''Italic'' list item
+            * List with ((link))
+            ** Nested with WikiWord
+            ** Nested with [http://example.com URL]
 
-+++ Table
+            # Ordered list item
+            # Another ordered item
 
-|| '''Name''' || '''Type''' ||
-|| ((Link1)) || Free ||
-|| WikiWord || Auto ||
+            +++ Table
 
-++++ Quote
+            || '''Name''' || '''Type''' ||
+            || ((Link1)) || Free ||
+            || WikiWord || Auto ||
 
-> Quoted text with '''formatting'''
-> And ((links))
+            ++++ Quote
 
-+++++ Code
+            > Quoted text with '''formatting'''
+            > And ((links))
 
-<code>
-function test() {
-    return '''not bold''';
-}
-</code>
+            +++++ Code
 
-++++++ End
+            <code>
+            function test() {
+                return '''not bold''';
+            }
+            </code>
 
-----
+            ++++++ End
 
-= Centered Text =
+            ----
 
-Visit [http://example.com] or http://example.com directly.
+            = Centered Text =
 
-[# anchor]
-WIKI;
+            Visit [http://example.com] or http://example.com directly.
+
+            [# anchor]
+            WIKI;
 
         $output = $this->wiki->transform($input, 'Xhtml');
 

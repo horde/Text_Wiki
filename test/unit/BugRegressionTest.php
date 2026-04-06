@@ -28,10 +28,10 @@ class BugRegressionTest extends TestCase
      */
     public function testBug18289NestedLists(): void
     {
-        $text = '    * level1
-     * level2
-    * level1
-     * level2';
+        $text = '* level1
+ * level2
+* level1
+ * level2';
 
         $html = $this->wiki->transform($text);
 

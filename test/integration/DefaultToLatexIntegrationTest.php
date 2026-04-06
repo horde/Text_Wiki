@@ -24,13 +24,13 @@ class DefaultToLatexIntegrationTest extends TestCase
     public function testSimpleDocumentToLatex(): void
     {
         $input = <<<WIKI
-+ Main Heading
+            + Main Heading
 
-This is a paragraph with '''bold''' text.
+            This is a paragraph with '''bold''' text.
 
-* List item 1
-* List item 2
-WIKI;
+            * List item 1
+            * List item 2
+            WIKI;
 
         $output = $this->wiki->transform($input, 'Latex');
 
@@ -55,12 +55,12 @@ WIKI;
     public function testLatexListOutput(): void
     {
         $input = <<<WIKI
-* Item 1
-* Item 2
+            * Item 1
+            * Item 2
 
-# Numbered 1
-# Numbered 2
-WIKI;
+            # Numbered 1
+            # Numbered 2
+            WIKI;
 
         $output = $this->wiki->transform($input, 'Latex');
 
@@ -72,10 +72,10 @@ WIKI;
     public function testLatexDocumentStructure(): void
     {
         $input = <<<WIKI
-+ Chapter
-++ Section
-+++ Subsection
-WIKI;
+            + Chapter
+            ++ Section
+            +++ Subsection
+            WIKI;
 
         $output = $this->wiki->transform($input, 'Latex');
 

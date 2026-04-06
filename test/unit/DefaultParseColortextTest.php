@@ -18,7 +18,7 @@ class DefaultParseColortextTest extends TestCase
     {
         $wiki = TextWikiBase::factory('Default', ['Colortext']);
 
-        $input = "##red:colored text##";
+        $input = "##red|colored text##";
         $wiki->parse($input);
 
         $colorTokens = array_filter($wiki->tokens, fn($t) => $t[0] === 'Colortext');
@@ -29,7 +29,7 @@ class DefaultParseColortextTest extends TestCase
     {
         $wiki = TextWikiBase::factory('Default', ['Colortext']);
 
-        $input = "##blue:blue text##";
+        $input = "##blue|blue text##";
         $output = $wiki->transform($input, 'Xhtml');
 
         $this->assertMatchesRegularExpression('/(color:\s*blue|style="[^"]*color)/i', $output);
@@ -40,7 +40,7 @@ class DefaultParseColortextTest extends TestCase
     {
         $wiki = TextWikiBase::factory('Default', ['Colortext']);
 
-        $input = "##red:red## and ##green:green## text";
+        $input = "##red|red## and ##green|green## text";
         $wiki->parse($input);
 
         $colorTokens = array_filter($wiki->tokens, fn($t) => $t[0] === 'Colortext');
@@ -51,7 +51,7 @@ class DefaultParseColortextTest extends TestCase
     {
         $wiki = TextWikiBase::factory('Default', ['Colortext']);
 
-        $input = "##FF0000:red text##";
+        $input = "##FF0000|red text##";
         $wiki->parse($input);
 
         $colorTokens = array_filter($wiki->tokens, fn($t) => $t[0] === 'Colortext');

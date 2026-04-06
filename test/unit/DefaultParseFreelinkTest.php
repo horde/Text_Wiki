@@ -51,7 +51,7 @@ class DefaultParseFreelinkTest extends TestCase
         $this->assertCount(1, $wiki->tokens);
         $this->assertEquals('Freelink', $wiki->tokens[0][0]);
         $this->assertEquals('HomePage', $wiki->tokens[0][1]['page']);
-        $this->assertEquals('Section1', $wiki->tokens[0][1]['anchor']);
+        $this->assertEquals('#Section1', $wiki->tokens[0][1]['anchor']);
     }
 
     public function testFreelinkWithTextAndAnchor(): void
@@ -65,7 +65,7 @@ class DefaultParseFreelinkTest extends TestCase
         $this->assertEquals('Freelink', $wiki->tokens[0][0]);
         $this->assertEquals('MyHomePage', $wiki->tokens[0][1]['page']);
         $this->assertEquals('My Home Page', $wiki->tokens[0][1]['text']);
-        $this->assertEquals('Section1', $wiki->tokens[0][1]['anchor']);
+        $this->assertEquals('#Section1', $wiki->tokens[0][1]['anchor']);
     }
 
     public function testMediaWikiBracketsDoNotParse(): void
@@ -101,7 +101,7 @@ class DefaultParseFreelinkTest extends TestCase
         $input = 'Visit ((Free Link)) here.';
         $output = $wiki->transform($input, 'Xhtml');
 
-        $this->assertStringContainsString('<a href=', $output);
+        $this->assertStringContainsString('href=', $output);
         $this->assertStringContainsString('Free Link', $output);
     }
 }

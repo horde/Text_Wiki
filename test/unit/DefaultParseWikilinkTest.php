@@ -23,7 +23,7 @@ class DefaultParseWikilinkTest extends TestCase
 
         $this->assertCount(1, $wiki->tokens);
         $this->assertEquals('Wikilink', $wiki->tokens[0][0]);
-        $this->assertStringContainsString('WikiWord', $wiki->source);
+        $this->assertStringContainsString($wiki->delim . '0' . $wiki->delim, $wiki->source);
     }
 
     public function testMultipleWikiWords(): void

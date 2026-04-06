@@ -31,7 +31,7 @@ class DefaultParseInterwikiTest extends TestCase
 
         // Configure a test interwiki site
         $wiki->setRenderConf('Xhtml', 'Interwiki', 'sites', [
-            'Wikipedia' => 'https://en.wikipedia.org/wiki/%s'
+            'Wikipedia' => 'https://en.wikipedia.org/wiki/%s',
         ]);
 
         $input = "Wikipedia:PHP";
