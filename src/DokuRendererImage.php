@@ -22,16 +22,16 @@ class DokuRendererImage extends WikiRendererBase
         if (!isset($options['attr']['align'])) {
             $options['attr']['align'] = '';
         }
-        $img = '{{' .
-            ($options['attr']['align'] == 'right' || $options['attr']['align'] == 'center' ? ' ' : '') .
-            $options['src'] .
-            (isset($options['attr']['width'])
+        $img = '{{'
+            . ($options['attr']['align'] == 'right' || $options['attr']['align'] == 'center' ? ' ' : '')
+            . $options['src']
+            . (isset($options['attr']['width'])
              ? '?' . $options['attr']['width'] . (isset($options['attr']['height'])
                                               ? 'x' . $options['attr']['height']
                                               : '')
-             : '') .
-            ($options['attr']['align'] == 'left' || $options['attr']['align'] == 'center' ? ' ' : '') .
-            '}}';
+             : '')
+            . ($options['attr']['align'] == 'left' || $options['attr']['align'] == 'center' ? ' ' : '')
+            . '}}';
         if (isset($options['attr']['link'])) {
             return '[[' . $options['attr']['link'] . '|' . $img . ']]';
         } else {

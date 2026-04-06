@@ -1,4 +1,5 @@
 <?php
+
 // vim: set expandtab tabstop=4 shiftwidth=4 softtabstop=4:
 /**
  * HTML_BBCodeParser: Transforms BBCode in XHTML (Text_Wiki version)
@@ -71,7 +72,7 @@ class HTML_BBCodeParser extends Text_Wiki_BBCode
      * @access   private
      * @var      string
      */
-    var $_text          = '';
+    public $_text          = '';
 
     /**
     * A string containing the parsed version of the text
@@ -79,7 +80,7 @@ class HTML_BBCodeParser extends Text_Wiki_BBCode
     * @access   private
     * @var      string
     */
-    var $_parsed        = '';
+    public $_parsed        = '';
 
     /**
     * An array of options, filled by an ini file or through the contructor
@@ -87,16 +88,16 @@ class HTML_BBCodeParser extends Text_Wiki_BBCode
     * @access   private
     * @var      array
     */
-    var $_options = array(  'quotestyle'    => 'double', // fixed, ignored
-                            'quotewhat'     => 'all', // fixed, ignored
-                            'open'          => '[', // fixed, rejected
-                            'close'         => ']', // fixed, rejected
-                            'xmlclose'      => true, // fixed, ignored
-                            'filters'       => 'Basic',
-                            'rules'         => array(),
-                            'parse'         => array(),
-                            'render'        => array()
-                         );
+    public $_options = [  'quotestyle'    => 'double', // fixed, ignored
+        'quotewhat'     => 'all', // fixed, ignored
+        'open'          => '[', // fixed, rejected
+        'close'         => ']', // fixed, rejected
+        'xmlclose'      => true, // fixed, ignored
+        'filters'       => 'Basic',
+        'rules'         => [],
+        'parse'         => [],
+        'render'        => [],
+    ];
 
     /**
     * Constructor, initialises the options and filters
@@ -116,7 +117,7 @@ class HTML_BBCodeParser extends Text_Wiki_BBCode
     * @access   public
     * @author   Stijn de Reede  <sjr@gmx.co.uk>
     */
-    function HTML_BBCodeParser($options = array())
+    public function HTML_BBCodeParser($options = [])
     {
         // instantiate the Text_Wiki transformer
         parent::Text_Wiki_BBCode();
@@ -130,15 +131,15 @@ class HTML_BBCodeParser extends Text_Wiki_BBCode
         if (!defined('HTML_BBCODEPARSER_V2')) {
             $baseoptions = PEAR::getStaticProperty('HTML_BBCodeParser', '_options');
             if (is_array($baseoptions)) {
-                foreach ($baseoptions as  $k => $v)  {
+                foreach ($baseoptions as $k => $v) {
                     $this->_options[$k] = $v;
                 }
             }
         }
 
         // set the options passed as an argument
-        foreach ($options as $k => $v )  {
-           $this->_options[$k] = $v;
+        foreach ($options as $k => $v) {
+            $this->_options[$k] = $v;
         }
 
         // open and close tags are fixed by Text_Wiki_BBCode
@@ -150,20 +151,20 @@ class HTML_BBCodeParser extends Text_Wiki_BBCode
         // set the rules
         $rules = array_merge(
             // mandatory rules
-            array('Prefilter', 'Delimiter'),
+            ['Prefilter', 'Delimiter'],
             //  old style ?
-            isset($this->_options['filters']) ?
-                HTML_BBCodeParser::filtersToRules($this->_options['filters']) : array(),
+            isset($this->_options['filters'])
+                ? HTML_BBCodeParser::filtersToRules($this->_options['filters']) : [],
             //  new style ?
-            isset($this->_options['rules']) ?
-                is_array($this->_options['rules']) ?
-                    $this->_options['rules'] : explode(',', $this->_options['rules'])
-                : array()
+            isset($this->_options['rules'])
+                ? is_array($this->_options['rules'])
+                    ? $this->_options['rules'] : explode(',', $this->_options['rules'])
+                : []
         );
 
         // filter rules so their order is kept
         foreach ($this->rules as $rule) {
-            if (!in_array( $rule, $rules)) {
+            if (!in_array($rule, $rules)) {
                 $this->deleteRule($rule);
             }
         }
@@ -185,7 +186,7 @@ class HTML_BBCodeParser extends Text_Wiki_BBCode
                 }
             }
         }
-//        var_dump( $options);var_dump($this->parseConf);var_dump($this->formatConf);var_dump($this->renderConf); die();
+        //        var_dump( $options);var_dump($this->parseConf);var_dump($this->formatConf);var_dump($this->renderConf); die();
     }
 
     /**
@@ -196,7 +197,7 @@ class HTML_BBCodeParser extends Text_Wiki_BBCode
      * @access   public
      * @static
      */
-    function pruneOptions(&$options)
+    public function pruneOptions(&$options)
     {
         foreach (array_keys($options) as $k0) {
             if (is_array($options[$k0])) {
@@ -219,12 +220,12 @@ class HTML_BBCodeParser extends Text_Wiki_BBCode
      * @access   public
      * @static
      */
-    function parseIniFile($iniFile = 'BBCodeParser.ini')
+    public function parseIniFile($iniFile = 'BBCodeParser.ini')
     {
-        static $isArray = array(
+        static $isArray = [
             'set_render', 'filters', 'rules',
-            'schemes', 'extensions', 'refused', 'prefixes', 'img_ext');
-        $options = array();
+            'schemes', 'extensions', 'refused', 'prefixes', 'img_ext'];
+        $options = [];
         // Parse the ini file
         $config = parse_ini_file($iniFile, true);
         // Normalize if old config
@@ -235,15 +236,15 @@ class HTML_BBCodeParser extends Text_Wiki_BBCode
         // proceed each section or general items
         foreach ($config as $name => $section) {
             if (is_string($section)) {
-                $options[$name] = in_array($name, $isArray) ?
-                            explode(',', $section) : $section;
+                $options[$name] = in_array($name, $isArray)
+                            ? explode(',', $section) : $section;
                 continue;
             }
             $keys = explode('_', $name);
             $here = & $options;
             foreach ($keys as $key) {
                 if (!isset($here[$key])) {
-                    $here[$key] = array();
+                    $here[$key] = [];
                 }
                 $here = & $here[$key];
             }
@@ -255,7 +256,7 @@ class HTML_BBCodeParser extends Text_Wiki_BBCode
                 if ($smiley && (substr($itk, 0, 7) == 'smiley_')) {
                     $words = explode(' ', $item);
                     $equal = false;
-                    $variante = array();
+                    $variante = [];
                     for ($i = 1; $i < count($words); $i++) {
                         if ($equal) {
                             $variante[] = $words[$i];
@@ -267,16 +268,17 @@ class HTML_BBCodeParser extends Text_Wiki_BBCode
                         }
                     }
                     $here[$words[0]] = array_merge(
-                        array(
+                        [
                             substr($itk, 7),
-                            $equal || (count($words) == $i + 1) ?
-                                $itk
-                              : implode(' ', array_slice($words, $i))
-                        ),
-                        $variante);
+                            $equal || (count($words) == $i + 1)
+                                ? $itk
+                              : implode(' ', array_slice($words, $i)),
+                        ],
+                        $variante
+                    );
                 } else {
-                    $here[$itk] = in_array($itk, $isArray) ?
-                                explode(',', $item) : $item;
+                    $here[$itk] = in_array($itk, $isArray)
+                                ? explode(',', $item) : $item;
                 }
             }
         }
@@ -292,22 +294,22 @@ class HTML_BBCodeParser extends Text_Wiki_BBCode
      * @access   public
      * @static
      */
-    function filtersToRules($filters = array())
+    public function filtersToRules($filters = [])
     {
-        $conv = array(
+        $conv = [
             // todo: , 'Strike', ' Subscript', 'Superscript'
-            'Basic' => array('Bold', 'Italic', 'Underline'),
-            'Extended' => array('Colortext', 'Font', 'Blockquote', 'Code'), //todo: , 'align'
-            'Links' => array('Url'),
-            'Images' => array('Image'),
-            'Lists' => array('List'),
-            'Email' => array('Url')
-        );
+            'Basic' => ['Bold', 'Italic', 'Underline'],
+            'Extended' => ['Colortext', 'Font', 'Blockquote', 'Code'], //todo: , 'align'
+            'Links' => ['Url'],
+            'Images' => ['Image'],
+            'Lists' => ['List'],
+            'Email' => ['Url'],
+        ];
         if (!is_array($filters)) {
             $filters = explode(',', $filters);
         }
         foreach ($conv as $filter => $rules) {
-            if (!in_array( $filter, $filters)) {
+            if (!in_array($filter, $filters)) {
                 unset($conv[$filter]);
             }
         }
@@ -324,7 +326,7 @@ class HTML_BBCodeParser extends Text_Wiki_BBCode
     * @see      $_text
     * @author   Stijn de Reede  <sjr@gmx.co.uk>
     */
-    function setText($str)
+    public function setText($str)
     {
         $this->_text = $str;
     }
@@ -338,7 +340,7 @@ class HTML_BBCodeParser extends Text_Wiki_BBCode
     * @see      $_text
     * @author   Stijn de Reede  <sjr@gmx.co.uk>
     */
-    function getText()
+    public function getText()
     {
         return $this->_text;
     }
@@ -352,7 +354,7 @@ class HTML_BBCodeParser extends Text_Wiki_BBCode
     * @see      $_preparsed
     * @author   Stijn de Reede  <sjr@gmx.co.uk>
     */
-    function getPreparsed()
+    public function getPreparsed()
     {
         return $this->_preparsed;
     }
@@ -366,7 +368,7 @@ class HTML_BBCodeParser extends Text_Wiki_BBCode
     * @see      $_parsed
     * @author   Stijn de Reede  <sjr@gmx.co.uk>
     */
-    function getParsed()
+    public function getParsed()
     {
         return $this->_parsed;
     }
@@ -380,7 +382,7 @@ class HTML_BBCodeParser extends Text_Wiki_BBCode
     * @see      Text_Wiki::parse()
     * @see      Text_Wiki::render()
     */
-    function parse($text = null)
+    public function parse($text = null)
     {
         if (isset($text)) {
             parent::parse($text);
@@ -400,7 +402,7 @@ class HTML_BBCodeParser extends Text_Wiki_BBCode
     * @see      $_text
     * @author   Stijn de Reede  <sjr@gmx.co.uk>
     */
-    function qparse($str)
+    public function qparse($str)
     {
         $this->_text = $str;
         $this->parse();
@@ -416,7 +418,7 @@ class HTML_BBCodeParser extends Text_Wiki_BBCode
     * @see      $_text
     * @author   Stijn de Reede  <sjr@gmx.co.uk>
     */
-    function staticQparse($str)
+    public function staticQparse($str)
     {
         $p = new HTML_BBCodeParser();
         $str = $p->qparse($str);
@@ -424,4 +426,3 @@ class HTML_BBCodeParser extends Text_Wiki_BBCode
         return $str;
     }
 }
-?>

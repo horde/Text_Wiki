@@ -15,6 +15,7 @@
  */
 
 namespace Horde\Text\Wiki;
+
 use Throwable;
 use InvalidArgumentException;
 
@@ -121,7 +122,7 @@ class WikiParserBase
         // to the tokens array. strip off the Text_Wiki_Parse_ portion.
 
         $parserPrefix = substr($this::class, 0, strrpos($this::class, 'Parser'));
-        $this->format = substr($parserPrefix, strrpos($parserPrefix, '\\')+1);
+        $this->format = substr($parserPrefix, strrpos($parserPrefix, '\\') + 1);
         if (is_null($rule)) {
             $rule = substr($this::class, strrpos($this::class, 'Parser') + 6);
         }
@@ -129,8 +130,8 @@ class WikiParserBase
 
 
         // override config options for the rule if specified
-        if (isset($this->wiki->parseConf[$this->rule]) &&
-            is_array($this->wiki->parseConf[$this->rule])) {
+        if (isset($this->wiki->parseConf[$this->rule])
+            && is_array($this->wiki->parseConf[$this->rule])) {
 
             $this->conf = array_merge(
                 $this->conf,

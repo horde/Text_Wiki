@@ -43,7 +43,7 @@ class DocbookRendererHtml extends WikiRendererBase
 
     public function token($options)
     {
-        return "<para>\n<![CDATA[\n" . strip_tags($options['text']) .
-            "\n]]>\n</para>\n";
+        return "<para>\n<![CDATA[\n" . strip_tags($options['text'])
+            . "\n]]>\n</para>\n";
     }
 }

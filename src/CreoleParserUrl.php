@@ -103,8 +103,8 @@ class CreoleParserUrl extends WikiParserBase
                     'href' => $href,
                     'text' => $text,
                 ]
-            ) . $text .
-            $this->wiki->addToken(
+            ) . $text
+            . $this->wiki->addToken(
                 $this->rule,
                 [
                     'type' => 'end',

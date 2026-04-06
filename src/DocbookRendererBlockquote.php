@@ -49,7 +49,7 @@ class DocbookRendererBlockquote extends WikiRendererBase
         }
 
         // starting
-        return '<blockquote>' . (empty($options['name']) ? '' :
-            '<attribution>' . $options['name'] . '</attribution>') . "\n";
+        return '<blockquote>' . (empty($options['name']) ? ''
+            : '<attribution>' . $options['name'] . '</attribution>') . "\n";
     }
 }

@@ -130,8 +130,8 @@ class BBCodeParserList extends WikiParserBase
             } elseif (($matches[1] == 'i') || ($matches[1] == 'I')) {
                 $format = $matches[1];
             } else {
-                $format =
-                    ($matches[1] >= 'a') && ($matches[1] <= 'z') ? 'a' : 'A';
+                $format
+                    = ($matches[1] >= 'a') && ($matches[1] <= 'z') ? 'a' : 'A';
                 $key = $matches[1];
             }
         } else {
@@ -180,9 +180,9 @@ class BBCodeParserList extends WikiParserBase
         return $this->wiki->addToken($this->rule, [
             'type' => $this->_type[$this->_level] . '_item_start',
             'level' => $this->_level,
-            'count' =>  ++$this->_count[$this->_level]]) .
-               rtrim($matches[1]) .
-               $this->wiki->addToken($this->rule, [
+            'count' =>  ++$this->_count[$this->_level]])
+               . rtrim($matches[1])
+               . $this->wiki->addToken($this->rule, [
                    'type' => $this->_type[$this->_level] . '_item_end',
                    'level' => $this->_level,
                    'count' =>  $this->_count[$this->_level]]);

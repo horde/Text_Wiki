@@ -50,13 +50,13 @@ class DocbookRendererRevise extends WikiRendererBase
     {
         switch ($options['type']) {
             case 'del_start':
-                return '<emphasis' .
-                    (($role = $this->getConf('role_del', 'deleted')) ?
-                    ' role="' . $role . '"' : '') . '>';
+                return '<emphasis'
+                    . (($role = $this->getConf('role_del', 'deleted'))
+                    ? ' role="' . $role . '"' : '') . '>';
             case 'ins_start':
-                return '<emphasis' .
-                    (($role = $this->getConf('role_ins', 'inserted')) ?
-                    ' role="' . $role . '"' : '') . '>';
+                return '<emphasis'
+                    . (($role = $this->getConf('role_ins', 'inserted'))
+                    ? ' role="' . $role . '"' : '') . '>';
         }
         return '</emphasis>';
     }

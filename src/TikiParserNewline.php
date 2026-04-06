@@ -69,8 +69,8 @@ class TikiParserNewline extends WikiParserBase
 
     public function process($matches)
     {
-        return $matches[1] .
-            $this->wiki->addToken($this->rule) .
-            $matches[2];
+        return $matches[1]
+            . $this->wiki->addToken($this->rule)
+            . $matches[2];
     }
 }

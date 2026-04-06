@@ -26,9 +26,9 @@ class LatexRendererImage extends WikiRendererBase
     {
         return 'Image: NI';
 
-        $src = '"' .
-            $this->getConf('base', '/') .
-            $options['src'] . '"';
+        $src = '"'
+            . $this->getConf('base', '/')
+            . $options['src'] . '"';
 
         if (isset($options['attr']['link'])) {
 
@@ -37,8 +37,8 @@ class LatexRendererImage extends WikiRendererBase
                 // it's a URL
                 $href = $options['attr']['link'];
             } else {
-                $href = $this->wiki->getRenderConf('xhtml', 'wikilink', 'view_url') .
-                    $options['attr']['link'];
+                $href = $this->wiki->getRenderConf('xhtml', 'wikilink', 'view_url')
+                    . $options['attr']['link'];
             }
 
         } else {

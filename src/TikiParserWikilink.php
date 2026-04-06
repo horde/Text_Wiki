@@ -89,20 +89,20 @@ class TikiParserWikilink extends WikiParserBase
         }
 
         // build the regular expression for finding WikiPage names.
-        $this->regex =
-            "(!?" .            // START WikiPage pattern (1)
-            "[$upper]" .       // 1 upper
-            "[$either]*" .     // 0+ alpha or digit
-            "[$lower]+" .      // 1+ lower or digit
-            "[$upper]" .       // 1 upper
-            "[$either]*" .     // 0+ or more alpha or digit
-            ")" .              // END WikiPage pattern (/1)
-            "((?:\#" .           // START Anchor pattern (2)()
-            "[$either]" .      // 1 alpha
-            "(?:" .              // start sub pattern ()
-            "[-_$either:.]*" . // 0+ dash, alpha, digit, underscore, colon, dot
-            "[-_$either]" .    // 1 dash, alpha, digit, or underscore
-            ")?)?)";           // end subpatterns (/)(/)(/2)
+        $this->regex
+            = "(!?"            // START WikiPage pattern (1)
+            . "[$upper]"       // 1 upper
+            . "[$either]*"     // 0+ alpha or digit
+            . "[$lower]+"      // 1+ lower or digit
+            . "[$upper]"       // 1 upper
+            . "[$either]*"     // 0+ or more alpha or digit
+            . ")"              // END WikiPage pattern (/1)
+            . "((?:\#"           // START Anchor pattern (2)()
+            . "[$either]"      // 1 alpha
+            . "(?:"              // start sub pattern ()
+            . "[-_$either:.]*" // 0+ dash, alpha, digit, underscore, colon, dot
+            . "[-_$either]"    // 1 dash, alpha, digit, or underscore
+            . ")?)?)";           // end subpatterns (/)(/)(/2)
     }
 
 
@@ -173,9 +173,9 @@ class TikiParserWikilink extends WikiParserBase
         return $this->wiki->addToken(
             $this->rule,
             array_merge(['type' => 'start'], $options)
-        ) .
-            $options['text'] .
-            $this->wiki->addToken(
+        )
+            . $options['text']
+            . $this->wiki->addToken(
                 $this->rule,
                 array_merge(['type' => 'end'], $options)
             );
@@ -219,11 +219,11 @@ class TikiParserWikilink extends WikiParserBase
         }
 
         // create and return the replacement token and preceding text
-        return $matches[1] .
-            $matches[2] .
-            $this->wiki->addToken($this->rule, array_merge(['type' => 'start'], $options)) .
-            $options['text'] .
-            $this->wiki->addToken($this->rule, array_merge(['type' => 'end'], $options)) .
-            ($matches[5] ?? '');
+        return $matches[1]
+            . $matches[2]
+            . $this->wiki->addToken($this->rule, array_merge(['type' => 'start'], $options))
+            . $options['text']
+            . $this->wiki->addToken($this->rule, array_merge(['type' => 'end'], $options))
+            . ($matches[5] ?? '');
     }
 }

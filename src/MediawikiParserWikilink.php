@@ -108,8 +108,8 @@ class MediawikiParserWikilink extends WikiParserBase
         if (in_array('Image', $this->wiki->disable)) {
             $this->imageConf['prefix'] = [];
         } else {
-            if (isset($this->wiki->parseConf['Image']) &&
-                is_array($this->wiki->parseConf['Image'])) {
+            if (isset($this->wiki->parseConf['Image'])
+                && is_array($this->wiki->parseConf['Image'])) {
                 $this->imageConf = array_merge(
                     $this->imageConf,
                     $this->wiki->parseConf['Image']
@@ -122,8 +122,8 @@ class MediawikiParserWikilink extends WikiParserBase
             $this->interwikiConf['sites'] = [];
             $this->interwikiConf['interlangage'] = [];
         } else {
-            if (isset($this->wiki->parseConf['Interwiki']) &&
-                is_array($this->wiki->parseConf['Interwiki'])) {
+            if (isset($this->wiki->parseConf['Interwiki'])
+                && is_array($this->wiki->parseConf['Interwiki'])) {
                 $this->interwikiConf = array_merge(
                     $this->interwikiConf,
                     $this->wiki->parseConf['Interwiki']
@@ -162,8 +162,8 @@ class MediawikiParserWikilink extends WikiParserBase
             $count = count($prefix);
             $i = -1;
             // Autolink
-            if (isset($this->conf['project']) &&
-                    in_array(trim($prefix[0]), $this->conf['project'])) {
+            if (isset($this->conf['project'])
+                    && in_array(trim($prefix[0]), $this->conf['project'])) {
                 $auto = trim($prefix[0]);
                 unset($prefix[0]);
                 $i = 0;
@@ -171,8 +171,8 @@ class MediawikiParserWikilink extends WikiParserBase
             while (++$i < $count) {
                 $prefix[$i] = trim($prefix[$i]);
                 // interlangage
-                if (!$interlang &&
-                    in_array($prefix[$i], $this->interwikiConf['interlangage'])) {
+                if (!$interlang
+                    && in_array($prefix[$i], $this->interwikiConf['interlangage'])) {
                     $interlang = $prefix[$i];
                     unset($prefix[$i]);
                     continue;

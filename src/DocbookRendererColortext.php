@@ -72,11 +72,11 @@ class DocbookRendererColortext extends WikiRendererBase
         }
         $color = $options['color'];
 
-        if (!in_array($color, $this->getConf('colors', [])) &&
-             $color[0] != '#') {
+        if (!in_array($color, $this->getConf('colors', []))
+             && $color[0] != '#') {
             $color = '#' . $color;
         }
-        return '<phrase role="' . $this->getConf('role', 'color') . '" ' .
-            $this->getConf('attribute', 'condition') . '="' . $color . '">';
+        return '<phrase role="' . $this->getConf('role', 'color') . '" '
+            . $this->getConf('attribute', 'condition') . '="' . $color . '">';
     }
 }

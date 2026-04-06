@@ -55,7 +55,7 @@ class DocbookRendererFont extends WikiRendererBase
                 $size .= 'px';
             }
         }
-        return '<phrase role="' . $this->getConf('role', 'fontsize') . '" ' .
-            $this->getConf('attribute', 'condition') . '="' . $size . '">';
+        return '<phrase role="' . $this->getConf('role', 'fontsize') . '" '
+            . $this->getConf('attribute', 'condition') . '="' . $size . '">';
     }
 }

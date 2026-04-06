@@ -48,20 +48,21 @@ require_once 'Text/Wiki/Parse/Tiki/Wikilink.php';
 
 class Text_Wiki_Parse_Tiki_AllTests extends PHPUnit_Framework_TestSuite
 {
-    
     public static function suite()
-    { 
+    {
         $suite = new PHPUnit_Framework_TestSuite('Text_Wiki_Parse_Tiki_TestSuite');
         $suite->addTestSuite('Text_Wiki_Parse_Tiki_Heading_Test');
-        
+
         return $suite;
     }
 
 }
 
+/**
+ * @coversNothing
+ */
 class Text_Wiki_Parse_Tiki_SetUp_Tests extends PHPUnit_Framework_TestCase
 {
-
     protected function setUp()
     {
         $obj = Text_Wiki::factory('Tiki');
@@ -78,15 +79,17 @@ class Text_Wiki_Parse_Tiki_SetUp_Tests extends PHPUnit_Framework_TestCase
 
         preg_match_all($this->t->regex, $this->fixture, $this->matches);
     }
-    
+
 }
 
+/**
+ * @coversNothing
+ */
 class Text_Wiki_Parse_Tiki_Heading_Test extends Text_Wiki_Parse_Tiki_SetUp_Tests
 {
-    
     public function testTikiParseHeadingProcess()
     {
-        $matches1 = array(
+        $matches1 = [
             0 => "
 !! Heading 2
 
@@ -99,21 +102,21 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi vitae est sit ame
             5 => "
 
 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi vitae est sit amet metus consequat scelerisque at accumsan dolor. Quisque posuere, mauris a fermentum sagittis, sem quam blandit tortor, vitae ullamcorper nulla velit placerat lacus. Nullam rutrum quam id est convallis luctus. Vivamus et urna odio. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Ut at augue eget elit feugiat pretium.
-"
-        );
+",
+        ];
 
         $this->assertRegExp("/\n\d+? Heading 2\d+?\d+?$matches1[5]\d+?/", $this->t->process($matches1));
 
-        $tokens = array(
-            0 => array(0 => 'Heading', 1 => array('type' => 'start', 'level' => 2, 'text' =>  ' Heading 2', 'id' => 'toc0', 'collapse' => '')),
-            1 => array(0 => 'Heading', 1 => array('type' => 'end', 'text' =>  ' Heading 2', 'level' => 2, 'collapse' =>  '', 'id' => 'toc0')),
-            2 => array(0 => 'Heading', 1 => array('type' => 'startContent', 'id' => 'toc0', 'level' => 2, 'collapse' => '', 'text' =>  ' Heading 2')),
-            3 => array(0 => 'Heading', 1 => array('type' => 'endContent', 'collapse' => '', 'level' => 2, 'id' => 'toc0', 'text' => ' Heading 2'))
-        );
+        $tokens = [
+            0 => [0 => 'Heading', 1 => ['type' => 'start', 'level' => 2, 'text' =>  ' Heading 2', 'id' => 'toc0', 'collapse' => '']],
+            1 => [0 => 'Heading', 1 => ['type' => 'end', 'text' =>  ' Heading 2', 'level' => 2, 'collapse' =>  '', 'id' => 'toc0']],
+            2 => [0 => 'Heading', 1 => ['type' => 'startContent', 'id' => 'toc0', 'level' => 2, 'collapse' => '', 'text' =>  ' Heading 2']],
+            3 => [0 => 'Heading', 1 => ['type' => 'endContent', 'collapse' => '', 'level' => 2, 'id' => 'toc0', 'text' => ' Heading 2']],
+        ];
 
         $this->assertEquals(array_values($tokens), array_values($this->t->wiki->tokens));
     }
-    
+
     public function testMediawikiParseHeadingRegex()
     {
         require_once dirname(__FILE__) . '/fixtures/test_tiki_heading_expected_matches.php';
@@ -121,7 +124,5 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi vitae est sit ame
 
         $this->assertEquals($expectedHeadingMatches, $this->matches);
     }
-    
-}
 
-?>
+}

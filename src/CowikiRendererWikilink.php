@@ -20,9 +20,9 @@ class CowikiRendererWikilink extends WikiRendererBase
     public function token($options)
     {
         if ($options['type'] == 'start') {
-            return '((' . $options['page'] .
-                (strlen($options['anchor']) ? '#' . $options['anchor'] : '') .
-                (strlen($options['text']) /*&& $options['page'] != $options['text']*/ ? ')(' : '');
+            return '((' . $options['page']
+                . (strlen($options['anchor']) ? '#' . $options['anchor'] : '')
+                . (strlen($options['text']) /*&& $options['page'] != $options['text']*/ ? ')(' : '');
         } else {
             return '))';
         }

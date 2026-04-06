@@ -190,8 +190,8 @@ class CowikiParserTable extends WikiParserBase
         }
 
         // wrap the return value in start and end tokens
-        $return =
-            $this->wiki->addToken(
+        $return
+            = $this->wiki->addToken(
                 $this->rule,
                 [
                     'type' => 'table_start',
@@ -200,8 +200,8 @@ class CowikiParserTable extends WikiParserBase
                     'attr' => $attr,
                 ]
             )
-            . $return .
-            $this->wiki->addToken(
+            . $return
+            . $this->wiki->addToken(
                 $this->rule,
                 [
                     'type' => 'table_end',

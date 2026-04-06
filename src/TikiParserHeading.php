@@ -87,8 +87,8 @@ class TikiParserHeading extends WikiParserBase
 
         $prefix = htmlspecialchars($this->getConf('id_prefix'));
         $collapse = $matches[3] ? ($matches[3] == '-') : null;
-        return $matches[1] .
-            $this->wiki->addToken(
+        return $matches[1]
+            . $this->wiki->addToken(
                 $this->rule,
                 [
                     'type' => 'start',
@@ -97,9 +97,9 @@ class TikiParserHeading extends WikiParserBase
                     'id' => $prefix . $id,
                     'collapse' => $collapse,
                 ]
-            ) .
-            $matches[4] .
-            $this->wiki->addToken(
+            )
+            . $matches[4]
+            . $this->wiki->addToken(
                 $this->rule,
                 [
                     'type' => 'end',
@@ -108,8 +108,8 @@ class TikiParserHeading extends WikiParserBase
                     'collapse' => $collapse,
                     'id' => $prefix . $id,
                 ]
-            ) .
-            $this->wiki->addToken(
+            )
+            . $this->wiki->addToken(
                 $this->rule,
                 [
                     'type' => 'startContent',
@@ -118,9 +118,9 @@ class TikiParserHeading extends WikiParserBase
                     'collapse' => $collapse,
                     'text' => $matches[4],
                 ]
-            ) .
-            $matches[5] .
-            $this->wiki->addToken(
+            )
+            . $matches[5]
+            . $this->wiki->addToken(
                 $this->rule,
                 [
                     'type' => 'endContent',

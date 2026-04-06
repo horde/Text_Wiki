@@ -185,22 +185,22 @@ class CreoleParserTable extends WikiParserBase
 
         // we're done!
         return
-            "\n\n" .
-            $this->wiki->addToken(
+            "\n\n"
+            . $this->wiki->addToken(
                 $this->rule,
                 [
                     'type' => 'table_start',
                     'rows' => $num_rows,
                     'cols' => $num_cols,
                 ]
-            ) .
-            $return .
-            $this->wiki->addToken(
+            )
+            . $return
+            . $this->wiki->addToken(
                 $this->rule,
                 [
                     'type' => 'table_end',
                 ]
-            ) .
-            "\n\n";
+            )
+            . "\n\n";
     }
 }

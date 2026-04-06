@@ -25,9 +25,9 @@ class CreoleRendererWikilink extends WikiRendererBase
             if ($dup) {
                 return '[[';
             } else {
-                return '[[' . $options['page'] .
-                    (strlen($options['anchor']) ? $options['anchor'] : '') .
-                    (strlen($options['text']) && (strlen($options['page']) || strlen($options['anchor'])) ? '|' : '');
+                return '[[' . $options['page']
+                    . (strlen($options['anchor']) ? $options['anchor'] : '')
+                    . (strlen($options['text']) && (strlen($options['page']) || strlen($options['anchor'])) ? '|' : '');
             }
         } elseif ($options['type'] == 'end') {
             if ($dup && strlen($options['anchor'])) {
@@ -37,16 +37,16 @@ class CreoleRendererWikilink extends WikiRendererBase
             }
         } else {
             if ($dup) {
-                return '[[' .
-                        (strlen($options['text']) ? $options['text'] : '') .
-                        (strlen($options['anchor']) ? $options['anchor'] : '') .
-                        ']]';
+                return '[['
+                        . (strlen($options['text']) ? $options['text'] : '')
+                        . (strlen($options['anchor']) ? $options['anchor'] : '')
+                        . ']]';
             } else {
-                return '[[' . $options['page'] .
-                    (strlen($options['anchor']) ? $options['anchor'] : '') .
-                    (strlen($options['text']) && strlen($options['page']) && strlen($options['anchor']) ? '|' : '') .
-                    (strlen($options['text']) ? $options['text'] : '') .
-                    ']]';
+                return '[[' . $options['page']
+                    . (strlen($options['anchor']) ? $options['anchor'] : '')
+                    . (strlen($options['text']) && strlen($options['page']) && strlen($options['anchor']) ? '|' : '')
+                    . (strlen($options['text']) ? $options['text'] : '')
+                    . ']]';
             }
         }
     }

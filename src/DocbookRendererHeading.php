@@ -120,23 +120,23 @@ class DocbookRendererHeading extends WikiRendererBase
         }
         // set global sections for process closure
         $sections = $this->getConf('sections', ['']);
-        $this->wiki->source =
+        $this->wiki->source
             // will produce one only if not blank section
-            $this->wiki->addToken(
+            = $this->wiki->addToken(
                 $this->rule,
                 ['type' => 'start',
                     'level' => 0,
                     'id' => 'global',
                     'text' => '']
-            ) .
-            $this->wiki->addToken(
+            )
+            . $this->wiki->addToken(
                 $this->rule,
                 ['type' => 'end',
                     'level' => 0]
-            ) .
-            $this->wiki->source .
+            )
+            . $this->wiki->source
             // will produce nothing but the closure of preceding sections
-            $this->wiki->addToken(
+            . $this->wiki->addToken(
                 $this->rule,
                 ['type' => 'start',
                     'level' => -1]
@@ -180,14 +180,14 @@ class DocbookRendererHeading extends WikiRendererBase
         $output = '';
         // sections to finish ?
         while ($this->_level >= 0 && $level <= $this->_level) {
-            $output .= $this->_stack[$this->_level] ?
-                    '</' . $this->_stack[$this->_level] . ">\n" : '';
+            $output .= $this->_stack[$this->_level]
+                    ? '</' . $this->_stack[$this->_level] . ">\n" : '';
             --$this->_level;
         }
-        $this->_stack[++$this->_level] = $level < 0 ? '' :
-                ($terminal ? $terminal : $this->_section[$level]);
-        return $output . ($this->_stack[$this->_level] ?
-            '<' . $this->_stack[$this->_level] . ' xml:id="' . $id .
-                 "\">\n<title>" : '');
+        $this->_stack[++$this->_level] = $level < 0 ? ''
+                : ($terminal ? $terminal : $this->_section[$level]);
+        return $output . ($this->_stack[$this->_level]
+            ? '<' . $this->_stack[$this->_level] . ' xml:id="' . $id
+                 . "\">\n<title>" : '');
     }
 }

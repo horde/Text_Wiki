@@ -103,12 +103,12 @@ class DokuParserDeflist extends WikiParserBase
         // add each term and narrative
         foreach ($list as $key => $val) {
             $return .= (
-                $this->wiki->addToken($this->rule, ['type' => 'term_start']) .
-                trim($val[2]) .
-                $this->wiki->addToken($this->rule, ['type' => 'term_end']) .
-                $this->wiki->addToken($this->rule, ['type' => 'narr_start']) .
-                trim($val[4]) .
-                $this->wiki->addToken($this->rule, ['type' => 'narr_end'])
+                $this->wiki->addToken($this->rule, ['type' => 'term_start'])
+                . trim($val[2])
+                . $this->wiki->addToken($this->rule, ['type' => 'term_end'])
+                . $this->wiki->addToken($this->rule, ['type' => 'narr_start'])
+                . trim($val[4])
+                . $this->wiki->addToken($this->rule, ['type' => 'narr_end'])
             );
         }
 

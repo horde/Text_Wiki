@@ -1,4 +1,5 @@
 <?php
+
 @include dirname(__FILE__) . '/config.php';
 
 require_once 'PHPUnit/Extensions/PhptTestSuite.php';

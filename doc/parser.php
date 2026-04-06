@@ -1,4 +1,4 @@
-<?
+<?php
 
 /* adjust include_path to include PEAR */
 // ini_set('include_path', ini_get('include_path').':/usr/share/pear');

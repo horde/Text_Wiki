@@ -50,7 +50,7 @@ class DocbookRendererBox extends WikiRendererBase
         if ($options['type'] == 'end') {
             return '</para>';
         }
-        return '<para' . (($role = $this->getConf('role', 'box')) ?
-            ' role="' . $role . '"' : '') . '>';
+        return '<para' . (($role = $this->getConf('role', 'box'))
+            ? ' role="' . $role . '"' : '') . '>';
     }
 }
