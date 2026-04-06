@@ -74,8 +74,8 @@ class DocbookRendererImage extends WikiRendererBase
                 /** @todo This needs to honor sprintf wikilinks (pmjones) */
                 /** @todo This needs to honor interwiki (pmjones) */
                 /** @todo This needs to honor freelinks (pmjones) */
-                $href = $this->wiki->getRenderConf('xhtml', 'wikilink', 'view_url') .
-                    $options['attr']['link'];
+                $href = $this->wiki->getRenderConf('xhtml', 'wikilink', 'view_url')
+                    . $options['attr']['link'];
             }
         } else {
             // image is not clickable.
@@ -86,8 +86,8 @@ class DocbookRendererImage extends WikiRendererBase
 
         // stephane@metacites.net -- 25/07/2004
         // we make up an align="center" value for the <img> tag.
-        if (isset($options['attr']['align']) &&
-            $options['attr']['align'] == 'center') {
+        if (isset($options['attr']['align'])
+            && $options['attr']['align'] == 'center') {
 
             // unset so it won't show up as an attribute
             unset($options['attr']['align']);
@@ -102,14 +102,14 @@ class DocbookRendererImage extends WikiRendererBase
             }
 
             // add a "center" style to the existing style.
-            $options['attr']['style'] .=
-                'display: block; margin-left: auto; margin-right: auto;';
+            $options['attr']['style']
+                .= 'display: block; margin-left: auto; margin-right: auto;';
         }
 
         // stephane@metacites.net -- 25/07/2004
         // try to guess width and height
-        if (! isset($options['attr']['width']) &&
-            ! isset($options['attr']['height'])) {
+        if (! isset($options['attr']['width'])
+            && ! isset($options['attr']['height'])) {
 
             // does the source refer to a local file or a URL?
             if (strpos($src, '://')) {

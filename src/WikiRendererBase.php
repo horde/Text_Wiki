@@ -98,16 +98,16 @@ class WikiRendererBase
         $this->wiki = & $obj;
 
         $rendererPrefix = substr($this::class, 0, strrpos($this::class, 'Renderer'));
-        $this->format = substr($rendererPrefix, strrpos($rendererPrefix, '\\')+1);
+        $this->format = substr($rendererPrefix, strrpos($rendererPrefix, '\\') + 1);
         $rule = substr($this::class, strrpos($this::class, 'Renderer') + 8);
         $this->rule = is_string($rule) ? $rule : null;
 
         // is there a format but no rule?
         // then this is the "main" render object, with
         // pre() and post() methods.
-        if ($this->format && ! $this->rule &&
-            isset($this->wiki->formatConf[$this->format]) &&
-            is_array($this->wiki->formatConf[$this->format])) {
+        if ($this->format && ! $this->rule
+            && isset($this->wiki->formatConf[$this->format])
+            && is_array($this->wiki->formatConf[$this->format])) {
 
             // this is a format render object
             $this->conf = array_merge(
@@ -118,9 +118,9 @@ class WikiRendererBase
         }
 
         // is there a format and a rule?
-        if ($this->format && $this->rule &&
-            isset($this->wiki->renderConf[$this->format][$this->rule]) &&
-            is_array($this->wiki->renderConf[$this->format][$this->rule])) {
+        if ($this->format && $this->rule
+            && isset($this->wiki->renderConf[$this->format][$this->rule])
+            && is_array($this->wiki->renderConf[$this->format][$this->rule])) {
 
             // this is a rule render object
             $this->conf = array_merge(

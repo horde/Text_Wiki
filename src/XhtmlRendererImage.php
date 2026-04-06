@@ -74,8 +74,8 @@ class XhtmlRendererImage extends WikiRendererBase
                 /** @todo This needs to honor sprintf wikilinks (pmjones) */
                 /** @todo This needs to honor interwiki (pmjones) */
                 /** @todo This needs to honor freelinks (pmjones) */
-                $href = $this->wiki->getRenderConf('xhtml', 'wikilink', 'view_url') .
-                    $options['attr']['link'];
+                $href = $this->wiki->getRenderConf('xhtml', 'wikilink', 'view_url')
+                    . $options['attr']['link'];
             }
         } else {
             // image is not clickable.
@@ -98,12 +98,12 @@ class XhtmlRendererImage extends WikiRendererBase
 
             if ($options['attr']['align'] == 'center') {
                 // add a "center" style to the existing style.
-                $options['attr']['style'] .=
-                    'display: block; margin-left: auto; margin-right: auto;';
+                $options['attr']['style']
+                    .= 'display: block; margin-left: auto; margin-right: auto;';
             } else {
                 // add a float style to the existing style
-                $options['attr']['style'] .=
-                    'float: ' . $options['attr']['align'];
+                $options['attr']['style']
+                    .= 'float: ' . $options['attr']['align'];
             }
 
             // unset so it won't show up as an attribute
@@ -112,8 +112,8 @@ class XhtmlRendererImage extends WikiRendererBase
 
         // stephane@metacites.net -- 25/07/2004
         // try to guess width and height
-        if (! isset($options['attr']['width']) &&
-            ! isset($options['attr']['height'])) {
+        if (! isset($options['attr']['width'])
+            && ! isset($options['attr']['height'])) {
 
             // does the source refer to a local file or a URL?
             if (strpos($src, '://')) {

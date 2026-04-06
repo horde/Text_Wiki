@@ -4,9 +4,11 @@ require_once 'PHPUnit/Framework/TestCase.php';
 require_once 'Text/Wiki.php';
 
 // class to test the Text_Wiki::transform() with different wiki markups
+/**
+ * @coversNothing
+ */
 class Text_Wiki_Generic_Transform_Tests extends PHPUnit_Framework_TestCase
 {
-
     public function testTransformFromMediawikiToTiki()
     {
         $obj = Text_Wiki::factory('Mediawiki');

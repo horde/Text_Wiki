@@ -3,7 +3,7 @@
 /**
  * Test the root TextWikiBase class
  *
- * Copyright 2025-2025 Horde LLC (http://www.horde.org/)
+ * Copyright 2025-2026 Horde LLC (http://www.horde.org/)
  *
  * @subpackage UnitTests
  * @author     Ralf Lang <ralf.lang@ralf-lang.de>

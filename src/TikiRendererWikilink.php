@@ -21,17 +21,17 @@ class TikiRendererWikilink extends WikiRendererBase
     {
         if (isset($options['type'])) {
             if ($options['type'] == 'start') {
-                return '((' . $options['page'] .
-                    (isset($options['anchor']) && strlen($options['anchor']) ? '#' . $options['anchor'] : '') .
-                    (strlen($options['text']) /*&& $options['page'] != $options['text']*/ ? '|' : '');
+                return '((' . $options['page']
+                    . (isset($options['anchor']) && strlen($options['anchor']) ? '#' . $options['anchor'] : '')
+                    . (strlen($options['text']) /*&& $options['page'] != $options['text']*/ ? '|' : '');
             } else {
                 return '))';
             }
         } else {
-            return '((' . $options['page'] .
-                (isset($options['anchor']) && strlen($options['anchor']) ? '#' . $options['anchor'] : '') .
-                (isset($options['text']) && strlen($options['text']) && $options['page'] != $options['text'] ? '|' . $options['text'] : '') .
-                '))';
+            return '((' . $options['page']
+                . (isset($options['anchor']) && strlen($options['anchor']) ? '#' . $options['anchor'] : '')
+                . (isset($options['text']) && strlen($options['text']) && $options['page'] != $options['text'] ? '|' . $options['text'] : '')
+                . '))';
         }
     }
 }

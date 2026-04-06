@@ -46,14 +46,14 @@ class DocbookRendererFunction extends WikiRendererBase
         extract($options); // name, access, return, params, throws
 
         // build the baseline output
-        $output = "<methodsynopsis>\n<modifier>" . $access .
-            "</modifier>\n<type>" . $return . "</type>\n<methodname>" .
-            $name . "</methodname>\n";
+        $output = "<methodsynopsis>\n<modifier>" . $access
+            . "</modifier>\n<type>" . $return . "</type>\n<methodname>"
+            . $name . "</methodname>\n";
 
         // build the set of params
         foreach ($params as $key => $val) {
-            $output .= '<methodparam><type>' . $val['type'] .
-                '</type><parameter>' . $val['descr'] . '</parameter>';
+            $output .= '<methodparam><type>' . $val['type']
+                . '</type><parameter>' . $val['descr'] . '</parameter>';
 
             // is there a default value?
             if ($val['default']) {
@@ -64,8 +64,8 @@ class DocbookRendererFunction extends WikiRendererBase
 
         // build the set of throws
         foreach ($throws as $key => $val) {
-            $output .= '<exceptionname>' . $val['type'] . ' ' . $val['descr'] .
-                    "</exceptionname>\n";
+            $output .= '<exceptionname>' . $val['type'] . ' ' . $val['descr']
+                    . "</exceptionname>\n";
         }
 
         // close the method synopsis and return the output

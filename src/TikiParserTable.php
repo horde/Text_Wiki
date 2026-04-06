@@ -212,8 +212,8 @@ class TikiParserTable extends WikiParserBase
         }
 
         // wrap the return value in start and end tokens
-        $return =
-            $this->wiki->addToken(
+        $return
+            = $this->wiki->addToken(
                 $this->rule,
                 [
                     'type' => 'table_start',
@@ -221,8 +221,8 @@ class TikiParserTable extends WikiParserBase
                     'cols' => $num_cols,
                 ]
             )
-            . $return .
-            $this->wiki->addToken(
+            . $return
+            . $this->wiki->addToken(
                 $this->rule,
                 [
                     'type' => 'table_end',

@@ -43,12 +43,12 @@ class DocbookRendererCode extends WikiRendererBase
 
     public function token($options)
     {
-        $filename = empty($options['attr']) || empty($options['attr']['filename']) ?
-            '' : '<filename>' . $options['attr']['filename'] . "</filename>\n";
-        $type = empty($options['attr']) || empty($options['attr']['type']) ?
-            '' : ' language="' . strtolower($options['attr']['type']) . '"';
-        return "<programlisting{$type}>\n{$filename}<![CDATA[\n" .
-            str_replace("\t", '    ', $options['text']) .
-            "\n]]>\n</programlisting>\n";
+        $filename = empty($options['attr']) || empty($options['attr']['filename'])
+            ? '' : '<filename>' . $options['attr']['filename'] . "</filename>\n";
+        $type = empty($options['attr']) || empty($options['attr']['type'])
+            ? '' : ' language="' . strtolower($options['attr']['type']) . '"';
+        return "<programlisting{$type}>\n{$filename}<![CDATA[\n"
+            . str_replace("\t", '    ', $options['text'])
+            . "\n]]>\n</programlisting>\n";
     }
 }

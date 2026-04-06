@@ -50,8 +50,8 @@ class BBCodeParserImage extends WikiParserBase
     public $conf = [
         'schemes' => 'http|ftp|https|ftps',  // can be also as array of regexps/strings
         'extensions' => 'jpg|jpeg|gif|png',  // can be also as array of regexps/strings
-        'url_regexp' =>
-         '(?:[^.\s/"\'<\\\#delim#\ca-\cz]+\.)*[a-z](?:[-a-z0-9]*[a-z0-9])?\.?(?:/[^\s"<>\\\#delim#\ca-\cz]*)?',
+        'url_regexp'
+         => '(?:[^.\s/"\'<\\\#delim#\ca-\cz]+\.)*[a-z](?:[-a-z0-9]*[a-z0-9])?\.?(?:/[^\s"<>\\\#delim#\ca-\cz]*)?',
         'local_regexp' => '(?:/?[^/\s"<\\\#delim#\ca-\cz]+)*',
     ];
 
@@ -70,8 +70,8 @@ class BBCodeParserImage extends WikiParserBase
 
         // convert the list of recognized schemes to a regex OR,
         $schemes = $this->getConf('schemes', $default['schemes']);
-        $this->regex = '#\[img]((?:(?:' . (is_array($schemes) ? implode('|', $schemes) : $schemes) . ')://' .
-                    $this->getConf('url_regexp', $default['url_regexp']);
+        $this->regex = '#\[img]((?:(?:' . (is_array($schemes) ? implode('|', $schemes) : $schemes) . ')://'
+                    . $this->getConf('url_regexp', $default['url_regexp']);
         if ($local = $this->getConf('local_regexp', $default['local_regexp'])) {
             $this->regex .= '|' . (is_array($local) ? implode('|', $local) : $local);
         }

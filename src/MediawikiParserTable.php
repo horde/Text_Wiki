@@ -66,8 +66,8 @@ class MediawikiParserTable extends WikiParserBase
      * @see process()
      * @see processCells()
      */
-    public $regexCells =
-        '#((?:^\||^!|\|\||!!|\G))(?:([^|\n]*?)\|(?!\|))?(?:\n*)(.+?)(?:\n*)(?=^\||^!|\|\||!!|\z)#msi';
+    public $regexCells
+        = '#((?:^\||^!|\|\||!!|\G))(?:([^|\n]*?)\|(?!\|))?(?:\n*)(.+?)(?:\n*)(?=^\||^!|\|\||!!|\z)#msi';
 
     /**
      * The current table nesting depth, starts by zero
@@ -174,8 +174,8 @@ class MediawikiParserTable extends WikiParserBase
         if ($matches[2]) {
             $ret .= $this->wiki->addToken($this->rule, [
                 'type'  => 'caption_start',
-                'level' => $this->_level ]) . $matches[2] .
-                    $this->wiki->addToken($this->rule, [
+                'level' => $this->_level ]) . $matches[2]
+                    . $this->wiki->addToken($this->rule, [
                         'type'  => 'caption_end',
                         'level' => $this->_level ]);
         }
@@ -274,8 +274,8 @@ class MediawikiParserTable extends WikiParserBase
                 $format = $pieces[1] . $pieces[4];
             }
             if (preg_match('#(.*)rowspan=("|\')?(\d+)(?(2)\2)(.*)#i', $format, $pieces)) {
-                $this->_spanCells[$this->_level][$order] =
-                                    $param['rowspan'] = (int) $pieces[3];
+                $this->_spanCells[$this->_level][$order]
+                                    = $param['rowspan'] = (int) $pieces[3];
                 $format = $pieces[1] . $pieces[4];
             }
             $param['format'] = $format;

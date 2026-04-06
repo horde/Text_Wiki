@@ -88,20 +88,20 @@ class DefaultParserWikilink extends WikiParserBase
         }
 
         // build the regular expression for finding WikiPage names.
-        $this->regex =
-            "(!?" .            // START WikiPage pattern (1)
-            "[$upper]" .       // 1 upper
-            "[$either]*" .     // 0+ alpha or digit
-            "[$lower]+" .      // 1+ lower or digit
-            "[$upper]" .       // 1 upper
-            "[$either]*" .     // 0+ or more alpha or digit
-            ")" .              // END WikiPage pattern (/1)
-            "((\#" .           // START Anchor pattern (2)(3)
-            "[$either]" .      // 1 alpha
-            "(" .              // start sub pattern (4)
-            "[-_$either:.]*" . // 0+ dash, alpha, digit, underscore, colon, dot
-            "[-_$either]" .    // 1 dash, alpha, digit, or underscore
-            ")?)?)";           // end subpatterns (/4)(/3)(/2)
+        $this->regex
+            = "(!?"            // START WikiPage pattern (1)
+            . "[$upper]"       // 1 upper
+            . "[$either]*"     // 0+ alpha or digit
+            . "[$lower]+"      // 1+ lower or digit
+            . "[$upper]"       // 1 upper
+            . "[$either]*"     // 0+ or more alpha or digit
+            . ")"              // END WikiPage pattern (/1)
+            . "((\#"           // START Anchor pattern (2)(3)
+            . "[$either]"      // 1 alpha
+            . "("              // start sub pattern (4)
+            . "[-_$either:.]*" // 0+ dash, alpha, digit, underscore, colon, dot
+            . "[-_$either]"    // 1 dash, alpha, digit, or underscore
+            . ")?)?)";           // end subpatterns (/4)(/3)(/2)
     }
 
     /**

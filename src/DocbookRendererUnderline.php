@@ -50,7 +50,7 @@ class DocbookRendererUnderline extends WikiRendererBase
         if ($options['type'] == 'end') {
             return '</emphasis>';
         }
-        return '<emphasis' . (($role = $this->getConf('role', 'underline')) ?
-            ' role="' . $role . '"' : '') . '>';
+        return '<emphasis' . (($role = $this->getConf('role', 'underline'))
+            ? ' role="' . $role . '"' : '') . '>';
     }
 }

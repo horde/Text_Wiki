@@ -1,7 +1,9 @@
 <?php
 
 namespace Horde\Text\Wiki;
+
 use Throwable;
+
 /**
  * Exception interface for the Horde Text Wiki package.
  *
@@ -9,6 +11,4 @@ use Throwable;
  *
  * @author     Ralf Lang <ralf.lang@ralf-lang.de>
  */
-interface TextWikiException extends Throwable
-{
-};
+interface TextWikiException extends Throwable {};

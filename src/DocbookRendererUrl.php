@@ -63,8 +63,8 @@ class DocbookRendererUrl extends WikiRendererBase
         $href = $this->textEncode($href);
 
         // does the filename extension indicate an image file?
-        if ($this->getConf('images') &&
-            in_array($ext, $this->getConf('img_ext', []))) {
+        if ($this->getConf('images')
+            && in_array($ext, $this->getConf('img_ext', []))) {
 
             // create alt text for the image
             if (! isset($text) || $text == '') {
@@ -80,8 +80,8 @@ class DocbookRendererUrl extends WikiRendererBase
         } else {
 
             // should we build a target clause?
-            if ($href[0] == '#' ||
-              strtolower(substr($href, 0, 7)) == 'mailto:') {
+            if ($href[0] == '#'
+              || strtolower(substr($href, 0, 7)) == 'mailto:') {
                 // targets not allowed for on-page anchors
                 // and mailto: links.
                 $target = '';

@@ -84,9 +84,9 @@ class CowikiParserRevise extends WikiParserBase
 
     public function processDel($matches)
     {
-        return $this->wiki->addToken($this->rule, ['type' => 'del_start']) .
-            $matches[1] .
-            $this->wiki->addToken($this->rule, ['type' => 'del_end']);
+        return $this->wiki->addToken($this->rule, ['type' => 'del_start'])
+            . $matches[1]
+            . $this->wiki->addToken($this->rule, ['type' => 'del_end']);
     }
 
 

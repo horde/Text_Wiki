@@ -131,9 +131,9 @@ class DefaultParserSmiley extends WikiParserBase
             }
         }
         $delim = '[\n\r\s' . $this->wiki->delim . '$^]';
-        $this->regex = '#(?<=' . $delim .
-             ')(' . ($reg1 ? $reg1 . '):' . ($reg2 ? '|' : '') : '') . $reg2 .
-             ')(?=' . $delim . ')#i';
+        $this->regex = '#(?<=' . $delim
+             . ')(' . ($reg1 ? $reg1 . '):' . ($reg2 ? '|' : '') : '') . $reg2
+             . ')(?=' . $delim . ')#i';
     }
 
     /**

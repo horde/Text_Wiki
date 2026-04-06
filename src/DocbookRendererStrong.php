@@ -50,7 +50,7 @@ class DocbookRendererStrong extends WikiRendererBase
         if ($options['type'] == 'end') {
             return '</emphasis>';
         }
-        return '<emphasis' . (($role = $this->getConf('role', 'strong')) ?
-            ' role="' . $role . '"' : '') . '>';
+        return '<emphasis' . (($role = $this->getConf('role', 'strong'))
+            ? ' role="' . $role . '"' : '') . '>';
     }
 }

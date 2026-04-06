@@ -20,13 +20,13 @@ class DokuRendererWikilink extends WikiRendererBase
     public function token($options)
     {
         if (!isset($options['type'])) {
-            return '[[' . $options['page'] .
-                (strlen($options['anchor']) ? '#' . $options['anchor'] : '') .
-                (strlen($options['text']) && $options['page'] != $options['text'] ? '|' . $options['text'] : '') . ']]';
+            return '[[' . $options['page']
+                . (strlen($options['anchor']) ? '#' . $options['anchor'] : '')
+                . (strlen($options['text']) && $options['page'] != $options['text'] ? '|' . $options['text'] : '') . ']]';
         } elseif ($options['type'] == 'start') {
-            return '[[' . $options['page'] .
-                (strlen($options['anchor']) ? '#' . $options['anchor'] : '') .
-                (strlen($options['text']) && $options['page'] != $options['text'] ? '|' . $options['text'] : '');
+            return '[[' . $options['page']
+                . (strlen($options['anchor']) ? '#' . $options['anchor'] : '')
+                . (strlen($options['text']) && $options['page'] != $options['text'] ? '|' . $options['text'] : '');
         } else {
             return ']]';
         }

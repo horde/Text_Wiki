@@ -15,6 +15,7 @@
  */
 
 namespace Horde\Text\Wiki;
+
 use Stringable;
 use InvalidArgumentException;
 use Throwable;
@@ -369,7 +370,7 @@ class TextWikiBase
     // The fully qualified class name of the parser, minus "Engine".
     // This cannot be public readonly as external engines may want to set it in their own constructor
     // This cannot be protected as some parsers want to access it, i.e. WikiParserHeading2
-    // Good candidate for a property hook when 8.4 becomes baseline 
+    // Good candidate for a property hook when 8.4 becomes baseline
     public string $parserPrefix;
     /**
      * A fix for PHP5.
@@ -453,9 +454,9 @@ class TextWikiBase
     {
         $class = '\Horde\Text\Wiki\\' . $parser . 'Engine';
         if (!class_exists($class)) {
-                throw new GenericTextWikiException(
-                    "Class '$class' implementing parser '$parser' does not exist or could not be autoloaded.\n"
-                );
+            throw new GenericTextWikiException(
+                "Class '$class' implementing parser '$parser' does not exist or could not be autoloaded.\n"
+            );
         }
 
         return new $class($rules);
@@ -604,8 +605,8 @@ class TextWikiBase
         $format = ucwords(strtolower($format));
         $rule = ucwords(strtolower($rule));
 
-        if (! isset($this->renderConf[$format]) ||
-            ! isset($this->renderConf[$format][$rule])) {
+        if (! isset($this->renderConf[$format])
+            || ! isset($this->renderConf[$format][$rule])) {
             return null;
         }
 
@@ -731,8 +732,8 @@ class TextWikiBase
         // the target name is not null, and not '', but does not exist
         // in the list of rules. this means we're trying to insert after
         // a target key, but the target key isn't there.
-        if (! is_null($tgt) && $tgt != '' &&
-            ! in_array($tgt, $this->rules)) {
+        if (! is_null($tgt) && $tgt != ''
+            && ! in_array($tgt, $this->rules)) {
             return false;
         }
 
@@ -1298,9 +1299,9 @@ class TextWikiBase
         $class = $this->parserPrefix . 'Parser' . ucfirst($rule);
 
         if (! class_exists($class)) {
-                throw new GenericTextWikiException(
-                    "Parse rule '$rule' not found, expected class '$class'"
-                );
+            throw new GenericTextWikiException(
+                "Parse rule '$rule' not found, expected class '$class'"
+            );
         }
 
         $this->parseObj[$rule] = new $class($this);
@@ -1326,7 +1327,8 @@ class TextWikiBase
 
         if (! class_exists($class)) {
             throw new GenericTextWikiException(
-                    "Render rule '$rule' in format '$format' not found. Expected class '$class'");
+                "Render rule '$rule' in format '$format' not found. Expected class '$class'"
+            );
         }
 
         $this->renderObj[$rule] = new $class($this);
@@ -1458,8 +1460,8 @@ class TextWikiBase
     {
         $len = strlen($this->_dirSep);
 
-        if (! empty($path) &&
-            substr($path, -1 * $len, $len) != $this->_dirSep) {
+        if (! empty($path)
+            && substr($path, -1 * $len, $len) != $this->_dirSep) {
             return $path . $this->_dirSep;
         } else {
             return $path;

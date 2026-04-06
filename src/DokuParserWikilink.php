@@ -73,11 +73,11 @@ class DokuParserWikilink extends WikiParserBase
         }
 
         // described wiki links
-        $tmp_regex = '/\[\[' . //start
-            '([' . $either . '\s:\.]*?)' . //page name
-            '(\#[' . $either . '\s:\.]+?)?' . //anchor
-            '(\|([^' . $this->wiki->delim . '\]]+?))?' . //description
-            '\]\]/' . ($this->getConf('utf-8') ? 'u' : ''); //end
+        $tmp_regex = '/\[\[' //start
+            . '([' . $either . '\s:\.]*?)' //page name
+            . '(\#[' . $either . '\s:\.]+?)?' //anchor
+            . '(\|([^' . $this->wiki->delim . '\]]+?))?' //description
+            . '\]\]/' . ($this->getConf('utf-8') ? 'u' : ''); //end
         $this->wiki->source = preg_replace_callback(
             $tmp_regex,
             [$this, 'processDescr'],
@@ -117,9 +117,9 @@ class DokuParserWikilink extends WikiParserBase
         return $this->wiki->addToken(
             $this->rule,
             array_merge(['type' => 'start'], $options)
-        ) .
-            $options['text'] .
-            $this->wiki->addToken(
+        )
+            . $options['text']
+            . $this->wiki->addToken(
                 $this->rule,
                 array_merge(['type' => 'end'], $options)
             );

@@ -50,7 +50,7 @@ class DocbookRendererItalic extends WikiRendererBase
         if ($options['type'] == 'end') {
             return '</emphasis>';
         }
-        return '<emphasis' . (($role = $this->getConf('role', 'italic')) ?
-            ' role="' . $role . '"' : '') . '>';
+        return '<emphasis' . (($role = $this->getConf('role', 'italic'))
+            ? ' role="' . $role . '"' : '') . '>';
     }
 }

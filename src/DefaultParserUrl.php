@@ -112,13 +112,13 @@ class DefaultParserUrl extends WikiParserBase
         $schemes = implode('|', $tmp);
 
         // build the regex
-        $this->regex =
-            "($schemes)" . // allowed schemes
-            "(" . // start pattern
-            "[^ \\/\"\'{$this->wiki->delim}]*\\/" . // no spaces, backslashes, slashes, double-quotes, single quotes, or delimiters;
-            ")*" . // end pattern
-            "[^ \\t\\n\\/\"\'{$this->wiki->delim}]*" .
-            "[A-Za-z0-9\\/?=&~_#]";
+        $this->regex
+            = "($schemes)" // allowed schemes
+            . "(" // start pattern
+            . "[^ \\/\"\'{$this->wiki->delim}]*\\/" // no spaces, backslashes, slashes, double-quotes, single quotes, or delimiters;
+            . ")*" // end pattern
+            . "[^ \\t\\n\\/\"\'{$this->wiki->delim}]*"
+            . "[A-Za-z0-9\\/?=&~_#]";
     }
 
 

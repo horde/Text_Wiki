@@ -64,8 +64,8 @@ class DocbookRendererList extends WikiRendererBase
         switch ($options['type']) {
 
             case 'bullet_list_start':
-                return '<itemizedlist' . (($mark = $this->getConf('mark', null)) ?
-                    ' mark="' . $mark . '"' : '') . ">\n";
+                return '<itemizedlist' . (($mark = $this->getConf('mark', null))
+                    ? ' mark="' . $mark . '"' : '') . ">\n";
 
             case 'bullet_list_end':
                 return "</itemizedlist>\n";

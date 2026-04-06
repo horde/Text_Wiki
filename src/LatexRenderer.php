@@ -80,10 +80,10 @@ class LatexRenderer extends WikiRendererBase
         $this->wiki->source = $this->escape_latex($this->wiki->source);
 
         return
-            "\\documentclass{article}\n" .
-            "\\usepackage{ulem}\n" .
-            "\\pagestyle{headings}\n" .
-            "\\begin{document}\n";
+            "\\documentclass{article}\n"
+            . "\\usepackage{ulem}\n"
+            . "\\pagestyle{headings}\n"
+            . "\\begin{document}\n";
     }
 
     public function post()

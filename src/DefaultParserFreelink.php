@@ -68,23 +68,23 @@ class DefaultParserFreelink extends WikiParserBase
             $any = '';
             $control = "\xc0-\xff";
         }
-        $this->regex =
-            '/' .                                                   // START regex
-            "\\(\\(" .                                               // double open-parens
-            "(" .                                                   // START freelink page patter
-            "[-A-Za-z0-9 _+\\/.,;:!?'\"\\[\\]\\{\\}&" . $any . "]+" . // 1 or more of just about any character
-            ")" .                                                   // END  freelink page pattern
-            "(" .                                                   // START display-name
-            "\|" .                                                   // a pipe to start the display name
-            "[-A-Za-z0-9 _+\\/.,;:!?'\"\\[\\]\\{\\}&" . $any . "]+" . // 1 or more of just about any character
-            ")?" .                                                   // END display-name pattern 0 or 1
-            "(" .                                                   // START pattern for named anchors
-            "\#" .                                                   // a hash mark
-            "[A-Za-z]" .                                           // 1 alpha
-            "[-A-Za-z0-9_:.]*" .                                   // 0 or more alpha, digit, underscore
-            ")?" .                                                   // END named anchors pattern 0 or 1
-            "()\\)\\)" .                                           // double close-parens
-            '/' . ($this->getConf('utf-8') ? 'u' : '');              // END regex
+        $this->regex
+            = '/'                                                   // START regex
+            . "\\(\\("                                               // double open-parens
+            . "("                                                   // START freelink page patter
+            . "[-A-Za-z0-9 _+\\/.,;:!?'\"\\[\\]\\{\\}&" . $any . "]+" // 1 or more of just about any character
+            . ")"                                                   // END  freelink page pattern
+            . "("                                                   // START display-name
+            . "\|"                                                   // a pipe to start the display name
+            . "[-A-Za-z0-9 _+\\/.,;:!?'\"\\[\\]\\{\\}&" . $any . "]+" // 1 or more of just about any character
+            . ")?"                                                   // END display-name pattern 0 or 1
+            . "("                                                   // START pattern for named anchors
+            . "\#"                                                   // a hash mark
+            . "[A-Za-z]"                                           // 1 alpha
+            . "[-A-Za-z0-9_:.]*"                                   // 0 or more alpha, digit, underscore
+            . ")?"                                                   // END named anchors pattern 0 or 1
+            . "()\\)\\)"                                           // double close-parens
+            . '/' . ($this->getConf('utf-8') ? 'u' : '');              // END regex
     }
 
 

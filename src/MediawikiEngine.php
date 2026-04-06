@@ -44,54 +44,54 @@ class MediawikiEngine extends TextWikiBase
     public function __construct(?array $rules = null)
     {
         if (!is_array($rules)) {
-            $rules = 
-[
-        'Prefilter',
-        'Delimiter',
-        'Code',
-        'Comment',
-        'Preformatted',
-        //        'Plugin',
-        //        'Function',
-        //        'Html',
-        'Raw',
-        //        'Include',
-        //        'Embed',
-        //        'Page',
-        //        'Anchor',
-        'Heading',
-        'Toc',
-        //        'Titlebar',
-        'Horiz',
-        'Redirect',
-        'Break',
-        //        'Blockquote',
-        //        'Box',
-        'Wikilink',
-        //        'Image', // done by Wikilink but still possible to disable/configure
-        //        'Interwiki', // done by Wikilink but still possible to disable/configure
-        'Table',
-        //        'Phplookup',
-        //        'Center',
-        'List',
-        'Deflist',
-        //        'Strong',  ** will be only fake inserted by Emphasis if needed for render
-        'Emphasis', // must run before Newline (see Text_Wiki_Parse_Emphasis::parse())
-        'Newline',
-        //'Paragraph',
-        'Url',
-        //        'Freelink',
-        //        'Colortext',
-        //        'Bold',
-        //        'Italic',
-        //        'Underline',
-        'Tt',
-        'Superscript',
-        'Subscript',
-        //        'Specialchar',
-        //        'Revise',
-        // 'Tighten',
-    ];
+            $rules
+= [
+    'Prefilter',
+    'Delimiter',
+    'Code',
+    'Comment',
+    'Preformatted',
+    //        'Plugin',
+    //        'Function',
+    //        'Html',
+    'Raw',
+    //        'Include',
+    //        'Embed',
+    //        'Page',
+    //        'Anchor',
+    'Heading',
+    'Toc',
+    //        'Titlebar',
+    'Horiz',
+    'Redirect',
+    'Break',
+    //        'Blockquote',
+    //        'Box',
+    'Wikilink',
+    //        'Image', // done by Wikilink but still possible to disable/configure
+    //        'Interwiki', // done by Wikilink but still possible to disable/configure
+    'Table',
+    //        'Phplookup',
+    //        'Center',
+    'List',
+    'Deflist',
+    //        'Strong',  ** will be only fake inserted by Emphasis if needed for render
+    'Emphasis', // must run before Newline (see Text_Wiki_Parse_Emphasis::parse())
+    'Newline',
+    //'Paragraph',
+    'Url',
+    //        'Freelink',
+    //        'Colortext',
+    //        'Bold',
+    //        'Italic',
+    //        'Underline',
+    'Tt',
+    'Superscript',
+    'Subscript',
+    //        'Specialchar',
+    //        'Revise',
+    // 'Tighten',
+];
 
 
         }

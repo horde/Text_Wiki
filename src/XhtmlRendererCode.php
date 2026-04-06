@@ -126,8 +126,8 @@ class XhtmlRendererCode extends WikiRendererBase
         }
 
         if ($css_filename && isset($attr['filename'])) {
-            $text = "<div$css_filename>" .
-                $attr['filename'] . '</div>' . $text;
+            $text = "<div$css_filename>"
+                . $attr['filename'] . '</div>' . $text;
         }
 
         return "\n$text\n\n";

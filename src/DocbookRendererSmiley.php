@@ -67,10 +67,10 @@ class DocbookRendererSmiley extends WikiRendererBase
         $imageSize = @getimagesize($imageFile);
 
         // return the HTML output
-        return '<img src="' . $this->textEncode($imageFile) . '"' .
-            (is_array($imageSize) ?
-                ' width="' . $imageSize[0] . '" height="' . $imageSize[1] . '"' : '') .
-            ' alt="' . $options['desc'] . '"' .
-            $this->formatConf(' class="%s"', 'css') . ' />';
+        return '<img src="' . $this->textEncode($imageFile) . '"'
+            . (is_array($imageSize)
+                ? ' width="' . $imageSize[0] . '" height="' . $imageSize[1] . '"' : '')
+            . ' alt="' . $options['desc'] . '"'
+            . $this->formatConf(' class="%s"', 'css') . ' />';
     }
 }

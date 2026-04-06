@@ -174,13 +174,13 @@ class BBCodeParserUrl extends WikiParserBase
                 'href' => $href,
                 'text' => $text]);
         }
-        return $pre .
-            $this->wiki->addToken($this->rule, [
+        return $pre
+            . $this->wiki->addToken($this->rule, [
                 'type' => 'start',
                 'href' => $href,
-                'text' => '']) .
-            $text .
-            $this->wiki->addToken($this->rule, [
+                'text' => ''])
+            . $text
+            . $this->wiki->addToken($this->rule, [
                 'type' => 'end',
                 'href' => $href,
                 'text' => '']);
