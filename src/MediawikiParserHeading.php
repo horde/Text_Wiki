@@ -91,6 +91,6 @@ class MediawikiParserHeading extends WikiParserBase
             ]
         );
 
-        return $start . trim($matches[2]) . $end . "\n";
+        return $start . trim($matches[2]) . $end;
     }
 }

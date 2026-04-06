@@ -58,6 +58,12 @@ class DefaultParserHeading extends WikiParserBase
     ];
 
     /**
+     * Running count for header IDs (used for TOC entries)
+     * @var int
+     */
+    private $idCounter = 0;
+
+    /**
     *
     * Generates a replacement for the matched text.  Token options are:
     *
@@ -75,13 +81,6 @@ class DefaultParserHeading extends WikiParserBase
 
     public function process($matches)
     {
-        // keep a running count for header IDs.  we use this later
-        // when constructing TOC entries, etc.
-        static $id;
-        if (! isset($id)) {
-            $id = 0;
-        }
-
         $prefix = htmlspecialchars($this->getConf('id_prefix'));
 
         $start = $this->wiki->addToken(
@@ -90,7 +89,7 @@ class DefaultParserHeading extends WikiParserBase
                 'type' => 'start',
                 'level' => strlen($matches[1]),
                 'text' => $matches[2],
-                'id' => $prefix . $id++,
+                'id' => $prefix . $this->idCounter++,
             ]
         );
 

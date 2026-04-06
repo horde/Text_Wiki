@@ -228,6 +228,14 @@ class TextWikiBase
     public $tokens = [];
 
     /**
+    * Token ID counter for generating unique token keys
+    *
+    * @access private
+    * @var int
+    */
+    private $tokenIdCounter = 0;
+
+    /**
     * How many tokens generated pro rules.
     *
     * Intended to load only necessary render objects
@@ -1209,12 +1217,7 @@ class TextWikiBase
         // increment the token ID number.  note that if you parse
         // multiple times with the same Text_Wiki object, the ID number
         // will not reset to zero.
-        static $id;
-        if (! isset($id)) {
-            $id = 0;
-        } else {
-            $id++;
-        }
+        $id = $this->tokenIdCounter++;
 
         // force the options to be an array
         settype($options, 'array');
