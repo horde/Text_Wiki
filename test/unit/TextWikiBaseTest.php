@@ -23,6 +23,10 @@ use DomainException;
 class TextWikiBaseTest extends TestCase
 {
     protected $obj;
+    protected $sourceText;
+    protected $tokens;
+    protected $_countRulesTokens;
+
     public function testBaseClassCanBeInstanciated(): void
     {
         $obj = new TextWikiBase();

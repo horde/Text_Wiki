@@ -112,16 +112,18 @@ class DefaultParseBoldItalicTest extends TestCase
         $wiki->parse($input);
 
         // Should not create tokens for unterminated markup
-        // The exact behavior depends on implementation
-        $output = $wiki->transform($input, 'Xhtml');
+        $this->assertCount(0, $wiki->tokens, 'Unterminated bold should not create tokens');
 
-        // Should not have bold tags if not properly closed
+        $output = $wiki->render('Xhtml');
+
+        // Count bold tags
         $boldStarts = substr_count($output, '<strong>') + substr_count($output, '<b>');
         $boldEnds = substr_count($output, '</strong>') + substr_count($output, '</b>');
 
-        // If any bold tags exist, they should be balanced
-        if ($boldStarts > 0) {
-            $this->assertEquals($boldStarts, $boldEnds, 'Bold tags should be balanced');
-        }
+        // Bold tags should be balanced (or none at all)
+        $this->assertEquals($boldStarts, $boldEnds, 'Bold tags should be balanced');
+
+        // Should contain literal ''' since it didn't parse
+        $this->assertStringContainsString("'''", $output, 'Unterminated markup should appear literally');
     }
 }
