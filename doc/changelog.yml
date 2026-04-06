@@ -1,0 +1,88 @@
+---
+3.0.0-alpha5:
+  api: 3.0.0-alpha1
+  state:
+    release: alpha
+    api: alpha
+  date: 2026-04-06
+  license:
+    identifier: LGPL-2.1-only
+    uri: https://spdx.org/licenses/LGPL-2.1-only.html
+  notes: |-
+    Current development state - not yet released
+2.0.0-alpha.3:
+  api: 2.0.0
+  state:
+    release: alpha
+    api: alpha
+  date: 2025-05-31
+  license:
+    identifier: LGPL-2.1-only
+    uri: https://spdx.org/licenses/LGPL-2.1-only.html
+  notes: |-
+    Remove readonly from ParserPrefix
+2.0.0-alpha.2:
+  api: 2.0.0
+  state:
+    release: alpha
+    api: alpha
+  date: 2025-05-29
+  license:
+    identifier: LGPL-2.1-only
+    uri: https://spdx.org/licenses/LGPL-2.1-only.html
+  notes: |-
+    fix: De-PEAR and deprecate ::isError helper
+    fix: Deprecate TextWikiBase::error and start throwing GenericTextWikiException instead
+2.0.0-alpha.1:
+  api: 2.0.0
+  state:
+    release: alpha
+    api: alpha
+  date: 2025-05-29
+  license:
+    identifier: LGPL-2.1-only
+    uri: https://spdx.org/licenses/LGPL-2.1-only.html
+  notes: |-
+    fix: Convert some leftover class names
+    Misnamed variable
+    fix: Enable UTF-8 mode by default and port regex improvements from the internalized version in horde/wicked
+    chore: Remove addPath as it's no longer useful
+    fix: Remove require_once and repair wrong base class name
+    Allow optionally setting an explicit rule name for a parser rule object
+    feat: Be more defensive when parsing wiki rules
+    Add InvalidArgumentException import
+    Start importing mediawiki tests
+    chore: Bulk remove call-by-reference on process()
+    feat: Fix mapping between class names and rule/format strings. Import fixtures from old tests/ dir.
+    Add basic exception test
+    Add placeholder test to demonstrate PHPUnit 12 test suite passing
+    feat: Add final generic exception class derived from DomainException, marker interface and CI boilerplate for unit tests
+    More minor CS fixes
+    fix: Change format object loader to align with new naming scheme
+    chore: Rename classes to match new filesystem structure. Fix string access {} to []. Apply php-cs-fixer
+    chore: PSR4 namespace, rename and move files
+    fix: Rename root base class to TextWiki, namespace, remove require_once statements. Fix curly braces {} string access to []
+    build: composer.json file now identifies as horde/text_wiki rather than pear/text_wiki
+    refactor: Move library code to canonical src/ dir
+    Create README.md
+1.2.2:
+  api: 1.2.0
+  state:
+    release: stable
+    api: stable
+  date: 2014-06-07
+  license:
+    identifier: LGPL-2.1-only
+    uri: http://www.gnu.org/copyleft/lesser.html
+  notes: |-
+    QA release
+
+    Bug #11649 Closed New Code regex fails
+    Req #12569 Closed Adding 'base_url' to XHTML Toc renderer
+    Bug #12719 Closed Blockquote parsing bugs
+    Bug #12722 Closed HTML Blockquote compliance
+    Bug #14604 Closed Unresolved dependency in Text_Wiki_Render_Latex_Freelink
+    Bug #18289 Closed List not properly parsed
+    Bug #19028 Closed remove error_reporting (for PEAR QA team)
+    Bug #20110 Closed package.xml does not validate
+    Req #20274 Closed Please Provides LICENSE file
