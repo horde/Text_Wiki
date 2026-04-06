@@ -102,6 +102,6 @@ class DefaultParserHeading extends WikiParserBase
             ]
         );
 
-        return $start . $matches[2] . $end . "\n";
+        return $start . $matches[2] . $end;
     }
 }
