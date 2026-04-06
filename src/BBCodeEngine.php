@@ -41,7 +41,7 @@ class BBCodeEngine extends TextWikiBase
      * @access public
      * @var array
      */
-    public $rules = [
+    public array $rules = [
         'Prefilter',
         'Delimiter',
         'Code',

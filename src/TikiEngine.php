@@ -37,7 +37,7 @@ namespace Horde\Text\Wiki;
  */
 class TikiEngine extends TextWikiBase
 {
-    public $rules = [
+    public array $rules = [
         'Prefilter',
         'Delimiter',
         'Code',

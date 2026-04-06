@@ -52,7 +52,7 @@ class CreoleEngine extends TextWikiBase
     // *single newlines* are handled as in most wikis (ignored)
     // if Newline is removed from rules, they will be handled as in word-processors (meaning a paragraph break)
 
-    public $rules = [
+    public array $rules = [
         'Prefilter',
         'Delimiter',
         'Preformatted',
