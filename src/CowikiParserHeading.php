@@ -51,7 +51,7 @@ class CowikiParserHeading extends WikiParserBase
     *
     */
 
-    public $regex = '/^(\++) (.*)/m';
+    public $regex = '/^(\++) (.*?)(\n|$)/m';
 
     public $conf = [
         'id_prefix' => 'toc',
@@ -102,6 +102,6 @@ class CowikiParserHeading extends WikiParserBase
             ]
         );
 
-        return $start . $matches[2] . $end . "\n";
+        return $start . $matches[2] . $end;
     }
 }
