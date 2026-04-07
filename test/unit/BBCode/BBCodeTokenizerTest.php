@@ -32,11 +32,11 @@ class BBCodeTokenizerTest extends TestCase
 
         $this->assertCount(3, $tokens);
         $this->assertSame(TokenType::OPEN_TAG, $tokens[0]->type);
-        $this->assertSame('b', $tokens[0]->value);
+        $this->assertSame('bold', $tokens[0]->value);
         $this->assertSame(TokenType::TEXT, $tokens[1]->type);
         $this->assertSame('bold', $tokens[1]->value);
         $this->assertSame(TokenType::CLOSE_TAG, $tokens[2]->type);
-        $this->assertSame('b', $tokens[2]->value);
+        $this->assertSame('bold', $tokens[2]->value);
     }
 
     public function testTagWithAttribute(): void
@@ -97,10 +97,10 @@ class BBCodeTokenizerTest extends TestCase
         $tokens = iterator_to_array($this->tokenizer->tokenize('[b][i]text[/i][/b]'));
 
         $this->assertCount(5, $tokens);
-        $this->assertSame('b', $tokens[0]->value);
-        $this->assertSame('i', $tokens[1]->value);
+        $this->assertSame('bold', $tokens[0]->value);
+        $this->assertSame('italic', $tokens[1]->value);
         $this->assertSame('text', $tokens[2]->value);
-        $this->assertSame('i', $tokens[3]->value);
-        $this->assertSame('b', $tokens[4]->value);
+        $this->assertSame('italic', $tokens[3]->value);
+        $this->assertSame('bold', $tokens[4]->value);
     }
 }

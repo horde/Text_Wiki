@@ -20,6 +20,7 @@ use PHPUnit\Framework\TestCase;
  *
  * Tests that old Cowiki-style array AST works with new renderer via adapter.
  * This demonstrates backward compatibility for existing engines.
+ * @coversNothing
  */
 class CowikiAdapterIntegrationTest extends TestCase
 {
