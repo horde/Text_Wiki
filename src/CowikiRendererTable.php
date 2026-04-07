@@ -19,33 +19,46 @@ class CowikiRendererTable extends WikiRendererBase
 
     public function token($options)
     {
-        // make nice variable names (type, attr, span)
-        $pad = '    ';
-
         switch ($options['type']) {
 
             case 'table_start':
-                return "\n<table>";
+                return "\n<table>\n";
                 break;
 
             case 'table_end':
-                return "\n</table>";
+                return "</table>\n";
                 break;
 
             case 'row_start':
-                return "\n";
+                return "<tr>";
                 break;
 
             case 'row_end':
-                return '';
+                return "</tr>\n";
                 break;
 
             case 'cell_start':
-                return str_pad('', $options['span'], '|') . ' ';
+                // Determine if this is a header or data cell
+                $tag = ($options['attr'] === 'header') ? 'th' : 'td';
+                $attrs = '';
+
+                // Add colspan if > 1
+                if (isset($options['span']) && $options['span'] > 1) {
+                    $attrs .= ' colspan="' . $options['span'] . '"';
+                }
+
+                // Add alignment if present and not a header
+                if ($options['attr'] !== 'header' && !empty($options['attr'])) {
+                    $attrs .= ' align="' . $options['attr'] . '"';
+                }
+
+                return "<$tag$attrs>";
                 break;
 
             case 'cell_end':
-                return ' ';
+                // Determine closing tag
+                $tag = ($options['attr'] === 'header') ? 'th' : 'td';
+                return "</$tag>";
                 break;
 
             default:
