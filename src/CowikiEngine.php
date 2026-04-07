@@ -37,10 +37,4 @@ namespace Horde\Text\Wiki;
  */
 class CowikiEngine extends TextWikiBase
 {
-    public function __construct()
-    {
-        parent::__construct();
-        $paths = $this->getPath('parse');
-        $this->addPath('parse', str_replace('Default', 'Cowiki', $paths[0]));
-    }
 }
