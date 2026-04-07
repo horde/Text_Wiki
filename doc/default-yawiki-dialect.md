@@ -1,4 +1,4 @@
-# Default Dialect Documentation
+# Default / YaWiki Dialect Documentation
 
 ## Historical Context
 
