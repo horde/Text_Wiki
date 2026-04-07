@@ -131,10 +131,10 @@ class XhtmlRendererWikilink extends WikiRendererBase
                 // form that uses sprintf()
                 if (strpos($href, '%s') === false) {
                     // use the old form
-                    $href = $href . $this->urlEncode($page);
+                    $href = $href . $this->urlEncode($page) . $anchor;
                 } else {
                     // use the new form
-                    $href = sprintf($href, $this->urlEncode($page));
+                    $href = sprintf($href, $this->urlEncode($page)) . $anchor;
                 }
             }
 
