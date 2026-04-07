@@ -193,18 +193,25 @@ class Xhtml implements Renderer, NodeVisitor
     }
 
     /**
-     * Render [img]http://...[/img] tag
+     * Render [img]http://...[/img] or [img alt="..."]http://...[/img] tag
      *
      * @param ElementNode $node Image element
      *
-     * @return string <img src="..." alt="" />
+     * @return string <img src="..." alt="..." />
      */
     protected function renderImg(ElementNode $node): string
     {
         $children = $node->getChildren();
         if (count($children) === 1 && $children[0] instanceof TextNode) {
             $src = htmlspecialchars($children[0]->getText(), ENT_QUOTES | ENT_HTML5, 'UTF-8');
-            return '<img src="' . $src . '" alt="" />';
+
+            // Get alt text from attributes (default to empty string)
+            $attrs = $node->getAttributes();
+            $alt = isset($attrs['alt'])
+                ? htmlspecialchars($attrs['alt'], ENT_QUOTES | ENT_HTML5, 'UTF-8')
+                : '';
+
+            return '<img src="' . $src . '" alt="' . $alt . '" />';
         }
 
         // Malformed - render nothing
@@ -236,7 +243,11 @@ class Xhtml implements Renderer, NodeVisitor
     }
 
     /**
-     * Render [code]...[/code] tag
+     * Render [code]...[/code] or [code=language]...[/code] tag
+     *
+     * Supports language attribute for syntax highlighters:
+     * - [code] → <pre><code>...</code></pre>
+     * - [code=php] → <pre><code class="language-php">...</code></pre>
      *
      * @param ElementNode $node Code element
      *
@@ -244,18 +255,59 @@ class Xhtml implements Renderer, NodeVisitor
      */
     protected function renderCode(ElementNode $node): string
     {
+        $attrs = $node->getAttributes();
+
+        // Check for language attribute
+        if (isset($attrs['language']) && $attrs['language'] !== '') {
+            $language = $attrs['language'];
+
+            // Sanitize language (alphanumeric, hyphen, underscore only)
+            if (preg_match('/^[a-zA-Z0-9_-]+$/', $language)) {
+                $languageClass = htmlspecialchars($language, ENT_QUOTES | ENT_HTML5, 'UTF-8');
+                return '<pre><code class="language-' . $languageClass . '">'
+                     . $this->renderChildren($node)
+                     . '</code></pre>';
+            }
+        }
+
+        // Default: no language class
         return '<pre><code>' . $this->renderChildren($node) . '</code></pre>';
     }
 
     /**
      * Render [list]...[/list] tag
      *
+     * Supports:
+     * - [list] → <ul> (unordered)
+     * - [list=1] → <ol> (ordered, numeric)
+     * - [list=a] → <ol type="a"> (ordered, lowercase alpha)
+     * - [list=A] → <ol type="A"> (ordered, uppercase alpha)
+     *
      * @param ElementNode $node List element
      *
-     * @return string <ul>...</ul>
+     * @return string <ul>...</ul> or <ol>...</ol>
      */
     protected function renderList(ElementNode $node): string
     {
+        $attrs = $node->getAttributes();
+
+        // Check for type attribute
+        if (isset($attrs['type'])) {
+            $type = $attrs['type'];
+
+            // Numeric ordered list
+            if ($type === '1') {
+                return '<ol>' . $this->renderChildren($node) . '</ol>';
+            }
+
+            // Alphabetic ordered lists
+            if ($type === 'a' || $type === 'A') {
+                $typeAttr = htmlspecialchars($type, ENT_QUOTES | ENT_HTML5, 'UTF-8');
+                return '<ol type="' . $typeAttr . '">' . $this->renderChildren($node) . '</ol>';
+            }
+        }
+
+        // Default: unordered list
         return '<ul>' . $this->renderChildren($node) . '</ul>';
     }
 
@@ -323,5 +375,179 @@ class Xhtml implements Renderer, NodeVisitor
 
         $size = (int) $attrs['size'];
         return '<span style="font-size: ' . $size . 'pt">' . $this->renderChildren($node) . '</span>';
+    }
+
+    /**
+     * Render [s]strikethrough[/s] tag
+     *
+     * @param ElementNode $node Strike element
+     *
+     * @return string <s>...</s>
+     */
+    protected function renderS(ElementNode $node): string
+    {
+        return '<s>' . $this->renderChildren($node) . '</s>';
+    }
+
+    /**
+     * Render [sup]superscript[/sup] tag
+     *
+     * @param ElementNode $node Superscript element
+     *
+     * @return string <sup>...</sup>
+     */
+    protected function renderSup(ElementNode $node): string
+    {
+        return '<sup>' . $this->renderChildren($node) . '</sup>';
+    }
+
+    /**
+     * Render [sub]subscript[/sub] tag
+     *
+     * @param ElementNode $node Subscript element
+     *
+     * @return string <sub>...</sub>
+     */
+    protected function renderSub(ElementNode $node): string
+    {
+        return '<sub>' . $this->renderChildren($node) . '</sub>';
+    }
+
+    /**
+     * Render [hr] horizontal rule tag
+     *
+     * @param ElementNode $node HR element
+     *
+     * @return string <hr />
+     */
+    protected function renderHr(ElementNode $node): string
+    {
+        return '<hr />';
+    }
+
+    /**
+     * Render [email]...[/email] or [email=...]...[/email] tag
+     *
+     * @param ElementNode $node Email element
+     *
+     * @return string <a href="mailto:...">...</a>
+     */
+    protected function renderEmail(ElementNode $node): string
+    {
+        $attrs = $node->getAttributes();
+
+        // [email=address@example.com]text[/email]
+        if (isset($attrs['email'])) {
+            $email = htmlspecialchars($attrs['email'], ENT_QUOTES | ENT_HTML5, 'UTF-8');
+
+            // Validate email
+            if (filter_var($attrs['email'], FILTER_VALIDATE_EMAIL) === false) {
+                return $this->renderChildren($node);
+            }
+
+            return '<a href="mailto:' . $email . '">' . $this->renderChildren($node) . '</a>';
+        }
+
+        // [email]address@example.com[/email] - email comes from text content
+        $children = $node->getChildren();
+        if (count($children) === 1 && $children[0] instanceof TextNode) {
+            $email = $children[0]->getText();
+
+            // Validate email
+            if (filter_var($email, FILTER_VALIDATE_EMAIL) === false) {
+                return htmlspecialchars($email, ENT_QUOTES | ENT_HTML5, 'UTF-8');
+            }
+
+            $emailEscaped = htmlspecialchars($email, ENT_QUOTES | ENT_HTML5, 'UTF-8');
+            return '<a href="mailto:' . $emailEscaped . '">' . $emailEscaped . '</a>';
+        }
+
+        // Malformed - just render children
+        return $this->renderChildren($node);
+    }
+
+    /**
+     * Render [youtube]VIDEO_ID[/youtube] tag
+     *
+     * @param ElementNode $node YouTube element
+     *
+     * @return string <iframe>...</iframe> or empty string if invalid
+     */
+    protected function renderYoutube(ElementNode $node): string
+    {
+        $children = $node->getChildren();
+        if (count($children) === 1 && $children[0] instanceof TextNode) {
+            $videoId = trim($children[0]->getText());
+
+            // Validate YouTube video ID format (11 chars: alphanumeric, underscore, hyphen)
+            if (preg_match('/^[a-zA-Z0-9_-]{11}$/', $videoId) !== 1) {
+                return '';
+            }
+
+            $videoId = htmlspecialchars($videoId, ENT_QUOTES | ENT_HTML5, 'UTF-8');
+            return '<iframe width="560" height="315" '
+                 . 'src="https://www.youtube.com/embed/' . $videoId . '" '
+                 . 'frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" '
+                 . 'allowfullscreen></iframe>';
+        }
+
+        // Malformed - render nothing
+        return '';
+    }
+
+    /**
+     * Render [center]...[/center] tag
+     *
+     * Traditional XHTML with align attribute.
+     *
+     * @param ElementNode $node Center element
+     *
+     * @return string <div align="center">...</div>
+     */
+    protected function renderCenter(ElementNode $node): string
+    {
+        return '<div align="center">' . $this->renderChildren($node) . '</div>';
+    }
+
+    /**
+     * Render [left]...[/left] tag
+     *
+     * Traditional XHTML with align attribute.
+     *
+     * @param ElementNode $node Left element
+     *
+     * @return string <div align="left">...</div>
+     */
+    protected function renderLeft(ElementNode $node): string
+    {
+        return '<div align="left">' . $this->renderChildren($node) . '</div>';
+    }
+
+    /**
+     * Render [right]...[/right] tag
+     *
+     * Traditional XHTML with align attribute.
+     *
+     * @param ElementNode $node Right element
+     *
+     * @return string <div align="right">...</div>
+     */
+    protected function renderRight(ElementNode $node): string
+    {
+        return '<div align="right">' . $this->renderChildren($node) . '</div>';
+    }
+
+    /**
+     * Render [justify]...[/justify] tag
+     *
+     * Traditional XHTML with align attribute.
+     *
+     * @param ElementNode $node Justify element
+     *
+     * @return string <div align="justify">...</div>
+     */
+    protected function renderJustify(ElementNode $node): string
+    {
+        return '<div align="justify">' . $this->renderChildren($node) . '</div>';
     }
 }
