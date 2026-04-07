@@ -17,6 +17,7 @@ namespace Horde\Text\Wiki\BBCode\Validator;
  * Validates color values to prevent CSS injection attacks.
  * Allows hex colors (#RGB, #RRGGBB), named colors, and rgb() values.
  *
+ * @author   Bertrand Gugger <bertrand@toggg.com>
  * @author   Ralf Lang <lang@b1-systems.de>
  * @category Horde
  * @license  http://www.horde.org/licenses/lgpl21 LGPL 2.1

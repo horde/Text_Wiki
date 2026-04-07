@@ -28,6 +28,7 @@ use Horde\Text\Wiki\Node\TextNode;
  * - Verbatim content ([code])
  * - Self-closing tags ([*])
  *
+ * @author   Paul M. Jones <pmjones@php.net>
  * @author   Ralf Lang <lang@b1-systems.de>
  * @category Horde
  * @license  http://www.horde.org/licenses/lgpl21 LGPL 2.1
@@ -128,9 +129,9 @@ class GenericStructureBuilder implements StructureBuilder
             $parent = $this->getCurrentParent();
         }
 
-        // Special case: [*] implicitly closes previous [*]
-        // Do this BEFORE getting parent, so parent is [list] not previous [*]
-        if ($tagName === '*') {
+        // Special case: listitem implicitly closes previous listitem
+        // Do this BEFORE getting parent, so parent is [list] not previous listitem
+        if ($tagName === 'listitem') {
             $this->implicitlyClosePreviousListItem();
             $parent = $this->getCurrentParent();
         }
@@ -352,22 +353,20 @@ class GenericStructureBuilder implements StructureBuilder
     }
 
     /**
-     * Implicitly close previous [*] list item
+     * Implicitly close previous listitem
      *
-     * When a new [*] is encountered, the previous [*] should close.
+     * When a new listitem is encountered, the previous one should close.
      *
      * @return void
      */
     protected function implicitlyClosePreviousListItem(): void
     {
-        // Look for previous [*] in stack
-        for ($i = count($this->stack) - 1; $i >= 1; $i--) {
-            $node = $this->stack[$i];
-            if ($node instanceof ElementNode && $node->getName() === '*') {
-                // Close it
-                array_splice($this->stack, $i, 1);
-                return;
-            }
+        // Only close a listitem that is at the top of the stack
+        // (direct child of the current list). Don't reach past list
+        // boundaries to close parent listitems.
+        $top = $this->stack[count($this->stack) - 1] ?? null;
+        if ($top instanceof ElementNode && $top->getName() === 'listitem') {
+            array_pop($this->stack);
         }
     }
 

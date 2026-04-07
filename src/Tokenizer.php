@@ -17,6 +17,7 @@ namespace Horde\Text\Wiki;
  * Tokenizers convert raw markup text into a stream of typed tokens
  * for structure building.
  *
+ * @author   Paul M. Jones <pmjones@php.net>
  * @author   Ralf Lang <lang@b1-systems.de>
  * @category Horde
  * @license  http://www.horde.org/licenses/lgpl21 LGPL 2.1

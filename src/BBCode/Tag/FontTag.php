@@ -18,6 +18,7 @@ use Horde\Text\Wiki\TagType;
 /**
  * [font=Arial]text[/font] tag definition
  *
+ * @author   Bertrand Gugger <bertrand@toggg.com>
  * @author   Ralf Lang <lang@b1-systems.de>
  * @category Horde
  * @license  http://www.horde.org/licenses/lgpl21 LGPL 2.1

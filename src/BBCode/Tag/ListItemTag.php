@@ -21,6 +21,7 @@ use Horde\Text\Wiki\TagType;
  * No explicit [/*] closing tag needed.
  * Only valid inside [list].
  *
+ * @author   Bertrand Gugger <bertrand@toggg.com>
  * @author   Ralf Lang <lang@b1-systems.de>
  * @category Horde
  * @license  http://www.horde.org/licenses/lgpl21 LGPL 2.1
@@ -30,7 +31,7 @@ class ListItemTag extends AbstractTagDefinition
 {
     public function __construct()
     {
-        parent::__construct('*', TagType::MIXED);
+        parent::__construct('listitem', TagType::MIXED);
     }
 
     /**

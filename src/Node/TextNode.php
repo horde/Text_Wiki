@@ -18,6 +18,7 @@ use Horde\Text\Wiki\NodeVisitor;
  *
  * Represents plain text content between markup tags.
  *
+ * @author   Paul M. Jones <pmjones@php.net>
  * @author   Ralf Lang <lang@b1-systems.de>
  * @category Horde
  * @license  http://www.horde.org/licenses/lgpl21 LGPL 2.1

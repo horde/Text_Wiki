@@ -18,6 +18,7 @@ use Horde\Text\Wiki\TagType;
 /**
  * [url]link[/url] and [url=http://...]text[/url] tag definition
  *
+ * @author   Bertrand Gugger <bertrand@toggg.com>
  * @author   Ralf Lang <lang@b1-systems.de>
  * @category Horde
  * @license  http://www.horde.org/licenses/lgpl21 LGPL 2.1
