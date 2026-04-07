@@ -63,7 +63,11 @@ class XhtmlRendererBlockquote extends WikiRendererBase
         }
         // starting
         if ($type == 'start') {
-            return "\n$pad<blockquote$css><div>\n$pad    ";
+            $author = '';
+            if (isset($options['name']) && $options['name']) {
+                $author = $pad . '    <cite>' . htmlspecialchars($options['name']) . ' wrote:</cite>' . "\n";
+            }
+            return "\n$pad<blockquote$css><div>\n$author$pad    ";
         }
 
         // ending

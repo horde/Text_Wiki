@@ -213,8 +213,8 @@ class CowikiParserTable extends WikiParserBase
         }
 
         // Check for pipe format: starts with | or contains | without HTML tags
-        if (preg_match('/^\|/', $trimmed) ||
-            (strpos($trimmed, '|') !== false && !preg_match('/<[^>]+>/', $trimmed))) {
+        if (preg_match('/^\|/', $trimmed)
+            || (strpos($trimmed, '|') !== false && !preg_match('/<[^>]+>/', $trimmed))) {
             return $this->parsePipeCells($row_content);
         }
 

@@ -5,6 +5,15 @@ namespace Horde\Text\Wiki;
 class PlainRendererUrl extends WikiRendererBase
 {
     /**
+     * Configuration options:
+     * - 'show_url': bool - Whether to show URL in parentheses for described links
+     *               Default: true (show URL for completeness in plain text)
+     */
+    public $conf = [
+        'show_url' => true,
+    ];
+
+    /**
     *
     * Renders a token into text matching the requested format.
     *
@@ -22,9 +31,13 @@ class PlainRendererUrl extends WikiRendererBase
         if ($options['type'] == 'start' || $options['type'] == 'end') {
             return '';
         } else {
-            // For described links, show both text and URL
+            // For described links, optionally show both text and URL
             if (!empty($options['text']) && $options['text'] != $options['href']) {
-                return $options['text'] . ' (' . $options['href'] . ')';
+                if ($this->getConf('show_url', true)) {
+                    return $options['text'] . ' (' . $options['href'] . ')';
+                }
+                // If show_url is false, only show the link text
+                return $options['text'];
             }
             // For plain URLs, just show the URL
             return $options['text'];

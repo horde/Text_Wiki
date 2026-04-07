@@ -51,7 +51,7 @@ class BBCodeParserSubscript extends WikiParserBase
      * @var string
      * @see parse()
      */
-    public $regex = "#\[sub](.*?)\[/sub]#i";
+    public $regex = "#\[sub](.*?)\[/sub]#is";
 
     // }}}
     // {{{ process()
