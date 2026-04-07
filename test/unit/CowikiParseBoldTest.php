@@ -5,13 +5,16 @@ declare(strict_types=1);
 namespace Horde\Text\Wiki\Test\Unit;
 
 use Horde\Text\Wiki\TextWikiBase;
+use Horde\Text\Wiki\CowikiParserBold;
+use Horde\Text\Wiki\XhtmlRendererBold;
 use PHPUnit\Framework\TestCase;
-use PHPUnit\Framework\Attributes\CoversNothing;
+use PHPUnit\Framework\Attributes\CoversClass;
 
 /**
  * Test Cowiki bold parsing (*bold text*)
  */
-#[CoversNothing]
+#[CoversClass(CowikiParserBold::class)]
+#[CoversClass(XhtmlRendererBold::class)]
 class CowikiParseBoldTest extends TestCase
 {
     public function testSimpleBold(): void
@@ -20,9 +23,9 @@ class CowikiParseBoldTest extends TestCase
         $source = '*bold text*';
         $result = $wiki->transform($source, 'Xhtml');
 
-        $this->assertStringContainsString('<strong>', $result);
+        $this->assertStringContainsString('<b>', $result);
         $this->assertStringContainsString('bold text', $result);
-        $this->assertStringContainsString('</strong>', $result);
+        $this->assertStringContainsString('</b>', $result);
     }
 
     public function testBoldInSentence(): void
@@ -32,7 +35,7 @@ class CowikiParseBoldTest extends TestCase
         $result = $wiki->transform($source, 'Xhtml');
 
         $this->assertStringContainsString('This is', $result);
-        $this->assertStringContainsString('<strong>bold</strong>', $result);
+        $this->assertStringContainsString('<b>bold</b>', $result);
         $this->assertStringContainsString('text in a sentence', $result);
     }
 
@@ -42,8 +45,8 @@ class CowikiParseBoldTest extends TestCase
         $source = '*first* and *second* bold words';
         $result = $wiki->transform($source, 'Xhtml');
 
-        $this->assertStringContainsString('<strong>first</strong>', $result);
-        $this->assertStringContainsString('<strong>second</strong>', $result);
+        $this->assertStringContainsString('<b>first</b>', $result);
+        $this->assertStringContainsString('<b>second</b>', $result);
     }
 
     public function testBoldWithSpaces(): void
@@ -52,7 +55,7 @@ class CowikiParseBoldTest extends TestCase
         $source = '*bold text with spaces*';
         $result = $wiki->transform($source, 'Xhtml');
 
-        $this->assertStringContainsString('<strong>bold text with spaces</strong>', $result);
+        $this->assertStringContainsString('<b>bold text with spaces</b>', $result);
     }
 
     public function testBoldEmpty(): void
@@ -62,7 +65,7 @@ class CowikiParseBoldTest extends TestCase
         $result = $wiki->transform($source, 'Xhtml');
 
         // Empty bold should still create tags
-        $this->assertStringContainsString('<strong></strong>', $result);
+        $this->assertStringContainsString('<b></b>', $result);
     }
 
     public function testNonMatchingAsterisks(): void
@@ -82,8 +85,8 @@ class CowikiParseBoldTest extends TestCase
         $source = "First line with *bold*\nSecond line with *more bold*";
         $result = $wiki->transform($source, 'Xhtml');
 
-        $this->assertStringContainsString('<strong>bold</strong>', $result);
-        $this->assertStringContainsString('<strong>more bold</strong>', $result);
+        $this->assertStringContainsString('<b>bold</b>', $result);
+        $this->assertStringContainsString('<b>more bold</b>', $result);
     }
 
     public function testBoldWithPunctuation(): void
@@ -92,8 +95,8 @@ class CowikiParseBoldTest extends TestCase
         $source = '*Hello!* and *world?*';
         $result = $wiki->transform($source, 'Xhtml');
 
-        $this->assertStringContainsString('<strong>Hello!</strong>', $result);
-        $this->assertStringContainsString('<strong>world?</strong>', $result);
+        $this->assertStringContainsString('<b>Hello!</b>', $result);
+        $this->assertStringContainsString('<b>world?</b>', $result);
     }
 
     public function testBoldRenderToPlain(): void
@@ -105,6 +108,6 @@ class CowikiParseBoldTest extends TestCase
         // Plain text should strip formatting but keep content
         $this->assertStringContainsString('bold', $result);
         $this->assertStringNotContainsString('*', $result);
-        $this->assertStringNotContainsString('<strong>', $result);
+        $this->assertStringNotContainsString('<b>', $result);
     }
 }

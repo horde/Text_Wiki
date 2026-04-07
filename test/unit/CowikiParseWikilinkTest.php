@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace Horde\Text\Wiki\Test\Unit;
 
-use Horde\Text\Wiki\CowikiEngine;
+use Horde\Text\Wiki\TextWikiBase;
+use Horde\Text\Wiki\CowikiParserWikilink;
+use Horde\Text\Wiki\XhtmlRendererWikilink;
 use PHPUnit\Framework\TestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
 
@@ -12,25 +14,21 @@ use PHPUnit\Framework\Attributes\CoversClass;
  * Test Cowiki wikilink parsing
  *
  * Cowiki supports:
- * - CamelCase/StudlyCaps: WikiPageName
- * - Explicit links: [WikiPageName]
- * - Described links: [WikiPageName display text]
- * - Links with anchors: WikiPageName#section
+ * - CamelCase/StudlyCaps: WikiPageName (requires camel_case config)
+ * - Described links: ((WikiPageName))
+ * - Described links with text: ((WikiPageName)(display text))
+ * - Links with anchors: ((WikiPageName#section))
  */
-#[CoversClass(CowikiEngine::class)]
+#[CoversClass(CowikiParserWikilink::class)]
+#[CoversClass(XhtmlRendererWikilink::class)]
 class CowikiParseWikilinkTest extends TestCase
 {
-    private CowikiEngine $wiki;
-
-    protected function setUp(): void
-    {
-        $this->wiki = new CowikiEngine();
-    }
-
     public function testSimpleCamelCase(): void
     {
+        $wiki = TextWikiBase::factory('Cowiki', ['Wikilink']);
+        $wiki->setParseConf('Wikilink', 'camel_case', true);
         $source = 'See WikiPageName for details';
-        $result = $this->wiki->transform($source, 'Xhtml');
+        $result = $wiki->transform($source, 'Xhtml');
 
         $this->assertStringContainsString('<a', $result);
         $this->assertStringContainsString('WikiPageName', $result);
@@ -39,8 +37,10 @@ class CowikiParseWikilinkTest extends TestCase
 
     public function testMultipleCamelCaseWords(): void
     {
+        $wiki = TextWikiBase::factory('Cowiki', ['Wikilink']);
+        $wiki->setParseConf('Wikilink', 'camel_case', true);
         $source = 'Visit HomePage or AboutUs pages';
-        $result = $this->wiki->transform($source, 'Xhtml');
+        $result = $wiki->transform($source, 'Xhtml');
 
         $this->assertStringContainsString('HomePage', $result);
         $this->assertStringContainsString('AboutUs', $result);
@@ -51,19 +51,19 @@ class CowikiParseWikilinkTest extends TestCase
 
     public function testExplicitWikiLink(): void
     {
-        $source = '[WikiPage]';
-        $result = $this->wiki->transform($source, 'Xhtml');
+        $wiki = TextWikiBase::factory('Cowiki', ['Wikilink']);
+        $source = '((WikiPage))';
+        $result = $wiki->transform($source, 'Xhtml');
 
         $this->assertStringContainsString('<a', $result);
         $this->assertStringContainsString('WikiPage', $result);
-        $this->assertStringNotContainsString('[', $result);
-        $this->assertStringNotContainsString(']', $result);
     }
 
     public function testDescribedWikiLink(): void
     {
-        $source = '[WikiPageName link description here]';
-        $result = $this->wiki->transform($source, 'Xhtml');
+        $wiki = TextWikiBase::factory('Cowiki', ['Wikilink']);
+        $source = '((WikiPageName)(link description here))';
+        $result = $wiki->transform($source, 'Xhtml');
 
         $this->assertStringContainsString('<a', $result);
         $this->assertStringContainsString('link description here', $result);
@@ -73,8 +73,10 @@ class CowikiParseWikilinkTest extends TestCase
 
     public function testWikiLinkWithAnchor(): void
     {
+        $wiki = TextWikiBase::factory('Cowiki', ['Wikilink']);
+        $wiki->setParseConf('Wikilink', 'camel_case', true);
         $source = 'Jump to WikiPage#section';
-        $result = $this->wiki->transform($source, 'Xhtml');
+        $result = $wiki->transform($source, 'Xhtml');
 
         $this->assertStringContainsString('<a', $result);
         $this->assertStringContainsString('WikiPage', $result);
@@ -83,8 +85,9 @@ class CowikiParseWikilinkTest extends TestCase
 
     public function testDescribedLinkWithAnchor(): void
     {
-        $source = '[WikiPage#anchor link text]';
-        $result = $this->wiki->transform($source, 'Xhtml');
+        $wiki = TextWikiBase::factory('Cowiki', ['Wikilink']);
+        $source = '((WikiPage#anchor)(link text))';
+        $result = $wiki->transform($source, 'Xhtml');
 
         $this->assertStringContainsString('<a', $result);
         $this->assertStringContainsString('link text', $result);
@@ -94,8 +97,10 @@ class CowikiParseWikilinkTest extends TestCase
 
     public function testNotCamelCase(): void
     {
+        $wiki = TextWikiBase::factory('Cowiki', ['Wikilink']);
+        $wiki->setParseConf('Wikilink', 'camel_case', true);
         $source = 'Normal words like wiki or page are not links';
-        $result = $this->wiki->transform($source, 'Xhtml');
+        $result = $wiki->transform($source, 'Xhtml');
 
         // Should NOT create links for non-CamelCase words
         $this->assertStringNotContainsString('href', $result);
@@ -103,8 +108,10 @@ class CowikiParseWikilinkTest extends TestCase
 
     public function testCamelCaseInSentence(): void
     {
+        $wiki = TextWikiBase::factory('Cowiki', ['Wikilink']);
+        $wiki->setParseConf('Wikilink', 'camel_case', true);
         $source = 'The WikiPage contains important information.';
-        $result = $this->wiki->transform($source, 'Xhtml');
+        $result = $wiki->transform($source, 'Xhtml');
 
         $this->assertStringContainsString('The', $result);
         $this->assertStringContainsString('<a', $result);
@@ -114,8 +121,10 @@ class CowikiParseWikilinkTest extends TestCase
 
     public function testWikiLinkRenderToPlain(): void
     {
+        $wiki = TextWikiBase::factory('Cowiki', ['Wikilink']);
+        $wiki->setParseConf('Wikilink', 'camel_case', true);
         $source = 'See WikiPageName for more';
-        $result = $this->wiki->transform($source, 'Plain');
+        $result = $wiki->transform($source, 'Plain');
 
         // Plain should preserve page name without HTML
         $this->assertStringContainsString('WikiPageName', $result);
@@ -124,19 +133,20 @@ class CowikiParseWikilinkTest extends TestCase
 
     public function testDescribedLinkRenderToPlain(): void
     {
-        $source = '[WikiPage custom text]';
-        $result = $this->wiki->transform($source, 'Plain');
+        $wiki = TextWikiBase::factory('Cowiki', ['Wikilink']);
+        $source = '((WikiPage)(custom text))';
+        $result = $wiki->transform($source, 'Plain');
 
         // Plain should show description text
         $this->assertStringContainsString('custom text', $result);
-        $this->assertStringNotContainsString('[', $result);
-        $this->assertStringNotContainsString(']', $result);
     }
 
     public function testMinimalCamelCase(): void
     {
+        $wiki = TextWikiBase::factory('Cowiki', ['Wikilink']);
+        $wiki->setParseConf('Wikilink', 'camel_case', true);
         $source = 'Simple CamelCase like AB or XyZ';
-        $result = $this->wiki->transform($source, 'Xhtml');
+        $result = $wiki->transform($source, 'Xhtml');
 
         // Minimal CamelCase (2 chars) should still create links
         $this->assertStringContainsString('href', $result);
@@ -144,8 +154,10 @@ class CowikiParseWikilinkTest extends TestCase
 
     public function testCamelCaseWithNumbers(): void
     {
+        $wiki = TextWikiBase::factory('Cowiki', ['Wikilink']);
+        $wiki->setParseConf('Wikilink', 'camel_case', true);
         $source = 'Page Wiki2023 or Version3Page';
-        $result = $this->wiki->transform($source, 'Xhtml');
+        $result = $wiki->transform($source, 'Xhtml');
 
         // CamelCase with numbers should create links
         $this->assertStringContainsString('Wiki2023', $result);
