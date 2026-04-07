@@ -31,7 +31,7 @@ class XhtmlTest extends TestCase
     public function testRenderBold(): void
     {
         $doc = new DocumentNode();
-        $bold = new ElementNode('b');
+        $bold = new ElementNode('bold');
         $bold->addChild(new TextNode('bold text'));
         $doc->addChild($bold);
 
@@ -43,7 +43,7 @@ class XhtmlTest extends TestCase
     public function testRenderItalic(): void
     {
         $doc = new DocumentNode();
-        $italic = new ElementNode('i');
+        $italic = new ElementNode('italic');
         $italic->addChild(new TextNode('italic text'));
         $doc->addChild($italic);
 
@@ -92,9 +92,9 @@ class XhtmlTest extends TestCase
     {
         $doc = new DocumentNode();
         $list = new ElementNode('list');
-        $item1 = new ElementNode('*');
+        $item1 = new ElementNode('listitem');
         $item1->addChild(new TextNode('Item 1'));
-        $item2 = new ElementNode('*');
+        $item2 = new ElementNode('listitem');
         $item2->addChild(new TextNode('Item 2'));
         $list->addChild($item1);
         $list->addChild($item2);
@@ -132,8 +132,8 @@ class XhtmlTest extends TestCase
     public function testNestedTags(): void
     {
         $doc = new DocumentNode();
-        $bold = new ElementNode('b');
-        $italic = new ElementNode('i');
+        $bold = new ElementNode('bold');
+        $italic = new ElementNode('italic');
         $italic->addChild(new TextNode('nested'));
         $bold->addChild($italic);
         $doc->addChild($bold);
@@ -143,12 +143,11 @@ class XhtmlTest extends TestCase
         $this->assertSame('<strong><em>nested</em></strong>', $html);
     }
 
-    public function testRenderAsteriskMethodName(): void
+    public function testRenderListitemMethodName(): void
     {
-        // Test that renderAsterisk() method exists and works
-        // (asterisk is special char in method name)
+        // Test that renderListitem() method works
         $doc = new DocumentNode();
-        $item = new ElementNode('*');
+        $item = new ElementNode('listitem');
         $item->addChild(new TextNode('item'));
         $doc->addChild($item);
 

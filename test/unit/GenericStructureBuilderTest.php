@@ -44,9 +44,9 @@ class GenericStructureBuilderTest extends TestCase
     public function testSimpleTag(): void
     {
         $tokens = [
-            new Token(TokenType::OPEN_TAG, 'b', 0),
+            new Token(TokenType::OPEN_TAG, 'bold', 0),
             new Token(TokenType::TEXT, 'bold', 3),
-            new Token(TokenType::CLOSE_TAG, 'b', 7),
+            new Token(TokenType::CLOSE_TAG, 'bold', 7),
         ];
 
         $doc = $this->builder->build($tokens);
@@ -54,7 +54,7 @@ class GenericStructureBuilderTest extends TestCase
 
         $this->assertCount(1, $children);
         $this->assertInstanceOf(ElementNode::class, $children[0]);
-        $this->assertSame('b', $children[0]->getName());
+        $this->assertSame('bold', $children[0]->getName());
 
         $boldChildren = $children[0]->getChildren();
         $this->assertCount(1, $boldChildren);
@@ -65,29 +65,29 @@ class GenericStructureBuilderTest extends TestCase
     public function testNestedTags(): void
     {
         $tokens = [
-            new Token(TokenType::OPEN_TAG, 'b', 0),
+            new Token(TokenType::OPEN_TAG, 'bold', 0),
             new Token(TokenType::TEXT, 'outer', 3),
-            new Token(TokenType::OPEN_TAG, 'b', 8),
+            new Token(TokenType::OPEN_TAG, 'bold', 8),
             new Token(TokenType::TEXT, 'inner', 11),
-            new Token(TokenType::CLOSE_TAG, 'b', 16),
-            new Token(TokenType::CLOSE_TAG, 'b', 20),
+            new Token(TokenType::CLOSE_TAG, 'bold', 16),
+            new Token(TokenType::CLOSE_TAG, 'bold', 20),
         ];
 
         $doc = $this->builder->build($tokens);
         $outer = $doc->getChildren()[0];
 
-        $this->assertSame('b', $outer->getName());
+        $this->assertSame('bold', $outer->getName());
         $this->assertCount(2, $outer->getChildren());
 
         $innerBold = $outer->getChildren()[1];
         $this->assertInstanceOf(ElementNode::class, $innerBold);
-        $this->assertSame('b', $innerBold->getName());
+        $this->assertSame('bold', $innerBold->getName());
     }
 
     public function testAutoCloseUnclosedTag(): void
     {
         $tokens = [
-            new Token(TokenType::OPEN_TAG, 'b', 0),
+            new Token(TokenType::OPEN_TAG, 'bold', 0),
             new Token(TokenType::TEXT, 'unclosed', 3),
         ];
 
@@ -119,9 +119,9 @@ class GenericStructureBuilderTest extends TestCase
     {
         $tokens = [
             new Token(TokenType::OPEN_TAG, 'code', 0),
-            new Token(TokenType::OPEN_TAG, 'b', 6), // Should not be parsed as tag
+            new Token(TokenType::OPEN_TAG, 'bold', 6), // Should not be parsed as tag
             new Token(TokenType::TEXT, 'raw', 9),
-            new Token(TokenType::CLOSE_TAG, 'b', 12),
+            new Token(TokenType::CLOSE_TAG, 'bold', 12),
             new Token(TokenType::CLOSE_TAG, 'code', 16),
         ];
 
@@ -139,9 +139,9 @@ class GenericStructureBuilderTest extends TestCase
     {
         $tokens = [
             new Token(TokenType::OPEN_TAG, 'list', 0),
-            new Token(TokenType::OPEN_TAG, '*', 6),
+            new Token(TokenType::OPEN_TAG, 'listitem', 6),
             new Token(TokenType::TEXT, 'item1', 9),
-            new Token(TokenType::OPEN_TAG, '*', 14),
+            new Token(TokenType::OPEN_TAG, 'listitem', 14),
             new Token(TokenType::TEXT, 'item2', 17),
             new Token(TokenType::CLOSE_TAG, 'list', 22),
         ];
@@ -151,7 +151,7 @@ class GenericStructureBuilderTest extends TestCase
 
         $this->assertSame('list', $list->getName());
         $this->assertCount(2, $list->getChildren());
-        $this->assertSame('*', $list->getChildren()[0]->getName());
-        $this->assertSame('*', $list->getChildren()[1]->getName());
+        $this->assertSame('listitem', $list->getChildren()[0]->getName());
+        $this->assertSame('listitem', $list->getChildren()[1]->getName());
     }
 }
