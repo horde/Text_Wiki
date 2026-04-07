@@ -241,6 +241,6 @@ class CowikiParserList extends WikiParserBase
         }
 
         // we're done!  send back the replacement text.
-        return "\n" . $return . "\n\n";
+        return $return;
     }
 }

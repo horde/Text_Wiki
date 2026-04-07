@@ -38,7 +38,7 @@ class CowikiRendererList extends WikiRendererBase
             case 'number_list_end':
 
                 if ($options['level'] == 0) {
-                    //return "\n";
+                    return "\n";
                 }
                 break;
             case 'bullet_item_start':
