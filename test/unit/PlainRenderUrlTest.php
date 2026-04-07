@@ -23,6 +23,29 @@ class PlainRenderUrlTest extends TestCase
 http://www.example.com/page
 ';
 
+        // Default behavior: show URL in parentheses for described links
+        // This preserves URL information in plain text output (useful for email, PDFs, etc.)
+        $expected = '
+An example page (http://www.example.com/page)
+http://www.example.com/page
+';
+
+        $this->assertEquals($expected, $wiki->transform($input, 'Plain'));
+    }
+
+    public function testRenderUrlWithoutShowingUrl(): void
+    {
+        $wiki = TextWikiBase::factory('Default', ['Url']);
+
+        // Configure to hide URLs (PEAR Text_Wiki behavior)
+        $wiki->setRenderConf('Plain', 'Url', ['show_url' => false]);
+
+        $input = '
+[http://www.example.com/page An example page]
+http://www.example.com/page
+';
+
+        // With show_url=false, only show link text
         $expected = '
 An example page
 http://www.example.com/page

@@ -126,22 +126,22 @@ class CowikiIdempotencyTest extends TestCase
     public function testComplexDocumentIdempotency(): void
     {
         $wiki = TextWikiBase::factory('Cowiki', [
-            'Heading', 'Bold', 'Italic', 'List', 'Url', 'Paragraph'
+            'Heading', 'Bold', 'Italic', 'List', 'Url', 'Paragraph',
         ]);
 
         $source = <<<'COWIKI'
-+ Main Heading
+            + Main Heading
 
-This is a paragraph with *bold* and /italic/ text.
+            This is a paragraph with *bold* and /italic/ text.
 
-++ Sub Heading
+            ++ Sub Heading
 
-* First item
-* Second item with *emphasis*
- * Nested item
+            * First item
+            * Second item with *emphasis*
+             * Nested item
 
-Visit ((http://example.com)(our website)) for more.
-COWIKI;
+            Visit ((http://example.com)(our website)) for more.
+            COWIKI;
 
         $firstPass = $wiki->transform($source, 'Cowiki');
         $secondPass = $wiki->transform($firstPass, 'Cowiki');

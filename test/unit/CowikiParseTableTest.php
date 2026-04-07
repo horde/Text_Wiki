@@ -236,4 +236,3 @@ class CowikiParseTableTest extends TestCase
         $this->assertGreaterThanOrEqual(2, substr_count($result, '<table'));
     }
 }
-
