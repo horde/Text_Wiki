@@ -9,6 +9,7 @@ use Throwable;
  *
  * This interface is used to define custom exceptions for the Text Wiki package.
  *
+ * @author     Paul M. Jones <pmjones@php.net>
  * @author     Ralf Lang <ralf.lang@ralf-lang.de>
  */
 interface TextWikiException extends Throwable {};

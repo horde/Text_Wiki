@@ -17,6 +17,7 @@ use Horde\Text\Wiki\TagType;
 /**
  * [i]italic text[/i] tag definition
  *
+ * @author   Bertrand Gugger <bertrand@toggg.com>
  * @author   Ralf Lang <lang@b1-systems.de>
  * @category Horde
  * @license  http://www.horde.org/licenses/lgpl21 LGPL 2.1
@@ -26,6 +27,6 @@ class ItalicTag extends AbstractTagDefinition
 {
     public function __construct()
     {
-        parent::__construct('i', TagType::INLINE);
+        parent::__construct('italic', TagType::INLINE);
     }
 }

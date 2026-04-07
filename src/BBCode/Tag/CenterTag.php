@@ -17,6 +17,7 @@ use Horde\Text\Wiki\TagType;
 /**
  * [center]centered text[/center] tag definition
  *
+ * @author   Bertrand Gugger <bertrand@toggg.com>
  * @author   Ralf Lang <lang@b1-systems.de>
  * @category Horde
  * @license  http://www.horde.org/licenses/lgpl21 LGPL 2.1

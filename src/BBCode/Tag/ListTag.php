@@ -20,6 +20,7 @@ use Horde\Text\Wiki\TagType;
  *
  * Can only contain [*] list items and nested [list] tags.
  *
+ * @author   Bertrand Gugger <bertrand@toggg.com>
  * @author   Ralf Lang <lang@b1-systems.de>
  * @category Horde
  * @license  http://www.horde.org/licenses/lgpl21 LGPL 2.1
@@ -41,6 +42,6 @@ class ListTag extends AbstractTagDefinition
      */
     public function canContain(TagDefinition $child): bool
     {
-        return $child->getName() === '*' || $child->getName() === 'list';
+        return $child->getName() === 'listitem' || $child->getName() === 'list';
     }
 }

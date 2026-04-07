@@ -46,6 +46,7 @@ use Horde\Text\Wiki\SimpleTagRegistry;
  * - GenericStructureBuilder (tokens → validated AST)
  * - TagRegistry (12 core BBCode tags)
  *
+ * @author   Bertrand Gugger <bertrand@toggg.com>
  * @author   Ralf Lang <lang@b1-systems.de>
  * @category Horde
  * @license  http://www.horde.org/licenses/lgpl21 LGPL 2.1

@@ -21,6 +21,7 @@ use Horde\Text\Wiki\Tokenizer;
  * Converts BBCode text into a stream of tokens.
  * Handles [tag], [tag=value], [tag attr=value], and [/tag] patterns.
  *
+ * @author   Bertrand Gugger <bertrand@toggg.com>
  * @author   Ralf Lang <lang@b1-systems.de>
  * @category Horde
  * @license  http://www.horde.org/licenses/lgpl21 LGPL 2.1
@@ -28,6 +29,25 @@ use Horde\Text\Wiki\Tokenizer;
  */
 class BBCodeTokenizer implements Tokenizer
 {
+    /**
+     * Map BBCode syntax names to canonical AST tag names
+     *
+     * Tags not listed here keep their BBCode name as-is
+     * (e.g., code, list, url, email, color, font, size, youtube,
+     * center, left, right, justify).
+     */
+    private const NAME_MAP = [
+        'b'     => 'bold',
+        'i'     => 'italic',
+        'u'     => 'underline',
+        's'     => 'strike',
+        'sup'   => 'superscript',
+        'sub'   => 'subscript',
+        'hr'    => 'horiz',
+        'img'   => 'image',
+        '*'     => 'listitem',
+        'quote' => 'blockquote',
+    ];
     /**
      * Tokenize BBCode text
      *
@@ -159,10 +179,12 @@ class BBCodeTokenizer implements Tokenizer
                 return null; // Invalid [/]
             }
 
+            $canonicalName = self::NAME_MAP[$tagName] ?? $tagName;
+
             return [
                 'token' => new Token(
                     TokenType::CLOSE_TAG,
-                    $tagName,
+                    $canonicalName,
                     $startPos,
                     [],
                     $tagContent,
@@ -215,6 +237,8 @@ class BBCodeTokenizer implements Tokenizer
             return null;
         }
 
+        $canonicalName = self::NAME_MAP[$tagName] ?? $tagName;
+
         $attributes = [];
         $remainder = substr($content, $spacePos);
 
@@ -223,12 +247,12 @@ class BBCodeTokenizer implements Tokenizer
             $value = trim(substr($remainder, 1));
             $value = $this->unquoteValue($value);
 
-            // Map to attribute name based on tag
+            // Map to attribute name based on BBCode syntax name
             $attrName = $this->getDefaultAttributeName($tagName);
             $attributes[$attrName] = $value;
 
             return [
-                'name' => $tagName,
+                'name' => $canonicalName,
                 'attributes' => $attributes,
             ];
         }
@@ -239,7 +263,7 @@ class BBCodeTokenizer implements Tokenizer
         }
 
         return [
-            'name' => $tagName,
+            'name' => $canonicalName,
             'attributes' => $attributes,
         ];
     }

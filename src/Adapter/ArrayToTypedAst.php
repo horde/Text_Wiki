@@ -25,6 +25,7 @@ use Horde\Text\Wiki\Node\TextNode;
  * This enables gradual migration from array-based to typed AST
  * while keeping a single modern renderer.
  *
+ * @author   Paul M. Jones <pmjones@php.net>
  * @author   Ralf Lang <lang@b1-systems.de>
  * @category Horde
  * @license  http://www.horde.org/licenses/lgpl21 LGPL 2.1
@@ -32,6 +33,21 @@ use Horde\Text\Wiki\Node\TextNode;
  */
 class ArrayToTypedAst
 {
+    /**
+     * Map legacy short tag names to canonical semantic names
+     */
+    private const NAME_MAP = [
+        'b'     => 'bold',
+        'i'     => 'italic',
+        'u'     => 'underline',
+        's'     => 'strike',
+        'sup'   => 'superscript',
+        'sub'   => 'subscript',
+        'hr'    => 'horiz',
+        'img'   => 'image',
+        '*'     => 'listitem',
+        'quote' => 'blockquote',
+    ];
     /**
      * Convert array-based AST to typed AST
      *
@@ -109,8 +125,11 @@ class ArrayToTypedAst
         // Extract attributes
         $attrs = $element['attr'] ?? $element['attributes'] ?? [];
 
+        // Normalize legacy tag names to canonical names
+        $canonicalName = self::NAME_MAP[$name] ?? $name;
+
         // Create element node
-        $node = new ElementNode($name, $attrs);
+        $node = new ElementNode($canonicalName, $attrs);
 
         // Handle text content
         if (isset($element['text']) && is_string($element['text'])) {

@@ -19,6 +19,7 @@ use Horde\Text\Wiki\Node\DocumentNode;
  * Parsers convert markup text (BBCode, Mediawiki, etc.) into a structured
  * document tree for validation and rendering.
  *
+ * @author   Paul M. Jones <pmjones@php.net>
  * @author   Ralf Lang <lang@b1-systems.de>
  * @category Horde
  * @license  http://www.horde.org/licenses/lgpl21 LGPL 2.1

@@ -17,6 +17,8 @@ use Horde\Text\Wiki\TagType;
 /**
  * [sub]subscript text[/sub] tag definition
  *
+ * @author   Bertrand Gugger <bertrand@toggg.com>
+ * @author   Firman Wandayandi <firman@php.net>
  * @author   Ralf Lang <lang@b1-systems.de>
  * @category Horde
  * @license  http://www.horde.org/licenses/lgpl21 LGPL 2.1
@@ -26,6 +28,6 @@ class SubscriptTag extends AbstractTagDefinition
 {
     public function __construct()
     {
-        parent::__construct('sub', TagType::INLINE);
+        parent::__construct('subscript', TagType::INLINE);
     }
 }

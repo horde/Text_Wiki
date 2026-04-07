@@ -14,6 +14,7 @@ namespace Horde\Text\Wiki;
 /**
  * Tag types for nesting validation
  *
+ * @author   Paul M. Jones <pmjones@php.net>
  * @author   Ralf Lang <lang@b1-systems.de>
  * @category Horde
  * @license  http://www.horde.org/licenses/lgpl21 LGPL 2.1

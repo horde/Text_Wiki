@@ -23,6 +23,7 @@ use Horde\Text\Wiki\Renderer;
  * Renders the typed document tree to XHTML using visitor pattern.
  * Works with AST from modern parsers (BBCode, future Mediawiki, etc.).
  *
+ * @author   Paul M. Jones <pmjones@php.net>
  * @author   Ralf Lang <lang@b1-systems.de>
  * @category Horde
  * @license  http://www.horde.org/licenses/lgpl21 LGPL 2.1
@@ -82,10 +83,7 @@ class Xhtml implements Renderer, NodeVisitor
     public function visitElement(ElementNode $node): string
     {
         $tagName = $node->getName();
-
-        // Special case: map '*' to method-safe name
-        $methodName = ($tagName === '*') ? 'listitem' : $tagName;
-        $method = 'render' . ucfirst($methodName);
+        $method = 'render' . ucfirst($tagName);
 
         // If specific render method exists, use it
         if (method_exists($this, $method)) {
@@ -129,43 +127,45 @@ class Xhtml implements Renderer, NodeVisitor
     }
 
     /**
-     * Render [b]bold[/b] tag
+     * Render bold tag
      *
      * @param ElementNode $node Bold element
      *
      * @return string <strong>...</strong>
      */
-    protected function renderB(ElementNode $node): string
+    protected function renderBold(ElementNode $node): string
     {
         return '<strong>' . $this->renderChildren($node) . '</strong>';
     }
 
     /**
-     * Render [i]italic[/i] tag
+     * Render italic tag
      *
      * @param ElementNode $node Italic element
      *
      * @return string <em>...</em>
      */
-    protected function renderI(ElementNode $node): string
+    protected function renderItalic(ElementNode $node): string
     {
         return '<em>' . $this->renderChildren($node) . '</em>';
     }
 
     /**
-     * Render [u]underline[/u] tag
+     * Render underline tag
      *
      * @param ElementNode $node Underline element
      *
      * @return string <u>...</u>
      */
-    protected function renderU(ElementNode $node): string
+    protected function renderUnderline(ElementNode $node): string
     {
         return '<u>' . $this->renderChildren($node) . '</u>';
     }
 
     /**
-     * Render [url]...[/url] or [url=...]...[/url] tag
+     * Render URL link
+     *
+     * Supports both BBCode [url=...]...[/url] and Yawiki [url text] style.
      *
      * @param ElementNode $node URL element
      *
@@ -175,7 +175,7 @@ class Xhtml implements Renderer, NodeVisitor
     {
         $attrs = $node->getAttributes();
 
-        // [url=http://...]text[/url]
+        // [url=http://...]text[/url] or Yawiki [url text]
         if (isset($attrs['href'])) {
             $href = htmlspecialchars($attrs['href'], ENT_QUOTES | ENT_HTML5, 'UTF-8');
             return '<a href="' . $href . '">' . $this->renderChildren($node) . '</a>';
@@ -193,20 +193,40 @@ class Xhtml implements Renderer, NodeVisitor
     }
 
     /**
-     * Render [img]http://...[/img] or [img alt="..."]http://...[/img] tag
+     * Render image
+     *
+     * Supports both BBCode [img]url[/img] (URL from content) and
+     * Yawiki [[image url]] (URL from 'src' attribute).
      *
      * @param ElementNode $node Image element
      *
      * @return string <img src="..." alt="..." />
      */
-    protected function renderImg(ElementNode $node): string
+    protected function renderImage(ElementNode $node): string
     {
+        $attrs = $node->getAttributes();
+
+        // Yawiki style: src from attribute
+        if (isset($attrs['src'])) {
+            $src = htmlspecialchars($attrs['src'], ENT_QUOTES | ENT_HTML5, 'UTF-8');
+            $alt = htmlspecialchars($attrs['alt'] ?? '', ENT_QUOTES | ENT_HTML5, 'UTF-8');
+
+            $html = '<img src="' . $src . '" alt="' . $alt . '"';
+
+            if (isset($attrs['link'])) {
+                $html .= ' />';
+                $link = htmlspecialchars($attrs['link'], ENT_QUOTES | ENT_HTML5, 'UTF-8');
+                return '<a href="' . $link . '">' . $html . '</a>';
+            }
+
+            return $html . ' />';
+        }
+
+        // BBCode style: src from content
         $children = $node->getChildren();
         if (count($children) === 1 && $children[0] instanceof TextNode) {
             $src = htmlspecialchars($children[0]->getText(), ENT_QUOTES | ENT_HTML5, 'UTF-8');
 
-            // Get alt text from attributes (default to empty string)
-            $attrs = $node->getAttributes();
             $alt = isset($attrs['alt'])
                 ? htmlspecialchars($attrs['alt'], ENT_QUOTES | ENT_HTML5, 'UTF-8')
                 : '';
@@ -214,23 +234,25 @@ class Xhtml implements Renderer, NodeVisitor
             return '<img src="' . $src . '" alt="' . $alt . '" />';
         }
 
-        // Malformed - render nothing
         return '';
     }
 
     /**
-     * Render [quote]...[/quote] or [quote=Author]...[/quote] tag
+     * Render blockquote
      *
-     * @param ElementNode $node Quote element
+     * Supports both BBCode [quote=Author]...[/quote] and
+     * Yawiki > blockquote style.
+     *
+     * @param ElementNode $node Blockquote element
      *
      * @return string <blockquote>...</blockquote>
      */
-    protected function renderQuote(ElementNode $node): string
+    protected function renderBlockquote(ElementNode $node): string
     {
         $attrs = $node->getAttributes();
         $output = '<blockquote>';
 
-        // [quote=Author]
+        // [quote=Author] - BBCode attribution
         if (isset($attrs['author'])) {
             $author = htmlspecialchars($attrs['author'], ENT_QUOTES | ENT_HTML5, 'UTF-8');
             $output .= '<p><strong>' . $author . ' wrote:</strong></p>';
@@ -274,6 +296,11 @@ class Xhtml implements Renderer, NodeVisitor
         return '<pre><code>' . $this->renderChildren($node) . '</code></pre>';
     }
 
+    protected function renderPreformatted(ElementNode $node): string
+    {
+        return '<pre>' . $this->renderChildren($node) . '</pre>';
+    }
+
     /**
      * Render [list]...[/list] tag
      *
@@ -291,12 +318,11 @@ class Xhtml implements Renderer, NodeVisitor
     {
         $attrs = $node->getAttributes();
 
-        // Check for type attribute
         if (isset($attrs['type'])) {
             $type = $attrs['type'];
 
-            // Numeric ordered list
-            if ($type === '1') {
+            // Numeric ordered list (BBCode '1' or wiki 'number')
+            if ($type === '1' || $type === 'number') {
                 return '<ol>' . $this->renderChildren($node) . '</ol>';
             }
 
@@ -378,49 +404,59 @@ class Xhtml implements Renderer, NodeVisitor
     }
 
     /**
-     * Render [s]strikethrough[/s] tag
+     * Render strikethrough tag
      *
      * @param ElementNode $node Strike element
      *
      * @return string <s>...</s>
      */
-    protected function renderS(ElementNode $node): string
+    protected function renderStrike(ElementNode $node): string
     {
         return '<s>' . $this->renderChildren($node) . '</s>';
     }
 
     /**
-     * Render [sup]superscript[/sup] tag
+     * Render superscript tag
      *
      * @param ElementNode $node Superscript element
      *
      * @return string <sup>...</sup>
      */
-    protected function renderSup(ElementNode $node): string
+    protected function renderSuperscript(ElementNode $node): string
     {
         return '<sup>' . $this->renderChildren($node) . '</sup>';
     }
 
     /**
-     * Render [sub]subscript[/sub] tag
+     * Render subscript tag
      *
      * @param ElementNode $node Subscript element
      *
      * @return string <sub>...</sub>
      */
-    protected function renderSub(ElementNode $node): string
+    protected function renderSubscript(ElementNode $node): string
     {
         return '<sub>' . $this->renderChildren($node) . '</sub>';
     }
 
+    protected function renderDel(ElementNode $node): string
+    {
+        return '<del>' . $this->renderChildren($node) . '</del>';
+    }
+
+    protected function renderIns(ElementNode $node): string
+    {
+        return '<ins>' . $this->renderChildren($node) . '</ins>';
+    }
+
     /**
-     * Render [hr] horizontal rule tag
+     * Render horizontal rule tag
      *
-     * @param ElementNode $node HR element
+     * @param ElementNode $node Horiz element
      *
      * @return string <hr />
      */
-    protected function renderHr(ElementNode $node): string
+    protected function renderHoriz(ElementNode $node): string
     {
         return '<hr />';
     }
@@ -496,7 +532,7 @@ class Xhtml implements Renderer, NodeVisitor
     }
 
     /**
-     * Render [center]...[/center] tag
+     * Render [center]...[/center] alignment
      *
      * Traditional XHTML with align attribute.
      *
@@ -549,5 +585,280 @@ class Xhtml implements Renderer, NodeVisitor
     protected function renderJustify(ElementNode $node): string
     {
         return '<div align="justify">' . $this->renderChildren($node) . '</div>';
+    }
+
+    /**
+     * Render strong emphasis
+     *
+     * @param ElementNode $node Strong element
+     *
+     * @return string <strong>...</strong>
+     */
+    protected function renderStrong(ElementNode $node): string
+    {
+        return '<strong>' . $this->renderChildren($node) . '</strong>';
+    }
+
+    /**
+     * Render emphasis
+     *
+     * @param ElementNode $node Emphasis element
+     *
+     * @return string <em>...</em>
+     */
+    protected function renderEmphasis(ElementNode $node): string
+    {
+        return '<em>' . $this->renderChildren($node) . '</em>';
+    }
+
+    /**
+     * Render monospace (teletype)
+     *
+     * @param ElementNode $node Tt element
+     *
+     * @return string <tt>...</tt>
+     */
+    protected function renderTt(ElementNode $node): string
+    {
+        return '<tt>' . $this->renderChildren($node) . '</tt>';
+    }
+
+    /**
+     * Render heading with level
+     *
+     * @param ElementNode $node Heading element with 'level' attribute
+     *
+     * @return string <h1>...<h6>
+     */
+    protected function renderHeading(ElementNode $node): string
+    {
+        $attrs = $node->getAttributes();
+        $level = $attrs['level'] ?? 1;
+        $level = max(1, min(6, (int)$level));
+        $tag = 'h' . $level;
+
+        return '<' . $tag . '>' . $this->renderChildren($node) . '</' . $tag . '>';
+    }
+
+    /**
+     * Render line break
+     *
+     * @param ElementNode $node Break element
+     *
+     * @return string <br />
+     */
+    protected function renderBreak(ElementNode $node): string
+    {
+        return '<br />';
+    }
+
+    /**
+     * Render ((freelink)) wiki link
+     *
+     * @param ElementNode $node Freelink element with 'page' attribute
+     *
+     * @return string <a href="...">...</a>
+     */
+    protected function renderFreelink(ElementNode $node): string
+    {
+        $attrs = $node->getAttributes();
+        $page = $attrs['page'] ?? '';
+        $href = htmlspecialchars(str_replace(' ', '+', $page), ENT_QUOTES | ENT_HTML5, 'UTF-8');
+
+        return '<a href="' . $href . '">' . $this->renderChildren($node) . '</a>';
+    }
+
+    /**
+     * Render wiki page link (Cowiki wikilinks)
+     *
+     * @param ElementNode $node Wikilink element with 'page' and optional 'anchor' attributes
+     *
+     * @return string <a href="...">...</a>
+     */
+    protected function renderWikilink(ElementNode $node): string
+    {
+        $attrs = $node->getAttributes();
+        $page = $attrs['page'] ?? '';
+        $anchor = $attrs['anchor'] ?? '';
+        $href = htmlspecialchars(str_replace(' ', '+', $page), ENT_QUOTES | ENT_HTML5, 'UTF-8');
+        if ($anchor !== '') {
+            $href .= '#' . htmlspecialchars($anchor, ENT_QUOTES | ENT_HTML5, 'UTF-8');
+        }
+
+        return '<a href="' . $href . '">' . $this->renderChildren($node) . '</a>';
+    }
+
+    /**
+     * Render PHP manual lookup link
+     *
+     * @param ElementNode $node Phplookup element with 'function' attribute
+     *
+     * @return string <a href="php.net/...">...</a>
+     */
+    protected function renderPhplookup(ElementNode $node): string
+    {
+        $attrs = $node->getAttributes();
+        $function = $attrs['function'] ?? '';
+        $href = 'https://www.php.net/' . htmlspecialchars($function, ENT_QUOTES | ENT_HTML5, 'UTF-8');
+
+        return '<a href="' . $href . '">' . $this->renderChildren($node) . '</a>';
+    }
+
+    /**
+     * Render table
+     *
+     * @param ElementNode $node Table element
+     *
+     * @return string <table>...</table>
+     */
+    protected function renderTable(ElementNode $node): string
+    {
+        return '<table>' . $this->renderChildren($node) . '</table>';
+    }
+
+    /**
+     * Render table row
+     *
+     * @param ElementNode $node Row element
+     *
+     * @return string <tr>...</tr>
+     */
+    protected function renderRow(ElementNode $node): string
+    {
+        return '<tr>' . $this->renderChildren($node) . '</tr>';
+    }
+
+    /**
+     * Render table cell
+     *
+     * @param ElementNode $node Cell element with optional 'type' attribute
+     *
+     * @return string <td>...</td> or <th>...</th>
+     */
+    protected function renderCell(ElementNode $node): string
+    {
+        $attrs = $node->getAttributes();
+        $tag = ($attrs['type'] ?? 'data') === 'header' ? 'th' : 'td';
+
+        return '<' . $tag . '>' . $this->renderChildren($node) . '</' . $tag . '>';
+    }
+
+    /**
+     * Render definition list
+     *
+     * @param ElementNode $node Deflist element
+     *
+     * @return string <dl>...</dl>
+     */
+    protected function renderDeflist(ElementNode $node): string
+    {
+        return '<dl>' . $this->renderChildren($node) . '</dl>';
+    }
+
+    /**
+     * Render definition term
+     *
+     * @param ElementNode $node Defterm element
+     *
+     * @return string <dt>...</dt>
+     */
+    protected function renderDefterm(ElementNode $node): string
+    {
+        return '<dt>' . $this->renderChildren($node) . '</dt>';
+    }
+
+    /**
+     * Render definition description
+     *
+     * @param ElementNode $node Defdef element
+     *
+     * @return string <dd>...</dd>
+     */
+    protected function renderDefdef(ElementNode $node): string
+    {
+        return '<dd>' . $this->renderChildren($node) . '</dd>';
+    }
+
+    /**
+     * Render colored text
+     *
+     * @param ElementNode $node Colortext element with 'color' attribute
+     *
+     * @return string <span style="color: ...">...</span>
+     */
+    protected function renderColortext(ElementNode $node): string
+    {
+        $attrs = $node->getAttributes();
+        if (!isset($attrs['color'])) {
+            return $this->renderChildren($node);
+        }
+
+        $color = htmlspecialchars($attrs['color'], ENT_QUOTES | ENT_HTML5, 'UTF-8');
+        return '<span style="color: ' . $color . ';">' . $this->renderChildren($node) . '</span>';
+    }
+
+    /**
+     * Render anchor/ID target
+     *
+     * @param ElementNode $node Anchor element with 'name' attribute
+     *
+     * @return string <a id="..."></a>
+     */
+    protected function renderAnchor(ElementNode $node): string
+    {
+        $attrs = $node->getAttributes();
+        $name = htmlspecialchars($attrs['name'] ?? '', ENT_QUOTES | ENT_HTML5, 'UTF-8');
+
+        return '<a id="' . $name . '"></a>';
+    }
+
+    /**
+     * Render table of contents
+     *
+     * Placeholder: actual TOC generation requires a second pass.
+     *
+     * @param ElementNode $node Toc element
+     *
+     * @return string TOC placeholder div
+     */
+    protected function renderToc(ElementNode $node): string
+    {
+        return '<div class="toc"></div>';
+    }
+
+    /**
+     * Render paragraph
+     *
+     * @param ElementNode $node Paragraph element
+     *
+     * @return string <p>...</p>
+     */
+    protected function renderParagraph(ElementNode $node): string
+    {
+        return '<p>' . $this->renderChildren($node) . '</p>';
+    }
+
+    /**
+     * Render deleted revision markup
+     *
+     * @param ElementNode $node Revise_del element
+     *
+     * @return string <del>...</del>
+     */
+    protected function renderRevise_del(ElementNode $node): string
+    {
+        return '<del>' . $this->renderChildren($node) . '</del>';
+    }
+
+    /**
+     * Render inserted revision markup
+     *
+     * @param ElementNode $node Revise_ins element
+     *
+     * @return string <ins>...</ins>
+     */
+    protected function renderRevise_ins(ElementNode $node): string
+    {
+        return '<ins>' . $this->renderChildren($node) . '</ins>';
     }
 }

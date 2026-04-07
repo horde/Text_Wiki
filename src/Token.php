@@ -16,6 +16,7 @@ namespace Horde\Text\Wiki;
  *
  * Immutable data structure representing a single token from the input stream.
  *
+ * @author   Paul M. Jones <pmjones@php.net>
  * @author   Ralf Lang <lang@b1-systems.de>
  * @category Horde
  * @license  http://www.horde.org/licenses/lgpl21 LGPL 2.1

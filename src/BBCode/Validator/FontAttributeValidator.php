@@ -17,6 +17,7 @@ namespace Horde\Text\Wiki\BBCode\Validator;
  * Validates font family names to prevent CSS injection attacks.
  * Allows letters, numbers, spaces, hyphens, and common punctuation.
  *
+ * @author   Bertrand Gugger <bertrand@toggg.com>
  * @author   Ralf Lang <lang@b1-systems.de>
  * @category Horde
  * @license  http://www.horde.org/licenses/lgpl21 LGPL 2.1
