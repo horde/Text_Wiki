@@ -9,7 +9,7 @@ class CowikiRendererHeading extends WikiRendererBase
         if ($options['type'] == 'start') {
             return str_pad('', $options['level'], '+') . ' ';
         } else {
-            return '';
+            return "\n";
         }
     }
 }
