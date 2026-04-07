@@ -44,7 +44,7 @@ class BBCodeParserBold extends WikiParserBase
      * @var string
      * @see parse()
      */
-    public $regex =  "#\[b](.*?)\[/b]#i";
+    public $regex =  "#\[b](.*?)\[/b]#is";
 
 
     /**

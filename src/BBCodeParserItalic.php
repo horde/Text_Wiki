@@ -44,7 +44,7 @@ class BBCodeParserItalic extends WikiParserBase
      * @var string
      * @see parse()
      */
-    public $regex =  "#\[i](.*?)\[/i]#i";
+    public $regex =  "#\[i](.*?)\[/i]#is";
 
     /**
      * Generates a replacement for the matched text.  Token options are:

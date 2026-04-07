@@ -44,7 +44,7 @@ class BBCodeParserUnderline extends WikiParserBase
      * @var string
      * @see parse()
      */
-    public $regex =  "#\[u](.*?)\[/u]#i";
+    public $regex =  "#\[u](.*?)\[/u]#is";
 
 
     /**

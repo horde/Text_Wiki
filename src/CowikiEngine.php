@@ -35,6 +35,4 @@ namespace Horde\Text\Wiki;
  * @link       http://pear.php.net/package/Text_Wiki
  * @see        Text_Wiki::Text_Wiki()
  */
-class CowikiEngine extends TextWikiBase
-{
-}
+class CowikiEngine extends TextWikiBase {}

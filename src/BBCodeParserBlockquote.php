@@ -45,7 +45,7 @@ class BBCodeParserBlockquote extends WikiParserBase
      * @var string
      * @see Text_Wiki_Parse::parse()
      */
-    public $regex = '#\[quote(?:=\s*"(.*?)")?\s*]((?:((?R))|.)*?)\[/quote]#msi';
+    public $regex = '#\[quote(?:=\s*"?([^"\]]*)"?)?\s*]((?:((?R))|.)*?)\[/quote]#msi';
 
     /**
      * The current quote nesting depth, starts by zero
