@@ -350,10 +350,14 @@ class BBCodeTokenizer implements Tokenizer
      *
      * Maps tag names to their default attribute:
      * - [url=...] → href
+     * - [email=...] → email
      * - [color=...] → color
      * - [font=...] → font
      * - [size=...] → size
      * - [quote=...] → author
+     * - [list=...] → type
+     * - [img=...] → alt (for [img alt="..."])
+     * - [code=...] → language
      *
      * @param string $tagName Tag name
      *
@@ -363,10 +367,14 @@ class BBCodeTokenizer implements Tokenizer
     {
         return match ($tagName) {
             'url' => 'href',
+            'email' => 'email',
             'color' => 'color',
             'font' => 'font',
             'size' => 'size',
             'quote' => 'author',
+            'list' => 'type',
+            'img' => 'alt',
+            'code' => 'language',
             default => 'value',
         };
     }

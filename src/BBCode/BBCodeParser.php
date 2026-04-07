@@ -12,17 +12,27 @@ declare(strict_types=1);
 namespace Horde\Text\Wiki\BBCode;
 
 use Horde\Text\Wiki\BBCode\Tag\BoldTag;
+use Horde\Text\Wiki\BBCode\Tag\CenterTag;
 use Horde\Text\Wiki\BBCode\Tag\CodeTag;
 use Horde\Text\Wiki\BBCode\Tag\ColorTag;
+use Horde\Text\Wiki\BBCode\Tag\EmailTag;
 use Horde\Text\Wiki\BBCode\Tag\FontTag;
+use Horde\Text\Wiki\BBCode\Tag\HrTag;
 use Horde\Text\Wiki\BBCode\Tag\ImgTag;
 use Horde\Text\Wiki\BBCode\Tag\ItalicTag;
+use Horde\Text\Wiki\BBCode\Tag\JustifyTag;
+use Horde\Text\Wiki\BBCode\Tag\LeftTag;
 use Horde\Text\Wiki\BBCode\Tag\ListItemTag;
 use Horde\Text\Wiki\BBCode\Tag\ListTag;
 use Horde\Text\Wiki\BBCode\Tag\QuoteTag;
+use Horde\Text\Wiki\BBCode\Tag\RightTag;
 use Horde\Text\Wiki\BBCode\Tag\SizeTag;
+use Horde\Text\Wiki\BBCode\Tag\StrikeTag;
+use Horde\Text\Wiki\BBCode\Tag\SubscriptTag;
+use Horde\Text\Wiki\BBCode\Tag\SuperscriptTag;
 use Horde\Text\Wiki\BBCode\Tag\UnderlineTag;
 use Horde\Text\Wiki\BBCode\Tag\UrlTag;
+use Horde\Text\Wiki\BBCode\Tag\YoutubeTag;
 use Horde\Text\Wiki\GenericStructureBuilder;
 use Horde\Text\Wiki\Node\DocumentNode;
 use Horde\Text\Wiki\Parser;
@@ -55,17 +65,39 @@ class BBCodeParser implements Parser
     {
         $this->tokenizer = new BBCodeTokenizer();
 
-        // Register 12 core BBCode tags
+        // Register core BBCode tags
         $registry = new SimpleTagRegistry();
+
+        // Basic formatting
         $registry->register(new BoldTag());
         $registry->register(new ItalicTag());
         $registry->register(new UnderlineTag());
+        $registry->register(new StrikeTag());
+        $registry->register(new SuperscriptTag());
+        $registry->register(new SubscriptTag());
+
+        // Links and media
         $registry->register(new UrlTag());
+        $registry->register(new EmailTag());
         $registry->register(new ImgTag());
+        $registry->register(new YoutubeTag());
+
+        // Block elements
         $registry->register(new QuoteTag());
         $registry->register(new CodeTag());
+        $registry->register(new HrTag());
+
+        // Alignment
+        $registry->register(new CenterTag());
+        $registry->register(new LeftTag());
+        $registry->register(new RightTag());
+        $registry->register(new JustifyTag());
+
+        // Lists
         $registry->register(new ListTag());
         $registry->register(new ListItemTag());
+
+        // Styling
         $registry->register(new ColorTag());
         $registry->register(new FontTag());
         $registry->register(new SizeTag());
