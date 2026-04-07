@@ -204,8 +204,14 @@ class CowikiParserWikilink extends WikiParserBase
         /*if ($matches[3][0] == '!') {
             return $matches[1] . substr($matches[3], 1) . $matches[4] . $matches[7];
         }*/
+        if (!isset($matches[2])) {
+            $matches[2] = '';
+        }
         if (!isset($matches[4])) {
             $matches[4] = '';
+        }
+        if (!isset($matches[7])) {
+            $matches[7] = '';
         }
         if ($matches[2] == '))' && $matches[7] == '((') {
             return $matches[1] . $matches[3] . $matches[4];

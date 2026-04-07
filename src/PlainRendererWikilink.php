@@ -19,6 +19,10 @@ class PlainRendererWikilink extends WikiRendererBase
 
     public function token($options)
     {
+        // If no custom text was provided, use the page name
+        if (empty($options['text'])) {
+            return $options['page'];
+        }
         return $options['text'];
     }
 }

@@ -22,6 +22,11 @@ class PlainRendererUrl extends WikiRendererBase
         if ($options['type'] == 'start' || $options['type'] == 'end') {
             return '';
         } else {
+            // For described links, show both text and URL
+            if (!empty($options['text']) && $options['text'] != $options['href']) {
+                return $options['text'] . ' (' . $options['href'] . ')';
+            }
+            // For plain URLs, just show the URL
             return $options['text'];
         }
     }
