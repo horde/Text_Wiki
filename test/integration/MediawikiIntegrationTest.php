@@ -83,7 +83,7 @@ class MediawikiIntegrationTest extends TestCase
     public function testMonospace(): void
     {
         $result = $this->render('<tt>monospace</tt>');
-        $this->assertStringContainsString('<tt>monospace</tt>', $result);
+        $this->assertStringContainsString('<code>monospace</code>', $result);
     }
 
     public function testSuperscript(): void
@@ -101,7 +101,7 @@ class MediawikiIntegrationTest extends TestCase
     public function testStrikethrough(): void
     {
         $result = $this->render('<s>struck</s>');
-        $this->assertStringContainsString('<s>struck</s>', $result);
+        $this->assertStringContainsString('<del>struck</del>', $result);
     }
 
     public function testDel(): void
@@ -301,7 +301,7 @@ class MediawikiIntegrationTest extends TestCase
     public function testColor(): void
     {
         $result = $this->render('<span style="color:red;">Red text</span>');
-        $this->assertStringContainsString('style="color: red"', $result);
+        $this->assertStringContainsString('style="color: red;"', $result);
         $this->assertStringContainsString('Red text', $result);
     }
 

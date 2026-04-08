@@ -235,11 +235,6 @@ class Plain implements Renderer, NodeVisitor
         return $this->renderChildren($node);
     }
 
-    protected function renderColortext(ElementNode $node): string
-    {
-        return $this->renderChildren($node);
-    }
-
     // ---------------------------------------------------------------
     // Alignment — strip, pass through text
     // ---------------------------------------------------------------
@@ -347,17 +342,6 @@ class Plain implements Renderer, NodeVisitor
     }
 
     protected function renderWikilink(ElementNode $node): string
-    {
-        $text = $this->renderChildren($node);
-        if ($text !== '') {
-            return $text;
-        }
-
-        $attrs = $node->getAttributes();
-        return $attrs['page'] ?? '';
-    }
-
-    protected function renderFreelink(ElementNode $node): string
     {
         $text = $this->renderChildren($node);
         if ($text !== '') {

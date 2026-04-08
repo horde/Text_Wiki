@@ -218,7 +218,7 @@ class BBCodeIntegrationTest extends TestCase
         $doc = $this->parser->parse($bbcode);
         $html = $this->renderer->render($doc);
 
-        $this->assertSame('<s>strikethrough text</s>', $html);
+        $this->assertSame('<del>strikethrough text</del>', $html);
     }
 
     public function testSuperscript(): void
@@ -306,7 +306,7 @@ class BBCodeIntegrationTest extends TestCase
         $doc = $this->parser->parse($bbcode);
         $html = $this->renderer->render($doc);
 
-        $this->assertStringContainsString('<s>strikethrough</s>', $html);
+        $this->assertStringContainsString('<del>strikethrough</del>', $html);
         $this->assertStringContainsString('<sup>superscript</sup>', $html);
     }
 

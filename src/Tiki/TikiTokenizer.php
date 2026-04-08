@@ -350,9 +350,9 @@ class TikiTokenizer implements Tokenizer
             $color = $matches[15][0];
             $text = $matches[16][0];
             return [
-                new Token(TokenType::OPEN_TAG, 'colortext', $pos, ['color' => $color]),
+                new Token(TokenType::OPEN_TAG, 'color', $pos, ['color' => $color]),
                 new Token(TokenType::TEXT, $text, $pos),
-                new Token(TokenType::CLOSE_TAG, 'colortext', $pos),
+                new Token(TokenType::CLOSE_TAG, 'color', $pos),
             ];
         }
 

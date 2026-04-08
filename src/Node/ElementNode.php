@@ -102,6 +102,20 @@ class ElementNode implements Node
     }
 
     /**
+     * Remove a child node
+     *
+     * @param Node $child Child node to remove
+     *
+     * @return void
+     */
+    public function removeChild(Node $child): void
+    {
+        $this->children = array_values(
+            array_filter($this->children, fn(Node $c) => $c !== $child)
+        );
+    }
+
+    /**
      * Get last child node
      *
      * @return Node|null Last child or null if no children

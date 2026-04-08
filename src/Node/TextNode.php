@@ -56,6 +56,16 @@ class TextNode implements Node
     }
 
     /**
+     * Set text content
+     *
+     * @param string $text New text content
+     */
+    public function setText(string $text): void
+    {
+        $this->text = $text;
+    }
+
+    /**
      * Append text to this node
      *
      * Used to merge consecutive text nodes.

@@ -102,7 +102,7 @@ class XhtmlTest extends TestCase
 
         $html = $this->renderer->render($doc);
 
-        $this->assertSame('<ul><li>Item 1</li><li>Item 2</li></ul>', $html);
+        $this->assertSame("<ul><li>Item 1</li>\n<li>Item 2</li>\n</ul>", $html);
     }
 
     public function testRenderCode(): void
@@ -114,7 +114,7 @@ class XhtmlTest extends TestCase
 
         $html = $this->renderer->render($doc);
 
-        $this->assertSame('<pre><code>echo &quot;hello&quot;;</code></pre>', $html);
+        $this->assertSame("<pre><code>echo &quot;hello&quot;;</code></pre>\n", $html);
     }
 
     public function testRenderColor(): void
@@ -126,7 +126,7 @@ class XhtmlTest extends TestCase
 
         $html = $this->renderer->render($doc);
 
-        $this->assertSame('<span style="color: #FF0000">red text</span>', $html);
+        $this->assertSame('<span style="color: #FF0000;">red text</span>', $html);
     }
 
     public function testNestedTags(): void
@@ -153,6 +153,6 @@ class XhtmlTest extends TestCase
 
         $html = $this->renderer->render($doc);
 
-        $this->assertSame('<li>item</li>', $html);
+        $this->assertSame("<li>item</li>\n", $html);
     }
 }

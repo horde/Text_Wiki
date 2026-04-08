@@ -292,15 +292,6 @@ class Docbook implements Renderer, NodeVisitor
         return $this->renderChildren($node);
     }
 
-    protected function renderColortext(ElementNode $node): string
-    {
-        $attrs = $node->getAttributes();
-        $color = $this->escapeXml($attrs['color'] ?? '');
-
-        return '<phrase role="color" condition="' . $color . '">'
-             . $this->renderChildren($node) . '</phrase>';
-    }
-
     // ---------------------------------------------------------------
     // Alignment — limited support in DocBook
     // ---------------------------------------------------------------
@@ -449,11 +440,6 @@ class Docbook implements Renderer, NodeVisitor
         }
 
         return $this->escapeXml($page);
-    }
-
-    protected function renderFreelink(ElementNode $node): string
-    {
-        return $this->renderWikilink($node);
     }
 
     protected function renderPhplookup(ElementNode $node): string

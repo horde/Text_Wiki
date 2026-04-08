@@ -300,11 +300,6 @@ class Latex implements Renderer, NodeVisitor
         return $this->renderChildren($node);
     }
 
-    protected function renderColortext(ElementNode $node): string
-    {
-        return $this->renderChildren($node);
-    }
-
     // ---------------------------------------------------------------
     // Alignment
     // ---------------------------------------------------------------
@@ -435,11 +430,6 @@ class Latex implements Renderer, NodeVisitor
         }
 
         return $this->escapeLatex($page);
-    }
-
-    protected function renderFreelink(ElementNode $node): string
-    {
-        return $this->renderWikilink($node);
     }
 
     protected function renderPhplookup(ElementNode $node): string
