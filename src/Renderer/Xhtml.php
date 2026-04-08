@@ -31,6 +31,23 @@ use Horde\Text\Wiki\Renderer;
  */
 class Xhtml implements Renderer, NodeVisitor
 {
+    /** @var array<string, callable(ElementNode, NodeVisitor): string> */
+    private array $elementHandlers = [];
+
+    /**
+     * Register a custom element handler
+     *
+     * Handlers take priority over built-in render methods.
+     * Signature: function(ElementNode $node, NodeVisitor $renderer): string
+     *
+     * @param string $tagName Tag name (case-insensitive)
+     * @param callable(ElementNode, NodeVisitor): string $handler
+     */
+    public function setElementHandler(string $tagName, callable $handler): void
+    {
+        $this->elementHandlers[strtolower($tagName)] = $handler;
+    }
+
     /**
      * Render document tree to XHTML
      *
@@ -82,6 +99,12 @@ class Xhtml implements Renderer, NodeVisitor
      */
     public function visitElement(ElementNode $node): string
     {
+        $key = strtolower($node->getName());
+
+        if (isset($this->elementHandlers[$key])) {
+            return ($this->elementHandlers[$key])($node, $this);
+        }
+
         $tagName = $node->getName();
         $method = 'render' . ucfirst($tagName);
 
@@ -117,7 +140,7 @@ class Xhtml implements Renderer, NodeVisitor
      *
      * @return string Rendered children
      */
-    protected function renderChildren(ElementNode $node): string
+    public function renderChildren(ElementNode $node): string
     {
         $output = '';
         foreach ($node->getChildren() as $child) {

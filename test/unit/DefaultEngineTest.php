@@ -13,6 +13,11 @@ namespace Horde\Text\Wiki\Test\Unit;
 
 use Horde\Text\Wiki\DefaultEngine;
 use Horde\Text\Wiki\GenericTextWikiException;
+use Horde\Text\Wiki\Node\DocumentNode;
+use Horde\Text\Wiki\Node\TextNode;
+use Horde\Text\Wiki\Parser;
+use Horde\Text\Wiki\Renderer;
+use Horde\Text\Wiki\SimpleFormatCatalog;
 use Horde\Text\Wiki\WikiEngine;
 use PHPUnit\Framework\Attributes\CoversNothing;
 use PHPUnit\Framework\TestCase;
@@ -99,5 +104,28 @@ WIKI;
     {
         $this->expectException(GenericTextWikiException::class);
         $this->engine->transform('hello', 'UnknownFormat');
+    }
+
+    public function testAcceptsCustomCatalog(): void
+    {
+        $doc = new DocumentNode();
+        $doc->addChild(new TextNode('hello'));
+
+        $parser = $this->createMock(Parser::class);
+        $parser->method('getFormat')->willReturn('yawiki');
+        $parser->method('parse')->willReturn($doc);
+
+        $renderer = $this->createMock(Renderer::class);
+        $renderer->method('getFormat')->willReturn('custom');
+        $renderer->method('render')->willReturn('CUSTOM:hello');
+
+        $catalog = new SimpleFormatCatalog();
+        $catalog->registerParser($parser);
+        $catalog->registerRenderer($renderer);
+
+        $engine = new DefaultEngine($catalog);
+        $result = $engine->transform('hello', 'custom');
+
+        $this->assertSame('CUSTOM:hello', $result);
     }
 }

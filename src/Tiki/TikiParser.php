@@ -15,6 +15,7 @@ use Horde\Text\Wiki\GenericStructureBuilder;
 use Horde\Text\Wiki\Node\DocumentNode;
 use Horde\Text\Wiki\Parser;
 use Horde\Text\Wiki\SimpleTagRegistry;
+use Horde\Text\Wiki\TagRegistry;
 use Horde\Text\Wiki\Tiki\Tag\AnchorTag;
 use Horde\Text\Wiki\Tiki\Tag\BlockquoteTag;
 use Horde\Text\Wiki\Tiki\Tag\BoldTag;
@@ -62,10 +63,16 @@ class TikiParser implements Parser
     private TikiTokenizer $tokenizer;
     private GenericStructureBuilder $builder;
 
-    public function __construct()
+    public function __construct(?TagRegistry $registry = null)
     {
         $this->tokenizer = new TikiTokenizer();
 
+        $registry = $registry ?? $this->createDefaultRegistry();
+        $this->builder = new GenericStructureBuilder($registry);
+    }
+
+    private function createDefaultRegistry(): TagRegistry
+    {
         $registry = new SimpleTagRegistry();
 
         // Inline formatting
@@ -110,7 +117,7 @@ class TikiParser implements Parser
         $registry->register(new AnchorTag());
         $registry->register(new BreakTag());
 
-        $this->builder = new GenericStructureBuilder($registry);
+        return $registry;
     }
 
     /**

@@ -37,6 +37,7 @@ use Horde\Text\Wiki\GenericStructureBuilder;
 use Horde\Text\Wiki\Node\DocumentNode;
 use Horde\Text\Wiki\Parser;
 use Horde\Text\Wiki\SimpleTagRegistry;
+use Horde\Text\Wiki\TagRegistry;
 
 /**
  * BBCode parser
@@ -62,10 +63,16 @@ class BBCodeParser implements Parser
      *
      * Sets up tokenizer, tag registry, and structure builder.
      */
-    public function __construct()
+    public function __construct(?TagRegistry $registry = null)
     {
         $this->tokenizer = new BBCodeTokenizer();
 
+        $registry = $registry ?? $this->createDefaultRegistry();
+        $this->builder = new GenericStructureBuilder($registry);
+    }
+
+    private function createDefaultRegistry(): TagRegistry
+    {
         // Register core BBCode tags
         $registry = new SimpleTagRegistry();
 
@@ -103,7 +110,7 @@ class BBCodeParser implements Parser
         $registry->register(new FontTag());
         $registry->register(new SizeTag());
 
-        $this->builder = new GenericStructureBuilder($registry);
+        return $registry;
     }
 
     /**

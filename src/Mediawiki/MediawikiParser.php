@@ -15,6 +15,7 @@ use Horde\Text\Wiki\GenericStructureBuilder;
 use Horde\Text\Wiki\Node\DocumentNode;
 use Horde\Text\Wiki\Parser;
 use Horde\Text\Wiki\SimpleTagRegistry;
+use Horde\Text\Wiki\TagRegistry;
 use Horde\Text\Wiki\Mediawiki\Tag\AnchorTag;
 use Horde\Text\Wiki\Mediawiki\Tag\BlockquoteTag;
 use Horde\Text\Wiki\Mediawiki\Tag\BreakTag;
@@ -73,10 +74,16 @@ class MediawikiParser implements Parser
     private MediawikiTokenizer $tokenizer;
     private GenericStructureBuilder $builder;
 
-    public function __construct(array $options = [])
+    public function __construct(array $options = [], ?TagRegistry $registry = null)
     {
         $this->tokenizer = new MediawikiTokenizer($options);
 
+        $registry = $registry ?? $this->createDefaultRegistry();
+        $this->builder = new GenericStructureBuilder($registry);
+    }
+
+    private function createDefaultRegistry(): TagRegistry
+    {
         $registry = new SimpleTagRegistry();
 
         // Inline formatting (MediaWiki uses strong/emphasis, not bold/italic)
@@ -138,7 +145,7 @@ class MediawikiParser implements Parser
         // Structure
         $registry->register(new BreakTag());
 
-        $this->builder = new GenericStructureBuilder($registry);
+        return $registry;
     }
 
     public function parse(string $text): DocumentNode
