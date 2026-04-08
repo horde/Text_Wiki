@@ -178,8 +178,9 @@ class YawikiTokenizer implements Tokenizer
             . '|@@(.+?)@@'          // group 11: revise
             . '| _\n'               // group 12 implicit: line break
             . '|\[(\w+:\/\/[^\]\s]+)(?:\s+([^\]]+))?\]' // groups 12,13: url
-            . '|\(\(([^\)]+)\)\)'   // group 14: freelink
-            . '|\[\[php\s+(.+?)\]\]' // group 15: phplookup
+            . '|\[([A-Za-z][-\w\/]*(?:#[-\w:.]+)?)(?:\s+([^\]]+))?\]' // groups 14,15: wikilink [Page text]
+            . '|\(\(([^\)]+)\)\)'   // group 16: freelink
+            . '|\[\[php\s+(.+?)\]\]' // group 17: phplookup
             . ')/Us';
     }
 
@@ -313,9 +314,21 @@ class YawikiTokenizer implements Tokenizer
                 new Token(TokenType::CLOSE_TAG, 'url', $pos),
             ];
         }
-        // Freelink: ((page name))
+        // Wikilink: [PageName display text] (no URL scheme)
         if (isset($matches[14]) && $matches[14][1] !== -1) {
-            $content = $matches[14][0];
+            $page = $matches[14][0];
+            $text = (isset($matches[15]) && $matches[15][1] !== -1)
+                ? $matches[15][0]
+                : $page;
+            return [
+                new Token(TokenType::OPEN_TAG, 'wikilink', $pos, ['page' => $page]),
+                new Token(TokenType::TEXT, $text, $pos),
+                new Token(TokenType::CLOSE_TAG, 'wikilink', $pos),
+            ];
+        }
+        // Freelink: ((page name))
+        if (isset($matches[16]) && $matches[16][1] !== -1) {
+            $content = $matches[16][0];
             $parts = explode('|', $content, 2);
             $page = trim($parts[0]);
             $text = isset($parts[1]) ? trim($parts[1]) : $page;
@@ -326,10 +339,10 @@ class YawikiTokenizer implements Tokenizer
             ];
         }
         // PHP lookup: [[php function]]
-        if (isset($matches[15]) && $matches[15][1] !== -1) {
+        if (isset($matches[17]) && $matches[17][1] !== -1) {
             return [
-                new Token(TokenType::OPEN_TAG, 'phplookup', $pos, ['function' => $matches[15][0]]),
-                new Token(TokenType::TEXT, $matches[15][0], $pos),
+                new Token(TokenType::OPEN_TAG, 'phplookup', $pos, ['function' => $matches[17][0]]),
+                new Token(TokenType::TEXT, $matches[17][0], $pos),
                 new Token(TokenType::CLOSE_TAG, 'phplookup', $pos),
             ];
         }
@@ -357,7 +370,7 @@ class YawikiTokenizer implements Tokenizer
 
         return [
             new Token(TokenType::OPEN_TAG, 'heading', $pos, ['level' => $level]),
-            new Token(TokenType::TEXT, $text, $pos),
+            ...$this->tokenizeInlineContent($text, $pos),
             new Token(TokenType::CLOSE_TAG, 'heading', $pos),
         ];
     }
@@ -485,15 +498,37 @@ class YawikiTokenizer implements Tokenizer
 
         preg_match_all('/^([ \t]*)([*#]) (.*)$/m', $block, $items, PREG_SET_ORDER);
 
-        $stack = []; // Track list nesting depths
+        $stack = []; // Track list nesting types
         $hasOpenItem = false; // Whether a listitem is open and awaiting close
+        $indentLevels = []; // Map indent widths to nesting levels
 
         foreach ($items as $item) {
             $indent = strlen($item[1]);
             $type = $item[2] === '*' ? 'bullet' : 'number';
             $text = $item[3];
 
-            $targetLevel = $indent + 1; // 0 indent = level 1
+            // Map indent width to a nesting level: any increase = one deeper
+            if (empty($indentLevels)) {
+                $indentLevels[$indent] = 1;
+            } elseif (!isset($indentLevels[$indent])) {
+                // New indent width — find its correct level
+                $maxLevel = max($indentLevels);
+                $maxIndent = array_search($maxLevel, $indentLevels);
+                if ($indent > $maxIndent) {
+                    // Deeper: one level more than current deepest
+                    $indentLevels[$indent] = $maxLevel + 1;
+                } else {
+                    // Shallower than deepest but not seen before: find nearest
+                    $bestLevel = 1;
+                    foreach ($indentLevels as $w => $l) {
+                        if ($w <= $indent && $l > $bestLevel) {
+                            $bestLevel = $l;
+                        }
+                    }
+                    $indentLevels[$indent] = $bestLevel;
+                }
+            }
+            $targetLevel = $indentLevels[$indent];
 
             if (count($stack) < $targetLevel) {
                 // Going deeper — open new list levels (keep parent listitem open)
@@ -522,9 +557,9 @@ class YawikiTokenizer implements Tokenizer
                 }
             }
 
-            // Open new listitem
-            $tokens[] = new Token(TokenType::OPEN_TAG, 'listitem', $pos);
-            $tokens[] = new Token(TokenType::TEXT, $text, $pos);
+            // Open new listitem — Yawiki lists are always tight (contiguous lines)
+            $tokens[] = new Token(TokenType::OPEN_TAG, 'listitem', $pos, ['tight' => true]);
+            array_push($tokens, ...$this->tokenizeInlineContent($text, $pos));
             $hasOpenItem = true;
         }
 
@@ -558,7 +593,7 @@ class YawikiTokenizer implements Tokenizer
 
         return [
             new Token(TokenType::OPEN_TAG, 'blockquote', $pos),
-            new Token(TokenType::TEXT, trim($text), $pos),
+            ...$this->tokenizeInlineContent(trim($text), $pos),
             new Token(TokenType::CLOSE_TAG, 'blockquote', $pos),
         ];
     }
@@ -625,7 +660,7 @@ class YawikiTokenizer implements Tokenizer
                 $cellText = trim($trimmed);
 
                 $tokens[] = new Token(TokenType::OPEN_TAG, 'cell', $pos, $attrs);
-                $tokens[] = new Token(TokenType::TEXT, $cellText, $pos);
+                array_push($tokens, ...$this->tokenizeInlineContent($cellText, $pos));
                 $tokens[] = new Token(TokenType::CLOSE_TAG, 'cell', $pos);
             }
 
@@ -656,10 +691,10 @@ class YawikiTokenizer implements Tokenizer
 
         foreach ($items as $item) {
             $tokens[] = new Token(TokenType::OPEN_TAG, 'defterm', $pos);
-            $tokens[] = new Token(TokenType::TEXT, trim($item[1]), $pos);
+            array_push($tokens, ...$this->tokenizeInlineContent(trim($item[1]), $pos));
             $tokens[] = new Token(TokenType::CLOSE_TAG, 'defterm', $pos);
             $tokens[] = new Token(TokenType::OPEN_TAG, 'defdef', $pos);
-            $tokens[] = new Token(TokenType::TEXT, trim($item[2]), $pos);
+            array_push($tokens, ...$this->tokenizeInlineContent(trim($item[2]), $pos));
             $tokens[] = new Token(TokenType::CLOSE_TAG, 'defdef', $pos);
         }
 
@@ -680,9 +715,56 @@ class YawikiTokenizer implements Tokenizer
     {
         return [
             new Token(TokenType::OPEN_TAG, 'center', $pos),
-            new Token(TokenType::TEXT, $matches[1], $pos),
+            ...$this->tokenizeInlineContent($matches[1], $pos),
             new Token(TokenType::CLOSE_TAG, 'center', $pos),
         ];
+    }
+
+    // ---------------------------------------------------------------
+    // Inline content scanner (used by block handlers)
+    // ---------------------------------------------------------------
+
+    /**
+     * Scan text for inline patterns and return tokens
+     *
+     * Block-level handlers call this instead of emitting a raw TEXT
+     * token so that freelinks, bold, URLs, etc. inside lists, tables,
+     * blockquotes, headings, and other block constructs are parsed.
+     *
+     * @param string $text Text to scan
+     * @param int    $pos  Source position (for token offsets)
+     *
+     * @return array<Token>
+     */
+    private function tokenizeInlineContent(string $text, int $pos): array
+    {
+        $tokens = [];
+        $offset = 0;
+        $length = strlen($text);
+
+        while ($offset < $length) {
+            if (!preg_match($this->inlinePattern, $text, $matches, PREG_OFFSET_CAPTURE, $offset)) {
+                // No more inline matches — emit remaining text
+                $rest = substr($text, $offset);
+                if ($rest !== '') {
+                    $tokens[] = new Token(TokenType::TEXT, $rest, $pos);
+                }
+                break;
+            }
+
+            $matchStart = $matches[0][1];
+
+            // Emit text before the match
+            if ($matchStart > $offset) {
+                $tokens[] = new Token(TokenType::TEXT, substr($text, $offset, $matchStart - $offset), $pos);
+            }
+
+            // Emit the inline tokens
+            array_push($tokens, ...$this->tokenizeInlineMatch($matches, $pos));
+            $offset = $matchStart + strlen($matches[0][0]);
+        }
+
+        return $tokens;
     }
 
     // ---------------------------------------------------------------

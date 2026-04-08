@@ -516,6 +516,16 @@ class BlockParser
             }
         }
 
+        // If the tip is a GFM table and the line starts a block-level construct
+        // (not a table row), close the table so the line is processed normally.
+        if ($tip !== null && $tip->type === 'table') {
+            if ($this->isBlockStartLine($line)) {
+                $tip->close();
+                $this->context->closeLastBlock();
+                $tip = $this->context->getTip();
+            }
+        }
+
         // Setext heading takes priority over thematic break when paragraph is open
         if ($tip !== null && $tip->type === 'paragraph' && $this->isSetextUnderline($line)) {
             $this->convertToSetextHeading($tip, $line);
@@ -1371,6 +1381,48 @@ class BlockParser
         $cells[] = $current;
 
         return $cells;
+    }
+
+    /**
+     * Check if a line starts a block-level construct
+     *
+     * Returns true for ATX headings, thematic breaks, fenced code,
+     * blockquotes, and list items.
+     */
+    private function isBlockStartLine(string $line): bool
+    {
+        $trimmed = ltrim($line);
+        $indent = strlen($line) - strlen($trimmed);
+        if ($indent >= 4) {
+            return false;
+        }
+
+        // ATX heading
+        if (preg_match('/^#{1,6}(?:\s|$)/', $trimmed)) {
+            return true;
+        }
+        // Thematic break
+        if (preg_match('/^(?:(?:\*\s*){3,}|(?:-\s*){3,}|(?:_\s*){3,})\s*$/', $trimmed)) {
+            return true;
+        }
+        // Fenced code
+        if (preg_match('/^(?:`{3,}|~{3,})/', $trimmed)) {
+            return true;
+        }
+        // Blockquote
+        if (preg_match('/^>\s?/', $trimmed)) {
+            return true;
+        }
+        // Bullet list item
+        if (preg_match('/^[*+-]\s/', $trimmed)) {
+            return true;
+        }
+        // Ordered list item
+        if (preg_match('/^\d{1,9}[.)]\s/', $trimmed)) {
+            return true;
+        }
+
+        return false;
     }
 
     // ---------------------------------------------------------------
