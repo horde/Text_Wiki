@@ -115,15 +115,17 @@ class Markdown implements Renderer, NodeVisitor
     // ---------------------------------------------------------------
 
     /**
-     * Escape CommonMark-significant ASCII punctuation
+     * Escape CommonMark-significant ASCII punctuation in inline text.
      *
-     * Over-escaping is acceptable — it guarantees idempotency since
-     * \X -> parser -> TextNode(X) -> renderer -> \X is stable.
+     * Only escapes characters that have inline significance in CommonMark.
+     * Characters like . - # + are only significant at line start (ordered
+     * list markers, thematic breaks, ATX headings, bullet lists) and must
+     * NOT be escaped in inline text — doing so breaks URLs and other content
+     * containing these characters.
      */
     private function escapeMarkdown(string $text): string
     {
-        // Backslash-escape all ASCII punctuation that CommonMark treats specially
-        return preg_replace('/([\\\\*_\[\]{}()#+\-.!|~<>&`])/', '\\\\$1', $text);
+        return preg_replace('/([\\\\*_\[\]{}()!|~<>&`])/', '\\\\$1', $text);
     }
 
     // ---------------------------------------------------------------
