@@ -28,6 +28,6 @@ class FreelinkTag extends AbstractTagDefinition
 {
     public function __construct()
     {
-        parent::__construct('freelink', TagType::INLINE);
+        parent::__construct('wikilink', TagType::INLINE);
     }
 }

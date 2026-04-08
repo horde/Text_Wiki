@@ -291,11 +291,6 @@ class Mediawiki implements Renderer, NodeVisitor
         return '[[' . $target . ']]';
     }
 
-    protected function renderFreelink(ElementNode $node): string
-    {
-        return $this->renderWikilink($node);
-    }
-
     protected function renderEmail(ElementNode $node): string
     {
         $attrs = $node->getAttributes();
@@ -430,13 +425,6 @@ class Mediawiki implements Renderer, NodeVisitor
         return '<span style="font-size:' . $size . ';">' . $this->renderChildren($node) . '</span>';
     }
 
-    protected function renderColortext(ElementNode $node): string
-    {
-        $attrs = $node->getAttributes();
-        $color = $attrs['color'] ?? '';
-
-        return '<span style="color:' . $color . ';">' . $this->renderChildren($node) . '</span>';
-    }
 
     // ---------------------------------------------------------------
     // Lists — character repetition: *, #, **, ##, *#, etc.
@@ -619,5 +607,59 @@ class Mediawiki implements Renderer, NodeVisitor
         $function = $attrs['function'] ?? '';
 
         return '[[php ' . $function . ']]';
+    }
+
+    // ---------------------------------------------------------------
+    // CommonMark/GFM elements
+    // ---------------------------------------------------------------
+
+    protected function renderSoftbreak(ElementNode $node): string
+    {
+        return "\n";
+    }
+
+    protected function renderHtmlblock(ElementNode $node): string
+    {
+        return $this->renderChildrenRaw($node);
+    }
+
+    protected function renderHtmlinline(ElementNode $node): string
+    {
+        return $this->renderChildrenRaw($node);
+    }
+
+    /**
+     * Render children without escaping (for raw HTML passthrough)
+     */
+    private function renderChildrenRaw(ElementNode $node): string
+    {
+        $output = '';
+        foreach ($node->getChildren() as $child) {
+            if ($child instanceof TextNode) {
+                $output .= $child->getText();
+            } else {
+                $output .= $child->accept($this);
+            }
+        }
+        return $output;
+    }
+
+    // ---------------------------------------------------------------
+    // Standalone child elements (for completeness)
+    // ---------------------------------------------------------------
+
+    protected function renderCell(ElementNode $node): string
+    {
+        return $this->renderChildren($node);
+    }
+
+    protected function renderDefterm(ElementNode $node): string
+    {
+        return '; ' . $this->renderChildren($node);
+    }
+
+    protected function renderDefdef(ElementNode $node): string
+    {
+        return ': ' . $this->renderChildren($node);
     }
 }

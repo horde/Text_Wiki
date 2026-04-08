@@ -294,7 +294,7 @@ class Yawiki implements Renderer, NodeVisitor
         return ',,' . $this->renderChildren($node) . ',,';
     }
 
-    protected function renderColortext(ElementNode $node): string
+    protected function renderColor(ElementNode $node): string
     {
         $attrs = $node->getAttributes();
         $color = $attrs['color'] ?? '';
@@ -337,7 +337,7 @@ class Yawiki implements Renderer, NodeVisitor
         return '[' . $href . ']';
     }
 
-    protected function renderFreelink(ElementNode $node): string
+    protected function renderWikilink(ElementNode $node): string
     {
         $attrs = $node->getAttributes();
         $page = $attrs['page'] ?? $this->renderChildren($node);

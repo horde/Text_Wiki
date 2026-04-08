@@ -217,7 +217,7 @@ class Tiki implements Renderer, NodeVisitor
         return ',,' . $this->renderChildren($node) . ',,';
     }
 
-    protected function renderColortext(ElementNode $node): string
+    protected function renderColor(ElementNode $node): string
     {
         $attrs = $node->getAttributes();
         $color = $attrs['color'] ?? '';

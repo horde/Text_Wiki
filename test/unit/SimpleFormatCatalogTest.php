@@ -33,7 +33,7 @@ class SimpleFormatCatalogTest extends TestCase
     public function testRegisterAndGetParser(): void
     {
         $catalog = new SimpleFormatCatalog();
-        $parser = $this->createMock(Parser::class);
+        $parser = $this->createStub(Parser::class);
         $parser->method('getFormat')->willReturn('test');
 
         $catalog->registerParser($parser);
@@ -44,7 +44,7 @@ class SimpleFormatCatalogTest extends TestCase
     public function testRegisterAndGetRenderer(): void
     {
         $catalog = new SimpleFormatCatalog();
-        $renderer = $this->createMock(Renderer::class);
+        $renderer = $this->createStub(Renderer::class);
         $renderer->method('getFormat')->willReturn('test');
 
         $catalog->registerRenderer($renderer);
@@ -59,7 +59,7 @@ class SimpleFormatCatalogTest extends TestCase
     public function testParserLookupIsCaseInsensitive(): void
     {
         $catalog = new SimpleFormatCatalog();
-        $parser = $this->createMock(Parser::class);
+        $parser = $this->createStub(Parser::class);
         $parser->method('getFormat')->willReturn('Yawiki');
 
         $catalog->registerParser($parser);
@@ -71,7 +71,7 @@ class SimpleFormatCatalogTest extends TestCase
     public function testRendererLookupIsCaseInsensitive(): void
     {
         $catalog = new SimpleFormatCatalog();
-        $renderer = $this->createMock(Renderer::class);
+        $renderer = $this->createStub(Renderer::class);
         $renderer->method('getFormat')->willReturn('Xhtml');
 
         $catalog->registerRenderer($renderer);
@@ -87,7 +87,7 @@ class SimpleFormatCatalogTest extends TestCase
     public function testHasParserReturnsTrueWhenRegistered(): void
     {
         $catalog = new SimpleFormatCatalog();
-        $parser = $this->createMock(Parser::class);
+        $parser = $this->createStub(Parser::class);
         $parser->method('getFormat')->willReturn('test');
 
         $catalog->registerParser($parser);
@@ -106,7 +106,7 @@ class SimpleFormatCatalogTest extends TestCase
     public function testHasRendererReturnsTrueWhenRegistered(): void
     {
         $catalog = new SimpleFormatCatalog();
-        $renderer = $this->createMock(Renderer::class);
+        $renderer = $this->createStub(Renderer::class);
         $renderer->method('getFormat')->willReturn('test');
 
         $catalog->registerRenderer($renderer);
@@ -148,9 +148,9 @@ class SimpleFormatCatalogTest extends TestCase
     public function testRegisterParserReplacesDuplicate(): void
     {
         $catalog = new SimpleFormatCatalog();
-        $parser1 = $this->createMock(Parser::class);
+        $parser1 = $this->createStub(Parser::class);
         $parser1->method('getFormat')->willReturn('test');
-        $parser2 = $this->createMock(Parser::class);
+        $parser2 = $this->createStub(Parser::class);
         $parser2->method('getFormat')->willReturn('test');
 
         $catalog->registerParser($parser1);
@@ -162,9 +162,9 @@ class SimpleFormatCatalogTest extends TestCase
     public function testRegisterRendererReplacesDuplicate(): void
     {
         $catalog = new SimpleFormatCatalog();
-        $renderer1 = $this->createMock(Renderer::class);
+        $renderer1 = $this->createStub(Renderer::class);
         $renderer1->method('getFormat')->willReturn('test');
-        $renderer2 = $this->createMock(Renderer::class);
+        $renderer2 = $this->createStub(Renderer::class);
         $renderer2->method('getFormat')->willReturn('test');
 
         $catalog->registerRenderer($renderer1);
@@ -180,9 +180,9 @@ class SimpleFormatCatalogTest extends TestCase
     public function testGetParserFormats(): void
     {
         $catalog = new SimpleFormatCatalog();
-        $parser1 = $this->createMock(Parser::class);
+        $parser1 = $this->createStub(Parser::class);
         $parser1->method('getFormat')->willReturn('alpha');
-        $parser2 = $this->createMock(Parser::class);
+        $parser2 = $this->createStub(Parser::class);
         $parser2->method('getFormat')->willReturn('beta');
 
         $catalog->registerParser($parser1);
@@ -197,9 +197,9 @@ class SimpleFormatCatalogTest extends TestCase
     public function testGetRendererFormats(): void
     {
         $catalog = new SimpleFormatCatalog();
-        $renderer1 = $this->createMock(Renderer::class);
+        $renderer1 = $this->createStub(Renderer::class);
         $renderer1->method('getFormat')->willReturn('alpha');
-        $renderer2 = $this->createMock(Renderer::class);
+        $renderer2 = $this->createStub(Renderer::class);
         $renderer2->method('getFormat')->willReturn('beta');
 
         $catalog->registerRenderer($renderer1);
@@ -215,19 +215,19 @@ class SimpleFormatCatalogTest extends TestCase
     {
         $catalog = new SimpleFormatCatalog();
 
-        $parser = $this->createMock(Parser::class);
+        $parser = $this->createStub(Parser::class);
         $parser->method('getFormat')->willReturn('shared');
         $catalog->registerParser($parser);
 
-        $parserOnly = $this->createMock(Parser::class);
+        $parserOnly = $this->createStub(Parser::class);
         $parserOnly->method('getFormat')->willReturn('parseonly');
         $catalog->registerParser($parserOnly);
 
-        $renderer = $this->createMock(Renderer::class);
+        $renderer = $this->createStub(Renderer::class);
         $renderer->method('getFormat')->willReturn('shared');
         $catalog->registerRenderer($renderer);
 
-        $rendererOnly = $this->createMock(Renderer::class);
+        $rendererOnly = $this->createStub(Renderer::class);
         $rendererOnly->method('getFormat')->willReturn('renderonly');
         $catalog->registerRenderer($rendererOnly);
 
@@ -244,7 +244,7 @@ class SimpleFormatCatalogTest extends TestCase
     {
         $catalog = SimpleFormatCatalog::withDefaults();
 
-        $expected = ['bbcode', 'cowiki', 'creole', 'doku', 'mediawiki', 'tiki', 'yawiki'];
+        $expected = ['bbcode', 'cowiki', 'creole', 'doku', 'markdown', 'mediawiki', 'tiki', 'yawiki'];
         $formats = $catalog->getParserFormats();
         sort($formats);
 
@@ -257,7 +257,7 @@ class SimpleFormatCatalogTest extends TestCase
 
         $expected = [
             'bbcode', 'cowiki', 'creole', 'docbook', 'doku',
-            'latex', 'mediawiki', 'plain', 'tiki', 'xhtml', 'yawiki',
+            'latex', 'markdown', 'mediawiki', 'plain', 'tiki', 'xhtml', 'yawiki',
         ];
         $formats = $catalog->getRendererFormats();
         sort($formats);
@@ -272,9 +272,9 @@ class SimpleFormatCatalogTest extends TestCase
         $convertible = $catalog->getConvertibleFormats();
         sort($convertible);
 
-        // 7 formats have both parser and renderer
+        // 8 formats have both parser and renderer
         $this->assertSame(
-            ['bbcode', 'cowiki', 'creole', 'doku', 'mediawiki', 'tiki', 'yawiki'],
+            ['bbcode', 'cowiki', 'creole', 'doku', 'markdown', 'mediawiki', 'tiki', 'yawiki'],
             $convertible
         );
     }

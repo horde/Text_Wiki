@@ -111,11 +111,11 @@ WIKI;
         $doc = new DocumentNode();
         $doc->addChild(new TextNode('hello'));
 
-        $parser = $this->createMock(Parser::class);
+        $parser = $this->createStub(Parser::class);
         $parser->method('getFormat')->willReturn('yawiki');
         $parser->method('parse')->willReturn($doc);
 
-        $renderer = $this->createMock(Renderer::class);
+        $renderer = $this->createStub(Renderer::class);
         $renderer->method('getFormat')->willReturn('custom');
         $renderer->method('render')->willReturn('CUSTOM:hello');
 

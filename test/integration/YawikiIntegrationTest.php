@@ -81,7 +81,7 @@ class YawikiIntegrationTest extends TestCase
         $doc = $this->parser->parse('{{monospace}}');
         $html = $this->renderer->render($doc);
 
-        $this->assertStringContainsString('<tt>monospace</tt>', $html);
+        $this->assertStringContainsString('<code>monospace</code>', $html);
     }
 
     public function testSuperscript(): void

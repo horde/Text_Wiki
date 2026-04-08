@@ -128,7 +128,7 @@ class Xhtml implements Renderer, NodeVisitor
      */
     public function visitText(TextNode $node): string
     {
-        return htmlspecialchars($node->getText(), ENT_QUOTES | ENT_HTML5, 'UTF-8');
+        return htmlspecialchars($node->getText(), ENT_COMPAT | ENT_HTML5, 'UTF-8');
     }
 
     /**
@@ -198,10 +198,15 @@ class Xhtml implements Renderer, NodeVisitor
     {
         $attrs = $node->getAttributes();
 
-        // [url=http://...]text[/url] or Yawiki [url text]
+        // [url=http://...]text[/url] or Yawiki [url text] or CommonMark [text](url "title")
         if (isset($attrs['href'])) {
-            $href = htmlspecialchars($attrs['href'], ENT_QUOTES | ENT_HTML5, 'UTF-8');
-            return '<a href="' . $href . '">' . $this->renderChildren($node) . '</a>';
+            $href = $this->sanitizeUrl($attrs['href']);
+            $html = '<a href="' . $href . '"';
+            if (isset($attrs['title']) && $attrs['title'] !== '') {
+                $html .= ' title="' . htmlspecialchars($attrs['title'], ENT_QUOTES | ENT_HTML5, 'UTF-8') . '"';
+            }
+            $html .= '>' . $this->renderChildren($node) . '</a>';
+            return $html;
         }
 
         // [url]http://...[/url] - href comes from text content
@@ -229,12 +234,16 @@ class Xhtml implements Renderer, NodeVisitor
     {
         $attrs = $node->getAttributes();
 
-        // Yawiki style: src from attribute
+        // Yawiki/CommonMark style: src from attribute
         if (isset($attrs['src'])) {
-            $src = htmlspecialchars($attrs['src'], ENT_QUOTES | ENT_HTML5, 'UTF-8');
+            $src = $this->sanitizeUrl($attrs['src']);
             $alt = htmlspecialchars($attrs['alt'] ?? '', ENT_QUOTES | ENT_HTML5, 'UTF-8');
 
             $html = '<img src="' . $src . '" alt="' . $alt . '"';
+
+            if (isset($attrs['title']) && $attrs['title'] !== '') {
+                $html .= ' title="' . htmlspecialchars($attrs['title'], ENT_QUOTES | ENT_HTML5, 'UTF-8') . '"';
+            }
 
             if (isset($attrs['link'])) {
                 $html .= ' />';
@@ -273,16 +282,16 @@ class Xhtml implements Renderer, NodeVisitor
     protected function renderBlockquote(ElementNode $node): string
     {
         $attrs = $node->getAttributes();
-        $output = '<blockquote>';
+        $output = "<blockquote>\n";
 
         // [quote=Author] - BBCode attribution
         if (isset($attrs['author'])) {
             $author = htmlspecialchars($attrs['author'], ENT_QUOTES | ENT_HTML5, 'UTF-8');
-            $output .= '<p><strong>' . $author . ' wrote:</strong></p>';
+            $output .= '<p><strong>' . $author . " wrote:</strong></p>\n";
         }
 
         $output .= $this->renderChildren($node);
-        $output .= '</blockquote>';
+        $output .= "</blockquote>\n";
 
         return $output;
     }
@@ -302,21 +311,18 @@ class Xhtml implements Renderer, NodeVisitor
     {
         $attrs = $node->getAttributes();
 
-        // Check for language attribute
-        if (isset($attrs['language']) && $attrs['language'] !== '') {
+        // Check for language attribute — reject if it contains HTML-unsafe characters
+        if (isset($attrs['language']) && $attrs['language'] !== ''
+            && !preg_match('/[<>&"\']/', $attrs['language'])) {
             $language = $attrs['language'];
-
-            // Sanitize language (alphanumeric, hyphen, underscore only)
-            if (preg_match('/^[a-zA-Z0-9_-]+$/', $language)) {
-                $languageClass = htmlspecialchars($language, ENT_QUOTES | ENT_HTML5, 'UTF-8');
-                return '<pre><code class="language-' . $languageClass . '">'
-                     . $this->renderChildren($node)
-                     . '</code></pre>';
-            }
+            $languageClass = htmlspecialchars($language, ENT_QUOTES | ENT_HTML5, 'UTF-8');
+            return '<pre><code class="language-' . $languageClass . '">'
+                 . $this->renderChildren($node)
+                 . "</code></pre>\n";
         }
 
         // Default: no language class
-        return '<pre><code>' . $this->renderChildren($node) . '</code></pre>';
+        return '<pre><code>' . $this->renderChildren($node) . "</code></pre>\n";
     }
 
     protected function renderPreformatted(ElementNode $node): string
@@ -344,19 +350,28 @@ class Xhtml implements Renderer, NodeVisitor
         if (isset($attrs['type'])) {
             $type = $attrs['type'];
 
-            // Numeric ordered list (BBCode '1' or wiki 'number')
-            if ($type === '1' || $type === 'number') {
-                return '<ol>' . $this->renderChildren($node) . '</ol>';
+            // Ordered list (BBCode '1', 'number', or CommonMark 'ordered')
+            if ($type === '1' || $type === 'number' || $type === 'ordered') {
+                $start = isset($attrs['start']) ? (int) $attrs['start'] : 1;
+                if ($start !== 1) {
+                    return '<ol start="' . $start . "\">\n" . $this->renderChildren($node) . "</ol>\n";
+                }
+                return "<ol>\n" . $this->renderChildren($node) . "</ol>\n";
             }
 
             // Alphabetic ordered lists
             if ($type === 'a' || $type === 'A') {
                 $typeAttr = htmlspecialchars($type, ENT_QUOTES | ENT_HTML5, 'UTF-8');
-                return '<ol type="' . $typeAttr . '">' . $this->renderChildren($node) . '</ol>';
+                return '<ol type="' . $typeAttr . "\">\n" . $this->renderChildren($node) . "</ol>\n";
+            }
+
+            // Bullet list (CommonMark 'bullet')
+            if ($type === 'bullet') {
+                return "<ul>\n" . $this->renderChildren($node) . "</ul>\n";
             }
         }
 
-        // Default: unordered list
+        // Default: unordered list (simple, no extra newlines)
         return '<ul>' . $this->renderChildren($node) . '</ul>';
     }
 
@@ -369,7 +384,85 @@ class Xhtml implements Renderer, NodeVisitor
      */
     protected function renderListitem(ElementNode $node): string
     {
-        return '<li>' . $this->renderChildren($node) . '</li>';
+        $tight = $node->getAttributes()['tight'] ?? false;
+
+        if ($tight) {
+            // In tight lists, render paragraphs without <p> wrappers
+            // but keep other block elements (code, blockquote, sub-lists) as-is
+            $children = $node->getChildren();
+            $hasBlockElements = false;
+            foreach ($children as $child) {
+                if ($child instanceof ElementNode && $child->getName() !== 'paragraph') {
+                    $hasBlockElements = true;
+                    break;
+                }
+            }
+
+            if ($hasBlockElements) {
+                // Mix of paragraph + block elements (e.g., text + sub-list)
+                // Render paragraphs inline (no <p>), block elements on their own lines
+                $parts = [];
+                $firstIsParagraph = false;
+                foreach ($children as $idx => $child) {
+                    if ($child instanceof ElementNode && $child->getName() === 'paragraph') {
+                        if ($idx === 0) {
+                            $firstIsParagraph = true;
+                        }
+                        $rendered = $child->accept($this);
+                        $rendered = preg_replace('/<p>(.*?)<\/p>\n?/s', '$1', $rendered) ?? $rendered;
+                        $parts[] = $rendered;
+                    } else {
+                        $parts[] = $child->accept($this);
+                    }
+                }
+                // Join parts, avoiding double newlines
+                $content = '';
+                foreach ($parts as $i => $part) {
+                    if ($i > 0 && !str_ends_with($content, "\n")) {
+                        $content .= "\n";
+                    }
+                    $content .= $part;
+                }
+                $content = rtrim($content, "\n");
+                $lastChild = end($children);
+                $lastIsParagraph = $lastChild instanceof ElementNode && $lastChild->getName() === 'paragraph';
+                if ($firstIsParagraph) {
+                    return '<li>' . $content . "\n</li>\n";
+                }
+                if ($lastIsParagraph) {
+                    return "<li>\n" . $content . "</li>\n";
+                }
+                return "<li>\n" . $content . "\n</li>\n";
+            }
+
+            // Only paragraphs — strip <p> wrappers, inline content
+            $content = $this->renderChildren($node);
+            $content = preg_replace('/<p>(.*?)<\/p>/s', '$1', $content) ?? $content;
+            $content = rtrim($content, "\n");
+            return '<li>' . $content . "</li>\n";
+        }
+
+        // Check if this has paragraph children (CommonMark loose list)
+        $hasParagraphs = false;
+        foreach ($node->getChildren() as $child) {
+            if ($child instanceof ElementNode && $child->getName() === 'paragraph') {
+                $hasParagraphs = true;
+                break;
+            }
+        }
+
+        $content = $this->renderChildren($node);
+        if ($content === '') {
+            return "<li></li>\n";
+        }
+
+        // Loose list with paragraphs: newline after <li>
+        if ($hasParagraphs) {
+            return "<li>\n" . $content . "</li>\n";
+        }
+
+        // Simple list item (non-CommonMark): compact rendering
+        return '<li>' . rtrim($content, "\n") . "</li>\n";
     }
 
     /**
@@ -387,7 +480,7 @@ class Xhtml implements Renderer, NodeVisitor
         }
 
         $color = htmlspecialchars($attrs['color'], ENT_QUOTES | ENT_HTML5, 'UTF-8');
-        return '<span style="color: ' . $color . '">' . $this->renderChildren($node) . '</span>';
+        return '<span style="color: ' . $color . ';">' . $this->renderChildren($node) . '</span>';
     }
 
     /**
@@ -435,7 +528,7 @@ class Xhtml implements Renderer, NodeVisitor
      */
     protected function renderStrike(ElementNode $node): string
     {
-        return '<s>' . $this->renderChildren($node) . '</s>';
+        return '<del>' . $this->renderChildren($node) . '</del>';
     }
 
     /**
@@ -481,7 +574,7 @@ class Xhtml implements Renderer, NodeVisitor
      */
     protected function renderHoriz(ElementNode $node): string
     {
-        return '<hr />';
+        return "<hr />\n";
     }
 
     /**
@@ -635,15 +728,15 @@ class Xhtml implements Renderer, NodeVisitor
     }
 
     /**
-     * Render monospace (teletype)
+     * Render inline code / monospace text
      *
      * @param ElementNode $node Tt element
      *
-     * @return string <tt>...</tt>
+     * @return string <code>...</code>
      */
     protected function renderTt(ElementNode $node): string
     {
-        return '<tt>' . $this->renderChildren($node) . '</tt>';
+        return '<code>' . $this->renderChildren($node) . '</code>';
     }
 
     /**
@@ -660,7 +753,7 @@ class Xhtml implements Renderer, NodeVisitor
         $level = max(1, min(6, (int)$level));
         $tag = 'h' . $level;
 
-        return '<' . $tag . '>' . $this->renderChildren($node) . '</' . $tag . '>';
+        return '<' . $tag . '>' . $this->renderChildren($node) . '</' . $tag . ">\n";
     }
 
     /**
@@ -672,23 +765,7 @@ class Xhtml implements Renderer, NodeVisitor
      */
     protected function renderBreak(ElementNode $node): string
     {
-        return '<br />';
-    }
-
-    /**
-     * Render ((freelink)) wiki link
-     *
-     * @param ElementNode $node Freelink element with 'page' attribute
-     *
-     * @return string <a href="...">...</a>
-     */
-    protected function renderFreelink(ElementNode $node): string
-    {
-        $attrs = $node->getAttributes();
-        $page = $attrs['page'] ?? '';
-        $href = htmlspecialchars(str_replace(' ', '+', $page), ENT_QUOTES | ENT_HTML5, 'UTF-8');
-
-        return '<a href="' . $href . '">' . $this->renderChildren($node) . '</a>';
+        return "<br />\n";
     }
 
     /**
@@ -736,7 +813,29 @@ class Xhtml implements Renderer, NodeVisitor
      */
     protected function renderTable(ElementNode $node): string
     {
-        return '<table>' . $this->renderChildren($node) . '</table>';
+        $children = $node->getChildren();
+        $headerRows = '';
+        $bodyRows = '';
+        foreach ($children as $child) {
+            $rendered = $child->accept($this);
+            $isHeader = ($child instanceof ElementNode)
+                && ($child->getAttributes()['header'] ?? false) === true;
+            if ($isHeader) {
+                $headerRows .= $rendered;
+            } else {
+                $bodyRows .= $rendered;
+            }
+        }
+
+        $result = "<table>\n";
+        if ($headerRows !== '') {
+            $result .= "<thead>\n" . $headerRows . "</thead>\n";
+        }
+        if ($bodyRows !== '') {
+            $result .= "<tbody>\n" . $bodyRows . "</tbody>\n";
+        }
+        $result .= "</table>\n";
+        return $result;
     }
 
     /**
@@ -748,7 +847,7 @@ class Xhtml implements Renderer, NodeVisitor
      */
     protected function renderRow(ElementNode $node): string
     {
-        return '<tr>' . $this->renderChildren($node) . '</tr>';
+        return "<tr>\n" . $this->renderChildren($node) . "</tr>\n";
     }
 
     /**
@@ -761,9 +860,19 @@ class Xhtml implements Renderer, NodeVisitor
     protected function renderCell(ElementNode $node): string
     {
         $attrs = $node->getAttributes();
-        $tag = ($attrs['type'] ?? 'data') === 'header' ? 'th' : 'td';
 
-        return '<' . $tag . '>' . $this->renderChildren($node) . '</' . $tag . '>';
+        // CommonMark header boolean or legacy 'type' string
+        $isHeader = ($attrs['header'] ?? false) === true
+            || ($attrs['type'] ?? 'data') === 'header';
+        $tag = $isHeader ? 'th' : 'td';
+
+        $align = $attrs['align'] ?? '';
+        if ($align !== '') {
+            $align = htmlspecialchars($align, ENT_QUOTES | ENT_HTML5, 'UTF-8');
+            return '<' . $tag . ' align="' . $align . '">' . $this->renderChildren($node) . '</' . $tag . ">\n";
+        }
+
+        return '<' . $tag . '>' . $this->renderChildren($node) . '</' . $tag . ">\n";
     }
 
     /**
@@ -809,17 +918,6 @@ class Xhtml implements Renderer, NodeVisitor
      *
      * @return string <span style="color: ...">...</span>
      */
-    protected function renderColortext(ElementNode $node): string
-    {
-        $attrs = $node->getAttributes();
-        if (!isset($attrs['color'])) {
-            return $this->renderChildren($node);
-        }
-
-        $color = htmlspecialchars($attrs['color'], ENT_QUOTES | ENT_HTML5, 'UTF-8');
-        return '<span style="color: ' . $color . ';">' . $this->renderChildren($node) . '</span>';
-    }
-
     /**
      * Render anchor/ID target
      *
@@ -858,7 +956,75 @@ class Xhtml implements Renderer, NodeVisitor
      */
     protected function renderParagraph(ElementNode $node): string
     {
-        return '<p>' . $this->renderChildren($node) . '</p>';
+        return '<p>' . $this->renderChildren($node) . "</p>\n";
+    }
+
+    /**
+     * Render soft line break (CommonMark)
+     *
+     * @param ElementNode $node Softbreak element
+     *
+     * @return string newline character
+     */
+    protected function renderSoftbreak(ElementNode $node): string
+    {
+        return "\n";
+    }
+
+    /**
+     * Render raw HTML block (CommonMark)
+     *
+     * @param ElementNode $node Htmlblock element
+     *
+     * @return string Raw HTML content
+     */
+    protected function renderHtmlblock(ElementNode $node): string
+    {
+        return $this->renderChildrenRaw($node) . "\n";
+    }
+
+    /**
+     * Render raw inline HTML (CommonMark)
+     *
+     * @param ElementNode $node Htmlinline element
+     *
+     * @return string Raw HTML content
+     */
+    protected function renderHtmlinline(ElementNode $node): string
+    {
+        return $this->renderChildrenRaw($node);
+    }
+
+    /**
+     * Render children without HTML escaping (for raw HTML nodes)
+     *
+     * @param ElementNode $node Parent node
+     *
+     * @return string Unescaped children text
+     */
+    public function renderChildrenRaw(ElementNode $node): string
+    {
+        $output = '';
+        foreach ($node->getChildren() as $child) {
+            if ($child instanceof TextNode) {
+                $output .= $child->getText();
+            } else {
+                $output .= $child->accept($this);
+            }
+        }
+        return $output;
+    }
+
+    /**
+     * Filter GFM disallowed raw HTML tags by replacing < with &lt;
+     */
+    private function filterDisallowedHtml(string $html): string
+    {
+        return preg_replace(
+            '/<(\/?(?:title|textarea|style|xmp|iframe|noembed|noframes|script|plaintext)(?:\s|>|\/?>))/i',
+            '&lt;$1',
+            $html
+        ) ?? $html;
     }
 
     /**
@@ -883,5 +1049,25 @@ class Xhtml implements Renderer, NodeVisitor
     protected function renderRevise_ins(ElementNode $node): string
     {
         return '<ins>' . $this->renderChildren($node) . '</ins>';
+    }
+
+    /**
+     * Sanitize URL for use in href/src attributes
+     *
+     * Percent-encodes unsafe characters per CommonMark spec while
+     * preserving existing percent-encoding and HTML entity-escaping
+     * the result for safe attribute inclusion.
+     */
+    private function sanitizeUrl(string $url): string
+    {
+        // Percent-encode characters that should not appear raw in URLs
+        // but preserve existing percent-encoding (%XX sequences)
+        $url = preg_replace_callback(
+            '/[^a-zA-Z0-9._~:\/\?#@!\$&\'\(\)\*\+,;=\-%]/',
+            fn(array $m) => rawurlencode($m[0]),
+            $url
+        ) ?? $url;
+
+        return htmlspecialchars($url, ENT_QUOTES | ENT_HTML5, 'UTF-8');
     }
 }

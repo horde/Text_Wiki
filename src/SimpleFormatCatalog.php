@@ -12,6 +12,7 @@ declare(strict_types=1);
 namespace Horde\Text\Wiki;
 
 use Horde\Text\Wiki\BBCode\BBCodeParser;
+use Horde\Text\Wiki\Commonmark\MarkdownParser;
 use Horde\Text\Wiki\Cowiki\CowikiParser;
 use Horde\Text\Wiki\Creole\CreoleParser;
 use Horde\Text\Wiki\Doku\DokuParser;
@@ -22,6 +23,7 @@ use Horde\Text\Wiki\Renderer\Creole;
 use Horde\Text\Wiki\Renderer\Docbook;
 use Horde\Text\Wiki\Renderer\Doku;
 use Horde\Text\Wiki\Renderer\Latex;
+use Horde\Text\Wiki\Renderer\Markdown;
 use Horde\Text\Wiki\Renderer\Mediawiki;
 use Horde\Text\Wiki\Renderer\Plain;
 use Horde\Text\Wiki\Renderer\Tiki;
@@ -57,6 +59,7 @@ class SimpleFormatCatalog implements FormatCatalog
         $catalog = new self();
 
         $catalog->registerParser(new BBCodeParser());
+        $catalog->registerParser(new MarkdownParser());
         $catalog->registerParser(new CowikiParser());
         $catalog->registerParser(new CreoleParser());
         $catalog->registerParser(new DokuParser());
@@ -70,6 +73,7 @@ class SimpleFormatCatalog implements FormatCatalog
         $catalog->registerRenderer(new Docbook());
         $catalog->registerRenderer(new Doku());
         $catalog->registerRenderer(new Latex());
+        $catalog->registerRenderer(new Markdown());
         $catalog->registerRenderer(new Mediawiki());
         $catalog->registerRenderer(new Plain());
         $catalog->registerRenderer(new Tiki());

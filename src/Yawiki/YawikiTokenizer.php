@@ -286,9 +286,9 @@ class YawikiTokenizer implements Tokenizer
                 $color = '#' . $color;
             }
             return [
-                new Token(TokenType::OPEN_TAG, 'colortext', $pos, ['color' => $color]),
+                new Token(TokenType::OPEN_TAG, 'color', $pos, ['color' => $color]),
                 new Token(TokenType::TEXT, $text, $pos),
-                new Token(TokenType::CLOSE_TAG, 'colortext', $pos),
+                new Token(TokenType::CLOSE_TAG, 'color', $pos),
             ];
         }
         // Revise: @@---del+++ins@@
@@ -320,9 +320,9 @@ class YawikiTokenizer implements Tokenizer
             $page = trim($parts[0]);
             $text = isset($parts[1]) ? trim($parts[1]) : $page;
             return [
-                new Token(TokenType::OPEN_TAG, 'freelink', $pos, ['page' => $page]),
+                new Token(TokenType::OPEN_TAG, 'wikilink', $pos, ['page' => $page]),
                 new Token(TokenType::TEXT, $text, $pos),
-                new Token(TokenType::CLOSE_TAG, 'freelink', $pos),
+                new Token(TokenType::CLOSE_TAG, 'wikilink', $pos),
             ];
         }
         // PHP lookup: [[php function]]

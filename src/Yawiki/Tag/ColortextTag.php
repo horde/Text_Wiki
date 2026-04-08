@@ -28,6 +28,6 @@ class ColortextTag extends AbstractTagDefinition
 {
     public function __construct()
     {
-        parent::__construct('colortext', TagType::INLINE);
+        parent::__construct('color', TagType::INLINE);
     }
 }
