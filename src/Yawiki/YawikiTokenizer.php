@@ -181,6 +181,7 @@ class YawikiTokenizer implements Tokenizer
             . '|\[([A-Za-z][-\w\/]*(?:#[-\w:.]+)?)(?:\s+([^\]]+))?\]' // groups 14,15: wikilink [Page text]
             . '|\(\(([^\)]+)\)\)'   // group 16: freelink
             . '|\[\[php\s+(.+?)\]\]' // group 17: phplookup
+            . '|(?<![A-Za-z0-9\-_])(!)?((?:[A-Z][A-Za-z0-9]*?[a-z0-9]+?[A-Z][A-Za-z0-9]*?)(?:\/(?:[A-Z][A-Za-z0-9]*?[a-z0-9]+?[A-Z][A-Za-z0-9]*?))*?)(?![A-Za-z0-9\-_\/])' // groups 18,19: CamelCase wikilink
             . ')/Us';
     }
 
@@ -288,7 +289,7 @@ class YawikiTokenizer implements Tokenizer
             }
             return [
                 new Token(TokenType::OPEN_TAG, 'color', $pos, ['color' => $color]),
-                new Token(TokenType::TEXT, $text, $pos),
+                ...$this->tokenizeInlineContent($text, $pos),
                 new Token(TokenType::CLOSE_TAG, 'color', $pos),
             ];
         }
@@ -344,6 +345,19 @@ class YawikiTokenizer implements Tokenizer
                 new Token(TokenType::OPEN_TAG, 'phplookup', $pos, ['function' => $matches[17][0]]),
                 new Token(TokenType::TEXT, $matches[17][0], $pos),
                 new Token(TokenType::CLOSE_TAG, 'phplookup', $pos),
+            ];
+        }
+        // CamelCase wikilink: StudlyCapsWord (with optional !escape)
+        if (isset($matches[19]) && $matches[19][1] !== -1) {
+            $page = $matches[19][0];
+            // ! prefix suppresses auto-linking — render as plain text
+            if (isset($matches[18]) && $matches[18][1] !== -1 && $matches[18][0] === '!') {
+                return [new Token(TokenType::TEXT, $page, $pos)];
+            }
+            return [
+                new Token(TokenType::OPEN_TAG, 'wikilink', $pos, ['page' => $page]),
+                new Token(TokenType::TEXT, $page, $pos),
+                new Token(TokenType::CLOSE_TAG, 'wikilink', $pos),
             ];
         }
 
@@ -784,7 +798,7 @@ class YawikiTokenizer implements Tokenizer
     {
         return [
             new Token(TokenType::OPEN_TAG, $name, $pos),
-            new Token(TokenType::TEXT, $text, $pos),
+            ...$this->tokenizeInlineContent($text, $pos),
             new Token(TokenType::CLOSE_TAG, $name, $pos),
         ];
     }
