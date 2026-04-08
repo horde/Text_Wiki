@@ -40,6 +40,7 @@ use Horde\Text\Wiki\GenericStructureBuilder;
 use Horde\Text\Wiki\Node\DocumentNode;
 use Horde\Text\Wiki\Parser;
 use Horde\Text\Wiki\SimpleTagRegistry;
+use Horde\Text\Wiki\TagRegistry;
 
 /**
  * Creole parser
@@ -63,10 +64,16 @@ class CreoleParser implements Parser
     private CreoleTokenizer $tokenizer;
     private GenericStructureBuilder $builder;
 
-    public function __construct()
+    public function __construct(?TagRegistry $registry = null)
     {
         $this->tokenizer = new CreoleTokenizer();
 
+        $registry = $registry ?? $this->createDefaultRegistry();
+        $this->builder = new GenericStructureBuilder($registry);
+    }
+
+    private function createDefaultRegistry(): TagRegistry
+    {
         $registry = new SimpleTagRegistry();
 
         // Inline formatting
@@ -106,7 +113,7 @@ class CreoleParser implements Parser
         $registry->register(new DeftermTag());
         $registry->register(new DefdefTag());
 
-        $this->builder = new GenericStructureBuilder($registry);
+        return $registry;
     }
 
     /**

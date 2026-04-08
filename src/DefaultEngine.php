@@ -1,27 +1,45 @@
 <?php
 
-// vim: set expandtab tabstop=4 shiftwidth=4 softtabstop=4:
+declare(strict_types=1);
+
 /**
- * Parse structured wiki text and render into arbitrary formats such as XHTML.
+ * Copyright 2013-2026 The Horde Project (http://www.horde.org/)
  *
- * PHP versions 4 and 5
- *
- * @category   Text
- * @package    Text_Wiki
- * @author     Justin Patrin <justinpatrin@php.net>
- * @license    http://www.gnu.org/copyleft/lesser.html  LGPL License 2.1
- * @version    CVS: $Id$
- * @link       http://pear.php.net/package/Text_Wiki
+ * See the enclosed file LICENSE for license information (LGPL). If you
+ * did not receive this file, see http://www.horde.org/licenses/lgpl21.
  */
 
 namespace Horde\Text\Wiki;
 
 /**
- * This is the parser for the Default ruleset. For now, this simply extends TextWiki.
+ * Default engine — Yawiki parser + catalog-resolved renderers
  *
- * @category   Text
- * @package    Text_Wiki
- * @version    Release: @package_version@
- * @author     Justin Patrin <justinpatrin@php.net>
+ * The "Default" dialect is Yawiki (Yet Another Wiki), the original Text_Wiki
+ * markup created by Paul M. Jones. This engine uses a FormatCatalog to resolve
+ * renderers, making it extensible with custom formats.
+ *
+ * @author   Paul M. Jones <pmjones@php.net>
+ * @author   Justin Patrin <justinpatrin@php.net>
+ * @author   Ralf Lang <lang@b1-systems.de>
+ * @category Horde
+ * @license  http://www.horde.org/licenses/lgpl21 LGPL 2.1
+ * @package  Text_Wiki
  */
-class DefaultEngine extends TextWikiBase {}
+class DefaultEngine implements WikiEngine
+{
+    private FormatCatalog $catalog;
+    private Parser $parser;
+
+    public function __construct(?FormatCatalog $catalog = null)
+    {
+        $this->catalog = $catalog ?? SimpleFormatCatalog::withDefaults();
+        $this->parser = $this->catalog->getParser('yawiki');
+    }
+
+    public function transform(string $text, string $format = 'Xhtml'): string
+    {
+        return $this->catalog->getRenderer($format)->render(
+            $this->parser->parse($text)
+        );
+    }
+}

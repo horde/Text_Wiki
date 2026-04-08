@@ -39,6 +39,9 @@ use Horde\Text\Wiki\Renderer;
  */
 class Creole implements Renderer, NodeVisitor
 {
+    /** @var array<string, callable(ElementNode, NodeVisitor): string> */
+    private array $elementHandlers = [];
+
     private const BLOCK_ELEMENTS = [
         'heading', 'horiz', 'code', 'raw', 'blockquote',
         'paragraph', 'table', 'list', 'center',
@@ -49,6 +52,11 @@ class Creole implements Renderer, NodeVisitor
 
     /** @var array<string> Stack of 'bullet'|'number' per nesting level */
     private array $listTypeStack = [];
+
+    public function setElementHandler(string $tagName, callable $handler): void
+    {
+        $this->elementHandlers[strtolower($tagName)] = $handler;
+    }
 
     public function render(DocumentNode $document): string
     {
@@ -70,6 +78,12 @@ class Creole implements Renderer, NodeVisitor
 
     public function visitElement(ElementNode $node): string
     {
+        $key = strtolower($node->getName());
+
+        if (isset($this->elementHandlers[$key])) {
+            return ($this->elementHandlers[$key])($node, $this);
+        }
+
         $tagName = $node->getName();
         $method = 'render' . str_replace('_', '', ucwords($tagName, '_'));
 
@@ -165,7 +179,7 @@ class Creole implements Renderer, NodeVisitor
     // Child rendering helper
     // ---------------------------------------------------------------
 
-    protected function renderChildren(ElementNode $node): string
+    public function renderChildren(ElementNode $node): string
     {
         return $this->renderNodeList($node->getChildren());
     }

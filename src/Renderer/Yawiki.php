@@ -33,6 +33,9 @@ use Horde\Text\Wiki\Renderer;
  */
 class Yawiki implements Renderer, NodeVisitor
 {
+    /** @var array<string, callable(ElementNode, NodeVisitor): string> */
+    private array $elementHandlers = [];
+
     private const BLOCK_ELEMENTS = [
         'heading', 'horiz', 'code', 'blockquote', 'center',
         'paragraph', 'table', 'deflist', 'list',
@@ -49,6 +52,11 @@ class Yawiki implements Renderer, NodeVisitor
      * @var array<int, true>
      */
     private array $renderedReviseIns = [];
+
+    public function setElementHandler(string $tagName, callable $handler): void
+    {
+        $this->elementHandlers[strtolower($tagName)] = $handler;
+    }
 
     public function render(DocumentNode $document): string
     {
@@ -71,6 +79,12 @@ class Yawiki implements Renderer, NodeVisitor
 
     public function visitElement(ElementNode $node): string
     {
+        $key = strtolower($node->getName());
+
+        if (isset($this->elementHandlers[$key])) {
+            return ($this->elementHandlers[$key])($node, $this);
+        }
+
         $tagName = $node->getName();
 
         // Handle underscore in method names (revise_del, revise_ins)
@@ -217,7 +231,7 @@ class Yawiki implements Renderer, NodeVisitor
     // Child rendering helper
     // ---------------------------------------------------------------
 
-    protected function renderChildren(ElementNode $node): string
+    public function renderChildren(ElementNode $node): string
     {
         return $this->renderNodeList($node->getChildren());
     }

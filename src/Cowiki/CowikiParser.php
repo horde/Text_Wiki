@@ -35,6 +35,7 @@ use Horde\Text\Wiki\GenericStructureBuilder;
 use Horde\Text\Wiki\Node\DocumentNode;
 use Horde\Text\Wiki\Parser;
 use Horde\Text\Wiki\SimpleTagRegistry;
+use Horde\Text\Wiki\TagRegistry;
 
 /**
  * Cowiki parser
@@ -56,10 +57,16 @@ class CowikiParser implements Parser
     private CowikiTokenizer $tokenizer;
     private GenericStructureBuilder $builder;
 
-    public function __construct()
+    public function __construct(?TagRegistry $registry = null)
     {
         $this->tokenizer = new CowikiTokenizer();
 
+        $registry = $registry ?? $this->createDefaultRegistry();
+        $this->builder = new GenericStructureBuilder($registry);
+    }
+
+    private function createDefaultRegistry(): TagRegistry
+    {
         $registry = new SimpleTagRegistry();
 
         // Inline formatting
@@ -92,7 +99,7 @@ class CowikiParser implements Parser
         $registry->register(new RowTag());
         $registry->register(new CellTag());
 
-        $this->builder = new GenericStructureBuilder($registry);
+        return $registry;
     }
 
     /**

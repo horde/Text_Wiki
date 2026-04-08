@@ -36,6 +36,9 @@ use Horde\Text\Wiki\Renderer;
  */
 class Docbook implements Renderer, NodeVisitor
 {
+    /** @var array<string, callable(ElementNode, NodeVisitor): string> */
+    private array $elementHandlers = [];
+
     private const BLOCK_ELEMENTS = [
         'heading', 'horiz', 'code', 'raw', 'blockquote',
         'paragraph', 'table', 'list', 'deflist', 'center',
@@ -44,6 +47,11 @@ class Docbook implements Renderer, NodeVisitor
 
     /** @var array<int> Stack of open section levels for proper nesting */
     private array $sectionStack = [];
+
+    public function setElementHandler(string $tagName, callable $handler): void
+    {
+        $this->elementHandlers[strtolower($tagName)] = $handler;
+    }
 
     public function render(DocumentNode $document): string
     {
@@ -77,6 +85,12 @@ class Docbook implements Renderer, NodeVisitor
 
     public function visitElement(ElementNode $node): string
     {
+        $key = strtolower($node->getName());
+
+        if (isset($this->elementHandlers[$key])) {
+            return ($this->elementHandlers[$key])($node, $this);
+        }
+
         $tagName = $node->getName();
         $method = 'render' . str_replace('_', '', ucwords($tagName, '_'));
 
@@ -170,7 +184,7 @@ class Docbook implements Renderer, NodeVisitor
             && in_array($node->getName(), self::BLOCK_ELEMENTS, true);
     }
 
-    protected function renderChildren(ElementNode $node): string
+    public function renderChildren(ElementNode $node): string
     {
         return $this->renderNodeList($node->getChildren());
     }
@@ -178,7 +192,7 @@ class Docbook implements Renderer, NodeVisitor
     /**
      * Render children without escaping (for CDATA contexts)
      */
-    protected function renderChildrenRaw(ElementNode $node): string
+    public function renderChildrenRaw(ElementNode $node): string
     {
         $output = '';
         foreach ($node->getChildren() as $child) {

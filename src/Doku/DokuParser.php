@@ -41,6 +41,7 @@ use Horde\Text\Wiki\GenericStructureBuilder;
 use Horde\Text\Wiki\Node\DocumentNode;
 use Horde\Text\Wiki\Parser;
 use Horde\Text\Wiki\SimpleTagRegistry;
+use Horde\Text\Wiki\TagRegistry;
 
 /**
  * DokuWiki parser
@@ -62,10 +63,16 @@ class DokuParser implements Parser
     private DokuTokenizer $tokenizer;
     private GenericStructureBuilder $builder;
 
-    public function __construct()
+    public function __construct(?TagRegistry $registry = null)
     {
         $this->tokenizer = new DokuTokenizer();
 
+        $registry = $registry ?? $this->createDefaultRegistry();
+        $this->builder = new GenericStructureBuilder($registry);
+    }
+
+    private function createDefaultRegistry(): TagRegistry
+    {
         $registry = new SimpleTagRegistry();
 
         // Inline formatting
@@ -106,7 +113,7 @@ class DokuParser implements Parser
         $registry->register(new DeftermTag());
         $registry->register(new DefdefTag());
 
-        $this->builder = new GenericStructureBuilder($registry);
+        return $registry;
     }
 
     /**
