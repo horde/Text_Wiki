@@ -1,4 +1,54 @@
 ---
+3.0.0-beta1:
+  api: 3.0.0-beta1
+  state:
+    release: beta
+    api: beta
+  date: 2026-04-09
+  license:
+    identifier: LGPL-2.1-only
+    uri: https://spdx.org/licenses/LGPL-2.1-only.html
+  notes: |-
+    fix: Broken unicode regexes
+    fix: Many missing returns and wrong phpdoc detected by phpstan level 1
+    style: php-cs-fixer
+    fix: Even more edge cases for headings not tokenized in combination with other tags
+    Fix: CamelCase bareword wikilinks and mixed tags ambiguities
+    fix: Markdown parser and renderer quirks.
+    docs: Add integration and extension documentation
+    feat: Add CommonMark (Markdown) renderer and merge duplicate tags
+    feat: Add a Tag Registry to inject new tags or disable existing tags
+    test: Remove tests for old-style parsers
+    docs: Add documents on supported wiki dialects
+    test: Unit and integration tests for all AST parsers and renderers
+    feat: All wiki types migrated to AST
+    feat: Xhtml renderer support improved for img with alt tags, lists and code blocks
+    feat: Second priority BBCode tags (alignment, youtube, email)
+    test: Add unit and integration tests for BBCode parser and new Xhtml renderer
+    feat: Implement a new, OO typed kind of parser for BBCode and renderer for Xhtml
+    test: Add cowiki idempotency test (parse from cowiki syntax, render to cowiki syntax)
+    fix: Cowiki List renderer and Parser
+    feat: Support both the "htmlish" and the "pipeish" variants of Cowiki table syntax
+    fix: Wikilink parsing and rendering issues for Cowiki
+    fix: Consume newlines to achieve idempotency through multiple runs of the Cowiki parser and renderer.
+    fix: Remove custom constructor for Cowiki (outdated path assumptions)
+    docs: Add heritage, authoritative sources and comparisons for default/yawiki, cowiki and tiki dialects
+    test: Coverage for Cowiki parser
+    test: Fix DefaultParser tests and add Tiki parser tests
+    fix: re-scope the token id counter
+    fix: Remove newline at the end of defaultParserHeading like in Tiki parser
+    fix(TikiWikiRenderHeading): Change EndHeading from newline to empty string
+    fix: Array of rules must be typed due to inheritance
+    test: fix risky tests and deprecations / missing properties
+    fix: Protect textEncode htmlspecialchars against null
+    fix: Don't pass matches by reference where it's not needed
+    test: Increase coverage of default parser
+    test: Migrate phpt to phpunit tests
+    chore(hordeyml): Add keywords
+    chore(gitignore): Add default entries
+    style: php-cs-fixer
+    doc: Initialize a .horde.yml and a changelog.yml file from existing metadata
+    fix: remove callback reference for PHP 8 compatibility
 3.0.0-alpha5:
   api: 3.0.0-alpha1
   state:
@@ -19,8 +69,7 @@
   license:
     identifier: LGPL-2.1-only
     uri: https://spdx.org/licenses/LGPL-2.1-only.html
-  notes: |-
-    Remove readonly from ParserPrefix
+  notes: Remove readonly from ParserPrefix
 2.0.0-alpha.2:
   api: 2.0.0
   state:
@@ -75,9 +124,7 @@
     identifier: LGPL-2.1-only
     uri: http://www.gnu.org/copyleft/lesser.html
   notes: |-
-    QA release
-
-    Bug #11649 Closed New Code regex fails
+    QA releaseBug #11649 Closed New Code regex fails
     Req #12569 Closed Adding 'base_url' to XHTML Toc renderer
     Bug #12719 Closed Blockquote parsing bugs
     Bug #12722 Closed HTML Blockquote compliance

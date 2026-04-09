@@ -1,38 +1,110 @@
 {
+    "name": "horde/text_wiki",
+    "description": "Horde.org PSR-4 successor to the 2010s fork of the original pear/text_wiki",
+    "type": "library",
+    "homepage": "https://www.horde.org/libraries/Horde_Text_Wiki",
+    "license": "LGPL-2.1-only",
     "authors": [
         {
+            "name": "Ralf Lang",
+            "email": "ralf.lang@ralf-lang.de",
+            "role": "maintainer"
+        },
+        {
+            "name": "Jan Schneider",
+            "email": "jan@horde.org",
+            "role": "lead"
+        },
+        {
+            "name": "Chuck Hagenbuch",
+            "email": "chuck@horde.org",
+            "role": "lead"
+        },
+        {
+            "name": "Paul M. Jones",
             "email": "pmjones@ciaweb.net",
-            "name": "Paul Jones",
-            "role": "Lead"
+            "role": "lead"
         },
         {
-            "email": "papercrane@reversefold.com",
             "name": "Justin Patrin",
-            "role": "Lead"
+            "email": "papercrane@reversefold.com",
+            "role": "lead"
         },
         {
-            "email": "del@babel.com.au",
             "name": "Del Elson",
-            "role": "Developer"
+            "email": "del@babel.com.au",
+            "role": "developer"
+        },
+        {
+            "name": "Bertrand Gugger",
+            "email": "bertrand@toggg.com",
+            "role": "developer"
+        },
+        {
+            "name": "Michele Tomaiuolo",
+            "email": "tomamic@yahoo.it",
+            "role": "developer"
+        },
+        {
+            "name": "Moritz Venn",
+            "email": "ritzmo@php.net",
+            "role": "developer"
+        },
+        {
+            "name": "Firman Wandayandi",
+            "email": "firman@php.net",
+            "role": "developer"
+        },
+        {
+            "name": "Jeremy Cowgar",
+            "email": "jeremy@cowgar.com",
+            "role": "developer"
+        },
+        {
+            "name": "Manuel Holtgrewe",
+            "email": "purestorm@ggnore.net",
+            "role": "developer"
+        },
+        {
+            "name": "Rodrigo Sampaio Primo",
+            "email": "rodrigo@utopia.org.br",
+            "role": "developer"
+        },
+        {
+            "name": "Brian J. Sipos",
+            "email": "bjs5075@rit.edu",
+            "role": "developer"
         }
     ],
+    "keywords": [
+        "parser",
+        "creole",
+        "tikiwiki"
+    ],
+    "time": "2026-04-09",
+    "repositories": [],
+    "require": {
+        "php": "^8.1"
+    },
+    "require-dev": {},
+    "suggest": {},
     "autoload": {
         "psr-4": {
             "Horde\\Text\\Wiki\\": "src/"
         }
     },
-    "description": "More info available on: http://pear.php.net/package/Text_Wiki",
-    "include-path": [
-        "./"
-    ],
-    "license": "LGPL-2.1-or-later",
-    "name": "horde/text_wiki",
-    "support": {
-        "issues": "http://pear.php.net/bugs/search.php?cmd=display&package_name[]=Text_Wiki",
-        "source": "https://github.com/pear/Text_Wiki"
+    "autoload-dev": {
+        "psr-4": {
+            "Horde\\Text\\Wiki\\Test\\": "test/",
+            "Horde\\Text\\Wiki\\Test\\Fixtures\\": "test/fixtures/"
+        }
     },
-    "type": "library",
-    "require-dev": {
+    "config": {
+        "allow-plugins": {}
     },
-    "minimum-stability": "dev"
+    "extra": {
+        "branch-alias": {
+            "dev-FRAMEWORK_6_0": "3.x-dev"
+        }
+    }
 }
