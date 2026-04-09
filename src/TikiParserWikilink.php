@@ -75,11 +75,11 @@ class TikiParserWikilink extends WikiParserBase
             $either = 'A-Za-z0-9\p{L}';
         } elseif ($this->getConf('ext_chars')) {
             // use an extended character set; this should
-            // allow for umlauts and so on.  taken from the
-            // Tavi project defaults.php file.
-            $upper = 'A-Z\p{Lu}\xc0-\xde';
-            $lower = 'a-z0-9\p{Ll}\xdf-\xfe';
-            $either = 'A-Za-z0-9\p{L}\xc0-\xfe';
+            // allow for umlauts and so on.  Uses Unicode
+            // property escapes for UTF-8 compatibility.
+            $upper = 'A-Z\p{Lu}';
+            $lower = 'a-z0-9\p{Ll}';
+            $either = 'A-Za-z0-9\p{L}';
         } else {
             // the default character set, should be fine
             // for most purposes.
@@ -121,13 +121,13 @@ class TikiParserWikilink extends WikiParserBase
         if ($this->getConf('utf-8')) {
             $either = 'A-Za-z0-9\p{L}';
         } elseif ($this->getConf('ext_chars')) {
-            $either = "A-Za-z0-9\xc0-\xfe";
+            $either = 'A-Za-z0-9\p{L}';
         } else {
             $either = "A-Za-z0-9";
         }
 
         // described wiki links
-        $tmp_regex = '/\(\(' . /*$this->regex*/ '([' . $either . '\s\.\-]*?)(?:(\#[' . $either . '\s\.\-](?:[' . $either . '\s\.\-]*?)?)?)(?:\|(.+?))?\)\)/' . ($this->getConf('utf-8') ? 'u' : '');
+        $tmp_regex = '/\(\(' . /*$this->regex*/ '([' . $either . '\s\.\-]*?)(?:(\#[' . $either . '\s\.\-](?:[' . $either . '\s\.\-]*?)?)?)(?:\|(.+?))?\)\)/' . (($this->getConf('utf-8') || $this->getConf('ext_chars')) ? 'u' : '');
         $this->wiki->source = preg_replace_callback(
             $tmp_regex,
             [$this, 'processDescr'],
@@ -135,7 +135,7 @@ class TikiParserWikilink extends WikiParserBase
         );
 
         // standalone wiki links
-        $tmp_regex = '/(^|[^$either\-_])(\)\))?' . $this->regex . '(\(\()?/' . ($this->getConf('utf-8') ? 'u' : '');
+        $tmp_regex = '/(^|[^$either\-_])(\)\))?' . $this->regex . '(\(\()?/' . (($this->getConf('utf-8') || $this->getConf('ext_chars')) ? 'u' : '');
         $this->wiki->source = preg_replace_callback(
             $tmp_regex,
             [$this, 'process'],

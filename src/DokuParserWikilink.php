@@ -67,7 +67,7 @@ class DokuParserWikilink extends WikiParserBase
         if ($this->getConf('utf-8')) {
             $either = 'A-Za-z0-9\p{L}';
         } elseif ($this->getConf('ext_chars')) {
-            $either = 'A-Za-z0-9\xc0-\xfe';
+            $either = 'A-Za-z0-9\p{L}';
         } else {
             $either = 'A-Za-z0-9';
         }
@@ -77,7 +77,7 @@ class DokuParserWikilink extends WikiParserBase
             . '([' . $either . '\s:\.]*?)' //page name
             . '(\#[' . $either . '\s:\.]+?)?' //anchor
             . '(\|([^' . $this->wiki->delim . '\]]+?))?' //description
-            . '\]\]/' . ($this->getConf('utf-8') ? 'u' : ''); //end
+            . '\]\]/' . (($this->getConf('utf-8') || $this->getConf('ext_chars')) ? 'u' : ''); //end
         $this->wiki->source = preg_replace_callback(
             $tmp_regex,
             [$this, 'processDescr'],
