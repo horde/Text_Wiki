@@ -168,6 +168,9 @@ class DocbookRendererHeading extends WikiRendererBase
     public function token($options)
     {
         // get nice variable names (id, type, level, terminal)
+        $type = '';
+        $level = 0;
+        $id = '';
         $terminal = false;
         extract($options);
         if ($terminal) {

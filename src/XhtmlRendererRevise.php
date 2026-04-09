@@ -66,5 +66,7 @@ class XhtmlRendererRevise extends WikiRendererBase
         if ($options['type'] == 'ins_end') {
             return "</ins>";
         }
+
+        return '';
     }
 }

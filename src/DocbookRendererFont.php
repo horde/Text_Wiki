@@ -49,6 +49,7 @@ class DocbookRendererFont extends WikiRendererBase
         if ($options['type'] == 'end') {
             return '</phrase>';
         }
+        $size = '';
         if (isset($options['size'])) {
             $size = trim($options['size']);
             if (is_numeric($size)) {

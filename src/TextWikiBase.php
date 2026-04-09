@@ -978,11 +978,8 @@ class TextWikiBase
         // when in a delimited section, capture the token key number
         $key = '';
 
-        // load the format object, or crap out if we can't find it
-        $result = $this->loadFormatObj($format);
-        if ($this->isError($result)) {
-            return $result;
-        }
+        // load the format object
+        $this->loadFormatObj($format);
 
         // pre-rendering activity
         if (is_object($this->formatObj[$format])) {
@@ -1023,6 +1020,8 @@ class TextWikiBase
             // pass through the parsed source text character by character
             $this->_block = '';
             $tokenStack = [];
+            $opts = [];
+            $rule = '';
             $k = strlen($this->source);
             for ($i = 0; $i < $k; $i++) {
 
@@ -1128,7 +1127,7 @@ class TextWikiBase
     public function popRenderCallback()
     {
         if (count($this->_renderCallbacks) == 0) {
-            return Text_Wiki::error('Render callback popped when no render callbacks in stack');
+            return $this->error('Render callback popped when no render callbacks in stack');
         } else {
             $callback = array_pop($this->_renderCallbacks);
             $this->_block = call_user_func($callback, $this->_block);
@@ -1291,7 +1290,7 @@ class TextWikiBase
     *
     * @access public
     *
-    * @return bool True if loaded, false if not.
+    * @return void
     *
     */
 
@@ -1318,7 +1317,7 @@ class TextWikiBase
     *
     * @access public
     *
-    * @return bool True if loaded, false if not.
+    * @return void
     *
     */
 
@@ -1346,7 +1345,7 @@ class TextWikiBase
     *
     * @access public
     *
-    * @return bool True if loaded, false if not.
+    * @return void
     *
     */
 

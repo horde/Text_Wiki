@@ -48,5 +48,7 @@ class TikiRendererList extends WikiRendererBase
                 return "\n";
                 break;
         }
+
+        return '';
     }
 }

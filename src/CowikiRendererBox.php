@@ -31,5 +31,7 @@ class CowikiRendererBox extends WikiRendererBase
 </table>
 ';
         }
+
+        return '';
     }
 }

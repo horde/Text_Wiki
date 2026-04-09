@@ -31,5 +31,7 @@ class DokuRendererBox extends WikiRendererBase
 
 ';
         }
+
+        return '';
     }
 }

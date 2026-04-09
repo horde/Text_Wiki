@@ -55,5 +55,7 @@ class DocbookRendererTitlebar extends WikiRendererBase
         if ($options['type'] == 'end') {
             return '</div>';
         }
+
+        return '';
     }
 }

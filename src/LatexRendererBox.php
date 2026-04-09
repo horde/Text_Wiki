@@ -52,5 +52,7 @@ class LatexRendererBox extends WikiRendererBase
         if ($options['type'] == 'end') {
             return "}\n";
         }
+
+        return '';
     }
 }

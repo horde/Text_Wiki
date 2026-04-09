@@ -74,5 +74,7 @@ class XhtmlRendererBlockquote extends WikiRendererBase
         if ($type == 'end') {
             return "\n$pad</div></blockquote>";
         }
+
+        return '';
     }
 }

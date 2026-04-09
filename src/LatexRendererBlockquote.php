@@ -33,5 +33,7 @@ class LatexRendererBlockquote extends WikiRendererBase
         if ($type == 'end') {
             return "\\end{quote}\n\n";
         }
+
+        return '';
     }
 }

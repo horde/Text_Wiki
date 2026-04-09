@@ -20,6 +20,7 @@ class PlainRendererTable extends WikiRendererBase
     public function token($options)
     {
         // make nice variable names (type, attr, span)
+        $type = '';
         extract($options);
 
         $pad = '    ';

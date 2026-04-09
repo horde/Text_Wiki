@@ -19,6 +19,9 @@ class CreoleRendererUrl extends WikiRendererBase
 
     public function token($options)
     {
+        $type = '';
+        $href = '';
+        $text = '';
         extract($options);
         if ($type == 'start') {
             return '[[' . $href . '|';

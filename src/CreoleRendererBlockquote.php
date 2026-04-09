@@ -35,6 +35,8 @@ class CreoleRendererBlockquote extends WikiRendererBase
             $this->wiki->popRenderCallback();
             return '';
         }
+
+        return '';
     }
 
     public function renderInsideText($text)

@@ -26,5 +26,7 @@ class CowikiRendererSuperscript extends WikiRendererBase
         if ($options['type'] == 'end') {
             return '</sup>';
         }
+
+        return '';
     }
 }

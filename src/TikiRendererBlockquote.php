@@ -32,5 +32,7 @@ class TikiRendererBlockquote extends WikiRendererBase
         if ($options['type'] == 'end') {
             return '';
         }
+
+        return '';
     }
 }

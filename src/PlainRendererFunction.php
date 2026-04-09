@@ -21,6 +21,11 @@ class PlainRendererFunction extends WikiRendererBase
 
     public function token($options)
     {
+        $access = '';
+        $return = '';
+        $name = '';
+        $params = [];
+        $throws = [];
         extract($options); // access, return, name, params, throws
 
         $output = "$access $return $name ( ";

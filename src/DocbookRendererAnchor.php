@@ -30,6 +30,8 @@ class DocbookRendererAnchor extends WikiRendererBase
 {
     public function token($options)
     {
+        $type = '';
+        $name = '';
         extract($options); // $type, $name
 
         if ($type == 'start') {

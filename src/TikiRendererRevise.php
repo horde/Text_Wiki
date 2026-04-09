@@ -34,5 +34,7 @@ class TikiRendererRevise extends WikiRendererBase
                 return '</ins>';
                 break;
         }
+
+        return '';
     }
 }

@@ -47,6 +47,7 @@ class XhtmlRendererParagraph extends WikiRendererBase
 
     public function token($options)
     {
+        $type = '';
         extract($options); //type
 
         if ($type == 'start') {
@@ -57,5 +58,7 @@ class XhtmlRendererParagraph extends WikiRendererBase
         if ($type == 'end') {
             return "</p>\n\n";
         }
+
+        return '';
     }
 }

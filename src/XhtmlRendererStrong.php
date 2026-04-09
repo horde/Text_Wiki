@@ -55,5 +55,7 @@ class XhtmlRendererStrong extends WikiRendererBase
         if ($options['type'] == 'end') {
             return '</strong>';
         }
+
+        return '';
     }
 }

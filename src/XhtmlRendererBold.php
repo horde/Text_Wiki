@@ -55,5 +55,7 @@ class XhtmlRendererBold extends WikiRendererBase
         if ($options['type'] == 'end') {
             return '</b>';
         }
+
+        return '';
     }
 }

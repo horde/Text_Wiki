@@ -36,5 +36,7 @@ class PlainRendererBlockquote extends WikiRendererBase
         if ($type == 'end') {
             return "\n$pad";
         }
+
+        return '';
     }
 }

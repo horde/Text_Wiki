@@ -39,6 +39,9 @@ class XhtmlRendererHeading extends WikiRendererBase
 
     public function token($options)
     {
+        $type = '';
+        $level = 0;
+        $id = '';
         $collapse = null;
         static $jsOutput = false;
         // get nice variable names (id, type, level)

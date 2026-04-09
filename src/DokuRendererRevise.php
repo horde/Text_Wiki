@@ -33,5 +33,7 @@ class DokuRendererRevise extends WikiRendererBase
                 return '</ins>';
                 break;
         }
+
+        return '';
     }
 }

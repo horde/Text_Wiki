@@ -54,6 +54,9 @@ class XhtmlRendererList extends WikiRendererBase
     public function token($options)
     {
         // make nice variables (type, level, count)
+        $type = '';
+        $level = 0;
+        $count = 0;
         extract($options);
 
         // set up indenting so that the results look nice; we do this

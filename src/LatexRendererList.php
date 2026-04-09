@@ -23,6 +23,8 @@ class LatexRendererList extends WikiRendererBase
     public function token($options)
     {
         // make nice variables (type, level, count)
+        $type = '';
+        $level = 0;
         extract($options);
 
         switch ($type) {

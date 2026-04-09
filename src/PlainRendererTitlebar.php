@@ -52,5 +52,7 @@ class PlainRendererTitlebar extends WikiRendererBase
         if ($options['type'] == 'end') {
             return " *****\n";
         }
+
+        return '';
     }
 }

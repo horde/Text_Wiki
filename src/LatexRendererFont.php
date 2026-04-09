@@ -60,6 +60,7 @@ class LatexRendererFont extends WikiRendererBase
     public function token($options)
     {
         if ($options['type'] == 'start') {
+            $key = 'normalsize';
             foreach ($this->sizes as $key => $lim) {
                 if ($options['size'] < $lim) {
                     break;
@@ -71,5 +72,7 @@ class LatexRendererFont extends WikiRendererBase
         if ($options['type'] == 'end') {
             return '}';
         }
+
+        return '';
     }
 }

@@ -33,5 +33,7 @@ class CowikiRendererRevise extends WikiRendererBase
                 return '</ins>';
                 break;
         }
+
+        return '';
     }
 }

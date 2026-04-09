@@ -50,5 +50,7 @@ class CreoleRendererList extends WikiRendererBase
                 return "\n";
                 break;
         }
+
+        return '';
     }
 }

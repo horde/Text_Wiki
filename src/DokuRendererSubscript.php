@@ -26,5 +26,7 @@ class DokuRendererSubscript extends WikiRendererBase
         if ($options['type'] == 'end') {
             return '</sub>';
         }
+
+        return '';
     }
 }

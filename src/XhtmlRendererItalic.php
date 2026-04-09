@@ -55,5 +55,7 @@ class XhtmlRendererItalic extends WikiRendererBase
         if ($options['type'] == 'end') {
             return '</i>';
         }
+
+        return '';
     }
 }

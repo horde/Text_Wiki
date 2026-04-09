@@ -54,6 +54,9 @@ class DocbookRendererToc extends WikiRendererBase
     public function token($options)
     {
         // type, id, level, count, attr
+        $type = '';
+        $level = 0;
+        $id = '';
         extract($options);
 
         switch ($type) {
@@ -113,5 +116,7 @@ class DocbookRendererToc extends WikiRendererBase
                 return "</a></div>";
                 break;
         }
+
+        return '';
     }
 }

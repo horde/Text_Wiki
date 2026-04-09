@@ -50,5 +50,7 @@ class DokuRendererColortext extends WikiRendererBase
         if ($options['type'] == 'end') {
             return '<html></span></html>';
         }
+
+        return '';
     }
 }

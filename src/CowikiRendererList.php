@@ -53,5 +53,7 @@ class CowikiRendererList extends WikiRendererBase
                 return '';
                 break;
         }
+
+        return '';
     }
 }

@@ -27,6 +27,8 @@ class LatexRendererUrl extends WikiRendererBase
     {
         // create local variables from the options array (text,
         // href, type)
+        $href = '';
+        $text = '';
         extract($options);
 
         if ($options['type'] == 'start') {

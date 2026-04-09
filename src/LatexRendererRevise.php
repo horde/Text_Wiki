@@ -34,5 +34,7 @@ class LatexRendererRevise extends WikiRendererBase
         if ($options['type'] == 'ins_end') {
             return '}';
         }
+
+        return '';
     }
 }

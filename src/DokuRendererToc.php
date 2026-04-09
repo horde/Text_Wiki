@@ -23,5 +23,7 @@ class DokuRendererToc extends WikiRendererBase
     {
         // type, id, level, count, attr
         //TOC is automatic for more than 3 headers in DokuWiki
+
+        return '';
     }
 }

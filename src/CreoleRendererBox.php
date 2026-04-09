@@ -27,5 +27,7 @@ class CreoleRendererBox extends WikiRendererBase
         if ($options['type'] == 'end') {
             return "\n\n";
         }
+
+        return '';
     }
 }

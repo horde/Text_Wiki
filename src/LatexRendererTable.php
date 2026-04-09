@@ -31,6 +31,9 @@ class LatexRendererTable extends WikiRendererBase
     public function token($options)
     {
         // make nice variable names (type, attr, span)
+        $type = '';
+        $cols = 0;
+        $span = 1;
         extract($options);
 
         switch ($type) {

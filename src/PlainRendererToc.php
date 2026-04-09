@@ -20,6 +20,8 @@ class PlainRendererToc extends WikiRendererBase
     public function token($options)
     {
         // type, count, level
+        $type = '';
+        $level = 0;
         extract($options);
 
         if ($type == 'item_start') {
@@ -33,6 +35,8 @@ class PlainRendererToc extends WikiRendererBase
         if ($type == 'item_end') {
             return "\n";
         }
+
+        return '';
     }
 
 }

@@ -21,6 +21,11 @@ class TikiRendererFunction extends WikiRendererBase
 
     public function token($options)
     {
+        $access = '';
+        $return = '';
+        $name = '';
+        $params = [];
+        $throws = [];
         extract($options); // name, access, return, params, throws
 
         // build the baseline output

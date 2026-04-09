@@ -18,6 +18,7 @@ class LatexRendererAnchor extends WikiRendererBase
 {
     public function token($options)
     {
+        $type = '';
         extract($options); // $type, $name
 
         if ($type == 'start') {

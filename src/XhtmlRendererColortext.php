@@ -77,5 +77,7 @@ class XhtmlRendererColortext extends WikiRendererBase
         if ($options['type'] == 'end') {
             return '</span>';
         }
+
+        return '';
     }
 }

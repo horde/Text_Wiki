@@ -27,5 +27,7 @@ class TikiRendererSubscript extends WikiRendererBase
         if ($options['type'] == 'end') {
             return '</sub>';
         }
+
+        return '';
     }
 }

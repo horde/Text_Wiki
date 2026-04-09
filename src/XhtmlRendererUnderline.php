@@ -55,5 +55,7 @@ class XhtmlRendererUnderline extends WikiRendererBase
         if ($options['type'] == 'end') {
             return '</u>';
         }
+
+        return '';
     }
 }

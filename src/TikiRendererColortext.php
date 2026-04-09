@@ -49,5 +49,7 @@ class TikiRendererColortext extends WikiRendererBase
         if ($options['type'] == 'end') {
             return '~~';
         }
+
+        return '';
     }
 }

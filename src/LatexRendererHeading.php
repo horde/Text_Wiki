@@ -7,6 +7,8 @@ class LatexRendererHeading extends WikiRendererBase
     public function token($options)
     {
         // get nice variable names (type, level)
+        $type = '';
+        $level = 0;
         extract($options);
 
         if ($type == 'start') {

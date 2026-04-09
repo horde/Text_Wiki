@@ -27,5 +27,7 @@ class DokuRendererCenter extends WikiRendererBase
         if ($options['type'] == 'end') {
             return '<html></div></html>';
         }
+
+        return '';
     }
 }

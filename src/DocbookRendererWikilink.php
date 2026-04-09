@@ -56,6 +56,9 @@ class DocbookRendererWikilink extends WikiRendererBase
     public function token($options)
     {
         // make nice variable names (page, anchor, text)
+        $page = '';
+        $anchor = '';
+        $text = '';
         extract($options);
 
         // is there a "page existence" callback?

@@ -37,6 +37,13 @@ namespace Horde\Text\Wiki;
 class BBCodeParserUrl extends WikiParserBase
 {
     /**
+     * List of refused URL schemes.
+     *
+     * @var array
+     */
+    public array $refused = [];
+
+    /**
      * Configuration keys for this rule
      * 'schemes' => URL scheme(s) (array) recognized by this rule, default is the single rfc2396 pattern
      *              That is some (array of) regex string(s), must be safe with a pattern delim '#'

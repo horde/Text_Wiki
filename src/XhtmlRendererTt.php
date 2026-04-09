@@ -55,5 +55,7 @@ class XhtmlRendererTt extends WikiRendererBase
         if ($options['type'] == 'end') {
             return '</tt>';
         }
+
+        return '';
     }
 }

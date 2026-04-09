@@ -22,6 +22,7 @@ class DokuRendererTable extends WikiRendererBase
         static $lastChar = '';
 
         // make nice variable names (type, attr, span)
+        $char = '';
         $pad = '    ';
 
         switch ($options['type']) {

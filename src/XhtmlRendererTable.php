@@ -53,6 +53,8 @@ class XhtmlRendererTable extends WikiRendererBase
     public function token($options)
     {
         // make nice variable names (type, attr, span)
+        $type = '';
+        $attr = '';
         $span = $rowspan = 1;
         extract($options);
 

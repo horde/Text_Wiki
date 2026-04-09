@@ -19,6 +19,7 @@ class LatexRendererParagraph extends WikiRendererBase
 
     public function token($options)
     {
+        $type = '';
         extract($options); //type
 
         if ($type == 'start') {
@@ -28,5 +29,7 @@ class LatexRendererParagraph extends WikiRendererBase
         if ($type == 'end') {
             return "\n\n";
         }
+
+        return '';
     }
 }

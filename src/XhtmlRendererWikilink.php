@@ -56,6 +56,10 @@ class XhtmlRendererWikilink extends WikiRendererBase
     public function token($options)
     {
         // make nice variable names (page, anchor, text)
+        $page = '';
+        $anchor = '';
+        $text = '';
+        $output = '';
         extract($options);
 
         // is there a "page existence" callback?

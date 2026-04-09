@@ -54,6 +54,9 @@ class DocbookRendererUrl extends WikiRendererBase
     {
         // create local variables from the options array (text,
         // href, type)
+        $type = '';
+        $href = '';
+        $text = '';
         extract($options);
 
         // find the rightmost dot and determine the filename
@@ -67,7 +70,7 @@ class DocbookRendererUrl extends WikiRendererBase
             && in_array($ext, $this->getConf('img_ext', []))) {
 
             // create alt text for the image
-            if (! isset($text) || $text == '') {
+            if ($text == '') {
                 $text = basename($href);
                 $text = $this->textEncode($text);
             }

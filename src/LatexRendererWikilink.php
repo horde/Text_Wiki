@@ -27,6 +27,9 @@ class LatexRendererWikilink extends WikiRendererBase
     public function token($options)
     {
         // make nice variable names (page, anchor, text)
+        $page = '';
+        $anchor = '';
+        $text = '';
         extract($options);
 
         // are we checking page existence?

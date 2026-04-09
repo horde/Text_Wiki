@@ -19,6 +19,9 @@ class CowikiRendererUrl extends WikiRendererBase
 
     public function token($options)
     {
+        $type = '';
+        $href = '';
+        $text = '';
         extract($options);
         if ($type == 'start') {
             if (! strlen($text) || $href == $text) {

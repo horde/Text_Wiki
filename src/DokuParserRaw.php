@@ -59,8 +59,7 @@ class DokuParserRaw extends WikiParserBase
     *
     * @param array $matches The array of matches from parse().
     *
-    * @return A delimited token number to be used as a placeholder in
-    * the source text.
+    * @return void
     *
     */
 

@@ -51,5 +51,7 @@ class XhtmlRendererAddress extends WikiRendererBase
         if ($options['type'] == 'end') {
             return '</address>';
         }
+
+        return '';
     }
 }

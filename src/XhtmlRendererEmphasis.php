@@ -56,5 +56,7 @@ class XhtmlRendererEmphasis extends WikiRendererBase
         if ($options['type'] == 'end') {
             return '</em>';
         }
+
+        return '';
     }
 }

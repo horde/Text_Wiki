@@ -53,5 +53,7 @@ class DokuRendererList extends WikiRendererBase
                 return '';
                 break;
         }
+
+        return '';
     }
 }
