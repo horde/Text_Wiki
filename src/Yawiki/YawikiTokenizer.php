@@ -165,23 +165,25 @@ class YawikiTokenizer implements Tokenizer
 
         // Inline pattern: combined alternation
         // Order matters: ''' before '', ** before *, etc.
+        // NOTE: /U flag makes quantifiers ungreedy by default,
+        // so .+ is lazy (non-greedy) and .+? is greedy.
         $this->inlinePattern = '/(?:'
-            . "'''(.+?)'''"          // group 1: bold (triple quote)
-            . "|''(.+?)''"           // group 2: italic (double quote)
-            . '|\*\*(.+?)\*\*'      // group 3: strong
-            . '|\/\/(.+?)\/\/'       // group 4: emphasis
-            . '|__(.+?)__'          // group 5: underline
-            . '|\{\{(.+?)\}\}'      // group 6: monospace
-            . '|\^\^(.+?)\^\^'      // group 7: superscript
-            . '|,,(.+?),,'          // group 8: subscript
-            . '|##([a-zA-Z0-9#]+)\|(.+?)##' // groups 9,10: colortext
-            . '|@@(.+?)@@'          // group 11: revise
+            . "'''(.+)'''"          // group 1: bold (triple quote)
+            . "|''(.+)''"           // group 2: italic (double quote)
+            . '|\*\*(.+)\*\*'      // group 3: strong
+            . '|(?<!:)\/\/(.+)\/\/' // group 4: emphasis (negative lookbehind avoids :// in URLs)
+            . '|__(.+)__'          // group 5: underline
+            . '|\{\{(.+)\}\}'      // group 6: monospace
+            . '|\^\^(.+)\^\^'      // group 7: superscript
+            . '|,,(.+),,'          // group 8: subscript
+            . '|##([a-zA-Z0-9#]+)\|(.+)##' // groups 9,10: colortext
+            . '|@@(.+)@@'          // group 11: revise
             . '| _\n'               // group 12 implicit: line break
             . '|\[(\w+:\/\/[^\]\s]+)(?:\s+([^\]]+))?\]' // groups 12,13: url
             . '|\[([A-Za-z][-\w\/]*(?:#[-\w:.]+)?)(?:\s+([^\]]+))?\]' // groups 14,15: wikilink [Page text]
             . '|\(\(([^\)]+)\)\)'   // group 16: freelink
-            . '|\[\[php\s+(.+?)\]\]' // group 17: phplookup
-            . '|(?<![A-Za-z0-9\-_])(!)?((?:[A-Z][A-Za-z0-9]*?[a-z0-9]+?[A-Z][A-Za-z0-9]*?)(?:\/(?:[A-Z][A-Za-z0-9]*?[a-z0-9]+?[A-Z][A-Za-z0-9]*?))*?)(?![A-Za-z0-9\-_\/])' // groups 18,19: CamelCase wikilink
+            . '|\[\[php\s+(.+)\]\]' // group 17: phplookup
+            . '|(?<![A-Za-z0-9\-_])(!)?((?:[A-Z][A-Za-z0-9]*[a-z0-9]+[A-Z][A-Za-z0-9]*)(?:\/(?:[A-Z][A-Za-z0-9]*[a-z0-9]+[A-Z][A-Za-z0-9]*))*)(?![A-Za-z0-9\-_\/])' // groups 18,19: CamelCase wikilink
             . ')/Us';
     }
 
