@@ -78,7 +78,7 @@ class MediawikiParser implements Parser
     {
         $this->tokenizer = new MediawikiTokenizer($options);
 
-        $registry = $registry ?? $this->createDefaultRegistry();
+        $registry ??= $this->createDefaultRegistry();
         $this->builder = new GenericStructureBuilder($registry);
     }
 

@@ -61,7 +61,7 @@ class CowikiParser implements Parser
     {
         $this->tokenizer = new CowikiTokenizer();
 
-        $registry = $registry ?? $this->createDefaultRegistry();
+        $registry ??= $this->createDefaultRegistry();
         $this->builder = new GenericStructureBuilder($registry);
     }
 

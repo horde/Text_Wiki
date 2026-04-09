@@ -68,7 +68,7 @@ class CreoleParser implements Parser
     {
         $this->tokenizer = new CreoleTokenizer();
 
-        $registry = $registry ?? $this->createDefaultRegistry();
+        $registry ??= $this->createDefaultRegistry();
         $this->builder = new GenericStructureBuilder($registry);
     }
 

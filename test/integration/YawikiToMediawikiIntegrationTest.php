@@ -253,17 +253,17 @@ class YawikiToMediawikiIntegrationTest extends TestCase
     public function testComplexDocument(): void
     {
         $source = <<<'WIKI'
-++ Main Heading
+            ++ Main Heading
 
-Some paragraph with '''bold''' text.
+            Some paragraph with '''bold''' text.
 
-* Item 1
-* Item 2
+            * Item 1
+            * Item 2
 
-----
+            ----
 
-> A famous quote
-WIKI;
+            > A famous quote
+            WIKI;
 
         $result = $this->render($source);
         $this->assertStringContainsString('== Main Heading ==', $result);

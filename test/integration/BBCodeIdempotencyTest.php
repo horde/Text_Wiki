@@ -249,30 +249,30 @@ class BBCodeIdempotencyTest extends TestCase
     public function testComplexDocumentStabilizes(): void
     {
         $source = <<<'BBCODE'
-[b]Bold text[/b] and [i]italic[/i]
+            [b]Bold text[/b] and [i]italic[/i]
 
-[quote=Author]A famous quote[/quote]
+            [quote=Author]A famous quote[/quote]
 
-[list]
-[*]Item 1
-[*]Item 2
-[list=1]
-[*]Nested ordered
-[/list]
-[/list]
+            [list]
+            [*]Item 1
+            [*]Item 2
+            [list=1]
+            [*]Nested ordered
+            [/list]
+            [/list]
 
-[code=php]echo "hello";[/code]
+            [code=php]echo "hello";[/code]
 
-[hr]
+            [hr]
 
-[url=http://example.com]Visit us[/url]
+            [url=http://example.com]Visit us[/url]
 
-[color=red]red text[/color]
+            [color=red]red text[/color]
 
-[center]centered[/center]
+            [center]centered[/center]
 
-[img]http://example.com/img.png[/img]
-BBCODE;
+            [img]http://example.com/img.png[/img]
+            BBCODE;
 
         $firstPass = $this->roundTrip($source);
         $secondPass = $this->roundTrip($firstPass);

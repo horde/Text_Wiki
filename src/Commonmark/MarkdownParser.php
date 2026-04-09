@@ -16,6 +16,7 @@ use Horde\Text\Wiki\Node\ElementNode;
 use Horde\Text\Wiki\Node\TextNode;
 use Horde\Text\Wiki\Parser;
 use Horde\Text\Wiki\TagRegistry;
+use Closure;
 
 /**
  * Markdown parser (CommonMark / GFM)
@@ -149,7 +150,7 @@ class MarkdownParser implements Parser
 
         $inlines = $inlineParser->parse($text);
 
-        $clearChildren = \Closure::bind(function () {
+        $clearChildren = Closure::bind(function () {
             $this->children = [];
         }, $node, ElementNode::class);
         $clearChildren();
@@ -242,7 +243,7 @@ class MarkdownParser implements Parser
 
                     if ($checkboxHtml !== null) {
                         // Replace the paragraph's first text node with checkbox + remaining
-                        $clearChildren = \Closure::bind(function () {
+                        $clearChildren = Closure::bind(function () {
                             $this->children = [];
                         }, $para, ElementNode::class);
                         $clearChildren();

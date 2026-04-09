@@ -248,28 +248,28 @@ class CowikiIdempotencyTest extends TestCase
     public function testComplexDocumentStabilizes(): void
     {
         $source = <<<'COWIKI'
-+ Main Heading
+            + Main Heading
 
-Some paragraph with *bold* and /italic/ text.
+            Some paragraph with *bold* and /italic/ text.
 
-++ Sub Heading
+            ++ Sub Heading
 
-* Item 1
-* Item 2
- * Nested item
+            * Item 1
+            * Item 2
+             * Nested item
 
-((http://example.com)(Visit us))
+            ((http://example.com)(Visit us))
 
----
+            ---
 
-> A famous quote
+            > A famous quote
 
-<code>
-echo 'hello';
-</code>
+            <code>
+            echo 'hello';
+            </code>
 
-<toc>
-COWIKI;
+            <toc>
+            COWIKI;
 
         $firstPass = $this->roundTrip($source);
         $secondPass = $this->roundTrip($firstPass);

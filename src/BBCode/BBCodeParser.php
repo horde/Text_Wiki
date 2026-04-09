@@ -67,7 +67,7 @@ class BBCodeParser implements Parser
     {
         $this->tokenizer = new BBCodeTokenizer();
 
-        $registry = $registry ?? $this->createDefaultRegistry();
+        $registry ??= $this->createDefaultRegistry();
         $this->builder = new GenericStructureBuilder($registry);
     }
 

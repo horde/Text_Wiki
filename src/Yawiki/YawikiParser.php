@@ -80,7 +80,7 @@ class YawikiParser implements Parser
     {
         $this->tokenizer = new YawikiTokenizer();
 
-        $registry = $registry ?? $this->createDefaultRegistry();
+        $registry ??= $this->createDefaultRegistry();
         $this->builder = new GenericStructureBuilder($registry);
     }
 

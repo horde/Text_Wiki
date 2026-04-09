@@ -25,6 +25,4 @@ use Horde\Text\Wiki\AbstractTagDefinition as BaseAbstractTagDefinition;
  * @license  http://www.horde.org/licenses/lgpl21 LGPL 2.1
  * @package  Text_Wiki
  */
-abstract class AbstractTagDefinition extends BaseAbstractTagDefinition
-{
-}
+abstract class AbstractTagDefinition extends BaseAbstractTagDefinition {}

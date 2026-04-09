@@ -445,7 +445,7 @@ class YawikiTokenizer implements Tokenizer
     {
         $attrs = [];
         if (isset($matches[1]) && $matches[1] !== '') {
-            $attrs['depth'] = (int)$matches[1];
+            $attrs['depth'] = (int) $matches[1];
         }
 
         return [

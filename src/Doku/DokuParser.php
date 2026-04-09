@@ -67,7 +67,7 @@ class DokuParser implements Parser
     {
         $this->tokenizer = new DokuTokenizer();
 
-        $registry = $registry ?? $this->createDefaultRegistry();
+        $registry ??= $this->createDefaultRegistry();
         $this->builder = new GenericStructureBuilder($registry);
     }
 

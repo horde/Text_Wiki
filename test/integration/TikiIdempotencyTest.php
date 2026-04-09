@@ -287,28 +287,28 @@ class TikiIdempotencyTest extends TestCase
     public function testComplexDocumentStabilizes(): void
     {
         $source = <<<'TIKI'
-! Main Heading
+            ! Main Heading
 
-Some paragraph with __bold__ text.
+            Some paragraph with __bold__ text.
 
-!! Sub Heading
+            !! Sub Heading
 
-* Item 1
-* Item 2
-** Nested item
+            * Item 1
+            * Item 2
+            ** Nested item
 
-[http://example.com|Visit us]
+            [http://example.com|Visit us]
 
-----
+            ----
 
-> A famous quote
+            > A famous quote
 
-{CODE()}
-echo hello
-{CODE}
+            {CODE()}
+            echo hello
+            {CODE}
 
-{toc}
-TIKI;
+            {toc}
+            TIKI;
 
         $firstPass = $this->roundTrip($source);
         $secondPass = $this->roundTrip($firstPass);

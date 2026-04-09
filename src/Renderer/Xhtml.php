@@ -750,7 +750,7 @@ class Xhtml implements Renderer, NodeVisitor
     {
         $attrs = $node->getAttributes();
         $level = $attrs['level'] ?? 1;
-        $level = max(1, min(6, (int)$level));
+        $level = max(1, min(6, (int) $level));
         $tag = 'h' . $level;
 
         return '<' . $tag . '>' . $this->renderChildren($node) . '</' . $tag . ">\n";

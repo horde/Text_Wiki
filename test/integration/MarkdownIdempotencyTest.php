@@ -291,35 +291,35 @@ class MarkdownIdempotencyTest extends TestCase
     public function testComplexDocumentStabilizes(): void
     {
         $source = <<<'MD'
-# Main Heading
+            # Main Heading
 
-Some paragraph with **bold** and *italic* text.
+            Some paragraph with **bold** and *italic* text.
 
-## Sub Heading
+            ## Sub Heading
 
-- Item 1
-- Item 2
-  - Nested item
+            - Item 1
+            - Item 2
+              - Nested item
 
-[Visit us](http://example.com)
+            [Visit us](http://example.com)
 
----
+            ---
 
-> A famous quote
+            > A famous quote
 
-| Header 1 | Header 2 |
-| --- | --- |
-| Cell A | Cell B |
+            | Header 1 | Header 2 |
+            | --- | --- |
+            | Cell A | Cell B |
 
-```php
-echo "hello";
-```
+            ```php
+            echo "hello";
+            ```
 
-~~strikethrough text~~
+            ~~strikethrough text~~
 
-hard break
-and more text
-MD;
+            hard break
+            and more text
+            MD;
 
         $firstPass = $this->roundTrip($source);
         $secondPass = $this->roundTrip($firstPass);

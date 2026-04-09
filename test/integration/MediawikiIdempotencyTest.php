@@ -323,26 +323,26 @@ class MediawikiIdempotencyTest extends TestCase
     public function testComplexDocumentStabilizes(): void
     {
         $source = <<<'WIKI'
-== Main Heading ==
+            == Main Heading ==
 
-Some paragraph with '''bold''' text.
+            Some paragraph with '''bold''' text.
 
-=== Sub Heading ===
+            === Sub Heading ===
 
-* Item 1
-* Item 2
-** Nested item
+            * Item 1
+            * Item 2
+            ** Nested item
 
-[http://example.com Visit us]
+            [http://example.com Visit us]
 
-----
+            ----
 
-<blockquote>A famous quote</blockquote>
+            <blockquote>A famous quote</blockquote>
 
-<code>
-echo hello
-</code>
-WIKI;
+            <code>
+            echo hello
+            </code>
+            WIKI;
 
         $firstPass = $this->roundTrip($source);
         $secondPass = $this->roundTrip($firstPass);

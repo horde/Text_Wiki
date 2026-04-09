@@ -357,17 +357,17 @@ class PlainRendererTest extends TestCase
     public function testMixedYawikiDocument(): void
     {
         $source = <<<'YAWIKI'
-+ Main Heading
+            + Main Heading
 
-Some paragraph with **bold** text.
+            Some paragraph with **bold** text.
 
-* Item 1
-* Item 2
+            * Item 1
+            * Item 2
 
-----
+            ----
 
-> A famous quote
-YAWIKI;
+            > A famous quote
+            YAWIKI;
 
         $doc = $this->yawiki->parse($source);
         $plain = $this->renderer->render($doc);
@@ -382,21 +382,21 @@ YAWIKI;
     public function testMixedBBCodeDocument(): void
     {
         $source = <<<'BBCODE'
-[b]Bold text[/b] and [i]italic[/i]
+            [b]Bold text[/b] and [i]italic[/i]
 
-[quote]A famous quote[/quote]
+            [quote]A famous quote[/quote]
 
-[list]
-[*]Item 1
-[*]Item 2
-[/list]
+            [list]
+            [*]Item 1
+            [*]Item 2
+            [/list]
 
-[url=http://example.com]Visit us[/url]
+            [url=http://example.com]Visit us[/url]
 
-[hr]
+            [hr]
 
-[color=red]red text[/color]
-BBCODE;
+            [color=red]red text[/color]
+            BBCODE;
 
         $doc = $this->bbcode->parse($source);
         $plain = $this->renderer->render($doc);

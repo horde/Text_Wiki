@@ -236,15 +236,15 @@ class MediawikiToDocbookIntegrationTest extends TestCase
     public function testComplexDocument(): void
     {
         $source = <<<'WIKI'
-== Main Heading ==
+            == Main Heading ==
 
-Some paragraph with '''bold''' text.
+            Some paragraph with '''bold''' text.
 
-* Item 1
-* Item 2
+            * Item 1
+            * Item 2
 
-<blockquote>A famous quote</blockquote>
-WIKI;
+            <blockquote>A famous quote</blockquote>
+            WIKI;
 
         $result = $this->render($source);
         $this->assertStringContainsString('<article', $result);

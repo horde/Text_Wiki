@@ -83,15 +83,15 @@ class DefaultEngineTest extends TestCase
     public function testTransformComplexDocument(): void
     {
         $source = <<<'WIKI'
-++ Main Heading
+            ++ Main Heading
 
-Some paragraph with '''bold''' text.
+            Some paragraph with '''bold''' text.
 
-* Item 1
-* Item 2
+            * Item 1
+            * Item 2
 
-----
-WIKI;
+            ----
+            WIKI;
 
         $result = $this->engine->transform($source, 'Xhtml');
         $this->assertStringContainsString('<h2', $result);

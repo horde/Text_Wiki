@@ -269,26 +269,26 @@ class CreoleIdempotencyTest extends TestCase
     public function testComplexDocumentStabilizes(): void
     {
         $source = <<<'CREOLE'
-= Main Heading
+            = Main Heading
 
-Some paragraph with **bold** text.
+            Some paragraph with **bold** text.
 
-== Sub Heading
+            == Sub Heading
 
-* Item 1
-* Item 2
-** Nested item
+            * Item 1
+            * Item 2
+            ** Nested item
 
-[[http://example.com|Visit us]]
+            [[http://example.com|Visit us]]
 
-----
+            ----
 
-> A famous quote
+            > A famous quote
 
-{{{
-echo hello
-}}}
-CREOLE;
+            {{{
+            echo hello
+            }}}
+            CREOLE;
 
         $firstPass = $this->roundTrip($source);
         $secondPass = $this->roundTrip($firstPass);

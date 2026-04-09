@@ -1691,10 +1691,10 @@ class BlockParser
         $trimmed = ltrim($line);
         $indent = strlen($line) - strlen($trimmed);
         if ($indent < 4 && (
-            preg_match('/^#{1,6}(\s|$)/', $trimmed) ||   // ATX heading
-            preg_match('/^(?:(?:\*\s*){3,}|(?:-\s*){3,}|(?:_\s*){3,})\s*$/', $trimmed) || // Thematic break
-            preg_match('/^(?:`{3,}|~{3,})/', $trimmed) ||  // Fenced code
-            preg_match('/^>\s?/', $trimmed)                  // Blockquote
+            preg_match('/^#{1,6}(\s|$)/', $trimmed)   // ATX heading
+            || preg_match('/^(?:(?:\*\s*){3,}|(?:-\s*){3,}|(?:_\s*){3,})\s*$/', $trimmed) // Thematic break
+            || preg_match('/^(?:`{3,}|~{3,})/', $trimmed)  // Fenced code
+            || preg_match('/^>\s?/', $trimmed)                  // Blockquote
         )) {
             $table->close();
             $this->context->closeLastBlock();

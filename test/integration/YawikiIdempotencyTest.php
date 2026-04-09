@@ -349,39 +349,39 @@ class YawikiIdempotencyTest extends TestCase
     public function testComplexDocumentStabilizes(): void
     {
         $source = <<<'YAWIKI'
-+ Main Heading
+            + Main Heading
 
-Some paragraph with **bold** and //italic// text.
+            Some paragraph with **bold** and //italic// text.
 
-++ Sub Heading
+            ++ Sub Heading
 
-* Item 1
-* Item 2
- * Nested item
+            * Item 1
+            * Item 2
+             * Nested item
 
-[http://example.com Visit us]
+            [http://example.com Visit us]
 
-----
+            ----
 
-> A famous quote
+            > A famous quote
 
-|| ~ Header 1 || ~ Header 2 ||
-|| Cell A || Cell B ||
+            || ~ Header 1 || ~ Header 2 ||
+            || Cell A || Cell B ||
 
-: Term : Definition
+            : Term : Definition
 
-##red|colored text##
+            ##red|colored text##
 
-[[# myanchor]]
+            [[# myanchor]]
 
-[[toc]]
+            [[toc]]
 
-[[image http://example.com/img.png]]
+            [[image http://example.com/img.png]]
 
-= centered text
+            = centered text
 
-@@---old text+++new text@@
-YAWIKI;
+            @@---old text+++new text@@
+            YAWIKI;
 
         $firstPass = $this->roundTrip($source);
         $secondPass = $this->roundTrip($firstPass);
