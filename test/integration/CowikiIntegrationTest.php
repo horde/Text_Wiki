@@ -257,7 +257,7 @@ class CowikiIntegrationTest extends TestCase
         $doc = $this->parser->parse('<toc>');
         $html = $this->renderer->render($doc);
 
-        $this->assertStringContainsString('<div class="toc">', $html);
+        $this->assertSame('', $html);
     }
 
     public function testMixedFormatting(): void

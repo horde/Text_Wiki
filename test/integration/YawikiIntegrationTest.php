@@ -250,12 +250,12 @@ class YawikiIntegrationTest extends TestCase
         $this->assertStringContainsString('<a id="myanchor">', $html);
     }
 
-    public function testToc(): void
+    public function testTocEmpty(): void
     {
         $doc = $this->parser->parse('[[toc]]');
         $html = $this->renderer->render($doc);
 
-        $this->assertStringContainsString('<div class="toc">', $html);
+        $this->assertSame('', $html);
     }
 
     public function testImage(): void
@@ -316,5 +316,142 @@ class YawikiIntegrationTest extends TestCase
     public function testGetFormat(): void
     {
         $this->assertSame('yawiki', $this->parser->getFormat());
+    }
+
+    // ---------------------------------------------------------------
+    // Table of Contents
+    // ---------------------------------------------------------------
+
+    public function testTocWithHeadings(): void
+    {
+        $wiki = <<<'WIKI'
+[[toc]]
+
++ Introduction
+
+Some text.
+
+++ Getting Started
+
+More text.
+
++++ Installation
+
+Details.
+WIKI;
+        $doc = $this->parser->parse($wiki);
+        $html = $this->renderer->render($doc);
+
+        $this->assertStringContainsString('<nav id="toc">', $html);
+        $this->assertStringContainsString('<h2>Table of Contents</h2>', $html);
+        $this->assertStringContainsString('<ol>', $html);
+        $this->assertStringContainsString('<a href="#toc-0-introduction">Introduction</a>', $html);
+        $this->assertStringContainsString('<a href="#toc-1-getting-started">Getting Started</a>', $html);
+        $this->assertStringContainsString('<a href="#toc-2-installation">Installation</a>', $html);
+        $this->assertStringContainsString('</nav>', $html);
+
+        $this->assertStringContainsString('<h1 id="toc-0-introduction">', $html);
+        $this->assertStringContainsString('<h2 id="toc-1-getting-started">', $html);
+        $this->assertStringContainsString('<h3 id="toc-2-installation">', $html);
+    }
+
+    public function testTocWithDepth(): void
+    {
+        $wiki = <<<'WIKI'
+[[toc 2]]
+
++ Top Level
+
+++ Second Level
+
++++ Third Level
+WIKI;
+        $doc = $this->parser->parse($wiki);
+        $html = $this->renderer->render($doc);
+
+        $navEnd = strpos($html, '</nav>');
+        $tocHtml = substr($html, 0, $navEnd);
+
+        $this->assertStringContainsString('<a href="#toc-0-top-level">Top Level</a>', $tocHtml);
+        $this->assertStringContainsString('<a href="#toc-1-second-level">Second Level</a>', $tocHtml);
+        $this->assertStringNotContainsString('Third Level', $tocHtml, 'Third level should be excluded from TOC by depth limit');
+
+        $this->assertStringContainsString('<h3 id="toc-2-third-level">', $html, 'Third level heading should still render in body');
+    }
+
+    public function testHeadingIdsWithoutToc(): void
+    {
+        $wiki = <<<'WIKI'
++ First
+
+++ Second
+WIKI;
+        $this->renderer->enableHeadingIds();
+        $doc = $this->parser->parse($wiki);
+        $html = $this->renderer->render($doc);
+
+        $this->assertStringContainsString('<h1 id="toc-0-first">', $html);
+        $this->assertStringContainsString('<h2 id="toc-1-second">', $html);
+        $this->assertStringNotContainsString('<nav', $html);
+    }
+
+    public function testHeadingIdsOffByDefault(): void
+    {
+        $doc = $this->parser->parse('+ Heading');
+        $html = $this->renderer->render($doc);
+
+        $this->assertStringContainsString('<h1>Heading</h1>', $html);
+        $this->assertStringNotContainsString('id=', $html);
+    }
+
+    public function testHeadingIdSlugSpecialCharacters(): void
+    {
+        $this->renderer->enableHeadingIds();
+        $doc = $this->parser->parse('+ Hello World & Goodbye!');
+        $html = $this->renderer->render($doc);
+
+        $this->assertStringContainsString('id="toc-0-hello-world-goodbye"', $html);
+    }
+
+    public function testDuplicateHeadingText(): void
+    {
+        $wiki = <<<'WIKI'
++ Overview
+
++ Overview
+WIKI;
+        $this->renderer->enableHeadingIds();
+        $doc = $this->parser->parse($wiki);
+        $html = $this->renderer->render($doc);
+
+        $this->assertStringContainsString('id="toc-0-overview"', $html);
+        $this->assertStringContainsString('id="toc-1-overview"', $html);
+    }
+
+    public function testTocNestedOlStructure(): void
+    {
+        $wiki = <<<'WIKI'
+[[toc]]
+
++ Level 1
+
+++ Level 2a
+
+++ Level 2b
+
++ Level 1 Again
+WIKI;
+        $doc = $this->parser->parse($wiki);
+        $html = $this->renderer->render($doc);
+
+        $this->assertStringContainsString('<nav id="toc">', $html);
+        $occurrences = substr_count($html, '<ol>');
+        $closingOccurrences = substr_count($html, '</ol>');
+        $this->assertSame($occurrences, $closingOccurrences, 'ol tags must be balanced');
+
+        $liCount = substr_count($html, '<li>');
+        $liCloseCount = substr_count($html, '</li>');
+        $this->assertSame($liCount, $liCloseCount, 'li tags must be balanced');
+        $this->assertSame(4, $liCount, 'Should have 4 list items');
     }
 }

@@ -189,7 +189,7 @@ class TikiIntegrationTest extends TestCase
         $doc = $this->parser->parse('{toc}');
         $html = $this->renderer->render($doc);
 
-        $this->assertStringContainsString('<div class="toc">', $html);
+        $this->assertSame('', $html);
     }
 
     public function testMaketoc(): void
@@ -197,7 +197,7 @@ class TikiIntegrationTest extends TestCase
         $doc = $this->parser->parse('{maketoc}');
         $html = $this->renderer->render($doc);
 
-        $this->assertStringContainsString('<div class="toc">', $html);
+        $this->assertSame('', $html);
     }
 
     // ---------------------------------------------------------------

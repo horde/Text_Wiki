@@ -13,6 +13,7 @@ namespace Horde\Text\Wiki\Renderer;
 
 use Horde\Text\Wiki\Node\DocumentNode;
 use Horde\Text\Wiki\Node\ElementNode;
+use Horde\Text\Wiki\Node\Node;
 use Horde\Text\Wiki\Node\TextNode;
 use Horde\Text\Wiki\NodeVisitor;
 use Horde\Text\Wiki\Renderer;
@@ -34,6 +35,17 @@ class Xhtml implements Renderer, NodeVisitor
     /** @var array<string, callable(ElementNode, NodeVisitor): string> */
     private array $elementHandlers = [];
 
+    /** @var list<array{level: int, text: string, id: string}> */
+    private array $headings = [];
+
+    private int $headingCounter = 0;
+
+    private int $headingRenderIndex = 0;
+
+    private bool $headingIds = false;
+
+    private bool $hasToc = false;
+
     /**
      * Register a custom element handler
      *
@@ -48,6 +60,11 @@ class Xhtml implements Renderer, NodeVisitor
         $this->elementHandlers[strtolower($tagName)] = $handler;
     }
 
+    public function enableHeadingIds(bool $enable = true): void
+    {
+        $this->headingIds = $enable;
+    }
+
     /**
      * Render document tree to XHTML
      *
@@ -57,6 +74,12 @@ class Xhtml implements Renderer, NodeVisitor
      */
     public function render(DocumentNode $document): string
     {
+        $this->headings = [];
+        $this->headingCounter = 0;
+        $this->headingRenderIndex = 0;
+        $this->hasToc = false;
+        $this->collectHeadings($document);
+
         return $document->accept($this);
     }
 
@@ -147,6 +170,49 @@ class Xhtml implements Renderer, NodeVisitor
             $output .= $child->accept($this);
         }
         return $output;
+    }
+
+    private function collectHeadings(Node $node): void
+    {
+        foreach ($node->getChildren() as $child) {
+            if ($child instanceof ElementNode) {
+                if ($child->getName() === 'toc') {
+                    $this->hasToc = true;
+                } elseif ($child->getName() === 'heading') {
+                    $attrs = $child->getAttributes();
+                    $level = (int) ($attrs['level'] ?? 1);
+                    $text = $this->extractPlainText($child);
+                    $slug = $this->slugify($text);
+                    $id = 'toc-' . $this->headingCounter++ . '-' . $slug;
+                    $this->headings[] = ['level' => $level, 'text' => $text, 'id' => $id];
+                }
+            }
+            $this->collectHeadings($child);
+        }
+    }
+
+    private function extractPlainText(Node $node): string
+    {
+        $text = '';
+        foreach ($node->getChildren() as $child) {
+            if ($child instanceof TextNode) {
+                $text .= $child->getText();
+            } else {
+                $text .= $this->extractPlainText($child);
+            }
+        }
+
+        return $text;
+    }
+
+    private function slugify(string $text): string
+    {
+        $slug = strtolower(trim($text));
+        $slug = (string) preg_replace('/[^a-z0-9]+/', '-', $slug);
+        $slug = trim($slug, '-');
+        $slug = substr($slug, 0, 60);
+
+        return $slug !== '' ? $slug : 'heading';
     }
 
     /**
@@ -753,7 +819,20 @@ class Xhtml implements Renderer, NodeVisitor
         $level = max(1, min(6, (int) $level));
         $tag = 'h' . $level;
 
-        return '<' . $tag . '>' . $this->renderChildren($node) . '</' . $tag . ">\n";
+        $idAttr = '';
+        if (($this->headingIds || $this->hasToc)
+            && isset($this->headings[$this->headingRenderIndex])
+        ) {
+            $id = htmlspecialchars(
+                $this->headings[$this->headingRenderIndex]['id'],
+                ENT_QUOTES | ENT_HTML5,
+                'UTF-8',
+            );
+            $idAttr = ' id="' . $id . '"';
+        }
+        $this->headingRenderIndex++;
+
+        return '<' . $tag . $idAttr . '>' . $this->renderChildren($node) . '</' . $tag . ">\n";
     }
 
     /**
@@ -936,15 +1015,69 @@ class Xhtml implements Renderer, NodeVisitor
     /**
      * Render table of contents
      *
-     * Placeholder: actual TOC generation requires a second pass.
+     * @param ElementNode $node Toc element with optional 'depth' attribute
      *
-     * @param ElementNode $node Toc element
-     *
-     * @return string TOC placeholder div
+     * @return string <nav id="toc">...</nav> or empty string if no headings
      */
     protected function renderToc(ElementNode $node): string
     {
-        return '<div class="toc"></div>';
+        if ($this->headings === []) {
+            return '';
+        }
+
+        $attrs = $node->getAttributes();
+        $maxDepth = isset($attrs['depth']) ? (int) $attrs['depth'] : 6;
+
+        $minLevel = PHP_INT_MAX;
+        foreach ($this->headings as $h) {
+            if ($h['level'] < $minLevel) {
+                $minLevel = $h['level'];
+            }
+        }
+
+        $html = '<nav id="toc">' . "\n";
+        $html .= '<h2>Table of Contents</h2>' . "\n";
+
+        $currentDepth = 0;
+        $itemCount = 0;
+
+        foreach ($this->headings as $heading) {
+            $relativeLevel = $heading['level'] - $minLevel + 1;
+            if ($relativeLevel > $maxDepth) {
+                continue;
+            }
+
+            if ($relativeLevel > $currentDepth) {
+                while ($currentDepth < $relativeLevel) {
+                    $html .= '<ol>' . "\n";
+                    $currentDepth++;
+                }
+            } elseif ($relativeLevel < $currentDepth) {
+                while ($currentDepth > $relativeLevel) {
+                    $html .= '</li>' . "\n" . '</ol>' . "\n";
+                    $currentDepth--;
+                }
+                $html .= '</li>' . "\n";
+            } else {
+                if ($itemCount > 0) {
+                    $html .= '</li>' . "\n";
+                }
+            }
+
+            $id = htmlspecialchars($heading['id'], ENT_QUOTES | ENT_HTML5, 'UTF-8');
+            $text = htmlspecialchars($heading['text'], ENT_COMPAT | ENT_HTML5, 'UTF-8');
+            $html .= '<li><a href="#' . $id . '">' . $text . '</a>' . "\n";
+            $itemCount++;
+        }
+
+        while ($currentDepth > 0) {
+            $html .= '</li>' . "\n" . '</ol>' . "\n";
+            $currentDepth--;
+        }
+
+        $html .= '</nav>' . "\n";
+
+        return $html;
     }
 
     /**

@@ -442,7 +442,7 @@ class MediawikiIntegrationTest extends TestCase
     public function testTocMagicWord(): void
     {
         $result = $this->render('__TOC__');
-        $this->assertStringContainsString('<div class="toc">', $result);
+        $this->assertSame('', $result);
     }
 
     // ---------------------------------------------------------------
