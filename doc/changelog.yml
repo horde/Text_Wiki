@@ -60,6 +60,17 @@
     uri: https://spdx.org/licenses/LGPL-2.1-only.html
   notes: |-
     Current development state - not yet released
+3.0.0-RC1:
+  api: 3.0.0-RC1
+  state:
+    release: RC
+    api: RC
+  date: 2026-05-19
+  license:
+    identifier: LGPL-2.1-only
+    uri: https://spdx.org/licenses/LGPL-2.1-only.html
+  notes: |-
+    feat: All headings have anchors
 2.0.0-alpha.3:
   api: 2.0.0
   state:
