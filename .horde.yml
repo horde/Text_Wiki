@@ -12,86 +12,72 @@ list: dev
 type: library
 homepage: https://www.horde.org/libraries/Horde_Text_Wiki
 authors:
-  -
-    name: Ralf Lang
+  - name: Ralf Lang
     user: rlang
     email: ralf.lang@ralf-lang.de
     active: active
     role: maintainer
-  -
-    name: Jan Schneider
+  - name: Jan Schneider
     user: jan
     email: jan@horde.org
     active: false
     role: lead
-  -
-    name: Chuck Hagenbuch
+  - name: Chuck Hagenbuch
     user: chuck
     email: chuck@horde.org
     active: false
     role: lead
-  -
-    name: Paul M. Jones
+  - name: Paul M. Jones
     user: pmjones
     email: pmjones@ciaweb.net
     active: false
     role: lead
-  -
-    name: Justin Patrin
+  - name: Justin Patrin
     user: justinpatrin
     email: papercrane@reversefold.com
     active: false
     role: lead
-  -
-    name: Del Elson
+  - name: Del Elson
     user: delatbabel
     email: del@babel.com.au
     active: false
     role: developer
-  -
-    name: Bertrand Gugger
+  - name: Bertrand Gugger
     user: bertrand
     email: bertrand@toggg.com
     active: false
     role: developer
-  -
-    name: Michele Tomaiuolo
+  - name: Michele Tomaiuolo
     user: tomamic
     email: tomamic@yahoo.it
     active: false
     role: developer
-  -
-    name: Moritz Venn
+  - name: Moritz Venn
     user: ritzmo
     email: ritzmo@php.net
     active: false
     role: developer
-  -
-    name: Firman Wandayandi
+  - name: Firman Wandayandi
     user: firman
     email: firman@php.net
     active: false
     role: developer
-  -
-    name: Jeremy Cowgar
+  - name: Jeremy Cowgar
     user: jeremy
     email: jeremy@cowgar.com
     active: false
     role: developer
-  -
-    name: Manuel Holtgrewe
+  - name: Manuel Holtgrewe
     user: purestorm
     email: purestorm@ggnore.net
     active: false
     role: developer
-  -
-    name: Rodrigo Sampaio Primo
+  - name: Rodrigo Sampaio Primo
     user: rodrigo
     email: rodrigo@utopia.org.br
     active: false
     role: developer
-  -
-    name: Brian J. Sipos
+  - name: Brian J. Sipos
     user: bsipos
     email: bjs5075@rit.edu
     active: false
@@ -113,3 +99,12 @@ keywords:
   - creole
   - tikiwiki
 vendor: horde
+ci-platform:
+  '8.1': not resolvable
+  '8.2': not resolvable
+  '8.3': not resolvable
+  '8.4': not resolvable
+  '8.5': not resolvable
+  '8.6': not resolvable
+ci-platform-flags:
+  needs_installer_plugin: false

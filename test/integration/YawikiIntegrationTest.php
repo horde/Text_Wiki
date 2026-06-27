@@ -325,20 +325,20 @@ class YawikiIntegrationTest extends TestCase
     public function testTocWithHeadings(): void
     {
         $wiki = <<<'WIKI'
-[[toc]]
+            [[toc]]
 
-+ Introduction
+            + Introduction
 
-Some text.
+            Some text.
 
-++ Getting Started
+            ++ Getting Started
 
-More text.
+            More text.
 
-+++ Installation
+            +++ Installation
 
-Details.
-WIKI;
+            Details.
+            WIKI;
         $doc = $this->parser->parse($wiki);
         $html = $this->renderer->render($doc);
 
@@ -358,14 +358,14 @@ WIKI;
     public function testTocWithDepth(): void
     {
         $wiki = <<<'WIKI'
-[[toc 2]]
+            [[toc 2]]
 
-+ Top Level
+            + Top Level
 
-++ Second Level
+            ++ Second Level
 
-+++ Third Level
-WIKI;
+            +++ Third Level
+            WIKI;
         $doc = $this->parser->parse($wiki);
         $html = $this->renderer->render($doc);
 
@@ -382,10 +382,10 @@ WIKI;
     public function testHeadingIdsWithoutToc(): void
     {
         $wiki = <<<'WIKI'
-+ First
+            + First
 
-++ Second
-WIKI;
+            ++ Second
+            WIKI;
         $this->renderer->enableHeadingIds();
         $doc = $this->parser->parse($wiki);
         $html = $this->renderer->render($doc);
@@ -416,10 +416,10 @@ WIKI;
     public function testDuplicateHeadingText(): void
     {
         $wiki = <<<'WIKI'
-+ Overview
+            + Overview
 
-+ Overview
-WIKI;
+            + Overview
+            WIKI;
         $this->renderer->enableHeadingIds();
         $doc = $this->parser->parse($wiki);
         $html = $this->renderer->render($doc);
@@ -431,16 +431,16 @@ WIKI;
     public function testTocNestedOlStructure(): void
     {
         $wiki = <<<'WIKI'
-[[toc]]
+            [[toc]]
 
-+ Level 1
+            + Level 1
 
-++ Level 2a
+            ++ Level 2a
 
-++ Level 2b
+            ++ Level 2b
 
-+ Level 1 Again
-WIKI;
+            + Level 1 Again
+            WIKI;
         $doc = $this->parser->parse($wiki);
         $html = $this->renderer->render($doc);
 
