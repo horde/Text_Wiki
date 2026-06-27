@@ -1,65 +1,14 @@
 ---
-3.0.0-beta1:
-  api: 3.0.0-beta1
+3.0.0:
+  api: 3.0.0
   state:
-    release: beta
-    api: beta
-  date: 2026-04-09
+    release: stable
+    api: stable
+  date: 2026-06-27
   license:
     identifier: LGPL-2.1-only
     uri: https://spdx.org/licenses/LGPL-2.1-only.html
-  notes: |-
-    fix: Broken unicode regexes
-    fix: Many missing returns and wrong phpdoc detected by phpstan level 1
-    style: php-cs-fixer
-    fix: Even more edge cases for headings not tokenized in combination with other tags
-    Fix: CamelCase bareword wikilinks and mixed tags ambiguities
-    fix: Markdown parser and renderer quirks.
-    docs: Add integration and extension documentation
-    feat: Add CommonMark (Markdown) renderer and merge duplicate tags
-    feat: Add a Tag Registry to inject new tags or disable existing tags
-    test: Remove tests for old-style parsers
-    docs: Add documents on supported wiki dialects
-    test: Unit and integration tests for all AST parsers and renderers
-    feat: All wiki types migrated to AST
-    feat: Xhtml renderer support improved for img with alt tags, lists and code blocks
-    feat: Second priority BBCode tags (alignment, youtube, email)
-    test: Add unit and integration tests for BBCode parser and new Xhtml renderer
-    feat: Implement a new, OO typed kind of parser for BBCode and renderer for Xhtml
-    test: Add cowiki idempotency test (parse from cowiki syntax, render to cowiki syntax)
-    fix: Cowiki List renderer and Parser
-    feat: Support both the "htmlish" and the "pipeish" variants of Cowiki table syntax
-    fix: Wikilink parsing and rendering issues for Cowiki
-    fix: Consume newlines to achieve idempotency through multiple runs of the Cowiki parser and renderer.
-    fix: Remove custom constructor for Cowiki (outdated path assumptions)
-    docs: Add heritage, authoritative sources and comparisons for default/yawiki, cowiki and tiki dialects
-    test: Coverage for Cowiki parser
-    test: Fix DefaultParser tests and add Tiki parser tests
-    fix: re-scope the token id counter
-    fix: Remove newline at the end of defaultParserHeading like in Tiki parser
-    fix(TikiWikiRenderHeading): Change EndHeading from newline to empty string
-    fix: Array of rules must be typed due to inheritance
-    test: fix risky tests and deprecations / missing properties
-    fix: Protect textEncode htmlspecialchars against null
-    fix: Don't pass matches by reference where it's not needed
-    test: Increase coverage of default parser
-    test: Migrate phpt to phpunit tests
-    chore(hordeyml): Add keywords
-    chore(gitignore): Add default entries
-    style: php-cs-fixer
-    doc: Initialize a .horde.yml and a changelog.yml file from existing metadata
-    fix: remove callback reference for PHP 8 compatibility
-3.0.0-alpha5:
-  api: 3.0.0-alpha1
-  state:
-    release: alpha
-    api: alpha
-  date: 2026-04-06
-  license:
-    identifier: LGPL-2.1-only
-    uri: https://spdx.org/licenses/LGPL-2.1-only.html
-  notes: |-
-    Current development state - not yet released
+  notes: "chore: refresh qc fixes and platform deps\nchore: Update workflow dependency"
 3.0.0-RC1:
   api: 3.0.0-RC1
   state:
@@ -69,8 +18,27 @@
   license:
     identifier: LGPL-2.1-only
     uri: https://spdx.org/licenses/LGPL-2.1-only.html
-  notes: |-
-    feat: All headings have anchors
+  notes: 'feat: All headings have anchors'
+3.0.0-beta1:
+  api: 3.0.0-beta1
+  state:
+    release: beta
+    api: beta
+  date: 2026-04-09
+  license:
+    identifier: LGPL-2.1-only
+    uri: https://spdx.org/licenses/LGPL-2.1-only.html
+  notes: "fix: Broken unicode regexes\nfix: Many missing returns and wrong phpdoc detected by phpstan level 1\nstyle: php-cs-fixer\nfix: Even more edge cases for headings not tokenized in combination with other tags\nFix: CamelCase bareword wikilinks and mixed tags ambiguities\nfix: Markdown parser and renderer quirks.\ndocs: Add integration and extension documentation\nfeat: Add CommonMark (Markdown) renderer and merge duplicate tags\nfeat: Add a Tag Registry to inject new tags or disable existing tags\ntest: Remove tests for old-style parsers\ndocs: Add documents on supported wiki dialects\ntest: Unit and integration tests for all AST parsers and renderers\nfeat: All wiki types migrated to AST\nfeat: Xhtml renderer support improved for img with alt tags, lists and code blocks\nfeat: Second priority BBCode tags (alignment, youtube, email)\ntest: Add unit and integration tests for BBCode parser and new Xhtml renderer\nfeat: Implement a new, OO typed kind of parser for BBCode and renderer for Xhtml\ntest: Add cowiki idempotency test (parse from cowiki syntax, render to cowiki syntax)\nfix: Cowiki List renderer and Parser\nfeat: Support both the \"htmlish\" and the \"pipeish\" variants of Cowiki table syntax\nfix: Wikilink parsing and rendering issues for Cowiki\nfix: Consume newlines to achieve idempotency through multiple runs of the Cowiki parser and renderer.\nfix: Remove custom constructor for Cowiki (outdated path assumptions)\ndocs: Add heritage, authoritative sources and comparisons for default/yawiki, cowiki and tiki dialects\ntest: Coverage for Cowiki parser\ntest: Fix DefaultParser tests and add Tiki parser tests\nfix: re-scope the token id counter\nfix: Remove newline at the end of defaultParserHeading like in Tiki parser\nfix(TikiWikiRenderHeading): Change EndHeading from newline to empty string\nfix: Array of rules must be typed due to inheritance\ntest: fix risky tests and deprecations / missing properties\nfix: Protect textEncode htmlspecialchars against null\nfix: Don't pass matches by reference where it's not needed\ntest: Increase coverage of default parser\ntest: Migrate phpt to phpunit tests\nchore(hordeyml): Add keywords\nchore(gitignore): Add default entries\nstyle: php-cs-fixer\ndoc: Initialize a .horde.yml and a changelog.yml file from existing metadata\nfix: remove callback reference for PHP 8 compatibility"
+3.0.0-alpha5:
+  api: 3.0.0-alpha1
+  state:
+    release: alpha
+    api: alpha
+  date: 2026-04-06
+  license:
+    identifier: LGPL-2.1-only
+    uri: https://spdx.org/licenses/LGPL-2.1-only.html
+  notes: Current development state - not yet released
 2.0.0-alpha.3:
   api: 2.0.0
   state:
@@ -90,9 +58,7 @@
   license:
     identifier: LGPL-2.1-only
     uri: https://spdx.org/licenses/LGPL-2.1-only.html
-  notes: |-
-    fix: De-PEAR and deprecate ::isError helper
-    fix: Deprecate TextWikiBase::error and start throwing GenericTextWikiException instead
+  notes: "fix: De-PEAR and deprecate ::isError helper\nfix: Deprecate TextWikiBase::error and start throwing GenericTextWikiException instead"
 2.0.0-alpha.1:
   api: 2.0.0
   state:
@@ -102,29 +68,7 @@
   license:
     identifier: LGPL-2.1-only
     uri: https://spdx.org/licenses/LGPL-2.1-only.html
-  notes: |-
-    fix: Convert some leftover class names
-    Misnamed variable
-    fix: Enable UTF-8 mode by default and port regex improvements from the internalized version in horde/wicked
-    chore: Remove addPath as it's no longer useful
-    fix: Remove require_once and repair wrong base class name
-    Allow optionally setting an explicit rule name for a parser rule object
-    feat: Be more defensive when parsing wiki rules
-    Add InvalidArgumentException import
-    Start importing mediawiki tests
-    chore: Bulk remove call-by-reference on process()
-    feat: Fix mapping between class names and rule/format strings. Import fixtures from old tests/ dir.
-    Add basic exception test
-    Add placeholder test to demonstrate PHPUnit 12 test suite passing
-    feat: Add final generic exception class derived from DomainException, marker interface and CI boilerplate for unit tests
-    More minor CS fixes
-    fix: Change format object loader to align with new naming scheme
-    chore: Rename classes to match new filesystem structure. Fix string access {} to []. Apply php-cs-fixer
-    chore: PSR4 namespace, rename and move files
-    fix: Rename root base class to TextWiki, namespace, remove require_once statements. Fix curly braces {} string access to []
-    build: composer.json file now identifies as horde/text_wiki rather than pear/text_wiki
-    refactor: Move library code to canonical src/ dir
-    Create README.md
+  notes: "fix: Convert some leftover class names\nMisnamed variable\nfix: Enable UTF-8 mode by default and port regex improvements from the internalized version in horde/wicked\nchore: Remove addPath as it's no longer useful\nfix: Remove require_once and repair wrong base class name\nAllow optionally setting an explicit rule name for a parser rule object\nfeat: Be more defensive when parsing wiki rules\nAdd InvalidArgumentException import\nStart importing mediawiki tests\nchore: Bulk remove call-by-reference on process()\nfeat: Fix mapping between class names and rule/format strings. Import fixtures from old tests/ dir.\nAdd basic exception test\nAdd placeholder test to demonstrate PHPUnit 12 test suite passing\nfeat: Add final generic exception class derived from DomainException, marker interface and CI boilerplate for unit tests\nMore minor CS fixes\nfix: Change format object loader to align with new naming scheme\nchore: Rename classes to match new filesystem structure. Fix string access {} to []. Apply php-cs-fixer\nchore: PSR4 namespace, rename and move files\nfix: Rename root base class to TextWiki, namespace, remove require_once statements. Fix curly braces {} string access to []\nbuild: composer.json file now identifies as horde/text_wiki rather than pear/text_wiki\nrefactor: Move library code to canonical src/ dir\nCreate README.md"
 1.2.2:
   api: 1.2.0
   state:
@@ -134,13 +78,4 @@
   license:
     identifier: LGPL-2.1-only
     uri: http://www.gnu.org/copyleft/lesser.html
-  notes: |-
-    QA releaseBug #11649 Closed New Code regex fails
-    Req #12569 Closed Adding 'base_url' to XHTML Toc renderer
-    Bug #12719 Closed Blockquote parsing bugs
-    Bug #12722 Closed HTML Blockquote compliance
-    Bug #14604 Closed Unresolved dependency in Text_Wiki_Render_Latex_Freelink
-    Bug #18289 Closed List not properly parsed
-    Bug #19028 Closed remove error_reporting (for PEAR QA team)
-    Bug #20110 Closed package.xml does not validate
-    Req #20274 Closed Please Provides LICENSE file
+  notes: "QA releaseBug #11649 Closed New Code regex fails\nReq #12569 Closed Adding 'base_url' to XHTML Toc renderer\nBug #12719 Closed Blockquote parsing bugs\nBug #12722 Closed HTML Blockquote compliance\nBug #14604 Closed Unresolved dependency in Text_Wiki_Render_Latex_Freelink\nBug #18289 Closed List not properly parsed\nBug #19028 Closed remove error_reporting (for PEAR QA team)\nBug #20110 Closed package.xml does not validate\nReq #20274 Closed Please Provides LICENSE file"
